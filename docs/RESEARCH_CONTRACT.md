@@ -2,7 +2,7 @@
 
 ## Status
 
-Frozen candidate intervention specification for initial evaluation.
+Reference specification for evaluating the v0.1 prompt snapshot. This is notebook guidance, not repository-wide governance.
 
 ## Primary research question
 
@@ -33,7 +33,7 @@ A length-conscious generic instruction that asks the model to reason carefully, 
 
 ### CARS
 
-Exact frozen `prompts/CARS-v0.1.md`.
+Use the exact `prompts/CARS-v0.1.md` file when running a v0.1 comparison.
 
 ## Primary hypothesis
 
@@ -76,4 +76,4 @@ It does not establish a general theory of intelligence, general AI safety, auton
 
 ## Version discipline
 
-Do not modify CARS-v0.1 after outcomes are known and continue calling it v0.1. Any substantive prompt change receives a new version and is evaluated separately.
+The notebook can evolve freely. For any experiment whose result matters, record the exact prompt file or commit used so later edits are not confused with the tested intervention. Substantive variants should usually get a new filename or version label for easy comparison.
