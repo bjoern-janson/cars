@@ -1,16 +1,16 @@
 # Evaluation Threat Model
 
-CARS can appear successful for reasons unrelated to the intended capability. This document lists major threats to both prompt-level evaluation and the newer recursive correction architecture.
+CARS can appear successful for reasons unrelated to the intended capability. This document lists major threats to prompt-level evaluation, catalyst evaluation, and the recursive correction architecture.
 
 ## Prompt-length advantage
 
-A longer prompt may simply induce more deliberation.
+A longer intervention may simply induce more deliberation.
 
-**Control:** length-conscious generic reasoning baseline.
+**Control:** length-conscious generic reasoning baselines and matched-cost comparisons where feasible.
 
 ## Vocabulary leakage
 
-Tasks written using terms such as "authority laundering," "departure vs adoption," or the notebook's own architecture vocabulary may reward memorizing the intervention.
+Tasks written using CARS-specific language may reward memorizing the intervention rather than exhibiting the intended reasoning behavior.
 
 **Control:** held-out surface language, independent case authorship, and cases that do not name the hidden failure class.
 
@@ -18,7 +18,7 @@ Tasks written using terms such as "authority laundering," "departure vs adoption
 
 LLM or human judges may prefer cautious, structured prose even when task performance is unchanged.
 
-**Control:** outcome-based scoring, blinded ratings, behavioral follow-up, and explicit penalties for unnecessary interventions.
+**Control:** outcome-based scoring, blinded ratings, behavioral follow-up, and penalties for unnecessary interventions.
 
 ## Excessive conservatism
 
@@ -42,7 +42,7 @@ The escalation gate may make models reluctant to revise genuinely inadequate rep
 
 The architecture may learn that difficult cases are rewarded when treated as representation failures.
 
-**Control:** matched worlds in which shallow repair is sufficient, plus explicit false-escalation scoring.
+**Control:** matched worlds where shallow repair is sufficient, plus explicit false-escalation scoring.
 
 ## Residual-mapping error
 
@@ -64,21 +64,23 @@ CARS may improve answers only by requesting much more evidence or generating man
 
 ## Shared benchmark assumptions
 
-Internally authored tasks may encode the same worldview as the prompt or research notes.
+Internally authored tasks may encode the same worldview as the prompt, catalyst, or research notes.
 
 **Control:** external authors, structurally independent task sources, adversarial benchmark design, and cross-generator evaluation.
 
-## Model-specific prompt interaction
+## Model-specific intervention interaction
 
-CARS may exploit instruction-following tendencies of one model family.
+CARS may exploit instruction-following or notation priors of one model family.
 
-**Control:** cross-model evaluation.
+**Control:** cross-model evaluation and explicit model/version reporting.
 
-## Post-outcome prompt tuning
+## Post-outcome intervention tuning
 
-Changing the intervention after seeing failures can overfit a test suite and make results hard to interpret.
+Changing a prompt or catalyst after seeing failures can overfit a test suite and make results hard to interpret.
 
-**Control:** when reporting an experiment, record the exact prompt version or commit that produced the result. Use a new version label for substantive post-outcome changes when comparison matters.
+**Control:** record the exact intervention text or commit. Use a new variant label for substantive post-outcome changes when comparison matters.
+
+The current deployable catalyst is intentionally frozen so the next change should be evidence-driven rather than aesthetic.
 
 ## Narrative masking
 
@@ -86,11 +88,63 @@ A model may use CARS terminology correctly while making the same substantive err
 
 **Control:** score behavior, predictions, interventions, and later transfer rather than protocol recitation.
 
+# Catalyst-specific threats
+
+## Semantic collision
+
+Compact symbols may map onto strong pre-existing ontologies unrelated to CARS. A model can recover equation structure while interpreting `E`, `V`, `W`, `ρ`, or other symbols as exit, voice, weights, resistance, energy, or similarly plausible alternatives.
+
+**Control:** semantically typed catalyst symbols, blind ontology-recovery scoring, and comparison against earlier opaque notation.
+
+## Syntactic recovery mistaken for semantic recovery
+
+A model may correctly identify arrows, functions, and non-implications while assigning the wrong object types.
+
+**Control:** score ontology and relation recovery separately. A structurally coherent parse with the wrong ontology is not full decoding success.
+
+## Legend leakage
+
+Providing a symbol legend, CARS provenance, expected ontology labels, or prior interpretations turns a blind-decoding test into a guided explanation test.
+
+**Control:** keep blind conditions free of external legend/provenance and record exactly what context the model received.
+
+## Rubric leakage through the question
+
+A decoding prompt can accidentally name the distinctions it is supposed to test, such as “residual,” “candidate revision,” or “authority.”
+
+**Control:** use neutral decoding instructions and keep expected categories evaluator-side.
+
+## Scoring unencoded structure
+
+Evaluators may penalize a catalyst for failing to recover distinctions the tested variant never encoded.
+
+**Control:** score only the semantic content actually present in the intervention condition.
+
+## Equation/prose confounding
+
+If the frozen catalyst beats controls, the gain may come from the prose semantics rather than the equation, or from the equation's semantic typing rather than the prose.
+
+**Control:** equation-only, semantics-only, full-catalyst, and generic-careful-reasoning conditions.
+
+## Decode/execute conflation
+
+A model may explain the catalyst correctly but fail to use it on tasks.
+
+**Control:** score blind decoding and execution in separate stages.
+
+## Execution/efficacy conflation
+
+A model may follow the catalyst faithfully without improving substantive outcomes.
+
+**Control:** report execution fidelity separately from task performance and correction-capacity measures.
+
+# Architecture-specific threats
+
 ## Validation-environment leakage
 
 A supposedly held-out validation world may contain information already available during candidate generation or selection.
 
-**Control:** define the selection-information boundary explicitly and exclude any information capable of changing candidate generation or selection from later independent-validation claims.
+**Control:** define the selection-information boundary explicitly and exclude information capable of changing candidate generation or selection from later independent-validation claims.
 
 ## Validator tuning after selection
 
@@ -104,47 +158,65 @@ candidate selection
 → favorable validation outcome
 ```
 
-**Control:** specify or generate the validation procedure independently of candidate-selection information, or explicitly downgrade the evidence status.
+**Control:** require design-level insulation of both the validation procedure and validation environment from `I_sel,t`, or explicitly downgrade the evidence status.
 
 ## Statistical independence confused with design independence
 
-The architecture's independence claim is methodological. A validation sample can be statistically unrelated yet still be selected using knowledge of the candidate.
+A validation sample can be statistically unrelated yet still be selected or evaluated using knowledge of the candidate.
 
-**Control:** document procedural/design insulation rather than asserting unsupported probabilistic independence.
+**Control:** document methodological/design insulation:
+
+```text
+(𝒱_t, W_t^ind) ⟂_design I_sel,t
+```
+
+rather than asserting unsupported probabilistic independence.
 
 ## Adaptive holdout reuse
 
-A validation benchmark may be independent for one transition but become training information for later transitions once its results are observed.
+A validation benchmark may be independent for one transition but become selection information for later transitions once its results are observed.
 
-**Control:** treat exposed validation evidence as part of later selection history. Use renewable held-out environments and a separate audit layer for lineage-level claims.
+**Control:** treat exposed validation evidence as part of later selection history. Use renewable validation environments and a separate audit layer for lineage-level claims.
 
 ## Recursive lineage overfitting
 
-Repeated successor selection can gradually optimize the entire lineage to a finite family of validation environments even when each local step looks clean.
+Repeated successor selection can gradually optimize the lineage to a finite family of validation environments even when each local step appears clean.
 
-**Control:** fresh validation environments over time, cross-generator transfer, and final audit cases unavailable to the lineage.
+**Control:** fresh validation environments, cross-generator transfer, and final audit cases unavailable to the lineage.
 
 ## CorrCap gaming
 
 A correction-capacity metric may reward proxies such as verbosity, intervention count, uncertainty declarations, representation changes, or abstention.
 
-**Control:** negative-control worlds, explicit restraint scoring, matched-cost conditions, and construct-validity tests for the metric itself.
+**Control:** negative-control worlds, restraint scoring, matched-cost conditions, and construct-validity tests for the metric itself.
+
+## Construct/metric collapse
+
+The theory may implicitly treat `CorrCap` as identical to the higher-level `C_improve` construct it is intended to operationalize.
+
+**Control:** preserve:
+
+```text
+C_improve ≠ CorrCap
+```
+
+and test whether CorrCap tracks independent indicators of future correctability rather than only theory-selected proxies.
 
 ## Global-average dilution
 
 A successor may improve average performance while remaining worse on the residual that triggered revision.
 
-**Control:** require residual-local reporting and succession evidence rather than relying only on aggregate performance.
+**Control:** require residual-local reporting rather than relying only on aggregate performance.
 
 ## Arbitrary regression tolerance
 
 A successor may be declared acceptable because the tolerated regression threshold was chosen after outcomes were seen.
 
-**Control:** predeclare non-inferiority margins or other material-harm tolerances before validation.
+**Control:** predeclare non-inferiority or material-regression margins before validation.
 
 ## Successor regression
 
-A revision can repair the triggering residual while destroying previously reliable correction behavior.
+A revision can repair the triggering residual while damaging previously reliable correction behavior.
 
 **Control:** regression suites over unaffected cases and explicit tradeoff reporting. Local improvement is not sufficient for unrestricted adoption.
 
@@ -170,7 +242,7 @@ Success across many instances from one generator may reflect adaptation to the g
 
 Because `Φ_t`, `G_t`, and `𝒱_t` may themselves be revised, the architecture can accidentally let a revised evaluator certify its own validity.
 
-**Control:** the object being revised must not supply the sole authority for its successor. Apply the same departure/adoption separation and independent-validation requirement to correction-surface revisions.
+**Control:** the object being revised must not supply the sole authority for its successor. Apply the same leave/adopt separation and design-independent validation requirement to correction-surface revisions.
 
 ## Falsification target
 
