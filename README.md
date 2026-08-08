@@ -59,6 +59,12 @@ prompts/
   CARS-v0.2-CANDIDATE.md    Dependency-tracing experimental variant
   GENERIC-CONTROL-v0.1.md   Generic careful-reasoning comparison control
 
+notes/
+  2026-08-08-one-layer-enough.md
+                            Carrier capacity vs dependency case note
+  2026-08-08-typed-attribution.md
+                            Typed attribution and discriminating-test note
+
 docs/
   RESEARCH_CONTRACT.md      Primary question, hypotheses, outcomes, claim boundary
   DESIGN_RATIONALE.md       Why each constraint exists
