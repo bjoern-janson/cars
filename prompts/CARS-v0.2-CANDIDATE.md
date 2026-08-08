@@ -1,8 +1,8 @@
 # CARS — Controlled Adaptive Reasoning System v0.2 Candidate
 
-> **Status:** proposed successor intervention for comparison against frozen CARS v0.1. Not canonical, not frozen, and not demonstrated to improve reasoning.
+> **Status:** experimental prompt variant for comparison with CARS v0.1. Not demonstrated to improve reasoning.
 
-CARS v0.2 is intentionally a **minimal delta** from CARS v0.1. It preserves the v0.1 objective, operating rules, and invariants, and proposes only one additional conditional rule and one additional invariant.
+CARS v0.2 is intentionally a **minimal delta** from CARS v0.1. It preserves the v0.1 objective, operating rules, and invariants, and explores only one additional conditional rule and one additional invariant.
 
 The purpose of the candidate is to test whether reasoning systems can learn more accurately from **successful corrections** without over-preserving incidental conditions, inventing spurious dependencies, or adding unjustified reasoning cost.
 
@@ -30,7 +30,7 @@ CARS v0.2 does **not** instruct the system to:
 - infer necessity from one successful lineage;
 - treat recurring dependencies as timeless invariants;
 - build a civilizational artifact;
-- reinterpret CARS v0.1 results.
+- reinterpret earlier CARS results.
 
 Any later interpretation of recurring validated residues as candidate first principles is a **research-level inference**, not part of the intervention prompt.
 
@@ -81,7 +81,7 @@ Compared with v0.1, v0.2 should more accurately distinguish:
 
 ### Candidate negative pattern
 
-The candidate should be rejected or revised if it mainly produces:
+The candidate should be revised or dropped if it mainly produces:
 
 - longer reasoning without better future correction;
 - spurious dependency narratives;
@@ -90,11 +90,9 @@ The candidate should be rejected or revised if it mainly produces:
 - under-preservation of genuinely load-bearing functions;
 - degraded performance on ordinary tasks where dependency tracing is irrelevant.
 
-## Required comparison
+## Suggested comparison
 
-The candidate must be evaluated directly against the **exact frozen CARS v0.1 prompt**.
-
-At minimum:
+A useful direct test is:
 
 ```text
 CARS v0.1
@@ -111,14 +109,8 @@ Useful test cases should contain successful corrections with deliberately separa
 
 Evaluation should track both reasoning quality and cost.
 
-## Succession rule
+## Versioning note
 
-Version numbering does not grant authority.
+The version number is organizational, not epistemic. v0.2 is simply a later experimental branch of the idea. If comparative evidence favors it, that is evidence for the added rule within the tested scope; if not, keep, revise, or discard it.
 
-CARS v0.2 becomes a justified successor only if comparative evidence shows that the added dependency-tracing rule improves the relevant correction behavior at acceptable cost and without creating larger regressions.
-
-Until then:
-
-- `prompts/CARS-v0.1.md` remains the frozen canonical candidate;
-- this file remains a proposed experimental variant;
-- `FREEZE.json` remains unchanged.
+Git history preserves the lineage. No special freeze machinery is required unless a future preregistered experiment or release needs it.
