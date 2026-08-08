@@ -1,14 +1,22 @@
 # CARS Ablation Plan
 
-Ablations are intended to identify which constraints matter if CARS shows an effect.
+Ablations are intended to identify which constraints matter **if an effect is observed**.
 
-Prompt-level ablations and architecture-level ablations should remain distinct. A later architecture result must not be retroactively attributed to a v0.1 prompt component that did not instantiate it.
+Keep the experimental surfaces distinct:
+
+```text
+prompt ablation
+≠ catalyst ablation
+≠ recursive-architecture ablation
+```
+
+A later architecture result must not be retroactively attributed to a prompt component that did not instantiate it.
 
 ## Prompt-level ablations
 
 ### A0 — Generic careful reasoning
 
-Removes CARS-specific concepts while keeping a generic instruction to reason carefully, consider alternatives, and check assumptions.
+Remove CARS-specific concepts while keeping a generic instruction to reason carefully, consider alternatives, and check assumptions.
 
 **Purpose:** control for generic deliberation and prompt attention.
 
@@ -53,6 +61,54 @@ Remove Rule 12.
 Provide only the core invariants without the operating rules.
 
 **Purpose:** test whether compact principles are sufficient.
+
+## Catalyst ablations / controls
+
+The canonical catalyst is frozen in `notes/2026-08-08-catalyst-notation.md`. Catalyst variants should be labeled as experimental conditions rather than silently replacing that string.
+
+### K0 — Equation only
+
+Use only the typed catalyst equation, without the objective definition or execution-semantics sentence.
+
+**Question:** are the symbols self-decoding enough to recover the intended operation?
+
+### K1 — Semantics only
+
+Use only the execution-semantics chain / sentence.
+
+**Question:** does the prose alone carry the operational effect?
+
+### K2 — No objective line
+
+Remove `I ∝ C_improve` and its definition while preserving the operational equation and semantics.
+
+**Question:** does the higher-level objective materially change decoding or execution?
+
+### K3 — Opaque notation
+
+Replace semantically typed symbols with the earlier compressed form while preserving relation structure.
+
+**Primary risk:** syntactic recovery with ontology drift.
+
+### K4 — No leave/adopt firewall
+
+Remove `A_leave ↛ A_adopt` and corresponding execution language.
+
+**Primary risk:** incumbent failure becomes successor promotion.
+
+### K5 — No independence semantics
+
+Retain “validation” but remove explicit independent-validation language from the execution semantics.
+
+**Primary risk:** validation collapses into any favorable test, including selection-contaminated checks.
+
+### K6 — Generic careful reasoning
+
+Replace the catalyst with a concise generic instruction to reason carefully and revise when warranted.
+
+**Purpose:** control for extra deliberation rather than CARS-specific structure.
+
+Catalyst ablations should report decoding and execution separately. An ablation can hurt semantic recovery without changing downstream behavior, or vice versa.
 
 ## Dependency-tracing ablations
 
@@ -110,7 +166,11 @@ Use an unseen `W_t^ind` but permit `𝒱_t` to be selected after inspecting cand
 
 ### R5 — No design-independence gate
 
-Remove the requirement that validator design and validation environment be insulated from `I_sel,t`.
+Remove:
+
+```text
+(𝒱_t, W_t^ind) ⟂_design I_sel,t
+```
 
 **Primary risk:** self-validating candidate/validator loops.
 
@@ -130,7 +190,7 @@ Evaluate aggregate correction-capacity change without conditioning on the trigge
 
 Require local improvement but do not test unaffected controls.
 
-**Primary risk:** catastrophic regression elsewhere.
+**Primary risk:** major regression elsewhere.
 
 ### R9 — Static holdout reuse
 
@@ -156,9 +216,23 @@ Use the candidate aggregate metric without matched verbosity/intervention/absten
 
 **Primary risk:** metric optimization without genuine correction improvement.
 
+### R13 — CorrCap treated as C_improve
+
+Treat improvement in the operational `CorrCap` measure as direct validation of the higher-level `C_improve` construct.
+
+**Primary risk:** construct/metric collapse.
+
 ## Interpretation
 
 An ablation result should not automatically be read causally unless prompt length, ordering, interaction effects, benchmark structure, and selection leakage are controlled. Components may interact strongly.
+
+For catalyst work, distinguish:
+
+```text
+semantic recovery
+≠ execution
+≠ task outcome
+```
 
 For architecture-level work, distinguish:
 
