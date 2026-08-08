@@ -170,6 +170,8 @@ CARS should be evaluated in layers rather than treated as successful because it 
 
 `CorrCap` is itself an operational construct that requires validation. More interventions, more uncertainty, more verbosity, or more representation changes must not automatically score as higher correction capacity.
 
+Prompt-level scoring remains in [`eval/SCORING.md`](eval/SCORING.md) and [`eval/rubric.json`](eval/rubric.json). The recursive architecture has a separate proposed overlay in [`eval/ARCHITECTURE_SCORING.md`](eval/ARCHITECTURE_SCORING.md) so later research does not silently redefine the v0.1 rubric.
+
 ## Adversarial threats
 
 The current architecture should be attacked for:
@@ -221,6 +223,7 @@ benchmarks/
 
 eval/
   SCORING.md
+  ARCHITECTURE_SCORING.md
   rubric.json
 
 scripts/
