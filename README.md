@@ -29,17 +29,25 @@ CARS is designed around recurring reasoning failures:
 - forcing a determinate answer when unresolved is warranted;
 - producing a better retrospective explanation without changing future behavior.
 
-## The frozen candidate prompt
+## Frozen v0.1 and proposed v0.2
 
-The canonical v0.1 candidate is in [`prompts/CARS-v0.1.md`](prompts/CARS-v0.1.md).
+The canonical frozen candidate is [`prompts/CARS-v0.1.md`](prompts/CARS-v0.1.md).
 
 Do not silently modify that file during an evaluation. New variants should receive a new version.
+
+A narrowly scoped possible successor is documented in [`prompts/CARS-v0.2-CANDIDATE.md`](prompts/CARS-v0.2-CANDIDATE.md). It adds only one conditional dependency-tracing rule and one invariant:
+
+> **Historical presence ≠ functional necessity.**
+
+The v0.2 file is **not canonical, not frozen, and not evidence of improvement**. It must be compared directly against the exact v0.1 prompt. Version numbering does not grant succession authority.
 
 ## Repository map
 
 ```text
 prompts/
-  CARS-v0.1.md              Frozen candidate intervention
+  CARS-v0.1.md              Frozen canonical candidate intervention
+  CARS-v0.2-CANDIDATE.md    Proposed dependency-tracing successor variant
+  GENERIC-CONTROL-v0.1.md   Generic careful-reasoning comparison control
 
 docs/
   RESEARCH_CONTRACT.md      Primary question, hypotheses, outcomes, claim boundary
@@ -47,8 +55,11 @@ docs/
   CLAIMS_AND_NONCLAIMS.md   What evidence may and may not establish
   FAILURE_MODEL.md          Failure classes CARS is intended to handle
   EVALUATION_PROTOCOL.md    Comparison design and anti-leakage rules
+  EXPERIMENT_MATRIX.md      Suggested experiment families
   ABLATIONS.md              Component-removal tests
   THREAT_MODEL.md           Ways a CARS evaluation can fool itself
+  INDEPENDENT_CASE_AUTHOR_BRIEF.md
+                            Restricted brief for independently authored cases
   PROVENANCE.md             Research and AI-assisted workflow disclosure
 benchmarks/
   seed_cases.jsonl          Internal seed cases, not yet independent evidence
@@ -59,8 +70,11 @@ eval/
   rubric.json               Machine-readable rubric dimensions
 scripts/
   validate_cases.py         Schema and integrity checker
+  verify_freeze.py          Hash verification for frozen v0.1 artifacts
 examples/
   evaluation_record.json    Example result record
+results/
+  README.md                 Result publication boundary
 ```
 
 ## Research ladder
@@ -78,13 +92,17 @@ A valid negative result is a valid result.
 
 ## Primary comparison
 
-A serious test should compare at least:
+A serious v0.1 test should compare at least:
 
 - **B0 — Baseline:** model without CARS.
 - **B1 — Generic careful-reasoning control:** a length-matched instruction to reason carefully, consider alternatives, and check work without CARS-specific machinery.
 - **CARS — Frozen candidate:** exact prompt in `prompts/CARS-v0.1.md`.
 
 Optional ablations test whether any observed benefit depends on specific CARS components rather than prompt length or generic deliberation.
+
+A future v0.2 experiment should add a direct comparison between the exact frozen v0.1 prompt and the proposed dependency-tracing candidate. The v0.2 question is deliberately narrower:
+
+> **Does dependency tracing improve identification of transferable, load-bearing correction conditions enough to justify its added reasoning cost?**
 
 ## Core invariants
 
@@ -95,6 +113,10 @@ Optional ablations test whether any observed benefit depends on specific CARS co
 > **Evidence can authorize departure without authorizing destination.**
 
 > **Never make the current interface final; never make its successor self-authorizing.**
+
+The proposed v0.2 candidate adds:
+
+> **Historical presence ≠ functional necessity.**
 
 ## Evidence status
 
@@ -108,7 +130,9 @@ It does **not** establish that CARS:
 - increases intelligence;
 - causes better adaptation;
 - generalizes across models or domains;
-- solves representation invention or Controlled Representational Escape.
+- solves representation invention or Controlled Representational Escape;
+- discovers transferable correction dependencies;
+- identifies first principles.
 
 The seed benchmark is internally authored and therefore suitable for development, debugging, and preregistration design—not independent validation.
 
