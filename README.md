@@ -371,6 +371,8 @@ scripts/
 
 examples/
   evaluation_record.json
+  catalyst_evaluation_record.json
+  architecture_evaluation_record.json
 
 results/
   README.md
