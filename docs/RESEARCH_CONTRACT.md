@@ -2,9 +2,25 @@
 
 ## Status
 
-Reference specification for evaluating the v0.1 prompt snapshot. This is notebook guidance, not repository-wide governance.
+Reference specification for evaluating the **v0.1 prompt snapshot**. This is notebook guidance, not repository-wide governance.
 
-The notebook now contains a broader recursive correction architecture, but that architecture is **not retroactively part of CARS v0.1**. See [`../notes/2026-08-08-recursive-correction-architecture.md`](../notes/2026-08-08-recursive-correction-architecture.md).
+The notebook now contains two broader research surfaces:
+
+- a frozen catalyst candidate for blind decoding / execution tests;
+- a proposed recursive correction architecture.
+
+Neither is retroactively part of CARS v0.1. See:
+
+- [`../notes/2026-08-08-catalyst-notation.md`](../notes/2026-08-08-catalyst-notation.md)
+- [`../notes/2026-08-08-recursive-correction-architecture.md`](../notes/2026-08-08-recursive-correction-architecture.md)
+
+Keep the evidence surfaces separate:
+
+```text
+v0.1 prompt result
+≠ catalyst result
+≠ architecture result
+```
 
 ## Primary research question
 
@@ -43,11 +59,11 @@ CARS v0.1 improves aggregate controlled-adaptation score on held-out tasks relat
 
 ## Null / negative outcomes
 
-Any of the following are scientifically meaningful negative results:
+Scientifically meaningful negative or mixed results include:
 
 - no reliable improvement over B1;
 - improvement only on internally authored or lexically similar tasks;
-- gains disappear on held-out domains;
+- gains disappearing on held-out domains;
 - better verbal explanations without changed downstream behavior;
 - reduced false updates but excessive conservatism;
 - improved localization but worse task success;
@@ -76,26 +92,29 @@ A positive v0.1 result authorizes only the tested claim, model family, task dist
 
 It does not establish:
 
-- a general theory of intelligence;
+- a general theory or definition of intelligence;
+- `I ∝ C_improve` as an empirical law;
+- catalyst semantic recovery or efficacy;
 - general AI safety;
 - autonomous representation invention;
 - causal mechanism;
 - universal transfer;
 - recursive correction-capacity improvement;
-- validity of the notebook's later architecture.
+- validity of the notebook's later architecture;
+- validity of `CorrCap` as a measure of the higher-level `C_improve` construct.
 
-Likewise, a negative v0.1 result does not by itself falsify later architecture-level hypotheses that were not instantiated by the v0.1 prompt.
+Likewise, a negative v0.1 result does not by itself falsify later catalyst or architecture hypotheses that were not instantiated by the v0.1 prompt.
 
-## Relationship to the current architecture frontier
+## Relationship to later research surfaces
 
-The newer notebook question is harder:
+The catalyst asks whether a compact semantically typed intervention can be recovered and executed by unfamiliar models without requiring reconstruction of the full theory.
 
-> Can a correction process discover when its own representation or correction machinery is the limiting factor, generate a successor without self-authorizing it, and validate succession using information insulated from candidate selection?
+The recursive architecture asks whether a correction process can discover when its own representation or correction machinery is limiting, generate a successor without self-authorizing it, and validate succession using information insulated from candidate selection.
 
-That question requires separate experiments. It should not be answered by reinterpreting v0.1 benchmark results.
+Those questions require separate experiments. They should not be answered by reinterpreting v0.1 benchmark results.
 
 ## Version discipline
 
-The notebook can evolve freely. For any experiment whose result matters, record the exact prompt file or commit used so later edits are not confused with the tested intervention. Substantive variants should usually get a new filename or version label for easy comparison.
+The notebook can evolve freely. For any experiment whose result matters, record the exact prompt file or commit used so later edits are not confused with the tested intervention.
 
-Research notes and architecture documents may evolve without forcing a prompt version bump unless they actually change the intervention being tested.
+Substantive prompt variants should usually receive a new filename or version label for comparison. Research notes, catalyst studies, and architecture documents may evolve without forcing a prompt version bump unless they actually change the prompt intervention being tested.
