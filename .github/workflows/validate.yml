@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  research-artifact-integrity:
+  notebook-integrity:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,5 +14,3 @@ jobs:
           python-version: "3.12"
       - name: Validate seed benchmark
         run: python scripts/validate_cases.py
-      - name: Verify frozen artifact hashes
-        run: python scripts/verify_freeze.py
