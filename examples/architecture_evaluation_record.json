@@ -1,0 +1,46 @@
+{
+  "example_only": true,
+  "surface": "architecture",
+  "experiment_id": "EXAMPLE-ARCH-001",
+  "architecture_commit": "EXAMPLE_COMMIT",
+  "model": {
+    "name": "example-model",
+    "version": "example-version",
+    "date": "YYYY-MM-DD"
+  },
+  "state": {
+    "X_t_definition": "EXAMPLE_STATE_DEFINITION",
+    "residual_mapper": "EXAMPLE_PHI",
+    "residual_representation": "EXAMPLE_RHO",
+    "candidate_generator": "EXAMPLE_G",
+    "validator": "EXAMPLE_VALIDATOR"
+  },
+  "selection_information_boundary": "EXAMPLE_I_SEL",
+  "validation_environment": "EXAMPLE_W_IND",
+  "design_independence_status": "unknown",
+  "succession_rule_predeclared": true,
+  "delta_corrcap_residual": null,
+  "control_regression": null,
+  "regression_tolerance": null,
+  "architecture_scores": {
+    "RD": null,
+    "FE": null,
+    "LA": null,
+    "RM": null,
+    "UG": null,
+    "CG": null,
+    "AL": null,
+    "VI": null,
+    "RL": null,
+    "RG": null,
+    "SD": null,
+    "TR": null,
+    "SV": null,
+    "MG": null,
+    "RC": null
+  },
+  "validation_fresh_for_transition": null,
+  "benchmark_generator": "EXAMPLE_GENERATOR",
+  "protocol_deviations": [],
+  "notes": "Example schema only; not an empirical result."
+}
