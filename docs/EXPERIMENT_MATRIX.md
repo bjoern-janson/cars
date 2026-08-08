@@ -1,6 +1,16 @@
 # Experiment Matrix
 
-## Prompt-level minimum experiment
+CARS now has three experimentally distinct surfaces:
+
+```text
+prompt intervention
+≠ catalyst intervention
+≠ recursive architecture
+```
+
+A result on one surface does not automatically establish a result on another.
+
+## 1. Prompt-level minimum experiment
 
 | Condition | Intervention | Purpose |
 |---|---|---|
@@ -8,7 +18,7 @@
 | B1 | Generic Careful-Reasoning Control v0.1 | generic deliberation/control condition |
 | C0 | CARS v0.1 | candidate structured intervention |
 
-## Prompt-level ablations
+### Prompt-level ablations
 
 | Condition | Change | Main question |
 |---|---|---|
@@ -20,7 +30,7 @@
 | A6 | remove belief/decision separation | does it help decisions under uncertainty? |
 | A7 | invariants only | are compact principles sufficient? |
 
-## v0.2 dependency-tracing comparison
+## 2. v0.2 dependency-tracing comparison
 
 | Condition | Change | Main question |
 |---|---|---|
@@ -37,9 +47,58 @@ Cases should include:
 - substitutable implementations;
 - cases where no dependency analysis is needed.
 
-## Recursive correction architecture frontier
+## 3. Catalyst blind-decoding experiment
 
-The current notebook architecture should be tested separately from the prompt intervention. A useful blind benchmark should vary the hidden failure locus without naming it to the system.
+The frozen deployable catalyst is recorded in `notes/2026-08-08-catalyst-notation.md`.
+
+The first catalyst question is not whether CARS works. It is whether the compact intervention is semantically recoverable without importing an unrelated ontology.
+
+### Decoding conditions
+
+| Condition | Intervention | Main question |
+|---|---|---|
+| K0 | no catalyst / neutral symbol task | what ontology does the model infer without intervention? |
+| K1 | typed catalyst equation only | are the symbols sufficiently self-decoding? |
+| K2 | execution semantics only | how much structure is carried by prose alone? |
+| K3 | frozen deployable catalyst | does objective + typed equation + semantics recover the intended operation? |
+| K4 | older opaque catalyst form | does semantic typing reduce ontology drift? |
+
+Do not provide the CARS legend, repository provenance, expected ontology labels, or previous parses during blind decoding.
+
+Measure with `eval/CATALYST_SCORING.md`:
+
+- ontology recovery;
+- relation recovery;
+- ordering/process recovery;
+- authority recovery;
+- construct/metric separation where encoded;
+- independence semantics.
+
+### Catalyst execution conditions
+
+After decoding is scored, compare:
+
+| Condition | Intervention | Main question |
+|---|---|---|
+| E0 | no intervention | native correction behavior |
+| E1 | generic careful reasoning | generic deliberation control |
+| E2 | execution semantics only | does prose alone drive the behavior? |
+| E3 | frozen deployable catalyst | does the full compact intervention improve controlled execution? |
+
+Relevant task families should test:
+
+- real limitation vs ordinary difficulty;
+- provisional residual representation vs premature certainty;
+- candidate generation vs immediate successor promotion;
+- independent validation vs selection-contaminated validation;
+- leave/adopt separation;
+- downstream reuse of a valid correction.
+
+A positive decoding result is not an efficacy result. A positive execution result is not automatically a `CorrCap` result.
+
+## 4. Recursive correction architecture frontier
+
+The formal recursive architecture should be tested separately from the catalyst and prompt intervention. A useful blind benchmark should vary the hidden failure locus without naming it to the system.
 
 | World | Hidden structure | Successful behavior |
 |---|---|---|
@@ -47,7 +106,7 @@ The current notebook architecture should be tested separately from the prompt in
 | R1 | observation/interface collapses required distinction | identify non-identifiability; seek a new partition or observation |
 | R2 | residual mapper merges two mechanisms | revise `Φ_t` / recover the missing residual distinction |
 | R3 | detailed representation uses wrong partition | change partition rather than merely adding detail |
-| R4 | candidate generator shares the incumbent blind spot | revise generation or obtain a new candidate source |
+| R4 | candidate generator shares incumbent blind spot | revise generation or obtain a new candidate source |
 | R5 | validation environment is unseen but validator is selection-tuned | reject independence claim |
 | R6 | validator and validation environment are design-insulated | permit validation evidence to bear succession weight |
 | R7 | apparent dependency is incidental | remove without damaging correction |
@@ -65,16 +124,16 @@ At minimum compare:
 | Condition | Description |
 |---|---|
 | X0 | native model / no explicit correction architecture |
-| X1 | fixed CARS-style correction discipline |
-| X2 | architecture with revisable residual mapping but fixed validator |
-| X3 | architecture with revisable residual mapping and validation procedure |
-| X4 | architecture with full succession gate and design-independent validation requirement |
+| X1 | fixed correction discipline |
+| X2 | revisable residual mapping but fixed validator |
+| X3 | revisable residual mapping and validation procedure |
+| X4 | full succession gate with design-independent validation requirement |
 
 These are experiment-design placeholders, not claims that each condition is already implemented.
 
-## Primary prompt-level analysis
+## Prompt-level analysis
 
-Do not report only one aggregate score. At minimum compare:
+At minimum compare:
 
 - substantive task success;
 - over-update rate;
@@ -86,11 +145,34 @@ Do not report only one aggregate score. At minimum compare:
 - correction transfer;
 - token/latency/search cost.
 
-If CARS beats B0 but not B1, the evidence supports a generic-deliberation explanation more strongly than a CARS-specific mechanism.
+If CARS beats B0 but not B1, generic deliberation is a stronger explanation than a CARS-specific mechanism.
 
 If CARS beats B1 only on internally authored tasks, external transfer remains unresolved.
 
-## Primary architecture-level analysis
+## Catalyst-level analysis
+
+Report separately:
+
+```text
+Decode
+Execute
+TaskPerf
+```
+
+Do not collapse them into one score before checking for dissociation.
+
+Important failure patterns include:
+
+```text
+high relation recovery + low ontology recovery
+high decoding + low execution
+high execution fidelity + no task gain
+high task gain + no evidence of CorrCap gain
+```
+
+These are diagnostically different outcomes.
+
+## Architecture-level analysis
 
 Track at least:
 
@@ -113,7 +195,9 @@ Do not assume a single scalar captures all of these.
 
 ## CorrCap construct-validity controls
 
-A candidate correction-capacity metric should be challenged with agents or conditions that artificially increase:
+`C_improve` and `CorrCap` are not assumed identical.
+
+Challenge a candidate correction-capacity metric with agents or conditions that artificially increase:
 
 - reasoning length;
 - number of proposed interventions;
@@ -140,6 +224,15 @@ Where possible, reserve independently authored or externally generated worlds fo
 
 ## Interpretation rule
 
-A positive architecture-level result should be scoped to the exact residual families, selection-information boundary, validator design, validation generators, model family, and regression tolerance tested.
+A positive result should be scoped to the exact intervention, model family, task distribution, selection-information boundary, validator design, validation generators, and regression tolerance actually tested.
+
+In particular:
+
+```text
+catalyst decoding
+↛ catalyst efficacy
+↛ CorrCap improvement
+↛ recursive improvement
+```
 
 Repeated local succession does not by itself establish universal recursive improvement.
