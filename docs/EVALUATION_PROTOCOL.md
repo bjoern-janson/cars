@@ -11,7 +11,7 @@ Run identical tasks under:
 1. B0 baseline
 2. B1 generic careful-reasoning control
 3. CARS v0.1
-4. Optional preregistered ablations
+4. Optional ablations or later variants
 
 Randomize condition order where the evaluation setup permits it.
 
@@ -51,14 +51,14 @@ Tests whether correction survives beyond the exact case that produced it.
 
 Tests whether the model escalates only when the existing distinction space is actually inadequate.
 
-## Anti-leakage rules
+## Anti-leakage guidance
 
 - Do not expose expected labels or rubric language in the task prompt.
 - Avoid benchmark cases that merely repeat CARS vocabulary.
-- Hold out domains and surface forms from prompt development.
+- Hold out domains and surface forms from prompt development where possible.
 - Keep test cases authored independently where possible.
 - Blind human raters to condition where feasible.
-- Do not modify the frozen intervention after inspecting outcomes.
+- For a reported comparison, preserve or record the exact prompt versions used before interpreting outcomes.
 
 ## Primary scoring
 
@@ -100,3 +100,7 @@ Reasoning improvement that depends on uncontrolled cost expansion should be repo
 - invalid/inconclusive due to leakage, scoring failure, or protocol violation.
 
 Do not convert an invalid experiment into a positive or negative claim.
+
+## Notebook note
+
+This protocol is a reusable experiment template, not a requirement that every exploratory notebook change be preregistered or frozen. Tighten controls when the evidential claim warrants it.
