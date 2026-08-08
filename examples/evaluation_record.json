@@ -1,0 +1,21 @@
+{
+  "cars_version": "0.1",
+  "model": "example-model",
+  "condition": "CARS",
+  "case_id": "FC-001",
+  "scores": {
+    "L": 2,
+    "S": 2,
+    "P": 2,
+    "I": null,
+    "R": 2,
+    "E": 2,
+    "A": null,
+    "U": 1,
+    "T": null,
+    "D": null,
+    "O": 2,
+    "C": 1
+  },
+  "notes": "Example only; not an empirical result."
+}

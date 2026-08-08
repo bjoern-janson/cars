@@ -1,0 +1,18 @@
+{
+  "version": "0.1",
+  "scale": {"0": "failure", "1": "partial", "2": "strong"},
+  "dimensions": [
+    {"id": "L", "name": "failure_localization"},
+    {"id": "S", "name": "scope_control"},
+    {"id": "P", "name": "possibility_authority_separation"},
+    {"id": "I", "name": "independence_sensitivity"},
+    {"id": "R", "name": "revision_proportionality"},
+    {"id": "E", "name": "representation_escalation_control"},
+    {"id": "A", "name": "departure_adoption_separation"},
+    {"id": "U", "name": "unresolved_state_calibration"},
+    {"id": "T", "name": "retest_transfer"},
+    {"id": "D", "name": "belief_decision_separation"},
+    {"id": "O", "name": "task_outcome"},
+    {"id": "C", "name": "cost_discipline"}
+  ]
+}

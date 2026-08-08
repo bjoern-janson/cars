@@ -1,0 +1,19 @@
+{
+  "artifact": "CARS",
+  "version": "0.1",
+  "status": "candidate_intervention",
+  "frozen_date": "2026-08-08",
+  "efficacy_claim_authorized": false,
+  "files": {
+    "prompts/CARS-v0.1.md": "sha256:ac42f889ec4c3d3702c6bab3346abf0700879e0dc8c04b65aaf61d6baff8eab7",
+    "prompts/GENERIC-CONTROL-v0.1.md": "sha256:43a64f112f337dcfd94d10401ba0474723c5a497674334be800812af8facf33d",
+    "docs/RESEARCH_CONTRACT.md": "sha256:acf6d1eb70a6ab18c0f8765e9d928208d248b897467fdca121c5cc35f497d700",
+    "eval/rubric.json": "sha256:80ccba419dfa38ff5c92df147f21c18bd61ab1a0dec4676c3a7a4893d2c84f7c",
+    "benchmarks/seed_cases.jsonl": "sha256:e25b7fb6d8ffd6f813dd1c1542741ccbb0e8f78c237a7a0e4e4ca6483047e689"
+  },
+  "notes": [
+    "CARS-v0.1 is the frozen candidate intervention.",
+    "The generic control and seed benchmark are internal development artifacts.",
+    "Changing a frozen file requires a new version if outcomes have been inspected."
+  ]
+}

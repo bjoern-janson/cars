@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use CARS in research, please cite the repository version you evaluated."
+title: "CARS — Controlled Adaptive Reasoning System"
+type: software
+authors:
+  - family-names: Janson
+    given-names: Björn
+version: 0.1
+date-released: 2026-08-08
+license: MIT
+repository-code: "https://github.com/bjoern-janson/cars"
