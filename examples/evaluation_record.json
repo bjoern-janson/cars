@@ -1,7 +1,17 @@
 {
-  "cars_version": "0.1",
-  "model": "example-model",
-  "condition": "CARS",
+  "example_only": true,
+  "surface": "prompt",
+  "intervention": {
+    "name": "CARS",
+    "version": "0.1",
+    "commit": "EXAMPLE_COMMIT"
+  },
+  "model": {
+    "name": "example-model",
+    "version": "example-version",
+    "date": "YYYY-MM-DD"
+  },
+  "condition": "CARS-v0.1",
   "case_id": "FC-001",
   "scores": {
     "L": 2,
@@ -17,5 +27,6 @@
     "O": 2,
     "C": 1
   },
-  "notes": "Example only; not an empirical result."
+  "protocol_deviations": [],
+  "notes": "Example schema only; not an empirical result."
 }
