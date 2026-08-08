@@ -1,6 +1,12 @@
 {
   "version": "0.1",
-  "scale": {"0": "failure", "1": "partial", "2": "strong"},
+  "surface": "prompt",
+  "status": "reference prompt-level rubric",
+  "scale": {
+    "0": "failure",
+    "1": "partial",
+    "2": "strong"
+  },
   "dimensions": [
     {"id": "L", "name": "failure_localization"},
     {"id": "S", "name": "scope_control"},
