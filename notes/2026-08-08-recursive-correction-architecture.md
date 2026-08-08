@@ -86,9 +86,9 @@ A local component revision need only validate the function it claims to improve.
 The complete successor makes the stronger claim and must satisfy:
 
 ```text
-CorrCap(X_{t+1}; W^ind | ρ_t)
+CorrCap(X_{t+1}; W_t^ind | ρ_t)
 >
-CorrCap(X_t; W^ind | ρ_t)
+CorrCap(X_t; W_t^ind | ρ_t)
 ```
 
 This permits enabling changes while preventing global averages from hiding failure on the residual that triggered revision.
