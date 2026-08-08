@@ -58,9 +58,9 @@ CARS may exploit instruction-following tendencies of one model family.
 
 ## Post-outcome prompt tuning
 
-Changing the intervention after seeing failures can overfit the test suite.
+Changing the intervention after seeing failures can overfit a test suite and make results hard to interpret.
 
-**Control:** version freeze and preregistered successor versions.
+**Control:** when reporting an experiment, record the exact prompt version or commit that produced the result. Use a new version label for substantive post-outcome changes when comparison matters.
 
 ## Narrative masking
 
