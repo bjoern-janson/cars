@@ -1,0 +1,38 @@
+{
+  "example_only": true,
+  "surface": "catalyst",
+  "condition": "frozen-deployable-catalyst",
+  "catalyst_commit": "EXAMPLE_COMMIT",
+  "catalyst_text_sha256": "EXAMPLE_SHA256",
+  "context_disclosure": {
+    "cars_name_exposed": false,
+    "external_legend_exposed": false,
+    "intended_ontology_labels_exposed": false,
+    "prior_parses_exposed": false,
+    "rubric_language_exposed": false
+  },
+  "model": {
+    "name": "example-model",
+    "version": "example-version",
+    "date": "YYYY-MM-DD"
+  },
+  "stage": "blind-decoding",
+  "decode_scores": {
+    "DO": 2,
+    "DR": 2,
+    "DQ": 2,
+    "DA": 2,
+    "DC": 1,
+    "DI": 1
+  },
+  "execution_scores": {
+    "EL": null,
+    "ER": null,
+    "EG": null,
+    "EV": null,
+    "EA": null,
+    "EC": null
+  },
+  "protocol_deviations": [],
+  "notes": "Example schema only; not an empirical result."
+}
