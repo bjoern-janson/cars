@@ -2,14 +2,23 @@
 
 ## Goal
 
-Measure whether CARS changes reasoning behavior in the intended direction, not whether evaluators prefer its language.
+Measure whether CARS changes reasoning behavior in the intended direction, not whether evaluators prefer its language or notation.
 
-This protocol now distinguishes two related but different evaluation targets:
+The notebook now distinguishes three related but different evaluation targets:
 
-1. **prompt-level evaluation** — does a CARS intervention improve controlled reasoning relative to baselines?
-2. **architecture-level evaluation** — can a correction process earn succession authority through residual-local, design-independent validation without overfitting its own evaluation machinery?
+1. **prompt-level evaluation** — does a CARS prompt intervention improve controlled reasoning relative to baselines?
+2. **catalyst-level evaluation** — can an unfamiliar model recover and execute the intended correction operation from the frozen compact catalyst?
+3. **architecture-level evaluation** — can a correction process earn succession authority through residual-local, design-independent validation without overfitting its own evaluation machinery?
 
-The second target does not imply that the first has already succeeded.
+Evidence at one level does not automatically validate the others.
+
+```text
+Decode catalyst
+↛ execute catalyst
+↛ improve task performance
+↛ improve CorrCap
+↛ establish recursive improvement
+```
 
 ## Prompt-level conditions
 
@@ -24,60 +33,100 @@ Randomize condition order where the evaluation setup permits it.
 
 ## Prompt-level benchmark composition
 
-A useful suite should contain at least these adversarial pairs:
+A useful suite should contain adversarial pairs covering:
 
-### Genuine contradiction vs false contradiction
+- genuine contradiction vs false contradiction;
+- shallow vs deep failure;
+- bad incumbent vs seductive successor;
+- correlated confirmation vs independent probes;
+- explanation vs prediction;
+- uncertainty vs urgent action;
+- local fit vs held-out transfer;
+- model failure vs representation failure.
 
-Tests whether the model updates when warranted without treating criticism itself as evidence.
+The prompt-level benchmark should test behavior, not recognition of CARS terminology.
 
-### Shallow vs deep failure
+## Catalyst-level object
 
-Tests whether revision depth tracks failure depth.
+The current deployable catalyst is frozen in:
 
-### Bad incumbent vs seductive successor
+[`../notes/2026-08-08-catalyst-notation.md`](../notes/2026-08-08-catalyst-notation.md)
 
-Tests whether the model can reject the incumbent while withholding adoption.
+Use the exact string recorded there for a canonical catalyst condition. Do not silently edit punctuation, symbol names, prose, or ordering and still call the result the same catalyst.
 
-### Correlated confirmation vs independent probes
+Catalyst evaluation has two stages:
 
-Tests whether evidence is weighted by independence rather than quantity alone.
+```text
+blind semantic recovery
+→ execution
+```
 
-### Explanation vs prediction
+Use [`../eval/CATALYST_SCORING.md`](../eval/CATALYST_SCORING.md) for the proposed decoding/execution dimensions.
 
-Tests whether explanatory coherence is improperly converted into predictive authority.
+## Blind catalyst decoding
 
-### Uncertainty vs urgent action
+During a blind-decoding condition, do **not** provide:
 
-Tests whether the model can remain epistemically uncertain while still making a consequence-sensitive decision.
+- the CARS name or repository;
+- the symbol legend beyond what is inside the frozen catalyst itself;
+- intended ontology labels;
+- the formal architecture;
+- expected decoding categories;
+- prior model interpretations of the notation.
 
-### Local fit vs held-out transfer
+Ask the model to explain what operation the catalyst specifies or to reconstruct the process it implies.
 
-Tests whether correction survives beyond the exact case that produced it.
+Measure separately:
 
-### Model failure vs representation failure
+- ontology recovery;
+- relation recovery;
+- process/order recovery;
+- authority recovery;
+- construct/metric separation where encoded;
+- interpretation of independent validation.
 
-Tests whether the model escalates only when the existing distinction space is actually inadequate.
+A structurally plausible parse with the wrong ontology is a decoding failure, not a success.
+
+## Catalyst execution
+
+After blind decoding is measured, test whether the frozen catalyst changes reasoning behavior on cases where its structure is relevant.
+
+A minimal comparison should include, where feasible:
+
+1. **K0 — no catalyst**;
+2. **K1 — equation only**;
+3. **K2 — execution semantics only**;
+4. **K3 — frozen deployable catalyst**;
+5. **K4 — generic careful-reasoning control**.
+
+This separates semantic typing, prose execution guidance, and generic deliberation effects.
+
+Do not infer catalyst efficacy from decoding alone.
 
 ## Architecture-level object
 
-The current notebook architecture can be represented as:
+The current formal architecture is documented in:
+
+[`../notes/2026-08-08-recursive-correction-architecture.md`](../notes/2026-08-08-recursive-correction-architecture.md)
+
+A compact state representation is:
 
 ```text
 X_t = (C_t, O_t, M_t, Φ_t, G_t, 𝒱_t, …)
 ρ_t = Φ_t(E_t)
 ```
 
-with candidate generation, validation, and succession:
+with:
 
 ```text
 X_t
   --(E_t, Φ_t)--> ρ_t
   --G_t--> R_cand,t
   --(𝒱_t, W_t^ind)--> V_t^ind
-  --[Ind_t = 1; A_leave ≠> A_adopt]--> X_{t+1}
+  --[A_leave ↛ A_adopt; Ind_t = 1]--> X_{t+1}
 ```
 
-The architecture-level test should not assume that `ρ_t` is correct, that `Φ_t` is adequate, or that `𝒱_t` is an external oracle.
+The architecture-level test must not assume that `ρ_t` is correct, that `Φ_t` is adequate, or that `𝒱_t` is an external oracle.
 
 ## Architecture-level benchmark families
 
@@ -85,55 +134,63 @@ A useful blind benchmark should include worlds in which:
 
 ### Ordinary local repair is sufficient
 
-The correct response is to repair a shallow model or inference error without escalating representation or procedure.
+A shallow inference or model repair solves the problem. Escalation should be penalized.
 
 ### The current representation is non-identifying
 
-Two states that require different treatment are collapsed by the current observation/interface. The system must detect that more optimization inside the same representation is insufficient.
+Different hidden states requiring different treatment are collapsed by the current observation/interface.
 
 ### The residual partition is wrong
 
-The apparent failure population contains multiple mechanisms, or one mechanism has been split into misleading classes. The system must challenge `ρ_t = Φ_t(E_t)` rather than treating its current residual representation as truth.
-
-### A candidate dependency is incidental
-
-A condition is present during successful correction but removal leaves correction intact.
-
-### A candidate dependency is substitutable
-
-The historical implementation can be replaced while the relevant function survives.
+The current `ρ_t = Φ_t(E_t)` merges distinct mechanisms or splits one mechanism misleadingly.
 
 ### Candidate generation is the limiting factor
 
-The system localizes the problem adequately but fails because all generated revisions share the same blind spot.
+The residual is represented adequately, but all generated revisions share the same blind spot.
 
 ### Validation is the limiting factor
 
-The validator cannot distinguish good from bad successors or has been tuned using candidate-selection information.
+The validator cannot discriminate viable from non-viable successors, or is tuned using candidate-selection information.
 
-### The correction procedure itself is the limiting factor
+### A candidate dependency is incidental
 
-The system must identify a failure in its own discovery, generation, validation, or succession machinery rather than only changing the object-level model.
+A condition is present during successful correction but removal leaves the relevant function intact.
+
+### A candidate dependency is substitutable
+
+A historical implementation can be replaced while the tested correction function survives.
+
+### The correction procedure itself is limiting
+
+The system must identify a failure in its own discovery, generation, validation, or succession machinery.
 
 ### No deeper correction is warranted
 
-Hard or surprising cases in which the incumbent correction architecture is adequate. These are required to measure restraint and false escalation.
+Hard or surprising cases where the current correction architecture is adequate. These are required negative controls.
 
 ## Candidate-generation / validation firewall
 
-Let `I_sel,t` denote all information capable of influencing candidate generation or selection.
-
-Define:
+Let:
 
 ```text
-𝒱_t := validation procedure
-V_t^ind := 𝒱_t(R_cand,t ; W_t^ind)
+I_sel,t := all information capable of influencing candidate generation or selection
+```
+
+Strong validation independence is design-level:
+
+```text
+(𝒱_t, W_t^ind) ⟂_design I_sel,t
+```
+
+A protocol may also record:
+
+```text
 Ind_t := Ind(𝒱_t, W_t^ind ; I_sel,t)
 ```
 
-The independence claim is methodological/design-based, not a claim of probabilistic independence.
+The independence claim is methodological, not probabilistic.
 
-A validation result should not count as independent evidence for a candidate if any information used to construct that result could have changed which candidate was generated or selected.
+A validation result should not count as independent evidence for a candidate if information used to construct the validator or validation environment could have changed which candidate was generated or selected.
 
 ## Residual-local succession
 
@@ -153,15 +210,27 @@ and require positive residual-local improvement for the claimed succession scope
 
 This does not eliminate the need for regression testing elsewhere.
 
+## Construct / metric boundary
+
+The broader research objective `C_improve` and the operational target `CorrCap` are distinct:
+
+```text
+C_improve ≠ CorrCap
+```
+
+`CorrCap` should be treated as a measurement model whose construct validity must be tested.
+
+A higher `CorrCap` score is not automatically evidence for greater latent future correctability if the metric can be gamed by verbosity, search volume, abstention, intervention count, or representation escalation.
+
 ## Component-level vs system-level validation
 
 A local revision should be evaluated against the function it claims to improve.
 
 Examples:
 
-- a residual-mapper revision should improve residual discrimination;
-- a generator revision should improve useful candidate generation;
-- a validator revision should improve discrimination between viable and non-viable successors.
+- residual-mapper revision → residual discrimination;
+- generator revision → useful candidate generation;
+- validator revision → discrimination between viable and non-viable successors.
 
 The complete successor makes the stronger claim and should demonstrate residual-local correction-capacity improvement plus acceptable regression behavior.
 
@@ -179,46 +248,39 @@ W_val,t
 W_audit
 ```
 
-After `W_val,t` is exposed, its information belongs to later selection history. Recursive succession therefore requires renewable independence rather than repeated reuse of one static holdout.
+After `W_val,t` is exposed, its information belongs to later selection history. Recursive succession therefore requires **renewable independence** rather than repeated reuse of one static holdout.
 
 Stronger evidence uses fresh environments, independently authored generators, and audit cases unavailable to the revision lineage.
 
 ## Anti-leakage guidance
 
-- Do not expose expected labels or rubric language in the task prompt.
-- Avoid benchmark cases that merely repeat CARS vocabulary.
+- Do not expose expected labels or rubric language in task prompts.
+- Avoid benchmark cases that repeat CARS vocabulary.
 - Hold out domains and surface forms from prompt development where possible.
-- Keep test cases authored independently where possible.
+- Keep test cases independently authored where feasible.
 - Blind human raters to condition where feasible.
-- Record the exact prompt, code, candidate-selection process, validator, and validation environment used for reported experiments.
+- Record exact prompt/catalyst text, code, candidate-selection process, validator, and validation environment.
 - Treat exposed validation information as part of later lineage history.
-- Do not call a validation result independent solely because it came from a different dataset.
+- Do not call validation independent solely because it used a different dataset.
+- For catalyst decoding, do not leak the intended ontology through the question itself.
 
-## Primary scoring
+## Scoring surfaces
 
-Use the dimensions in `eval/SCORING.md` for prompt-level work, but preserve individual dimensions rather than collapsing immediately into a single scalar.
+Use:
 
-Architecture-level work should additionally track:
+- `eval/SCORING.md` and `eval/rubric.json` for prompt-level work;
+- `eval/CATALYST_SCORING.md` for catalyst decoding/execution;
+- `eval/ARCHITECTURE_SCORING.md` for recursive architecture work.
 
-- real-limitation detection;
-- false-escalation rate;
-- localization adequacy;
-- residual-partition recovery;
-- candidate-generation quality;
-- validator independence / leakage status;
-- residual-local correction gain;
-- substitution discovery;
-- transfer;
-- regression on unaffected controls;
-- token, latency, search, and intervention cost.
-
-`CorrCap` is a research construct, not a validated latent metric. It should be stress-tested against gaming by verbosity, intervention frequency, generalized caution, abstention, or escalation.
+Preserve individual dimensions before aggregation. An aggregate can hide tradeoffs and severe failures.
 
 ## Behavioral follow-up
 
-For correction tasks, include at least one later item where the corrected distinction matters again. A response that verbally accepts feedback but repeats the same failure should not receive full correction credit.
+For correction tasks, include later items where the corrected distinction matters again. Verbal acceptance without changed downstream behavior is not full correction.
 
-For architecture-level tests, include fresh cases where the discovered representation, dependency, or procedural change must be used without replaying the original failure trace.
+For catalyst tests, distinguish correct explanation of the catalyst from actual use of the catalyst on later cases.
+
+For architecture-level tests, include fresh cases where the discovered representation, dependency, or procedural change must be reused without replaying the original failure trace.
 
 ## Held-out evaluation
 
@@ -238,7 +300,7 @@ Cross-instance transfer from one generator should not be reported as cross-gener
 
 A successor may repair the triggering residual while damaging unaffected correction behavior.
 
-Where succession claims matter, predeclare the tolerated regression or non-inferiority margin before validation and report uncertainty around both local gain and regression.
+Where succession claims matter, predeclare the tolerated regression / non-inferiority margin before validation and report uncertainty around both local gain and regression.
 
 ## Cost accounting
 
@@ -252,19 +314,23 @@ Record where possible:
 - abstention/unresolved rate;
 - number of representation or procedure escalations.
 
-Reasoning improvement that depends on uncontrolled cost expansion should be reported as such.
+Improvement that depends on uncontrolled cost expansion should be reported as such.
 
 ## Valid outcomes
+
+Classify results as:
 
 - positive within scope;
 - negative/null;
 - mixed tradeoff;
-- invalid/inconclusive due to leakage, scoring failure, benchmark contamination, validator contamination, or protocol violation.
+- invalid/inconclusive.
+
+Invalidating conditions can include leakage, scoring failure, benchmark contamination, validator contamination, or protocol violation.
 
 Do not convert an invalid experiment into a positive or negative claim.
 
 ## Notebook note
 
-This protocol is a reusable experiment template, not a requirement that every exploratory notebook change be preregistered or frozen. Tighten controls when the evidential claim warrants it.
+This protocol is a reusable experiment template, not a requirement that every exploratory notebook change be preregistered or frozen.
 
-The next high-information experiment is adversarial: construct cases in which the architecture can appear to earn succession authority without genuinely improving correction capacity, then test whether the evaluation protocol detects the deception.
+The current catalyst has been intentionally frozen so the next information-bearing step is testing rather than further notation revision.
