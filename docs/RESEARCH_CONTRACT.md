@@ -4,9 +4,11 @@
 
 Reference specification for evaluating the v0.1 prompt snapshot. This is notebook guidance, not repository-wide governance.
 
+The notebook now contains a broader recursive correction architecture, but that architecture is **not retroactively part of CARS v0.1**. See [`../notes/2026-08-08-recursive-correction-architecture.md`](../notes/2026-08-08-recursive-correction-architecture.md).
+
 ## Primary research question
 
-**Does CARS improve controlled adaptive reasoning relative to an unprompted baseline and a generic careful-reasoning control, while avoiding increased over-revision, premature representation change, and unjustified confidence?**
+**Does CARS v0.1 improve controlled adaptive reasoning relative to an unprompted baseline and a generic careful-reasoning control, while avoiding increased over-revision, premature representation change, and unjustified confidence?**
 
 ## Unit of analysis
 
@@ -31,13 +33,13 @@ No CARS-specific intervention.
 
 A length-conscious generic instruction that asks the model to reason carefully, consider alternatives, check assumptions, and revise if warranted, without CARS-specific concepts such as authority laundering, representation escalation, departure/adoption separation, or unresolved-state preservation.
 
-### CARS
+### CARS v0.1
 
 Use the exact `prompts/CARS-v0.1.md` file when running a v0.1 comparison.
 
 ## Primary hypothesis
 
-CARS improves aggregate controlled-adaptation score on held-out tasks relative to B0 and B1.
+CARS v0.1 improves aggregate controlled-adaptation score on held-out tasks relative to B0 and B1.
 
 ## Null / negative outcomes
 
@@ -70,10 +72,30 @@ Any of the following are scientifically meaningful negative results:
 
 ## Claim rule
 
-A positive result authorizes only the tested claim, model family, task distribution, intervention version, and evaluation conditions.
+A positive v0.1 result authorizes only the tested claim, model family, task distribution, intervention version, and evaluation conditions.
 
-It does not establish a general theory of intelligence, general AI safety, autonomous representation invention, causal mechanism, or universal transfer.
+It does not establish:
+
+- a general theory of intelligence;
+- general AI safety;
+- autonomous representation invention;
+- causal mechanism;
+- universal transfer;
+- recursive correction-capacity improvement;
+- validity of the notebook's later architecture.
+
+Likewise, a negative v0.1 result does not by itself falsify later architecture-level hypotheses that were not instantiated by the v0.1 prompt.
+
+## Relationship to the current architecture frontier
+
+The newer notebook question is harder:
+
+> Can a correction process discover when its own representation or correction machinery is the limiting factor, generate a successor without self-authorizing it, and validate succession using information insulated from candidate selection?
+
+That question requires separate experiments. It should not be answered by reinterpreting v0.1 benchmark results.
 
 ## Version discipline
 
 The notebook can evolve freely. For any experiment whose result matters, record the exact prompt file or commit used so later edits are not confused with the tested intervention. Substantive variants should usually get a new filename or version label for easy comparison.
+
+Research notes and architecture documents may evolve without forcing a prompt version bump unless they actually change the intervention being tested.
