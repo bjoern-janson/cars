@@ -106,6 +106,21 @@ Practical rule:
 
 > **If information could have changed which revision was generated or selected, it cannot later be counted as independent validation evidence for that revision.**
 
+## Catalyst notation
+
+[`notes/2026-08-08-catalyst-notation.md`](notes/2026-08-08-catalyst-notation.md) separates notation used to **document** the architecture from notation used to **activate** it:
+
+> **Formal notation documents the architecture; catalyst notation activates the architecture.**
+
+The catalyst therefore carries more semantic information in its symbols and is evaluated by blind decoding rather than elegance alone:
+
+```text
+DecodeAcc(catalyst)
+:= Pr(intended operational structure recovered without legend)
+```
+
+This is a notation/intervention design question, not evidence that the underlying architecture works.
+
 ## What CARS is trying to prevent
 
 Across the prompt and research architecture, recurring failure modes include:
@@ -204,6 +219,7 @@ notes/
   2026-08-08-typed-attribution.md
   2026-08-08-representation-authority.md
   2026-08-08-recursive-correction-architecture.md
+  2026-08-08-catalyst-notation.md
 
 docs/
   RESEARCH_CONTRACT.md
