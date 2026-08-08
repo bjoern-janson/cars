@@ -1,4 +1,6 @@
-# CARS Scoring Rubric
+# CARS Prompt-Level Scoring Rubric
+
+> **Scope:** prompt-level CARS reasoning evaluation. Catalyst decoding/execution uses `CATALYST_SCORING.md`; recursive architecture evaluation uses `ARCHITECTURE_SCORING.md`.
 
 Score each applicable dimension from **0 to 2**.
 
@@ -62,4 +64,6 @@ Does the response avoid unnecessary search, hypothesis proliferation, or deliber
 
 Report dimensions individually first.
 
-If an aggregate is needed, preregister the aggregation rule. Do not silently compensate a severe failure in one safety-critical dimension with verbosity or strength in another.
+If an aggregate is needed, preregister the aggregation rule. Do not silently compensate a severe failure in one important dimension with verbosity or strength in another.
+
+Do not reuse this rubric as a substitute for catalyst or architecture scoring; those surfaces test different claims.
