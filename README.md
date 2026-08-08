@@ -64,6 +64,8 @@ notes/
                             Carrier capacity vs dependency case note
   2026-08-08-typed-attribution.md
                             Typed attribution and discriminating-test note
+  2026-08-08-representation-authority.md
+                            Representation authority and required-distinction note
 
 docs/
   RESEARCH_CONTRACT.md      Primary question, hypotheses, outcomes, claim boundary
