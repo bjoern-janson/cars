@@ -1,0 +1,87 @@
+{
+  "schema_version": 2,
+  "status": "frozen after B0-v2 plumbing PASS and before fresh manipulation data",
+  "study": "Pilot 0 Localization B0-v2: correction-signal manipulation validation",
+  "scope": "Validate that signal identity produces the intended ordered confidence-state update under the repaired conversational interface. B0-v2 does not test final correctness, H1, B, or C.",
+  "lineage": {
+    "predecessor": "PILOT0_B0_CONFIG.json / B0-v1",
+    "b0_v1_result": "FAIL_ORDER",
+    "raw_audit": "E0 and EU copied P_PRE on 142/142 replicate rows; EV copied P_PRE on 128/142 rows",
+    "localized_failure": "B0-v1 probability-probe interface induced baseline copying",
+    "repair": "preserve the exact original pre-treatment user message and assistant response as conversation history; present only the new signal and P_POST request in a new user message; do not restate P_PRE",
+    "plumbing_result": "PASS on 12 already-used B0-v1 prestates; plumbing had instrumentation authority only and did not evaluate the manipulation ordering"
+  },
+  "sampling": {
+    "raw_n": 120,
+    "sample_seed": 20260813,
+    "eligibility": "retain only initially-wrong frozen prestates after the unchanged Pilot 0 pre-treatment procedure",
+    "freshness": "exclude all prior plumbing, Run 1, Run 2, and B0-v1 sampled tasks"
+  },
+  "interface": {
+    "history_user": "exact frozen pre_prompt",
+    "history_assistant": "exact frozen raw_model_output containing the original ANSWER and P_CORRECT",
+    "new_user_message": "signal text followed by a request for current probability that the unchanged previous answer is correct; no P_PRE restatement and no answer revision",
+    "assistant_prefill": "P_POST: ",
+    "revision_allowed": false,
+    "final_correctness_scored": false
+  },
+  "signals": {
+    "E0": "Signal status: No new information is available about whether your previous answer is correct.",
+    "EU": "Signal status: There is unverified reason to doubt whether your previous answer is correct.",
+    "EV": "Signal status: It has been verified that your previous answer is incorrect."
+  },
+  "measurement": {
+    "p_pre": "reuse the already-recorded frozen pre-treatment P(correct) externally when computing M; do not restate it in the new B0-v2 user message",
+    "p_post": "reported probability after the new signal, before any reconsideration or answer revision",
+    "M": "P_post - stored P_pre",
+    "primary_ordering": "mean(M_E0) >= mean(M_EU) >= mean(M_EV)",
+    "expected_but_not_required": "M_E0 approximately 0; M_EU < 0; M_EV < M_EU"
+  },
+  "design": {
+    "signals_per_prestate": 3,
+    "replicates_per_signal": 2,
+    "matched_rng": "within each frozen prestate and replicate index, E0/EU/EV use the same generation seed",
+    "revision_allowed": false,
+    "final_correctness_scored": false
+  },
+  "generation": {
+    "base_seed": 20260809,
+    "do_sample": true,
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "max_new_tokens": 12,
+    "assistant_prefill": "P_POST: ",
+    "parse_retries": 0,
+    "matched_rng": "within each frozen prestate and replicate index, E0/EU/EV use the same generation seed"
+  },
+  "plumbing": {
+    "replicates_per_signal": 2,
+    "status": "passed before freeze; retained only for runner compatibility and provenance"
+  },
+  "analysis": {
+    "unit": "one frozen prestate/block",
+    "replicate_collapse": "average the two P_post values within each signal before across-block analysis",
+    "bootstrap": 5000,
+    "bootstrap_seed": 20260809,
+    "contrasts": [
+      "M_E0 - M_EU",
+      "M_EU - M_EV",
+      "M_E0 - M_EV"
+    ],
+    "pass_rule": "PASS only if mean(M_E0-M_EU) > 0 and mean(M_EU-M_EV) > 0 and the 95% block-bootstrap lower bounds for both adjacent contrasts are > 0.",
+    "unresolved_rule": "UNRESOLVED if both adjacent mean contrasts are positive but either adjacent 95% bootstrap interval includes 0.",
+    "fail_order_rule": "FAIL_ORDER if either adjacent mean contrast is <= 0.",
+    "non_circularity": "final-answer correctness and moderation are not used to establish manipulation validity"
+  },
+  "interpretation": {
+    "PASS": "the E0/EU/EV informational contrast is behaviorally instantiated; this does not support B or H1",
+    "UNRESOLVED": "signal ordering is directionally present but not cleanly separated; B remains unresolved and B1 does not run",
+    "FAIL_ORDER": "the intended signal ordering is not behaviorally instantiated; repair the manipulation interface only; C gains no authority"
+  },
+  "authority_boundary": [
+    "B0-v2 PASS authorizes design of B1 but is not evidence for B, C, or H1.",
+    "B0-v2 UNRESOLVED or FAIL_ORDER blocks B1 under this contract.",
+    "The B0-v2 plumbing sample is not part of the fresh manipulation cohort and has no manipulation-inference authority."
+  ]
+}
