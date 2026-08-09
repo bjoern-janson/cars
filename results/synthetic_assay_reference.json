@@ -58,12 +58,23 @@
       "expectation": "Strong shared baseline structure should not manufacture systematic moderation when treatment is genuinely randomized."
     },
     {
+      "name": "broken_randomization_confounding",
+      "status": "survived",
+      "metrics": {
+        "delta_unadjusted": 17.512398996746146,
+        "delta_baseline_adjusted": 0.022573138595795683,
+        "treated_fraction": 0.50015,
+        "corr_I_baseline": 0.6573735759509657
+      },
+      "expectation": "When treatment assignment depends on latent baseline structure, a constant true effect can produce very large false moderation."
+    },
+    {
       "name": "generic_plasticity",
       "status": "survived",
       "metrics": {
-        "delta_plus": 0.6163603268819684,
-        "delta_minus": 0.6137768764909168,
-        "delta_plus_minus_delta_minus": 0.002583450391051567
+        "delta_plus": 0.640250614754667,
+        "delta_minus": 0.6805720106415815,
+        "delta_plus_minus_delta_minus": -0.04032139588691441
       },
       "expectation": "Primary responsiveness can be positive while discrimination is approximately zero."
     },
@@ -71,15 +82,37 @@
       "name": "discriminative_responsiveness",
       "status": "survived",
       "metrics": {
-        "delta_plus": 0.640250614754667,
-        "delta_minus": -0.5194279893583866,
-        "delta_plus_minus_delta_minus": 1.1596786041130538
+        "delta_plus": 0.591542954108856,
+        "delta_minus": -0.5807921010184701,
+        "delta_plus_minus_delta_minus": 1.1723350551273262
       },
       "expectation": "A discriminative world should separate warranted from misleading intervention responsiveness."
+    },
+    {
+      "name": "high_correlation_causal_disagreement",
+      "status": "survived",
+      "metrics": {
+        "corr_VA_VB": 0.9995961377841787,
+        "delta_A": 0.6098023396815171,
+        "delta_B": -0.5627384605029983,
+        "residual_delta_IE": -2.3921454795477866
+      },
+      "expectation": "Very high ordinary correlation must not be treated as evidence that two instruments preserve the same heterogeneous causal contrast."
+    },
+    {
+      "name": "nonlinear_I_reparameterization",
+      "status": "survived",
+      "metrics": {
+        "tau_high_minus_low_I": 0.5767726203677519,
+        "tau_high_minus_low_Iprime": 0.5767726203677519,
+        "delta_I": 0.7688120927053074,
+        "delta_Iprime": 0.014003645698159043
+      },
+      "expectation": "Strictly increasing reparameterization of I preserves the primitive ordering while the numerical linear interaction coefficient can change substantially."
     }
   ],
   "summary": {
-    "total": 7,
+    "total": 10,
     "failed": 0,
     "failed_attacks": []
   }
