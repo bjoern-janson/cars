@@ -1,6 +1,6 @@
 {
-  "schema_version": 4,
-  "status": "refrozen after plumbing answer-token constraint repair",
+  "schema_version": 5,
+  "status": "refrozen after plumbing RNG-seed audit",
   "scientific_scope": "Qwen3-4B under this exact configuration on sampled MMLU-Pro task-prestate blocks",
   "model": {
     "repo_id": "Qwen/Qwen3-4B",
@@ -16,7 +16,10 @@
     "top_k": 20,
     "parse_retries": 2,
     "pre_max_new_tokens": 48,
-    "post_max_new_tokens": 24
+    "post_max_new_tokens": 24,
+    "pre_seed_label": "pre::{task_id}",
+    "post_seed_label": "post::{branch_id}",
+    "post_seed_arm_independent": true
   },
   "interface": {
     "version": "pilot0-local-prefill-constrained-choice-v1",
@@ -37,5 +40,5 @@
   },
   "outcome": "V = 1 if the final option letter matches the objective MMLU-Pro key, else 0",
   "primary": "Delta_tau = tau_high - tau_low",
-  "invariant": "The same model revision, backend, thinking mode, interface prefill/choice constraint, temperature, top_p, top_k, and seed policy must be used for pre, E0, and E+. Only the experimental feedback text may differ between post-treatment arms."
+  "invariant": "The same model revision, backend, thinking mode, interface prefill/choice constraint, temperature, top_p, top_k, and branch-fixed RNG stream must be used for pre, E0, and E+. Only the experimental feedback text may differ between post-treatment arms."
 }
