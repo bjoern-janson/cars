@@ -28,6 +28,10 @@ The current empirical assay is:
 
 [`docs/ASSAY_SPEC.md`](docs/ASSAY_SPEC.md)
 
+The first frozen empirical implementation is:
+
+[`experiments/PILOT0_MMLU_PRO.md`](experiments/PILOT0_MMLU_PRO.md)
+
 ## Motivating conjecture
 
 The research trajectory began from:
@@ -151,7 +155,7 @@ See [`docs/MEASUREMENT_BOUNDARY.md`](docs/MEASUREMENT_BOUNDARY.md).
 
 ## Current research posture: break the assay
 
-The basic randomized interaction estimator is not the interesting frontier. The current priority is adversarial assay validation.
+The basic randomized interaction estimator is not the interesting frontier. The current priority is adversarial assay validation followed by the first narrow randomized LLM run.
 
 ```text
 claim
@@ -171,9 +175,69 @@ High-information attacks include:
 - independently constructed interval-equivalent outcome instruments;
 - high-correlation instruments that disagree specifically on `I×E` structure;
 - nonlinear reparameterization of `I`;
-- sensitivity / low-power null-result attacks.
+- sensitivity / low-power null-result attacks;
+- threshold and rare-event mixture worlds that test ordering without assuming smoothness.
 
-See [`docs/RED_TEAM_PROTOCOL.md`](docs/RED_TEAM_PROTOCOL.md).
+See [`docs/RED_TEAM_PROTOCOL.md`](docs/RED_TEAM_PROTOCOL.md) and [`docs/JUMP_WORLD_STRESS_TESTS.md`](docs/JUMP_WORLD_STRESS_TESTS.md).
+
+## First empirical implementation: Pilot 0
+
+Pilot 0 deliberately uses a literal measurement rather than calling it intelligence:
+
+```text
+I = pre-treatment error suspicion
+I_i = 1 - P_i(correct)
+```
+
+The design uses one fixed model and MMLU-Pro multiple-choice items.
+
+For every sampled item:
+
+```text
+initial answer + P(correct)
+        ↓
+freeze pre-treatment state
+        ↓
+retain only objectively wrong initial answers
+        ↓
+create continuation branches
+        ↓
+randomize within task:
+E0 vs E+
+        ↓
+objective final-answer correctness V
+```
+
+Treatment:
+
+```text
+E0:
+Review your previous answer and revise if necessary.
+
+E+:
+Verified feedback: your previous answer is incorrect.
+Review your previous answer and revise if necessary.
+```
+
+Primary statistic:
+
+```text
+Δτ = τ_high - τ_low
+```
+
+where low/high refer to prespecified strata of pre-treatment error suspicion.
+
+The first 20–30-item run is **plumbing only**:
+
+```text
+plumbing pilot
+↛
+hypothesis evidence
+```
+
+If plumbing changes the prompt, parser, model/configuration, treatment, measurement, or scoring logic, freeze the revised implementation before using fresh items for the hypothesis run.
+
+See [`experiments/PILOT0_MMLU_PRO.md`](experiments/PILOT0_MMLU_PRO.md) and [`experiments/README.md`](experiments/README.md).
 
 ## CARS control protocol
 
@@ -347,7 +411,7 @@ Catalyst-decoding and recursive-architecture scoring files are retained for repr
 
 ## Current evidence status
 
-This repository currently establishes a **research architecture and falsification protocol**, not an empirical positive result.
+This repository currently establishes a **research architecture, falsification protocol, and executable empirical workflow**, not an empirical positive result.
 
 It does not establish that:
 
@@ -355,6 +419,7 @@ It does not establish that:
 - `I` is intelligence;
 - `I ∝ C_improve` is a law;
 - higher `I` predicts larger causal response in real systems;
+- pre-treatment error suspicion predicts larger corrective benefit;
 - the moderation relation is linear;
 - the result transports across interventions, domains, horizons, populations, or measurements;
 - arbitrary monotone outcome transformations preserve the additive CATE;
@@ -378,6 +443,7 @@ docs/
   ASSAY_SPEC.md
   MEASUREMENT_BOUNDARY.md
   RED_TEAM_PROTOCOL.md
+  JUMP_WORLD_STRESS_TESTS.md
   RESEARCH_CONTRACT.md
   DESIGN_RATIONALE.md
   CLAIMS_AND_NONCLAIMS.md
@@ -388,6 +454,11 @@ docs/
   THREAT_MODEL.md
   INDEPENDENT_CASE_AUTHOR_BRIEF.md
   PROVENANCE.md
+
+experiments/
+  README.md
+  LLM_ASSAY_PROTOCOL.md
+  PILOT0_MMLU_PRO.md
 
 benchmarks/
   seed_cases.jsonl
@@ -405,6 +476,12 @@ notes/
 
 scripts/
   validate_cases.py
+  run_assay_red_team.py
+  run_jump_worlds.py
+  run_pilot0_openai.py
+  prepare_pilot0_units.py
+  randomize_llm_assay.py
+  analyze_llm_assay.py
 
 examples/
   assay_evaluation_record.json
@@ -414,6 +491,9 @@ examples/
 
 results/
   README.md
+  SYNTHETIC_ASSAY_REFERENCE.md
+  synthetic_assay_reference.json
+  jump_worlds_reference.json
 ```
 
 ## Notebook philosophy
