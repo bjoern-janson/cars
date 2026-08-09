@@ -355,7 +355,9 @@ def run_post(args: argparse.Namespace, tokenizer, model) -> int:
     for index, row in enumerate(rows, 1):
         options = [str(x) for x in row["options"]]
         valid_letters = letters_for(options)
-        seed = stable_seed(args.seed, f"post::{row['id']}::{row['arm']}")
+        # The branch id fixes the RNG stream before treatment assignment. The arm
+        # may change only the experimental feedback text, not the sampling seed.
+        seed = stable_seed(args.seed, f"post::{row['id']}")
         prompt = post_prompt(row)
         match, raw_text, used_seed, input_tokens, output_tokens = generate_with_parse(
             tokenizer,
