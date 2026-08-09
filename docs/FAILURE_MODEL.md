@@ -1,18 +1,104 @@
 # CARS Failure Model
 
-This document defines failure classes used for evaluation design. They are diagnostic categories, not an ontology of all reasoning errors.
+This document defines diagnostic failure classes used by the CARS control protocol and the current empirical assay. They are not an ontology of all reasoning or measurement errors.
 
-The current architecture treats even the diagnostic representation as corrigible. A residual representation
+The governing rule is:
 
 ```text
-ρ_t = Φ_t(E_t)
+failure does not identify its cause
 ```
 
-is therefore a hypothesis about the encountered limitation, not the limitation itself.
+When a contradiction appears, localize the shallowest sufficient failure before revising higher-level structure.
+
+# Assay failure layers
+
+## 1. Causal-identification failure
+
+The intervention contrast does not identify the intended causal effect because treatment assignment, positivity, attrition, interference, missingness, or other design assumptions fail.
+
+**Corrective pressure:** repair the intervention design or downgrade the causal claim before interpreting heterogeneity.
+
+## 2. Measurement failure
+
+The measured `I` or `V` is noisy, saturated, unreliable, or generated through an invalid measurement procedure.
+
+Examples include:
+
+- ceiling/floor compression;
+- differential measurement error;
+- treatment-dependent measurement distortion;
+- insufficient reliability;
+- incompatible outcome instruments.
+
+**Corrective pressure:** improve or revalidate the measurement procedure; do not immediately revise the substantive hypothesis.
+
+## 3. Measurement-identity failure
+
+A transformation or alternate instrument changes the scientific object rather than merely reexpressing it.
+
+For the current additive CATE:
+
+```text
+V' = aV+b, a>0
+```
+
+is licensed to preserve additive-effect ordering, while a general nonlinear monotone `g(V)` is not.
+
+**Corrective pressure:** determine whether the compared measurements belong to the same admissible transformation class before calling the disagreement a contradiction.
+
+## 4. Shape-representation failure
+
+The scientific proposition may be correct while the chosen representation is wrong.
+
+Example:
+
+```text
+τ(i)
+```
+
+is monotone increasing but nonlinear, while the analysis assumes:
+
+```text
+τ(i) = τ₀ + δi.
+```
+
+A near-zero linear `δ` can therefore be a bad shape representation rather than a failed monotonicity claim.
+
+**Corrective pressure:** test the ordering or shape more directly.
+
+## 5. Estimator failure
+
+The chosen estimator is biased, unstable, misspecified, underpowered, or unable to recover the intended object under known-truth controls.
+
+**Corrective pressure:** validate the estimator in synthetic and negative-control worlds before revising the scientific proposition.
+
+## 6. Implementation failure
+
+The code, data pipeline, randomization, scoring, calibration, or analysis differs from the declared protocol.
+
+**Corrective pressure:** repair the implementation and rerun.
+
+## 7. Scientific-proposition failure
+
+After measurement identity, causal identification, shape representation, estimator adequacy, and implementation have survived scrutiny, the data show that:
+
+```text
+i₁ > i₀
+```
+
+does not imply:
+
+```text
+τ(i₁) > τ(i₀).
+```
+
+This is the level at which the primitive assay hypothesis takes a genuine empirical hit.
+
+# CARS reasoning failure classes
 
 ## Observation / measurement failure
 
-The available evidence is noisy, corrupted, incomplete, mismeasured, or generated through an unreliable observation process.
+Available evidence is noisy, corrupted, incomplete, mismeasured, or produced by an unreliable observation process.
 
 **Corrective pressure:** improve measurement, inspect source quality, seek independent observations.
 
@@ -20,113 +106,141 @@ The available evidence is noisy, corrupted, incomplete, mismeasured, or generate
 
 The evidence is adequate but the conclusion does not follow, or relevant alternatives were ignored.
 
-**Corrective pressure:** revise inference while preserving the observation layer.
+**Corrective pressure:** revise inference while preserving unaffected observation/model structure.
 
 ## Model failure
 
-The current explanatory or predictive model is wrong or incomplete even though the relevant distinction is available to the system.
+The current explanatory or predictive model is wrong or incomplete even though the task-relevant distinction is available.
 
-**Corrective pressure:** revise model structure or parameters within the current representational vocabulary.
+**Corrective pressure:** revise within the current representational vocabulary before escalating.
 
 ## Representation / interface failure
 
-The current interface or vocabulary collapses a task-relevant distinction, making the needed correction unavailable within the existing representation.
+The current interface or vocabulary collapses a task-relevant distinction, making the needed correction unavailable inside the current representation.
 
-**Corrective pressure:** investigate representation adequacy; only then generate or select candidate distinctions.
+**Corrective pressure:** investigate representation adequacy only after plausible within-representation explanations have been discriminated.
 
-A representation can be detailed yet non-identifying. More resolution is not automatically the corrective move; a different partition may be required.
-
-## Residual-mapping failure
-
-The procedure that maps evidence into the current residual representation is itself inadequate:
-
-```text
-Φ_t(E_t) = ρ_t,
-ρ_t ≠ ρ*
-```
-
-This can cause the system to correct the wrong object, merge distinct failure classes, or split one mechanism into misleading categories.
-
-**Corrective pressure:** challenge the residual mapping using alternate partitions, discriminating interventions, or withheld ground truth. Do not treat the current diagnostic partition as self-validating.
-
-## Candidate-generation failure
-
-The limitation is adequately represented, but the candidate generator fails to propose a viable discriminating revision or proposes only variants that share the same blind spot.
-
-**Corrective pressure:** revise candidate generation or expand the candidate space without granting generated alternatives automatic authority.
-
-## Validation-procedure failure
-
-The validation procedure is incapable of discriminating viable from non-viable successors, or is contaminated by information that influenced candidate generation or selection.
-
-**Corrective pressure:** revise validation design and revalidate using evidence insulated from the selection-information boundary.
+A representation can be highly detailed while remaining non-identifying.
 
 ## Mechanism uncertainty
 
-The result is observed, but the causal or generative mechanism is not identified.
+A result is observed, but the causal or generative mechanism is not identified.
 
-**Corrective pressure:** do not convert result validity into causal authority.
+**Corrective pressure:** do not convert result validity into causal or mechanistic authority.
 
 ## Missing-information state
 
 Available evidence is insufficient to choose among plausible explanations.
 
-**Corrective pressure:** remain unresolved or seek discriminating evidence.
+**Corrective pressure:** remain unresolved or seek a discriminating observation/intervention.
 
 ## Decision failure
 
-Beliefs may be adequate, but action selection ignores consequences, downside, reversibility, or information value.
+Beliefs may be adequately calibrated while action selection ignores consequences, reversibility, downside, opportunity cost, or information value.
 
 **Corrective pressure:** separate epistemic confidence from decision policy.
 
-## Correction-procedure failure
+# Historical recursive-architecture diagnostics
 
-The current process for detecting, localizing, generating, testing, or retaining corrections is itself the limiting factor.
+Earlier CARS work introduced additional diagnostic loci:
 
-**Corrective pressure:** treat the correction procedure as a candidate failure locus. Any successor procedure must still satisfy departure/adoption separation and independent validation.
+- residual-mapping failure;
+- candidate-generation failure;
+- validation-procedure failure;
+- correction-procedure failure.
 
-## Cross-cutting pathologies
+These remain useful mechanism hypotheses and historical architecture categories. They are no longer required in the minimal assay.
 
-### Premature retention
+If reactivated, preserve the old discipline:
 
-The system preserves an incumbent despite sufficient contrary evidence.
+```text
+ρ_t = Φ_t(E_t)
+```
 
-### Premature replacement
+is a provisional residual representation, not hidden truth.
 
-The system treats failure of an incumbent as validation of a successor.
+Likewise:
 
-### Over-escalation
+```text
+A_leave ↛ A_adopt
+```
 
-A shallow error triggers deep model, representation, residual-mapping, or procedural change.
+applies to proposed replacements at every layer.
 
-### Under-escalation
+# Cross-cutting pathologies
 
-A representation-limited or procedure-limited problem is repeatedly patched inside an inadequate correction surface.
+## Prognostic/predictive collapse
 
-### Authority laundering
+A variable that predicts baseline outcome is treated as though it necessarily predicts treatment-effect heterogeneity.
+
+## Headroom artifact
+
+Differential observable range is interpreted as intrinsic differential responsiveness.
+
+## Estimand drift
+
+A changed measurement or transformation is described as the same causal object without justification.
+
+## Parametric capture
+
+A convenient coefficient becomes the scientific object even though the proposition is more general.
+
+## Authority laundering
 
 Evidence for one property is silently reused as evidence for another.
 
-### Common-mode validation
+Examples:
 
-Repeated confirmation is treated as independent despite shared assumptions, measurement channels, validator design, or candidate-selection influence.
+```text
+high correlation
+↛
+measurement equivalence
+```
 
-### Global-average dilution
+```text
+positive δ
+↛
+I is intelligence
+```
 
-A successor appears improved in aggregate while remaining worse on the residual that triggered revision.
+```text
+responsiveness
+↛
+discriminative correction capacity
+```
 
-### Narrative-only correction
+## Premature retention
 
-The explanation changes but downstream reasoning or behavior does not.
+The system preserves an incumbent despite sufficient contrary evidence.
 
-### Metric gaming
+## Premature replacement
 
-The system increases the measured correction-capacity score through verbosity, intervention frequency, uncertainty signaling, abstention, or escalation rather than better correction.
+The system treats failure of an incumbent as validation of a successor.
 
-### Lineage overfitting
+## Over-escalation
 
-Repeated revisions adapt to previously exposed validation environments, causing a supposedly held-out benchmark to become part of the correction lineage's effective training history.
+A lower-level measurement, estimator, or inference error triggers unnecessary theory/representation revision.
 
-## Evaluation principle
+## Under-escalation
 
-Failure localization itself is part of what must be tested. A benchmark should not reward the model merely for naming one of these categories. The relevant question is whether its chosen representation supports discriminating interventions and better held-out correction.
+Repeated failures are patched at a shallow layer despite evidence that the scientific object or representation itself is inadequate.
+
+## Common-mode validation
+
+Repeated confirmation is treated as independent despite shared measurement channels, assumptions, benchmark generators, or selection information.
+
+## Narrative-only correction
+
+The explanation changes while future reasoning, action, or measured behavior does not.
+
+## Benchmark lineage overfitting
+
+Repeated revisions adapt to previously exposed evaluation cases, which are then incorrectly described as fresh holdout evidence.
+
+# Evaluation principle
+
+Failure localization is itself testable.
+
+The benchmark should not reward the model merely for naming a category. The relevant question is whether localization changes what is measured, tested, revised, or left unresolved in a way that survives independent follow-up.
+
+A useful red-team architecture does not protect the scientific proposition from contradiction. It specifies what lower-level failures must be ruled out before a contradiction reaches it.
