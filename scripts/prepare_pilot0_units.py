@@ -51,6 +51,7 @@ def main() -> int:
             continue
         eligible += 1
         task_id = str(row["id"])
+        audit = row.get("pre_state_audit") or {}
         for rep in range(args.replicates):
             branch = {
                 "id": f"{task_id}::r{rep + 1}",
@@ -71,6 +72,11 @@ def main() -> int:
                 "pre_response_model": row.get("response_model"),
                 "pre_model_requested": row.get("model_requested"),
                 "pre_reasoning_effort": row.get("reasoning_effort"),
+                "pre_backend": row.get("backend", audit.get("backend")),
+                "pre_generation_seed": row.get("generation_seed", audit.get("generation_seed")),
+                "pre_temperature": row.get("temperature", audit.get("temperature")),
+                "pre_top_p": row.get("top_p", audit.get("top_p")),
+                "pre_top_k": row.get("top_k", audit.get("top_k")),
             }
             branches.append(branch)
 
