@@ -316,6 +316,7 @@ def pairwise_summary(records: Sequence[dict], config: dict, stratum: str) -> dic
     base_seed = int(config["analysis"]["bootstrap_seed"])
     n_boot = int(config["analysis"]["bootstrap"])
     min_n = int(config["analysis"]["minimum_complete_blocks_for_pair"])
+    min_valid = int(config["analysis"]["minimum_valid_pairwise_bootstraps"])
     weak = float(config["analysis"]["weak_coupling_margin_abs_rho"])
     out: dict[str, dict] = {}
     for x_field, y_field in itertools.combinations(DIMENSIONS, 2):
@@ -344,8 +345,20 @@ def pairwise_summary(records: Sequence[dict], config: dict, stratum: str) -> dic
             seed=stable_seed(base_seed, f"pair::{stratum}::{key}"),
             n_boot=n_boot,
         )
+        if rho is None or int(ci["valid_bootstraps"]) < min_valid:
+            out[key] = {
+                "dimensions": [x_field, y_field],
+                "n_complete_blocks": n,
+                "adjudicable": False,
+                "spearman_rho": rho,
+                "bootstrap_95": ci,
+                "directional_flag": None,
+                "weak_coupling_flag": False,
+                "reason": f"requires at least {min_valid} valid non-degenerate bootstraps",
+            }
+            continue
         directional = None
-        if rho is not None and ci["low"] is not None and ci["high"] is not None:
+        if ci["low"] is not None and ci["high"] is not None:
             if float(ci["low"]) > 0.0:
                 directional = "positive"
             elif float(ci["high"]) < 0.0:
