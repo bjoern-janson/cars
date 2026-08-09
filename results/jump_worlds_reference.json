@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "seed": 20260809,
+  "n_per_world": 20000,
+  "evidence_status": "synthetic development evidence only",
+  "results": [
+    {
+      "name": "threshold_jump_world",
+      "status": "survived",
+      "truth": {
+        "tau_below_threshold": 0.0,
+        "tau_at_or_above_threshold": 8.0,
+        "threshold": 0.65
+      },
+      "metrics": {
+        "tau_low": 0.02799660799481174,
+        "tau_high": 8.029760357436817,
+        "tau_high_minus_low": 8.001763749442006,
+        "linear_gamma": -2.6231176729650265,
+        "linear_delta": 10.89773722916176,
+        "linear_tau_rmse_against_true_step": 2.1395455349860684,
+        "linear_tau_max_abs_error": 4.3514341536984995
+      },
+      "expectation": "The order-based assay should detect the high-vs-low response difference, while the linear interaction smooths a discontinuous treatment-response shape."
+    },
+    {
+      "name": "rare_jump_mixture_world",
+      "status": "survived",
+      "truth": {
+        "tau_i": "P(jump|i) * gain_if_jump",
+        "jump_probability": "0.02 + 0.10*i",
+        "gain_if_jump": 30.0
+      },
+      "metrics": {
+        "tau_low": 1.355362528895629,
+        "tau_high": 3.318671260914577,
+        "tau_high_minus_low": 1.9633087320189482,
+        "linear_gamma": 0.7937357476572764,
+        "linear_delta": 2.714717703514185,
+        "treated_jump_rate_low": 0.04168352893565358,
+        "treated_jump_rate_high": 0.11093688749509996,
+        "gain_if_jump": 30.0
+      },
+      "expectation": "Positive mean moderation can arise because higher I changes the probability of a rare large jump even when jump magnitude is fixed. Mean CATE therefore does not identify probability-of-jump and value-of-jump separately."
+    }
+  ],
+  "summary": {
+    "total": 2,
+    "failed": 0,
+    "failed_worlds": []
+  }
+}
