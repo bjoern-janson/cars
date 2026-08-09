@@ -2,111 +2,190 @@
 
 ## Purpose
 
-Create tasks that test whether a reasoning system responds appropriately to evidence, correction, ambiguity, competing explanations, and limits in its own problem representation.
+Create tasks and measurement conditions that test the CARS research program without reproducing its vocabulary or design assumptions.
 
-This brief intentionally avoids reproducing CARS prompt or catalyst vocabulary. Prospective case authors should ideally work from this document **without inspecting the intervention prompt, frozen catalyst, formal architecture, existing seed cases, or prior evaluation results**.
+There are now two primary authoring surfaces:
 
-The goal is to produce cases that can discriminate reasoning behavior rather than reward recognition of the framework.
+```text
+1. prompt-level CARS reasoning cases
+2. heterogeneous causal-responsiveness assay cases
+```
 
-## Requested prompt-level task families
+Historical catalyst and recursive-architecture cases remain optional and separate.
+
+Prospective authors should ideally work from this brief without inspecting the intervention prompt, current assay conclusions, seed cases, or prior evaluation results unless the study explicitly requires otherwise.
+
+The goal is to create discriminating evidence, not framework-recognition tasks.
+
+# A. Prompt-level reasoning cases
 
 Create difficult but adjudicable cases in which a strong reasoner must do one or more of the following:
 
-- distinguish different possible sources of an error;
+- distinguish possible sources of an error;
 - update after genuine disconfirming evidence;
 - resist updating after irrelevant or weak criticism;
-- distinguish many dependent observations from genuinely independent evidence;
-- decide whether a local fix is sufficient or a deeper change is necessary;
+- distinguish dependent observations from independent evidence;
+- decide whether local repair is sufficient or deeper change is warranted;
 - reject one explanation without automatically accepting another;
-- remain uncertain when evidence is insufficient;
-- reach a determinate conclusion when evidence is sufficient;
-- make a practical decision while important beliefs remain uncertain;
-- carry a valid correction into a later, structurally different problem.
+- remain unresolved when evidence is insufficient;
+- resolve when evidence is sufficient;
+- make a decision while important beliefs remain uncertain;
+- carry a valid correction into a structurally different follow-up problem.
 
-## Requested architecture-level case families
+Do not use CARS terminology in the model-facing prompt.
 
-Without naming the hidden failure type in the task, create cases where the correct response differs across matched worlds. Useful structures include:
+# B. Causal-responsiveness assay cases
 
-- an ordinary local error where deeper redesign would be unnecessary;
-- two hidden situations that look identical under the information initially available but require different responses once a missing distinction is found;
-- a mixed population where treating all failures as one class leads to the wrong intervention;
-- a case where the current way of categorizing the failure is itself misleading;
-- a case where the diagnosis is adequate but all proposed solutions share the same blind spot;
-- a case where a proposed solution looks successful under a convenient test but fails under an independently designed check;
-- a case where the testing procedure itself has been chosen after seeing the proposed solution and therefore should not count as independent confirmation;
-- a condition present during every successful correction that is nevertheless incidental;
-- a historical implementation that can be replaced while the relevant function survives;
-- a case where the problem lies in the correction procedure rather than only in the object being corrected;
-- a matched negative-control case where no deeper revision is warranted.
+The assay tests:
 
-The author should know the hidden structure; the model under test should not receive the answer taxonomy.
+```text
+τ(i)
+=
+E[V(e₁)-V(e₀) | I=i]
+```
 
-## Sequential / transfer cases
+and the ordering proposition:
 
-Where possible, include follow-up worlds that test whether a valid correction transfers without replaying the original explanation.
+```text
+i₁ > i₀
+⇒
+τ(i₁) > τ(i₀).
+```
 
-For repeated-correction studies, create fresh case families whose hidden structure is not derived from previously exposed validation items.
+Independent case authors can contribute by constructing experimental worlds where the true treatment-effect structure is known or adjudicable.
 
-A useful sequence can include:
+## Requested positive/negative worlds
 
-1. discovery/development cases;
-2. fresh validation cases;
-3. later audit cases held back from the revision lineage.
+Include cases where:
 
-Do not reuse an exposed case and continue describing it as held out.
+- the treatment effect is genuinely increasing with `I`;
+- the treatment effect is constant across `I`;
+- the treatment effect decreases with `I`;
+- the relationship is non-monotonic;
+- `I` strongly predicts baseline outcome but not treatment response;
+- `I` weakly predicts baseline outcome but strongly predicts treatment response.
 
-## Case requirements
+The benchmark should not be dominated by worlds that confirm the target ordering.
 
-Each case should include:
+## Requested measurement attacks
 
-1. a self-contained task prompt;
-2. enough information for meaningful adjudication;
-3. hidden author-side ground truth or adjudication logic;
-4. a description of what a strong response must do;
-5. at least one tempting but incorrect response pattern;
-6. when possible, a follow-up task testing whether the correction transfers;
-7. disclosure of which CARS materials, if any, the author saw before construction.
+Create paired worlds or instruments testing:
 
-For architecture-level cases, also record:
+- ceiling/floor saturation;
+- different available headroom across `I`;
+- reliable versus noisy `I` measurement;
+- reliable versus noisy `V` measurement;
+- positive affine outcome transformations;
+- nonlinear monotone outcome transformations;
+- independently constructed outcome instruments that are approximately interval-equivalent;
+- instruments with high ordinary correlation but different treatment/moderator-specific residual structure.
 
-- whether local repair or deeper revision is actually required;
-- what distinction or intervention discriminates the hidden alternatives;
-- whether the task intentionally contains an incidental dependency, substitutable implementation, validation contamination, or other confound;
-- what would count as false escalation.
+Record which transformations are intended to preserve the same scientific object and which deliberately change the additive estimand.
 
-## Avoid
+## Requested causal-identification attacks
 
-- specialized CARS terminology in model-facing prompts;
-- telling the model which abstraction or failure class is missing;
-- writing cases whose answer is obvious from the wording;
+Include matched designs where:
+
+- treatment is genuinely randomized;
+- treatment assignment is deliberately confounded;
+- positivity is restricted in part of the `I` support;
+- attrition depends on treatment and/or `I`;
+- intervention delivery differs across groups despite nominal randomization.
+
+The model/evaluator should be able to distinguish a failed causal design from a failed moderation hypothesis.
+
+## Requested specificity worlds
+
+Where the study targets correction rather than generic intervention responsiveness, construct intervention status independently of the tested system:
+
+```text
+E⁺ = warranted correction
+E⁰ = neutral / irrelevant
+E⁻ = misleading
+```
+
+Include:
+
+- generic-plasticity worlds where higher `I` amplifies all interventions;
+- discriminative worlds where response tracks the warranted status of the intervention;
+- circular worlds where intervention status is defined using the tested system's own outputs, as a negative control.
+
+# C. Measurement construction
+
+If authoring an outcome instrument, document:
+
+- what target quantity it intends to measure;
+- why additive differences are intended to be meaningful;
+- admissible transformations;
+- known ceiling/floor behavior;
+- reliability/noise model;
+- whether measurement behavior depends on treatment or moderator level.
+
+If two instruments are intended to be interval-equivalent, provide calibration data or a calibration procedure independent of the treatment-effect test.
+
+Do not treat high correlation as sufficient evidence of interval equivalence.
+
+# D. Hidden truth / adjudication
+
+Each assay case should record author-side truth or adjudication logic for:
+
+- treatment assignment mechanism;
+- true or intended treatment-effect pattern;
+- baseline/outcome relationship;
+- moderator/outcome relationship;
+- measurement transformation class;
+- whether a changed measurement defines the same or a different causal estimand;
+- expected failure mode if the assay is fooled.
+
+# E. Sequential / transfer cases
+
+For later transport work, create fresh task families whose hidden structure is not derived from previously exposed validation items.
+
+Useful sequence:
+
+```text
+development
+→ fresh validation
+→ later independent audit
+```
+
+Do not reuse exposed cases and continue describing them as held out.
+
+# F. Avoid
+
+- CARS terminology in model-facing prompts;
+- naming the missing abstraction or failure class;
+- constructing every case so the target hypothesis is true;
 - rewarding verbosity or cautious tone by itself;
-- requiring hidden domain knowledge unless sources are supplied;
-- making every correct answer “remain uncertain”;
-- making every failure require a deep conceptual change;
-- making every difficult case a representation failure;
-- constructing validation checks after seeing the model's preferred candidate and then calling them independent;
-- using the catalyst's symbol names or execution chain as task hints.
+- using a nonlinear outcome transform and calling it an invariance failure without establishing that the same additive estimand should be preserved;
+- defining `E⁺/E⁻` using the tested system's own reaction;
+- fitting measurement calibration after seeing treatment-effect results and calling it independent;
+- treating a high `I×E` coefficient as proof that `I` is causal;
+- treating null results as precise falsification when the design lacks sensitivity.
 
-## Catalyst blind-decoding independence
-
-Catalyst decoding is a different experiment from case authorship. If you are asked to evaluate the catalyst itself, do not inspect its legend, CARS provenance, prior model parses, or expected decoding categories before producing the blind interpretation.
-
-If you have already seen those materials, disclose that fact rather than treating the interpretation as blind.
-
-## Independence disclosure
+# G. Independence disclosure
 
 Please disclose whether you inspected:
 
-- the CARS prompt;
-- the frozen catalyst;
-- the formal recursive architecture;
-- existing CARS benchmark cases;
-- prior CARS evaluation results;
-- related research repositories;
-- prior model interpretations of the catalyst or cases.
+- the CARS control protocol;
+- the minimal assay specification;
+- the measurement-boundary document;
+- the red-team protocol;
+- existing benchmark cases;
+- prior assay results;
+- historical catalyst/recursive-architecture material;
+- related research repositories.
 
-This disclosure does not automatically invalidate the contribution, but it changes what kind of independence the cases or interpretations can support.
+This does not automatically invalidate the contribution, but it changes the independence claim it can support.
 
-## Output principle
+# H. Output principle
 
-The strongest independent case is not one that uses CARS language correctly. It is one where the hidden structure makes different correction strategies produce discriminably different outcomes.
+The strongest independent case is one where competing scientific explanations produce discriminably different outcomes and where the benchmark can identify *which layer failed*.
+
+For the current assay, the highest-value cases are those that can make:
+
+```text
+τ(i₁) > τ(i₀)
+```
+
+appear true when the target treatment-effect ordering is actually flat, opposite, or undefined under the claimed measurement equivalence.
