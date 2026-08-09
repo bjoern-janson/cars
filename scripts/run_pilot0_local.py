@@ -26,6 +26,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 LETTERS = "ABCDEFGHIJ"
 PRE_RE = re.compile(r"ANSWER\s*:\s*([A-J])\b.*?P_CORRECT\s*:\s*(0(?:\.\d+)?|1(?:\.0+)?)", re.I | re.S)
 POST_RE = re.compile(r"ANSWER\s*:\s*([A-J])\b", re.I)
+ASSISTANT_PREFILL = "ANSWER: "
+INTERFACE_VERSION = "pilot0-local-prefill-v1"
 
 
 def read_jsonl(path: Path) -> list[dict]:
@@ -91,7 +93,7 @@ def load_model(model_name: str):
     dtype = torch.float16 if torch.cuda.is_available() else torch.float32
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
-        torch_dtype=dtype,
+        dtype=dtype,
         device_map="auto",
     )
     model.eval()
@@ -108,13 +110,24 @@ def generate(
     temperature: float,
     top_p: float,
     top_k: int,
+    assistant_prefill: str,
 ) -> tuple[str, int, int]:
+    """Generate by continuing a fixed assistant-response prefill.
+
+    Hugging Face chat templates support ``continue_final_message=True`` for
+    prefilling a known response prefix. Pilot 0 uses this only to make the
+    machine-readable interface start with ``ANSWER: ``; it does not constrain
+    the answer letter, confidence value, treatment, or outcome.
+    """
     set_seed(seed)
-    messages = [{"role": "user", "content": prompt}]
+    messages = [
+        {"role": "user", "content": prompt},
+        {"role": "assistant", "content": assistant_prefill},
+    ]
     text = tokenizer.apply_chat_template(
         messages,
         tokenize=False,
-        add_generation_prompt=True,
+        continue_final_message=True,
         enable_thinking=False,
     )
     inputs = tokenizer(text, return_tensors="pt").to(model.device)
@@ -130,7 +143,8 @@ def generate(
         )
     input_len = int(inputs["input_ids"].shape[-1])
     output_ids = outputs[0][input_len:]
-    decoded = tokenizer.decode(output_ids, skip_special_tokens=True).strip()
+    continuation = tokenizer.decode(output_ids, skip_special_tokens=True)
+    decoded = (assistant_prefill + continuation).strip()
     return decoded, input_len, int(output_ids.shape[-1])
 
 
@@ -146,6 +160,7 @@ def generate_with_parse(
     temperature: float,
     top_p: float,
     top_k: int,
+    assistant_prefill: str,
 ) -> tuple[re.Match[str], str, int, int, int]:
     last_text = ""
     for attempt in range(retries + 1):
@@ -159,6 +174,7 @@ def generate_with_parse(
             temperature=temperature,
             top_p=top_p,
             top_k=top_k,
+            assistant_prefill=assistant_prefill,
         )
         last_text = text
         match = parser.search(text)
@@ -228,6 +244,7 @@ def run_pre(args: argparse.Namespace, tokenizer, model) -> int:
             temperature=args.temperature,
             top_p=args.top_p,
             top_k=args.top_k,
+            assistant_prefill=ASSISTANT_PREFILL,
         )
         initial_answer = match.group(1).upper()
         p_correct = float(match.group(2))
@@ -256,6 +273,8 @@ def run_pre(args: argparse.Namespace, tokenizer, model) -> int:
             "temperature": args.temperature,
             "top_p": args.top_p,
             "top_k": args.top_k,
+            "interface_version": INTERFACE_VERSION,
+            "assistant_prefill": ASSISTANT_PREFILL,
             "pre_prompt": prompt,
             "raw_model_output": raw_text,
             "input_tokens": input_tokens,
@@ -297,6 +316,7 @@ def run_post(args: argparse.Namespace, tokenizer, model) -> int:
             temperature=args.temperature,
             top_p=args.top_p,
             top_k=args.top_k,
+            assistant_prefill=ASSISTANT_PREFILL,
         )
         final_answer = match.group(1).upper()
         if final_answer not in letters_for(options):
@@ -315,6 +335,8 @@ def run_post(args: argparse.Namespace, tokenizer, model) -> int:
                 "post_reasoning_effort": "non-thinking",
                 "post_backend": "transformers-local",
                 "post_generation_seed": used_seed,
+                "post_interface_version": INTERFACE_VERSION,
+                "post_assistant_prefill": ASSISTANT_PREFILL,
                 "post_prompt": prompt,
                 "post_raw_model_output": raw_text,
                 "post_input_tokens": input_tokens,
