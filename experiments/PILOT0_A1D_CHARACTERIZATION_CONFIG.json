@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "status": "frozen before any A1-D correction-association inspection",
   "study": "Pilot 0 A1-D: exploratory characterization of I1 versus constrained realized-choice margin S",
   "scope": "Discovery-only comparison of two frozen pre-treatment measurements against existing correction-related observables. This stage does not validate a replacement moderator, does not create A1-V, and does not update B, C, H1, or CARS.",
@@ -63,15 +63,19 @@
     "tail_tie_seed": 20260809,
     "hypothesis_test_p_values": "none",
     "degenerate_criterion_rule": "If a criterion has zero variance within a stratum, report the relationship as undefined/degenerate rather than forcing a correlation.",
-    "missingness_rule": "A block is analyzed only if its frozen S extraction and required criterion branches are both present and internally consistent. Missing blocks are counted and reported; no imputation."
+    "missingness_rule": "A block is analyzed only if its frozen S extraction and required criterion branches are both present and internally consistent. Missing blocks are counted and reported; no imputation.",
+    "directional_cell_rule": "A moderator x criterion x stratum cell is called directional only when Spearman rho is defined and its 95% whole-block bootstrap interval lies strictly above zero or strictly below zero. This is a descriptive discovery flag, not a confirmatory hypothesis test."
   },
   "candidate_decision": {
     "purpose": "Discovery triage only; determines whether S is worth freezing for fresh A1-V validation, not whether S is valid.",
-    "WORTH_VALIDATING_S": "S shows a coherent correction-related pattern in at least two distinct criteria, with the same qualitative direction in at least two independent historical strata where those criteria are non-degenerate, and the corresponding I1 pattern is descriptively weaker or absent in those same cells.",
-    "I1_REMAINS_MORE_PROMISING": "I1 meets the same convergence rule and S does not.",
-    "BOTH_POTENTIALLY_RELEVANT": "Both I1 and S meet the convergence rule without one clearly dominating descriptively.",
-    "NEITHER_SHOWS_CONVERGENCE": "Neither moderator meets the convergence rule.",
-    "UNRESOLVED": "Data availability, criterion degeneracy, or inconsistent directions prevent the convergence rule from being adjudicated.",
+    "adjudicable_rule": "The discovery comparison is adjudicable only if at least two distinct criteria are non-degenerate in at least two independent historical strata for both moderators. Otherwise return UNRESOLVED.",
+    "candidate_convergence_rule": "A moderator converges only if at least two distinct criteria each have directional cells in at least two independent historical strata, the direction is consistent across those strata within each qualifying criterion, and the qualifying criteria share the same sign. Criteria with degenerate cells do not count.",
+    "WORTH_VALIDATING_S": "S meets the candidate convergence rule and I1 does not.",
+    "I1_REMAINS_MORE_PROMISING": "I1 meets the candidate convergence rule and S does not.",
+    "BOTH_POTENTIALLY_RELEVANT": "Both I1 and S meet the candidate convergence rule.",
+    "NEITHER_SHOWS_CONVERGENCE": "The comparison is adjudicable but neither moderator meets the candidate convergence rule.",
+    "UNRESOLVED": "The adjudicable rule fails; data availability or criterion degeneracy prevents the frozen convergence rule from being evaluated.",
+    "no_magnitude_tiebreak": "Do not rank I1 and S by absolute rho magnitude, tail contrast magnitude, number of nominally favorable cells, or any post-hoc composite score.",
     "guardrail": "These labels are discovery decisions only. No label grants construct authority or licenses retrospective replacement of I1."
   },
   "forbidden_updates": [
