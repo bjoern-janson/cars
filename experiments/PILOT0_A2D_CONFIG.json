@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "status": "frozen before A2-D transition-topology calculation",
   "study": "Pilot 0 A2-D: historical transition-topology discovery",
   "scope": "Use existing Run 1, Run 2, and B1 outcome branches to characterize whether transition behavior exhibits common, separable, and/or interface-conditioned structure. No new model generation and no construct validation.",
@@ -50,12 +50,17 @@
     "pairwise_bootstrap": "whole-block bootstrap within stratum",
     "minimum_complete_blocks_for_pair": 30,
     "minimum_valid_pairwise_bootstraps": 4000,
+    "representation_edge_exclusions": [
+      "T_change__Q_N",
+      "T_change__T_instability"
+    ],
+    "representation_edge_exclusion_reason": "T_change-Q_N is conditioning-linked because Q_N exists only after revision; T_change-T_instability has deterministic support constraints under exactly two neutral replicates. Both pairs are reported descriptively but cannot drive H_T1/H_T2.",
     "directional_pair_cell": "95% bootstrap interval for Spearman rho lies strictly above or below zero, using at least 4000 valid non-degenerate bootstrap draws",
-    "replicated_directional_edge": "same directional sign for a dimension pair in at least two independent historical strata, each meeting both the minimum complete-block and minimum valid-bootstrap rules",
-    "conflicting_directional_edge": "a dimension pair has directional cells of opposite signs in different usable strata",
+    "replicated_directional_edge": "same directional sign for a structurally eligible dimension pair in at least two independent historical strata, each meeting both the minimum complete-block and minimum valid-bootstrap rules",
+    "conflicting_directional_edge": "a structurally eligible dimension pair has directional cells of opposite signs in different usable strata",
     "weak_coupling_margin_abs_rho": 0.15,
     "weak_coupling_cell": "95% bootstrap interval for Spearman rho lies entirely inside [-0.15,+0.15], using at least 4000 valid non-degenerate bootstrap draws",
-    "replicated_weak_coupling_edge": "same dimension pair satisfies the weak-coupling cell rule in at least two independent historical strata, each meeting both pairwise admissibility rules",
+    "replicated_weak_coupling_edge": "same structurally eligible dimension pair satisfies the weak-coupling cell rule in at least two independent historical strata, each meeting both pairwise admissibility rules",
     "profile_measures": [
       "T_change",
       "Q_N",
@@ -72,8 +77,8 @@
     "interface_conditioned_dimension": "legacy_agreement_dimension and B1_divergence_dimension are both true"
   },
   "representation_gates": {
-    "H_T1_COMMON_STRUCTURE_SIGNAL": "Build an undirected graph over the four primary dimensions using replicated directional edges. Signal true iff the graph is connected and there are no conflicting directional edges among usable cells.",
-    "H_T2_SEPARABLE_STRUCTURE_SIGNAL": "Signal true iff at least two distinct replicated weak-coupling edges exist and together involve at least three of the four primary dimensions. This indicates practically weak monotonic coupling, not statistical independence or a psychological multidimensional construct.",
+    "H_T1_COMMON_STRUCTURE_SIGNAL": "Build an undirected graph over the four primary dimensions using only structurally eligible replicated directional edges. Signal true iff the graph is connected and there are no conflicting eligible directional edges among usable cells.",
+    "H_T2_SEPARABLE_STRUCTURE_SIGNAL": "Using only structurally eligible pairs, signal true iff at least two distinct replicated weak-coupling edges exist and together involve at least three of the four primary dimensions. This indicates practically weak monotonic coupling, not statistical independence or a psychological multidimensional construct.",
     "H_T3_INTERFACE_CONDITIONED_SIGNAL": "Signal true iff at least two primary profile dimensions satisfy the frozen interface-conditioned-dimension rule. This is evidence of interface-family-associated profile change, not causal attribution to interface because cohorts differ.",
     "summary_state": {
       "COMMON_STRUCTURE_PLAUSIBLE": "H_T1 only",
@@ -86,6 +91,7 @@
   "interpretation_guardrails": [
     "C1 and C2 are not treated as exchangeable independent indicators; Q_N conditions on revision and C2 is otherwise derived descriptive output only.",
     "No factor analysis, PCA, latent-variable model, composite correction score, or new moderator is permitted in A2-D.",
+    "All pairwise relationships are reported, but structurally dependent pairs listed in representation_edge_exclusions cannot create H_T1/H_T2 edges.",
     "A nonsignificant association does not count as separability; only the frozen practical weak-coupling interval rule does.",
     "Rare-event or degenerate bootstrap cells with fewer than 4000 valid resamples cannot create directional or weak-coupling topology edges.",
     "A common-structure signal means a common ordering remains empirically plausible; it does not establish a unitary latent trait.",
