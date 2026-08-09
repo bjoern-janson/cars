@@ -71,6 +71,7 @@ Its only questions are:
 - Does branch generation preserve the frozen pre-treatment response?
 - Does within-task treatment assignment balance exactly as intended?
 - Are there obvious ceiling/floor, refusal, truncation, or prompt artifacts?
+- Does the pre-state provenance verifier reproduce the frozen hashes and confirm identical visible prestates across branches?
 
 Allowed action after Stage A:
 
@@ -146,6 +147,20 @@ frozen previous P(correct)
 Do not regenerate the initial answer separately for `E0` and `E+`.
 
 This prevents treatment-dependent manufacture of `I`.
+
+The complete pre-treatment state must also be persisted as an auditable record **before branch generation**, including the exact prompt, requested/returned model identifiers, configuration, response ID, raw `P(correct)`, parsed `I`, UTC freeze timestamp, and canonical SHA-256 fingerprint.
+
+See [`PILOT0_PROVENANCE.md`](PILOT0_PROVENANCE.md).
+
+Keep explicit:
+
+```text
+same frozen pre-state
++
+randomized treatment
+```
+
+must be verified from stored provenance rather than inferred from procedure alone.
 
 ## Experimental unit and blocking
 
@@ -352,6 +367,10 @@ hypothesis evidence
 synthetic recovery
 ↛
 Pilot 0 evidence
+
+provenance integrity
+↛
+scientific validity
 
 Pilot 0 randomized result
 →
