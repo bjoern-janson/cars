@@ -2,9 +2,9 @@
 """Run zero-budget Pilot 0 from one frozen generation configuration.
 
 This wrapper is the official Qwen3-4B execution entrypoint. It makes the same
-model snapshot and sampling parameters drive pre, E0, and E+. Before post runs,
-it fails closed if the frozen branch metadata shows a different pre-treatment
-generation regime.
+model snapshot, interface contract, and sampling parameters drive pre, E0, and
+E+. Before post runs, it fails closed if frozen branch metadata shows a
+different pre-treatment generation regime.
 """
 
 from __future__ import annotations
@@ -50,29 +50,74 @@ def verify_model_manifest(config: dict, model_dir: Path) -> None:
         raise ValueError("cached model revision differs from frozen config")
 
 
-def verify_post_input(config: dict, model_dir: Path, input_path: Path) -> None:
-    expected_model = str(model_dir)
+def expected_checks(config: dict, model_dir: Path, row: dict, prefix: str) -> dict[str, bool]:
     generation = config["generation"]
+    interface = config["interface"]
+    expected_model = str(model_dir)
+    return {
+        f"{prefix}model_requested": row.get(f"{prefix}model_requested") == expected_model,
+        f"{prefix}backend": row.get(f"{prefix}backend") == config["model"]["backend"],
+        f"{prefix}reasoning_effort": row.get(f"{prefix}reasoning_effort") == "non-thinking",
+        f"{prefix}temperature": same_float(row.get(f"{prefix}temperature"), generation["temperature"]),
+        f"{prefix}top_p": same_float(row.get(f"{prefix}top_p"), generation["top_p"]),
+        f"{prefix}top_k": row.get(f"{prefix}top_k") == generation["top_k"],
+        f"{prefix}interface_version": row.get(f"{prefix}interface_version") == interface["version"],
+        f"{prefix}assistant_prefill": row.get(f"{prefix}assistant_prefill") == interface["assistant_prefill"],
+    }
+
+
+def verify_pre_output(config: dict, model_dir: Path, output_path: Path) -> None:
+    rows = read_jsonl(output_path)
+    if not rows:
+        raise ValueError("pre output contains no rows")
+    for row in rows:
+        normalized = dict(row)
+        normalized["pre_model_requested"] = row.get("model_requested")
+        normalized["pre_backend"] = row.get("backend")
+        normalized["pre_reasoning_effort"] = row.get("reasoning_effort")
+        normalized["pre_temperature"] = row.get("temperature")
+        normalized["pre_top_p"] = row.get("top_p")
+        normalized["pre_top_k"] = row.get("top_k")
+        normalized["pre_interface_version"] = row.get("interface_version")
+        normalized["pre_assistant_prefill"] = row.get("assistant_prefill")
+        failed = [name for name, ok in expected_checks(config, model_dir, normalized, "pre_").items() if not ok]
+        if failed:
+            raise ValueError(f"pre row {row.get('id')!r}: frozen config mismatch: {failed}")
+
+
+def verify_post_input(config: dict, model_dir: Path, input_path: Path) -> None:
     rows = read_jsonl(input_path)
     if not rows:
         raise ValueError("post input contains no branches")
 
     for row in rows:
-        row_id = row.get("id")
-        checks = {
-            "pre_model_requested": row.get("pre_model_requested") == expected_model,
-            "pre_backend": row.get("pre_backend") == config["model"]["backend"],
-            "pre_reasoning_effort": row.get("pre_reasoning_effort") == "non-thinking",
-            "pre_temperature": same_float(row.get("pre_temperature"), generation["temperature"]),
-            "pre_top_p": same_float(row.get("pre_top_p"), generation["top_p"]),
-            "pre_top_k": row.get("pre_top_k") == generation["top_k"],
-        }
-        failed = [name for name, ok in checks.items() if not ok]
+        failed = [name for name, ok in expected_checks(config, model_dir, row, "pre_").items() if not ok]
         if failed:
             raise ValueError(
-                f"branch {row_id!r}: frozen pre-treatment generation config differs "
+                f"branch {row.get('id')!r}: frozen pre-treatment config differs "
                 f"from current zero-budget config: {failed}"
             )
+
+
+def verify_post_output(config: dict, model_dir: Path, output_path: Path) -> None:
+    rows = read_jsonl(output_path)
+    if not rows:
+        raise ValueError("post output contains no rows")
+    interface = config["interface"]
+    for row in rows:
+        failed: list[str] = []
+        if row.get("post_model_requested") != str(model_dir):
+            failed.append("post_model_requested")
+        if row.get("post_backend") != config["model"]["backend"]:
+            failed.append("post_backend")
+        if row.get("post_reasoning_effort") != "non-thinking":
+            failed.append("post_reasoning_effort")
+        if row.get("post_interface_version") != interface["version"]:
+            failed.append("post_interface_version")
+        if row.get("post_assistant_prefill") != interface["assistant_prefill"]:
+            failed.append("post_assistant_prefill")
+        if failed:
+            raise ValueError(f"post row {row.get('id')!r}: frozen config mismatch: {failed}")
 
 
 def main() -> int:
@@ -129,7 +174,15 @@ def main() -> int:
     print("frozen execution config verified", file=sys.stderr)
     print(" ".join(cmd), file=sys.stderr)
     completed = subprocess.run(cmd, check=False)
-    return completed.returncode
+    if completed.returncode != 0:
+        return completed.returncode
+
+    if args.stage == "pre":
+        verify_pre_output(config, args.model_dir, args.output)
+    else:
+        verify_post_output(config, args.model_dir, args.output)
+    print("frozen output config verified", file=sys.stderr)
+    return 0
 
 
 if __name__ == "__main__":
