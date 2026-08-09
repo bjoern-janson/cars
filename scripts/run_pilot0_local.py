@@ -24,10 +24,14 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 LETTERS = "ABCDEFGHIJ"
-PRE_RE = re.compile(r"ANSWER\s*:\s*([A-J])\b.*?P_CORRECT\s*:\s*(0(?:\.\d+)?|1(?:\.0+)?)", re.I | re.S)
-POST_RE = re.compile(r"ANSWER\s*:\s*([A-J])\b", re.I)
+ANSWER_ID = r"(?:[A-J]|10|[1-9])"
+PRE_RE = re.compile(
+    rf"ANSWER\s*:\s*({ANSWER_ID})\b.*?P_CORRECT\s*:\s*(0(?:\.\d+)?|1(?:\.0+)?)",
+    re.I | re.S,
+)
+POST_RE = re.compile(rf"ANSWER\s*:\s*({ANSWER_ID})\b", re.I)
 ASSISTANT_PREFILL = "ANSWER: "
-INTERFACE_VERSION = "pilot0-local-prefill-v1"
+INTERFACE_VERSION = "pilot0-local-prefill-choiceid-v1"
 
 
 def read_jsonl(path: Path) -> list[dict]:
@@ -66,6 +70,28 @@ def normalize_answer(row: dict) -> str:
         if 0 <= idx < len(LETTERS):
             return LETTERS[idx]
     raise ValueError(f"task {row.get('id')!r} requires answer or answer_index")
+
+
+def normalize_model_choice(identifier: str, options: list[str]) -> str:
+    """Normalize a structured model answer identifier to the canonical letter.
+
+    The preferred surface form is A-J. During plumbing Qwen3-4B emitted a
+    1-based numeric option identifier while otherwise satisfying the exact
+    two-line machine-readable contract. Accept only those two explicit
+    encodings; do not extract answers from arbitrary prose.
+    """
+    value = str(identifier).strip().upper()
+    valid_letters = letters_for(options)
+    if value in valid_letters:
+        return value
+    if value.isdigit():
+        index = int(value) - 1
+        if 0 <= index < len(valid_letters):
+            return valid_letters[index]
+    raise ValueError(
+        f"answer identifier {identifier!r} is neither a valid option letter "
+        f"nor a 1-based option index for {len(options)} choices"
+    )
 
 
 def render_question(question: str, options: list[str]) -> str:
@@ -117,7 +143,7 @@ def generate(
     Hugging Face chat templates support ``continue_final_message=True`` for
     prefilling a known response prefix. Pilot 0 uses this only to make the
     machine-readable interface start with ``ANSWER: ``; it does not constrain
-    the answer letter, confidence value, treatment, or outcome.
+    the answer identifier, confidence value, treatment, or outcome.
     """
     set_seed(seed)
     messages = [
@@ -246,11 +272,9 @@ def run_pre(args: argparse.Namespace, tokenizer, model) -> int:
             top_k=args.top_k,
             assistant_prefill=ASSISTANT_PREFILL,
         )
-        initial_answer = match.group(1).upper()
+        initial_answer_raw = match.group(1)
+        initial_answer = normalize_model_choice(initial_answer_raw, options)
         p_correct = float(match.group(2))
-        valid_letters = letters_for(options)
-        if initial_answer not in valid_letters:
-            raise ValueError(f"{task_id}: parsed answer {initial_answer} outside valid options")
         initial_correct = initial_answer == benchmark_answer
         now = datetime.now(timezone.utc).isoformat(timespec="seconds")
         row = {
@@ -260,6 +284,7 @@ def run_pre(args: argparse.Namespace, tokenizer, model) -> int:
             "benchmark_answer": benchmark_answer,
             "category": task.get("category"),
             "source": task.get("src"),
+            "initial_answer_raw": initial_answer_raw,
             "initial_answer": initial_answer,
             "p_correct": p_correct,
             "i": 1.0 - p_correct,
@@ -283,8 +308,13 @@ def run_pre(args: argparse.Namespace, tokenizer, model) -> int:
             "generated_at_utc": now,
         }
         output.append(row)
+        display_answer = (
+            initial_answer
+            if str(initial_answer_raw).upper() == initial_answer
+            else f"{initial_answer_raw}->{initial_answer}"
+        )
         print(
-            f"[{index}/{len(tasks)}] {task_id}: answer={initial_answer} "
+            f"[{index}/{len(tasks)}] {task_id}: answer={display_answer} "
             f"key={benchmark_answer} p={p_correct:.3f} wrong={not initial_correct}",
             file=sys.stderr,
         )
@@ -318,14 +348,14 @@ def run_post(args: argparse.Namespace, tokenizer, model) -> int:
             top_k=args.top_k,
             assistant_prefill=ASSISTANT_PREFILL,
         )
-        final_answer = match.group(1).upper()
-        if final_answer not in letters_for(options):
-            raise ValueError(f"{row['id']}: parsed final answer {final_answer} outside valid options")
+        final_answer_raw = match.group(1)
+        final_answer = normalize_model_choice(final_answer_raw, options)
         benchmark_answer = str(row["benchmark_answer"]).strip().upper()
         correct = final_answer == benchmark_answer
         out = dict(row)
         out.update(
             {
+                "final_answer_raw": final_answer_raw,
                 "final_answer": final_answer,
                 "v": 1 if correct else 0,
                 "final_correct": correct,
@@ -346,9 +376,14 @@ def run_post(args: argparse.Namespace, tokenizer, model) -> int:
             }
         )
         output.append(out)
+        display_final = (
+            final_answer
+            if str(final_answer_raw).upper() == final_answer
+            else f"{final_answer_raw}->{final_answer}"
+        )
         print(
             f"[{index}/{len(rows)}] {row['id']} {row['arm']}: "
-            f"{row['initial_answer']} -> {final_answer} correct={correct}",
+            f"{row['initial_answer']} -> {display_final} correct={correct}",
             file=sys.stderr,
         )
 
