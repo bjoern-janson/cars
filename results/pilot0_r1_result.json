@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "study": "Pilot 0 R1: encoding-to-instability replication and transport",
+  "status": "R1 encoding-to-instability replication/transport under frozen pre-outcome contract",
+  "authority": "replication/transport evidence for the inherited encoding-to-T_instability contrast; no new representation construct and no global correction construct",
+  "inputs": {
+    "C1": "pilot0_r1_c1_completed.jsonl",
+    "C2": "pilot0_r1_c2_completed.jsonl",
+    "C3": "pilot0_r1_c3_completed.jsonl",
+    "C4": "pilot0_r1_c4_completed.jsonl"
+  },
+  "cohort_sampling_contract": {
+    "definition": "four independently sampled sets of MMLU-Pro frozen prestates drawn with the same sampler and raw_n, using distinct prespecified sample seeds",
+    "disjointness": "each later R1 cohort excludes all earlier R1 cohort task files in addition to every prior Pilot 0 task set, so no prestate may appear in more than one R1 cohort",
+    "interpretation": "same manipulation, assay, model, generation contract, and prestate-sampling distribution; different sampled prestates",
+    "eligibility": "initially-wrong frozen prestates only"
+  },
+  "manipulation_boundary": {
+    "fixed_scaffold": {
+      "question_section": "QUESTION:\n<exact rendered question/options>",
+      "state_label": "PREVIOUS STATE:",
+      "signal_section": "SIGNAL:\nSignal status: No new information is available about whether your previous answer is correct.",
+      "revision_section": "REVISION REQUEST:\nReview your previous answer and revise if necessary.\nReturn exactly one line: ANSWER: <one option letter>",
+      "section_order": [
+        "QUESTION",
+        "PREVIOUS STATE",
+        "SIGNAL",
+        "REVISION REQUEST"
+      ],
+      "section_separator": "two newline characters"
+    },
+    "encoding": {
+      "R_fields": "ANSWER: <exact frozen initial answer>\nP_CORRECT: <exact frozen p_correct rendered to six decimals>",
+      "R_prose": "Your previous answer was <exact frozen initial answer>. Before feedback, you assigned probability <exact frozen p_correct rendered to six decimals> that this answer was correct."
+    },
+    "causal_object": "prose versus field/value encoding of the same prior answer and P_CORRECT inside the exact inherited labeled E0 scaffold",
+    "orientation": "Delta_c = mean[T_instability(R_prose)-T_instability(R_fields)] within cohort c",
+    "not_authorized_as": [
+      "new representation discovery",
+      "cohort heterogeneity merely because cohort point estimates differ",
+      "psychological mechanism identification",
+      "normative interface quality",
+      "global correction capacity"
+    ]
+  },
+  "primary_endpoint": {
+    "name": "T_instability",
+    "definition": "within one encoding arm's two E0 branches, 1 iff their final answers differ, else 0",
+    "block_contrast": "D_i = T_instability(R_prose,i) - T_instability(R_fields,i)",
+    "cohort_estimand": "Delta_c = mean_i D_i within cohort c",
+    "common_estimand": "Delta_common = arithmetic mean of the four prespecified cohort effects Delta_1...Delta_4; cohorts receive equal weight as independent replication draws"
+  },
+  "cohort_effects": {
+    "C1": {
+      "n_blocks": 233,
+      "n_rows": 932,
+      "sample_seed": 20260822,
+      "Delta_c": 0.030042918454935622,
+      "bootstrap_95": {
+        "low": 0.008583690987124463,
+        "high": 0.055793991416309016,
+        "valid_bootstraps": 5000
+      },
+      "block_contrast_counts": {
+        "0.0": 226,
+        "1.0": 7
+      }
+    },
+    "C2": {
+      "n_blocks": 243,
+      "n_rows": 972,
+      "sample_seed": 20260823,
+      "Delta_c": 0.04526748971193416,
+      "bootstrap_95": {
+        "low": 0.01646090534979424,
+        "high": 0.07407407407407407,
+        "valid_bootstraps": 5000
+      },
+      "block_contrast_counts": {
+        "0.0": 230,
+        "1.0": 12,
+        "-1.0": 1
+      }
+    },
+    "C3": {
+      "n_blocks": 231,
+      "n_rows": 924,
+      "sample_seed": 20260824,
+      "Delta_c": 0.025974025974025976,
+      "bootstrap_95": {
+        "low": 0.004329004329004329,
+        "high": 0.05194805194805195,
+        "valid_bootstraps": 5000
+      },
+      "block_contrast_counts": {
+        "0.0": 223,
+        "1.0": 7,
+        "-1.0": 1
+      }
+    },
+    "C4": {
+      "n_blocks": 260,
+      "n_rows": 1040,
+      "sample_seed": 20260825,
+      "Delta_c": 0.03461538461538462,
+      "bootstrap_95": {
+        "low": 0.0038461538461538464,
+        "high": 0.06538461538461539,
+        "valid_bootstraps": 5000
+      },
+      "block_contrast_counts": {
+        "0.0": 243,
+        "1.0": 13,
+        "-1.0": 4
+      }
+    }
+  },
+  "common_effect": {
+    "Delta_common_equal_cohort": 0.033974954689070094,
+    "bootstrap_95": {
+      "low": 0.021316044327191207,
+      "high": 0.04779091218990479,
+      "valid_bootstraps": 5000
+    },
+    "randomization_inference": {
+      "two_sided_p": 0.0001999600079984003,
+      "permutations": 5000,
+      "permutation_seed": 20260809,
+      "rule": "within every prestate block, shuffle the four branch outcomes and reassign exact 2/2 fields/prose labels; recompute each cohort Delta_c and the equal-cohort Delta_common"
+    },
+    "decision": {
+      "status": "REPLICATED_ENCODING_INSTABILITY_SIGNAL",
+      "reason": "Delta_common differs from zero under the prespecified blocked-randomization test.",
+      "alpha": 0.05,
+      "practical_equivalence_margin": 0.05,
+      "point_estimate_abs_ge_practical_margin": false,
+      "bootstrap_95_entirely_beyond_practical_margin": false,
+      "practical_equivalence": true
+    }
+  },
+  "transport_diagnostic": {
+    "adjudicable": true,
+    "status": "COMPATIBLE_WITH_COMMON_EFFECT",
+    "cohort_sampling_variances": {
+      "C1": 0.00012560492028295563,
+      "C2": 0.00021259833372731904,
+      "C3": 0.00014764080263797937,
+      "C4": 0.0002478239016700555
+    },
+    "fixed_effect_meta_estimate": 0.03270562213636819,
+    "cochran_Q": 1.1203340239652968,
+    "df": 3,
+    "p": 0.7721677753064361,
+    "I2": 0.0,
+    "tau2_DL": 0.0,
+    "interpretation": "Cochran Q p>=0.05 indicates compatibility with a common-effect model under this diagnostic; it does not establish transport invariance."
+  },
+  "analysis_contract": {
+    "bootstrap": 5000,
+    "bootstrap_seed": 20260809,
+    "permutations": 5000,
+    "permutation_seed": 20260809,
+    "alpha": 0.05,
+    "practical_equivalence_margin": 0.05,
+    "cohort_reporting": "report Delta_c and a 95% whole-block bootstrap interval for every cohort before pooled inference",
+    "common_effect_interval": "stratified whole-block bootstrap: independently resample blocks with replacement within each cohort, recompute Delta_c, then average the four cohort effects equally",
+    "common_effect_test": "two-sided blocked randomization test for Delta_common=0 under the sharp no-encoding-effect null: within every prestate block, shuffle RF_E0/RP_E0 labels preserving exact 2/2, recompute each cohort Delta_c and their equal-cohort mean",
+    "common_effect_practical_scale": "practical equivalence requires the 95% stratified-bootstrap interval for Delta_common to lie strictly inside [-0.05,+0.05]",
+    "transport_assessment_order": [
+      "cohort-specific Delta_c estimates and intervals",
+      "Delta_common and uncertainty",
+      "practical scale against +/-0.05",
+      "between-cohort dispersion relative to estimated sampling uncertainty"
+    ],
+    "transport_model": "Cochran Q common-effect compatibility diagnostic using cohort-specific sampling variances Var(D_i)/n_c; report Q, df=3, chi-square p-value, I^2, and DerSimonian-Laird tau^2 descriptively",
+    "transport_guard": "if any cohort has zero/nonfinite estimated sampling variance, mark Q/I2/tau2 not adjudicable rather than regularizing silently",
+    "transport_interpretation": "Q p>=0.05 means observed cohort effects are compatible with a common-effect model under this diagnostic; it does not establish transport invariance. Q p<0.05 is evidence of excess between-cohort dispersion and earns a transport/heterogeneity follow-up."
+  },
+  "interpretation_guardrails": [
+    "R1 is a replication/transport branch, not continuation of the A-series localization ladder.",
+    "T_instability is the sole primary endpoint because R1 prospectively targets the A5-A7 replication discrepancy.",
+    "Different cohort point estimates do not by themselves establish heterogeneity.",
+    "Failure to detect between-cohort variation does not establish perfect transport invariance.",
+    "A significant common effect does not imply a practically large effect; causal/nonzero and practical-scale claims remain separate.",
+    "A transport signal does not identify why cohorts differ; prestate composition, sampling variation beyond model assumptions, or other context dependence require later discrimination.",
+    "No R1 result automatically updates B, C, H1, I1, S, or CARS."
+  ]
+}
