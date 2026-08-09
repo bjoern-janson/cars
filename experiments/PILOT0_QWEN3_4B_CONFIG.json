@@ -1,6 +1,6 @@
 {
-  "schema_version": 2,
-  "status": "refrozen after plumbing interface repair",
+  "schema_version": 3,
+  "status": "refrozen after plumbing answer-identifier repair",
   "scientific_scope": "Qwen3-4B under this exact configuration on sampled MMLU-Pro task-prestate blocks",
   "model": {
     "repo_id": "Qwen/Qwen3-4B",
@@ -19,9 +19,15 @@
     "post_max_new_tokens": 24
   },
   "interface": {
-    "version": "pilot0-local-prefill-v1",
+    "version": "pilot0-local-prefill-choiceid-v1",
     "assistant_prefill": "ANSWER: ",
-    "repair_reason": "30-item plumbing run showed Qwen3-4B could ignore the requested two-line format and exhaust the pre-treatment token cap before emitting ANSWER/P_CORRECT. Assistant prefilling repairs only the machine-readable response boundary."
+    "preferred_answer_encoding": "option letter A-J",
+    "accepted_answer_encodings": [
+      "option letter A-J",
+      "1-based option index 1-N"
+    ],
+    "canonicalization": "A-J remains unchanged; numeric k maps to the kth option letter; raw identifier is retained in provenance",
+    "repair_reason": "After assistant prefilling repaired response-start compliance, plumbing produced the exact two-line schema with ANSWER: 1 and P_CORRECT: 0.85. This repair accepts only explicit letter or 1-based index identifiers and canonicalizes them to the benchmark letter space; arbitrary prose extraction remains disallowed."
   },
   "measurement": {
     "name": "pre-treatment error suspicion",
@@ -32,7 +38,7 @@
     "E0": "Review your previous answer and revise if necessary.",
     "E+": "Verified feedback: your previous answer is incorrect.\nReview your previous answer and revise if necessary."
   },
-  "outcome": "V = 1 if final answer matches the objective MMLU-Pro key, else 0",
+  "outcome": "V = 1 if the canonicalized final answer matches the objective MMLU-Pro key, else 0",
   "primary": "Delta_tau = tau_high - tau_low",
-  "invariant": "The same model revision, backend, thinking mode, interface prefill, temperature, top_p, top_k, and seed policy must be used for pre, E0, and E+. Only the experimental feedback text may differ between post-treatment arms."
+  "invariant": "The same model revision, backend, thinking mode, interface prefill/canonicalization, temperature, top_p, top_k, and seed policy must be used for pre, E0, and E+. Only the experimental feedback text may differ between post-treatment arms."
 }
