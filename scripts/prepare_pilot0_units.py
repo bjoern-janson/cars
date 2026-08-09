@@ -77,6 +77,8 @@ def main() -> int:
                 "pre_temperature": row.get("temperature", audit.get("temperature")),
                 "pre_top_p": row.get("top_p", audit.get("top_p")),
                 "pre_top_k": row.get("top_k", audit.get("top_k")),
+                "pre_interface_version": row.get("interface_version", audit.get("interface_version")),
+                "pre_assistant_prefill": row.get("assistant_prefill", audit.get("assistant_prefill")),
             }
             branches.append(branch)
 
