@@ -21,17 +21,34 @@ from pathlib import Path
 from typing import Iterable
 
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, LogitsProcessor, LogitsProcessorList
 
 LETTERS = "ABCDEFGHIJ"
-ANSWER_ID = r"(?:[A-J]|10|[1-9])"
 PRE_RE = re.compile(
-    rf"ANSWER\s*:\s*({ANSWER_ID})\b.*?P_CORRECT\s*:\s*(0(?:\.\d+)?|1(?:\.0+)?)",
+    r"ANSWER\s*:\s*([A-J])\b.*?P_CORRECT\s*:\s*(0(?:\.\d+)?|1(?:\.0+)?)",
     re.I | re.S,
 )
-POST_RE = re.compile(rf"ANSWER\s*:\s*({ANSWER_ID})\b", re.I)
+POST_RE = re.compile(r"ANSWER\s*:\s*([A-J])\b", re.I)
 ASSISTANT_PREFILL = "ANSWER: "
-INTERFACE_VERSION = "pilot0-local-prefill-choiceid-v1"
+INTERFACE_VERSION = "pilot0-local-prefill-constrained-choice-v1"
+CHOICE_CONSTRAINT = "first-generated-token-valid-option-letter"
+
+
+class FirstTokenChoiceLogitsProcessor(LogitsProcessor):
+    """Restrict only the first generated token to the declared option letters."""
+
+    def __init__(self, prompt_length: int, allowed_token_ids: list[int]):
+        if not allowed_token_ids:
+            raise ValueError("allowed_token_ids must not be empty")
+        self.prompt_length = int(prompt_length)
+        self.allowed_token_ids = sorted(set(int(x) for x in allowed_token_ids))
+
+    def __call__(self, input_ids: torch.LongTensor, scores: torch.FloatTensor) -> torch.FloatTensor:
+        if int(input_ids.shape[-1]) != self.prompt_length:
+            return scores
+        constrained = torch.full_like(scores, float("-inf"))
+        constrained[:, self.allowed_token_ids] = scores[:, self.allowed_token_ids]
+        return constrained
 
 
 def read_jsonl(path: Path) -> list[dict]:
@@ -72,28 +89,6 @@ def normalize_answer(row: dict) -> str:
     raise ValueError(f"task {row.get('id')!r} requires answer or answer_index")
 
 
-def normalize_model_choice(identifier: str, options: list[str]) -> str:
-    """Normalize a structured model answer identifier to the canonical letter.
-
-    The preferred surface form is A-J. During plumbing Qwen3-4B emitted a
-    1-based numeric option identifier while otherwise satisfying the exact
-    two-line machine-readable contract. Accept only those two explicit
-    encodings; do not extract answers from arbitrary prose.
-    """
-    value = str(identifier).strip().upper()
-    valid_letters = letters_for(options)
-    if value in valid_letters:
-        return value
-    if value.isdigit():
-        index = int(value) - 1
-        if 0 <= index < len(valid_letters):
-            return valid_letters[index]
-    raise ValueError(
-        f"answer identifier {identifier!r} is neither a valid option letter "
-        f"nor a 1-based option index for {len(options)} choices"
-    )
-
-
 def render_question(question: str, options: list[str]) -> str:
     letters = letters_for(options)
     rendered = "\n".join(f"{letter}. {option}" for letter, option in zip(letters, options))
@@ -126,6 +121,26 @@ def load_model(model_name: str):
     return tokenizer, model
 
 
+def option_letter_token_ids(tokenizer, valid_letters: list[str]) -> list[int]:
+    """Return one-token encodings for valid option letters; fail closed otherwise."""
+    token_ids: list[int] = []
+    for letter in valid_letters:
+        encoded = tokenizer.encode(letter, add_special_tokens=False)
+        if len(encoded) != 1:
+            raise ValueError(
+                f"option letter {letter!r} is not a single token under this tokenizer: {encoded}"
+            )
+        token_id = int(encoded[0])
+        decoded = tokenizer.decode([token_id], skip_special_tokens=True).strip().upper()
+        if decoded != letter:
+            raise ValueError(
+                f"tokenizer round-trip mismatch for option letter {letter!r}: "
+                f"token_id={token_id} decoded={decoded!r}"
+            )
+        token_ids.append(token_id)
+    return token_ids
+
+
 def generate(
     tokenizer,
     model,
@@ -137,13 +152,14 @@ def generate(
     top_p: float,
     top_k: int,
     assistant_prefill: str,
+    valid_choice_letters: list[str],
 ) -> tuple[str, int, int]:
-    """Generate by continuing a fixed assistant-response prefill.
+    """Generate from a fixed assistant prefill with a constrained first choice token.
 
-    Hugging Face chat templates support ``continue_final_message=True`` for
-    prefilling a known response prefix. Pilot 0 uses this only to make the
-    machine-readable interface start with ``ANSWER: ``; it does not constrain
-    the answer identifier, confidence value, treatment, or outcome.
+    The only token-level constraint is on the first generated token immediately
+    after ``ANSWER: ``. It must be one of the task's declared option letters.
+    All subsequent generation remains sampled under the frozen temperature,
+    top-p, and top-k settings so the model still reports its own P_CORRECT.
     """
     set_seed(seed)
     messages = [
@@ -157,6 +173,11 @@ def generate(
         enable_thinking=False,
     )
     inputs = tokenizer(text, return_tensors="pt").to(model.device)
+    input_len = int(inputs["input_ids"].shape[-1])
+    allowed_token_ids = option_letter_token_ids(tokenizer, valid_choice_letters)
+    logits_processor = LogitsProcessorList(
+        [FirstTokenChoiceLogitsProcessor(input_len, allowed_token_ids)]
+    )
     with torch.inference_mode():
         outputs = model.generate(
             **inputs,
@@ -166,8 +187,8 @@ def generate(
             top_p=top_p,
             top_k=top_k,
             pad_token_id=tokenizer.eos_token_id,
+            logits_processor=logits_processor,
         )
-    input_len = int(inputs["input_ids"].shape[-1])
     output_ids = outputs[0][input_len:]
     continuation = tokenizer.decode(output_ids, skip_special_tokens=True)
     decoded = (assistant_prefill + continuation).strip()
@@ -187,6 +208,7 @@ def generate_with_parse(
     top_p: float,
     top_k: int,
     assistant_prefill: str,
+    valid_choice_letters: list[str],
 ) -> tuple[re.Match[str], str, int, int, int]:
     last_text = ""
     for attempt in range(retries + 1):
@@ -201,6 +223,7 @@ def generate_with_parse(
             top_p=top_p,
             top_k=top_k,
             assistant_prefill=assistant_prefill,
+            valid_choice_letters=valid_choice_letters,
         )
         last_text = text
         match = parser.search(text)
@@ -256,6 +279,7 @@ def run_pre(args: argparse.Namespace, tokenizer, model) -> int:
         task_id = str(task["id"])
         question = str(task["question"])
         options = [str(x) for x in task["options"]]
+        valid_letters = letters_for(options)
         benchmark_answer = normalize_answer(task)
         prompt = pre_prompt(question, options)
         seed = stable_seed(args.seed, f"pre::{task_id}")
@@ -271,9 +295,11 @@ def run_pre(args: argparse.Namespace, tokenizer, model) -> int:
             top_p=args.top_p,
             top_k=args.top_k,
             assistant_prefill=ASSISTANT_PREFILL,
+            valid_choice_letters=valid_letters,
         )
-        initial_answer_raw = match.group(1)
-        initial_answer = normalize_model_choice(initial_answer_raw, options)
+        initial_answer = match.group(1).upper()
+        if initial_answer not in valid_letters:
+            raise ValueError(f"{task_id}: parsed answer {initial_answer} outside valid options")
         p_correct = float(match.group(2))
         initial_correct = initial_answer == benchmark_answer
         now = datetime.now(timezone.utc).isoformat(timespec="seconds")
@@ -284,7 +310,6 @@ def run_pre(args: argparse.Namespace, tokenizer, model) -> int:
             "benchmark_answer": benchmark_answer,
             "category": task.get("category"),
             "source": task.get("src"),
-            "initial_answer_raw": initial_answer_raw,
             "initial_answer": initial_answer,
             "p_correct": p_correct,
             "i": 1.0 - p_correct,
@@ -300,6 +325,7 @@ def run_pre(args: argparse.Namespace, tokenizer, model) -> int:
             "top_k": args.top_k,
             "interface_version": INTERFACE_VERSION,
             "assistant_prefill": ASSISTANT_PREFILL,
+            "choice_constraint": CHOICE_CONSTRAINT,
             "pre_prompt": prompt,
             "raw_model_output": raw_text,
             "input_tokens": input_tokens,
@@ -308,13 +334,8 @@ def run_pre(args: argparse.Namespace, tokenizer, model) -> int:
             "generated_at_utc": now,
         }
         output.append(row)
-        display_answer = (
-            initial_answer
-            if str(initial_answer_raw).upper() == initial_answer
-            else f"{initial_answer_raw}->{initial_answer}"
-        )
         print(
-            f"[{index}/{len(tasks)}] {task_id}: answer={display_answer} "
+            f"[{index}/{len(tasks)}] {task_id}: answer={initial_answer} "
             f"key={benchmark_answer} p={p_correct:.3f} wrong={not initial_correct}",
             file=sys.stderr,
         )
@@ -333,6 +354,7 @@ def run_post(args: argparse.Namespace, tokenizer, model) -> int:
 
     for index, row in enumerate(rows, 1):
         options = [str(x) for x in row["options"]]
+        valid_letters = letters_for(options)
         seed = stable_seed(args.seed, f"post::{row['id']}::{row['arm']}")
         prompt = post_prompt(row)
         match, raw_text, used_seed, input_tokens, output_tokens = generate_with_parse(
@@ -347,15 +369,16 @@ def run_post(args: argparse.Namespace, tokenizer, model) -> int:
             top_p=args.top_p,
             top_k=args.top_k,
             assistant_prefill=ASSISTANT_PREFILL,
+            valid_choice_letters=valid_letters,
         )
-        final_answer_raw = match.group(1)
-        final_answer = normalize_model_choice(final_answer_raw, options)
+        final_answer = match.group(1).upper()
+        if final_answer not in valid_letters:
+            raise ValueError(f"{row['id']}: parsed final answer {final_answer} outside valid options")
         benchmark_answer = str(row["benchmark_answer"]).strip().upper()
         correct = final_answer == benchmark_answer
         out = dict(row)
         out.update(
             {
-                "final_answer_raw": final_answer_raw,
                 "final_answer": final_answer,
                 "v": 1 if correct else 0,
                 "final_correct": correct,
@@ -367,6 +390,7 @@ def run_post(args: argparse.Namespace, tokenizer, model) -> int:
                 "post_generation_seed": used_seed,
                 "post_interface_version": INTERFACE_VERSION,
                 "post_assistant_prefill": ASSISTANT_PREFILL,
+                "post_choice_constraint": CHOICE_CONSTRAINT,
                 "post_prompt": prompt,
                 "post_raw_model_output": raw_text,
                 "post_input_tokens": input_tokens,
@@ -376,14 +400,9 @@ def run_post(args: argparse.Namespace, tokenizer, model) -> int:
             }
         )
         output.append(out)
-        display_final = (
-            final_answer
-            if str(final_answer_raw).upper() == final_answer
-            else f"{final_answer_raw}->{final_answer}"
-        )
         print(
             f"[{index}/{len(rows)}] {row['id']} {row['arm']}: "
-            f"{row['initial_answer']} -> {display_final} correct={correct}",
+            f"{row['initial_answer']} -> {final_answer} correct={correct}",
             file=sys.stderr,
         )
 
