@@ -40,7 +40,6 @@ def main() -> int:
                 "question",
                 "options",
                 "benchmark_answer",
-                "initial_answer_raw",
                 "initial_answer",
                 "p_correct",
                 "i",
@@ -53,6 +52,7 @@ def main() -> int:
                 "pre_prompt",
                 "interface_version",
                 "assistant_prefill",
+                "choice_constraint",
             }
             missing = required - row.keys()
             if missing:
@@ -67,7 +67,6 @@ def main() -> int:
                 "question": row["question"],
                 "options": row["options"],
                 "benchmark_answer": row["benchmark_answer"],
-                "initial_answer_raw": row["initial_answer_raw"],
                 "initial_answer": row["initial_answer"],
                 "p_correct": row["p_correct"],
                 "i": row["i"],
@@ -76,6 +75,7 @@ def main() -> int:
                 "pre_prompt_sha256": canonical_sha256(row["pre_prompt"]),
                 "interface_version": row["interface_version"],
                 "assistant_prefill": row["assistant_prefill"],
+                "choice_constraint": row["choice_constraint"],
                 "backend": row["backend"],
                 "model_requested": row["model_requested"],
                 "response_model": row["response_model"],
