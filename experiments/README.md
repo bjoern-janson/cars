@@ -2,7 +2,7 @@
 
 ## Current executable path
 
-The repository now has one practical experimental workflow and one synthetic red-team workflow.
+The repository now has one practical experimental workflow and two synthetic red-team workflows.
 
 ### 1. Synthetic assay red-team
 
@@ -30,7 +30,35 @@ Reference results:
 - [`../results/SYNTHETIC_ASSAY_REFERENCE.md`](../results/SYNTHETIC_ASSAY_REFERENCE.md)
 - [`../results/synthetic_assay_reference.json`](../results/synthetic_assay_reference.json)
 
-### 2. Minimal randomized LLM assay
+### 2. Threshold / rare-jump stress tests
+
+Run:
+
+```text
+python scripts/run_jump_worlds.py \
+  --seed 20260809 \
+  --n 20000 \
+  --json-out results/jump_worlds_reference.json
+```
+
+Purpose:
+
+```text
+non-smooth / mixture response truth
+→ order-based assay
+→ check that smoothness is not silently promoted
+```
+
+These tests ask whether the primitive ordering survives a step-function response and whether a rare-event mean CATE can be correctly separated from claims about jump probability or jump magnitude.
+
+Documentation:
+
+- [`../docs/JUMP_WORLD_STRESS_TESTS.md`](../docs/JUMP_WORLD_STRESS_TESTS.md)
+- [`../results/jump_worlds_reference.json`](../results/jump_worlds_reference.json)
+
+These are synthetic development checks only. They do not add "jump" to the CARS prompt or scientific hypothesis.
+
+### 3. Minimal randomized LLM assay
 
 Protocol:
 
