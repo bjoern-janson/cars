@@ -1,6 +1,6 @@
 # CARS — Controlled Adaptive Reasoning System
 
-> **Status:** living research notebook. CARS is an epistemic control protocol around an empirical research program. The current scientific assay is deliberately smaller than the reasoning framework that motivated it. Nothing in this repository should be treated as an established theory of intelligence, validated self-improving system, or demonstrated causal law.
+> **Status:** living research notebook. CARS is an epistemic control protocol around an empirical research program. Pilot 0 is now **closed** under an epistemic stopping rule. The repository contains scoped randomized evidence about representation-dependent transition behavior, but nothing here establishes a general theory of intelligence, a global correction-capacity construct, a psychological mechanism, or a validated self-improving system.
 
 ## Current architecture
 
@@ -14,27 +14,25 @@ CARS
 
 ASSAY
 │
-├── tests one empirical proposition
+├── tests a specific empirical proposition
 └── produces evidence that CARS then processes
 ```
 
 Neither supplies the authority of the other.
 
-The current control-protocol artifact is:
+Current control protocol:
 
-[`prompts/CARS-CONTROL-PROTOCOL.md`](prompts/CARS-CONTROL-PROTOCOL.md)
+- [`prompts/CARS-CONTROL-PROTOCOL.md`](prompts/CARS-CONTROL-PROTOCOL.md)
 
-The current empirical assay is:
+Core assay specification:
 
-[`docs/ASSAY_SPEC.md`](docs/ASSAY_SPEC.md)
+- [`docs/ASSAY_SPEC.md`](docs/ASSAY_SPEC.md)
 
-The first frozen empirical implementation is:
+Pilot 0 frozen protocol and terminal record:
 
-[`experiments/PILOT0_MMLU_PRO.md`](experiments/PILOT0_MMLU_PRO.md)
-
-Its frozen pre-state audit requirements are:
-
-[`experiments/PILOT0_PROVENANCE.md`](experiments/PILOT0_PROVENANCE.md)
+- [`experiments/PILOT0_MMLU_PRO.md`](experiments/PILOT0_MMLU_PRO.md)
+- [`experiments/PILOT0_PROVENANCE.md`](experiments/PILOT0_PROVENANCE.md)
+- [`results/PILOT0_TERMINAL_RECORD.md`](results/PILOT0_TERMINAL_RECORD.md)
 
 ## Motivating conjecture
 
@@ -46,7 +44,7 @@ I ∝ C_improve
 
 where `C_improve` is a design objective: capacity to convert feedback into increased future correction capacity / viability.
 
-This remains a motivating conjecture and reasoning objective, not an established definition of intelligence and not the frozen empirical hypothesis.
+This remains a motivating conjecture and reasoning objective, not an established definition of intelligence and not a validated empirical law.
 
 The empirical program strips that conjecture down to a conditional causal-response object:
 
@@ -62,12 +60,6 @@ and the primitive scientific proposition:
 i₁ > i₀
 ⇒
 τ(i₁) > τ(i₀)
-```
-
-Equivalently, where a smooth representation is justified:
-
-```text
-∂τ(i)/∂i > 0
 ```
 
 The ordering proposition is the scientific object. A derivative or linear interaction coefficient is a representation of it, not the object itself.
@@ -98,7 +90,7 @@ V: difference-preserving
 ESTIMATOR
 ```
 
-The failure implications are asymmetric:
+Failure implications are asymmetric:
 
 ```text
 estimator failure
@@ -106,164 +98,169 @@ estimator failure
 
 shape failure
 ↛ scientific-proposition failure
-
-invalid measurement structure
-↓
-may change the identity of τ itself
 ```
 
-Measurement is therefore not merely downstream instrumentation. It partly constitutes the identity of the scientific object.
-
-## Measurement boundary
-
-Protocol rule:
-
-> **Before testing invariance, specify the admissible transformation class.**
-
-The current assay is asymmetric:
-
-```text
-I
-→ ordering
-→ strictly increasing transformations preserve the substantive ordering
-
-V
-→ subtraction / additive difference
-→ positive affine transformations preserve additive-CATE ordering
-```
-
-If:
-
-```text
-V' = aV + b
-a > 0
-```
-
-then:
-
-```text
-τ'(i) = aτ(i)
-```
-
-and therefore:
-
-```text
-sign[τ'(i₁) - τ'(i₀)]
-=
-sign[τ(i₁) - τ(i₀)]
-```
-
-General monotone nonlinear transformations of `V` are not licensed to preserve an additive CATE. They can redefine the causal estimand.
+Measurement is not merely downstream instrumentation. It partly constitutes the identity of the scientific object.
 
 See [`docs/MEASUREMENT_BOUNDARY.md`](docs/MEASUREMENT_BOUNDARY.md).
 
-## Current research posture: break the assay
+## Pilot 0 — terminal status
 
-The basic randomized interaction estimator is not the interesting frontier. The current priority is adversarial assay validation followed by the first narrow randomized LLM run.
-
-```text
-claim
-→ counterexample
-→ localize failure
-→ minimal sufficient revision
-```
-
-High-information attacks include:
-
-- constant treatment effect with strongly prognostic `I`;
-- ceiling/floor and recoverable-headroom artifacts;
-- nonlinear outcome remeasurement;
-- randomized versus confounded baseline structure;
-- generic plasticity under warranted, neutral, and misleading interventions;
-- affine positive controls;
-- independently constructed interval-equivalent outcome instruments;
-- high-correlation instruments that disagree specifically on `I×E` structure;
-- nonlinear reparameterization of `I`;
-- sensitivity / low-power null-result attacks;
-- threshold and rare-event mixture worlds that test ordering without assuming smoothness.
-
-See [`docs/RED_TEAM_PROTOCOL.md`](docs/RED_TEAM_PROTOCOL.md) and [`docs/JUMP_WORLD_STRESS_TESTS.md`](docs/JUMP_WORLD_STRESS_TESTS.md).
-
-## First empirical implementation: Pilot 0
-
-Pilot 0 deliberately uses a literal measurement rather than calling it intelligence:
+Pilot 0 used a literal measurement rather than calling it intelligence:
 
 ```text
-I = pre-treatment error suspicion
-I_i = 1 - P_i(correct)
+I₁ = 1 - P(correct)
 ```
 
-The design uses one fixed model and MMLU-Pro multiple-choice items.
+under one frozen Qwen3-4B configuration on MMLU-Pro.
 
-For every sampled item:
+The original moderation hypothesis was:
 
 ```text
-initial answer + P(correct)
-        ↓
-freeze complete pre-treatment state
-        ↓
-retain only objectively wrong initial answers
-        ↓
-create continuation branches
-        ↓
-randomize within task:
-E0 vs E+
-        ↓
-verify branch hashes against frozen state
-        ↓
-objective final-answer correctness V
+higher I₁
+→ greater causal benefit from verified-error feedback
 ```
 
-Treatment:
+Terminal status:
 
 ```text
-E0:
-Review your previous answer and revise if necessary.
-
-E+:
-Verified feedback: your previous answer is incorrect.
-Review your previous answer and revise if necessary.
+H1
+NOT SUPPORTED
 ```
 
-Primary statistic:
+`I₁` showed modest criterion validity for initial error likelihood, but correction-related validity was not demonstrated:
 
 ```text
-Δτ = τ_high - τ_low
+error detection
+≠ correction susceptibility
 ```
 
-where low/high refer to prespecified strata of pre-treatment error suspicion.
+The subsequent diagnostic program localized transition-specific representation effects.
 
-The first 20–30-item run is **plumbing only**:
+### Terminal endpoint ledger
+
+| Object | Terminal status |
+| --- | --- |
+| `T_change` × prior-state encoding | **CAUSAL** |
+| `T_change` × section scaffold | **CAUSAL** |
+| `T_change` × encoding×scaffold | **CAUSAL INTERACTION** |
+| `T_verified` × prior-state encoding | **CAUSAL** |
+| `T_verified` × conversational topology | **CAUSAL** |
+| `T_verified` × section scaffold | **PRACTICALLY SMALL** |
+| `T_verified` × encoding×scaffold | **UNRESOLVED** |
+| `T_instability` × broad inline representation | **CAUSAL** |
+| `T_instability` × prior-state encoding | **CAUSAL / REPLICATED / PRACTICALLY SMALL** |
+| `T_instability` × section scaffold | **PRACTICALLY SMALL** |
+| `T_instability` × encoding×scaffold | **PRACTICALLY SMALL** |
+| excess R1 cohort variation | **NOT DETECTED** |
+| transport invariance | **NOT ESTABLISHED** |
+| global correction capacity | **NOT ESTABLISHED** |
+| psychological mechanism | **NOT ESTABLISHED** |
+| general intelligence claim | **NOT ESTABLISHED** |
+
+The unresolved `T_verified` interaction is endpoint-local:
 
 ```text
-plumbing pilot
-↛
-hypothesis evidence
+unresolved T_verified interaction
+↛ reopen T_instability
 ```
 
-The complete pre-treatment state is persisted before branch generation with the exact prompt, model/configuration, response metadata, raw confidence, parsed `I`, UTC freeze timestamp, and canonical SHA-256 fingerprint.
+### R1 replication / transport
+
+R1 directly tested the A5↔A7 replication discrepancy for the labeled-scaffold, E0-only prior-state prose-versus-fields effect on `T_instability` across four fresh disjoint prestate cohorts.
+
+```text
+C1  +0.030043
+C2  +0.045267
+C3  +0.025974
+C4  +0.034615
+
+Δ_common = +0.033975
+95% CI   = [+0.021316,+0.047791]
+p        = 0.00019996
+```
+
+The effect is nonzero/reproduced while the entire common-effect interval lies inside the inherited `±0.05` practical region.
+
+Transport diagnostic:
+
+```text
+Q = 1.120334
+df = 3
+p = 0.772168
+I² = 0
+tau²_DL = 0
+```
+
+Authorized:
+
+```text
+observed cohort effects
+→ compatible with a common-effect model
+```
+
+Not authorized:
+
+```text
+compatible with common effect
+→ proven transport invariance
+```
+
+See [`results/PILOT0_TERMINAL_RECORD.md`](results/PILOT0_TERMINAL_RECORD.md) for the complete terminal lineage and authority boundary.
+
+## Pilot 0 stopping rule
+
+Pilot 0 is not closed because nothing else could theoretically be tested.
+
+It is closed because nothing else is presently justified to test.
+
+```text
+sufficiently contracted live hypothesis space
++
+alternatives discriminated
++
+surviving effects replicated / bounded
++
+remaining uncertainty locally contained
++
+no sufficiently discriminating next experiment
+────────────────────────────────────────────
+                        ↓
+                      STOP
+```
 
 Keep explicit:
 
 ```text
-same frozen pre-state
-+
-randomized treatment
+STOP
+≠ truth
+≠ completeness
+≠ certainty
+
+STOP
+= no presently justified escalation
 ```
 
-must be auditable rather than asserted.
-
-And:
+Therefore:
 
 ```text
-provenance integrity
-≠
-scientific validity
+A-series representation localization
+→ sufficiently resolved
+
+R1 replication/transport
+→ closed
+
+A8
+→ NOT EARNED
+
+R2
+→ NOT EARNED
+
+additional T_instability decomposition
+→ NOT EARNED
 ```
 
-If plumbing changes the prompt, parser, model/configuration, treatment, measurement, or scoring logic, freeze the revised implementation before using fresh items for the hypothesis run.
-
-See [`experiments/PILOT0_MMLU_PRO.md`](experiments/PILOT0_MMLU_PRO.md), [`experiments/PILOT0_PROVENANCE.md`](experiments/PILOT0_PROVENANCE.md), and [`experiments/README.md`](experiments/README.md).
+Any future empirical branch requires a genuinely new scientific question and a fresh pre-outcome contract.
 
 ## CARS control protocol
 
@@ -308,100 +305,51 @@ A_leave ↛ A_adopt
 
 CARS is used to interpret whether and where an assay fails. It does not make the assay hypothesis true.
 
-## Empirical layers
+## Evidence and authority boundaries
 
 Keep distinct:
 
 ```text
 causal heterogeneity
-≠
-longitudinal dynamics
-≠
-equilibrium
-≠
-stationary stochastic distribution
+≠ longitudinal dynamics
+≠ equilibrium
+≠ stationary stochastic distribution
 ```
 
-### Level 0 — responsiveness
+A scoped randomized result does not automatically establish:
+
+- a causal effect of the moderator itself;
+- construct identity;
+- mechanism;
+- discriminative correction capacity;
+- cross-model or cross-domain transport;
+- transport invariance;
+- safety;
+- equilibrium;
+- theory validation.
+
+See [`docs/CLAIMS_AND_NONCLAIMS.md`](docs/CLAIMS_AND_NONCLAIMS.md).
+
+## Synthetic red-team track
+
+The repository retains synthetic and adversarial checks for assay failure modes:
+
+- [`docs/RED_TEAM_PROTOCOL.md`](docs/RED_TEAM_PROTOCOL.md)
+- [`docs/JUMP_WORLD_STRESS_TESTS.md`](docs/JUMP_WORLD_STRESS_TESTS.md)
+- [`results/SYNTHETIC_ASSAY_REFERENCE.md`](results/SYNTHETIC_ASSAY_REFERENCE.md)
+
+Synthetic survival is development evidence only:
 
 ```text
-i₁ > i₀
-⇒
-τ(i₁) > τ(i₀)
+synthetic red-team survival
+↛ plumbing success
+↛ real randomized evidence
+↛ replication
+↛ transport invariance
+↛ stable law
 ```
 
-### Level 1 — robustness
-
-Ask whether the ordering survives justified variation in:
-
-```text
-h, domain, population, M_I, M_V
-```
-
-within the admissible measurement classes.
-
-### Level 2 — specificity
-
-Use independently established intervention status:
-
-```text
-E⁺ = warranted correction
-E⁰ = neutral / irrelevant
-E⁻ = misleading
-```
-
-and distinguish generic responsiveness from discriminative responsiveness.
-
-### Level 3 — mechanism
-
-Only after empirical effects exist should the notebook reopen deeper mechanism questions such as accessibility, authority acquisition, revision, adoption, transfer, inheritance, or representation failure.
-
-### Optional longitudinal extension
-
-If data warrant it, remeasure `I`:
-
-```text
-T_h^(e)(i)
-=
-E[I_{t+h} | do(E_t=e), I_t=i]
-```
-
-This supports a separate longitudinal-dynamics question. It is not part of the minimal responsiveness hypothesis.
-
-## What a genuine contradiction looks like
-
-A useful red-team architecture does not protect a claim from contradiction. It specifies in advance what counts as one.
-
-For a measurement-form contradiction, require:
-
-```text
-licensed transformation
-+
-reliable measurement
-+
-identified causal contrast
-+
-adequate estimator
-+
-opposite ordering
-```
-
-Then localize before revising:
-
-```text
-measurement equivalence?
-measurement error / saturation?
-causal identification?
-scientific-object identity?
-shape representation?
-estimator?
-implementation?
-substantive proposition?
-```
-
-Stop escalation once independent evidence identifies the failure.
-
-## Prompt track
+## Prompt and historical tracks
 
 Historical prompt snapshots remain intact:
 
@@ -412,118 +360,38 @@ The current role-separated control protocol is:
 
 - [`prompts/CARS-CONTROL-PROTOCOL.md`](prompts/CARS-CONTROL-PROTOCOL.md)
 
-Version numbers organize interventions; they do not imply epistemic superiority.
-
-## Historical catalyst / recursive-architecture track
-
-The August 8 catalyst and recursive-correction documents remain in the repository as research lineage:
-
-- [`notes/2026-08-08-catalyst-notation.md`](notes/2026-08-08-catalyst-notation.md)
-- [`notes/2026-08-08-recursive-correction-architecture.md`](notes/2026-08-08-recursive-correction-architecture.md)
-
-Their status has changed.
-
-```text
-old formal machinery
-→ historical / diagnostic scaffolding
-
-current empirical core
-→ minimal heterogeneous causal-response assay
-```
-
-Concepts such as residuals, candidate generation, validator independence, adoption gates, transfer, and inheritance remain useful diagnostic hypotheses when data demand them. They are no longer required in the headline empirical proposition.
-
-Catalyst-decoding and recursive-architecture scoring files are retained for reproducibility of those historical research surfaces. They should not be confused with the current assay frontier.
-
-## Current evidence status
-
-This repository currently establishes a **research architecture, falsification protocol, and executable empirical workflow**, not an empirical positive result.
-
-It does not establish that:
-
-- CARS improves reasoning or safety;
-- `I` is intelligence;
-- `I ∝ C_improve` is a law;
-- higher `I` predicts larger causal response in real systems;
-- pre-treatment error suspicion predicts larger corrective benefit;
-- the moderation relation is linear;
-- the result transports across interventions, domains, horizons, populations, or measurements;
-- arbitrary monotone outcome transformations preserve the additive CATE;
-- generic responsiveness is discriminative correction capacity;
-- a stable equilibrium exists;
-- a stationary stochastic distribution exists;
-- the historical recursive architecture is empirically validated.
-
-A valid negative result is a valid result.
+Historical catalyst and recursive-correction artifacts remain research lineage, not validated current theory.
 
 ## Repository map
 
 ```text
 prompts/
   CARS-CONTROL-PROTOCOL.md
-  CARS-v0.1.md
-  CARS-v0.2-CANDIDATE.md
-  GENERIC-CONTROL-v0.1.md
 
 docs/
   ASSAY_SPEC.md
   MEASUREMENT_BOUNDARY.md
   RED_TEAM_PROTOCOL.md
-  JUMP_WORLD_STRESS_TESTS.md
-  RESEARCH_CONTRACT.md
-  DESIGN_RATIONALE.md
   CLAIMS_AND_NONCLAIMS.md
   FAILURE_MODEL.md
-  EVALUATION_PROTOCOL.md
-  EXPERIMENT_MATRIX.md
-  ABLATIONS.md
-  THREAT_MODEL.md
-  INDEPENDENT_CASE_AUTHOR_BRIEF.md
-  PROVENANCE.md
+  RESEARCH_CONTRACT.md
 
 experiments/
   README.md
-  LLM_ASSAY_PROTOCOL.md
   PILOT0_MMLU_PRO.md
   PILOT0_PROVENANCE.md
-
-benchmarks/
-  seed_cases.jsonl
-  README.md
-
-eval/
-  ASSAY_SCORING.md
-  SCORING.md
-  CATALYST_SCORING.md
-  ARCHITECTURE_SCORING.md
-  rubric.json
-
-notes/
-  historical research notes and lineage
-
-scripts/
-  validate_cases.py
-  run_assay_red_team.py
-  run_jump_worlds.py
-  sample_mmlupro.py
-  run_pilot0_openai.py
-  freeze_pilot0_prestates.py
-  prepare_pilot0_units.py
-  randomize_llm_assay.py
-  verify_pilot0_frozen_state.py
-  analyze_llm_assay.py
-
-examples/
-  assay_evaluation_record.json
-  evaluation_record.json
-  catalyst_evaluation_record.json
-  architecture_evaluation_record.json
+  PILOT0_*_CONFIG.json
+  LLM_ASSAY_PROTOCOL.md
 
 results/
   README.md
+  PILOT0_TERMINAL_RECORD.md
   SYNTHETIC_ASSAY_REFERENCE.md
-  synthetic_assay_reference.json
-  jump_worlds_reference.json
+
+scripts/
+  frozen Pilot 0 runners / analyzers
+  randomized-assay utilities
+  synthetic red-team utilities
 ```
 
 ## Notebook philosophy
@@ -535,15 +403,15 @@ simple experiment first
 → complex explanation only if earned
 ```
 
-Do not add formal machinery because it is available. Add it when an observed failure, ambiguity, or new empirical layer requires it.
+Pilot 0 adds the complementary terminal discipline:
 
-## Relationship to adjacent work
+```text
+CORRECTION
+→ contraction of the live hypothesis space
+→ not perpetual hypothesis generation
+```
 
-CARS is separate from, but informed by, a broader trajectory around correction, representation adequacy, adaptive evaluation, and justified transformation.
-
-Earlier frameworks can supply mechanism hypotheses and benchmark dimensions. The minimal assay supplies the current empirical object.
-
-Success or failure of one artifact does not retroactively validate or invalidate the others.
+Successful correction can terminate when no remaining uncertainty supports a sufficiently discriminating next experiment.
 
 ## Authorship and workflow
 
