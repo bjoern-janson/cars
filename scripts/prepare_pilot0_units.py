@@ -24,6 +24,7 @@ def read_jsonl(path: Path) -> list[dict]:
                 "p_correct",
                 "i",
                 "initial_correct",
+                "pre_state_sha256",
             }
             missing = required - row.keys()
             if missing:
@@ -63,8 +64,13 @@ def main() -> int:
                 "i": row["i"],
                 "category": row.get("category"),
                 "source": row.get("source"),
+                "pre_state_sha256": row["pre_state_sha256"],
+                "pre_prompt_sha256": row.get("pre_prompt_sha256"),
+                "pre_state_frozen_at_utc": row.get("pre_state_frozen_at_utc"),
                 "pre_response_id": row.get("response_id"),
                 "pre_response_model": row.get("response_model"),
+                "pre_model_requested": row.get("model_requested"),
+                "pre_reasoning_effort": row.get("reasoning_effort"),
             }
             branches.append(branch)
 
