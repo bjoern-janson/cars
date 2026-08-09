@@ -32,6 +32,10 @@ The first frozen empirical implementation is:
 
 [`experiments/PILOT0_MMLU_PRO.md`](experiments/PILOT0_MMLU_PRO.md)
 
+Its frozen pre-state audit requirements are:
+
+[`experiments/PILOT0_PROVENANCE.md`](experiments/PILOT0_PROVENANCE.md)
+
 ## Motivating conjecture
 
 The research trajectory began from:
@@ -196,7 +200,7 @@ For every sampled item:
 ```text
 initial answer + P(correct)
         ↓
-freeze pre-treatment state
+freeze complete pre-treatment state
         ↓
 retain only objectively wrong initial answers
         ↓
@@ -204,6 +208,8 @@ create continuation branches
         ↓
 randomize within task:
 E0 vs E+
+        ↓
+verify branch hashes against frozen state
         ↓
 objective final-answer correctness V
 ```
@@ -235,9 +241,29 @@ plumbing pilot
 hypothesis evidence
 ```
 
+The complete pre-treatment state is persisted before branch generation with the exact prompt, model/configuration, response metadata, raw confidence, parsed `I`, UTC freeze timestamp, and canonical SHA-256 fingerprint.
+
+Keep explicit:
+
+```text
+same frozen pre-state
++
+randomized treatment
+```
+
+must be auditable rather than asserted.
+
+And:
+
+```text
+provenance integrity
+≠
+scientific validity
+```
+
 If plumbing changes the prompt, parser, model/configuration, treatment, measurement, or scoring logic, freeze the revised implementation before using fresh items for the hypothesis run.
 
-See [`experiments/PILOT0_MMLU_PRO.md`](experiments/PILOT0_MMLU_PRO.md) and [`experiments/README.md`](experiments/README.md).
+See [`experiments/PILOT0_MMLU_PRO.md`](experiments/PILOT0_MMLU_PRO.md), [`experiments/PILOT0_PROVENANCE.md`](experiments/PILOT0_PROVENANCE.md), and [`experiments/README.md`](experiments/README.md).
 
 ## CARS control protocol
 
@@ -459,6 +485,7 @@ experiments/
   README.md
   LLM_ASSAY_PROTOCOL.md
   PILOT0_MMLU_PRO.md
+  PILOT0_PROVENANCE.md
 
 benchmarks/
   seed_cases.jsonl
@@ -478,9 +505,12 @@ scripts/
   validate_cases.py
   run_assay_red_team.py
   run_jump_worlds.py
+  sample_mmlupro.py
   run_pilot0_openai.py
+  freeze_pilot0_prestates.py
   prepare_pilot0_units.py
   randomize_llm_assay.py
+  verify_pilot0_frozen_state.py
   analyze_llm_assay.py
 
 examples/
