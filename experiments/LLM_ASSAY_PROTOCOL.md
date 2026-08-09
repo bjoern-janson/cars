@@ -2,7 +2,11 @@
 
 ## Status
 
-This is the cheapest currently plausible route to real experimental data for the CARS assay.
+This is the general minimal protocol for real experimental data for the CARS assay.
+
+The first concrete implementation is frozen separately in:
+
+- [`PILOT0_MMLU_PRO.md`](PILOT0_MMLU_PRO.md)
 
 It does **not** test a universal law of intelligence. It tests a scoped proposition about heterogeneous causal response in specified model families, task distributions, interventions, outcome measures, and horizons.
 
@@ -76,6 +80,15 @@ I
 ```
 
 A linear scale is not required for the primary ordering test.
+
+Pilot 0 deliberately uses the literal measurement:
+
+```text
+I = pre-treatment error suspicion
+I_i = 1 - P_i(correct)
+```
+
+without claiming that this operationalization is intelligence or correction capacity.
 
 ## Intervention `E`
 
@@ -158,6 +171,8 @@ creates deterministic balanced assignments from a declared seed.
 
 Assignment must occur after all pre-treatment fields used in `I` are frozen.
 
+For Pilot 0, the block is the task plus its single frozen pre-treatment response, with four continuation branches randomized to two `E0` and two `E+` branches.
+
 ## Primary analysis
 
 Prefer a test at the level of the scientific ordering.
@@ -224,6 +239,22 @@ Include where feasible:
 - fixed outcome transformation;
 - repeated runs with fresh task instances;
 - model-family reporting rather than pooled anonymous averages.
+
+## Plumbing versus hypothesis evidence
+
+A small operational pilot may be used to validate parsing, assignment, treatment delivery, and scoring before a confirmatory run.
+
+Keep explicit:
+
+```text
+plumbing success
+↛
+hypothesis evidence
+```
+
+If the plumbing stage changes the model/configuration, prompt, parser, `I`, treatment wording, outcome rule, or assignment logic, freeze the revised implementation and use fresh items for the hypothesis run.
+
+Do not tune those elements against the sign or magnitude of the target interaction.
 
 ## Leakage control
 
