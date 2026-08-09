@@ -170,7 +170,7 @@ def main() -> int:
                 "at least one P_POST differs from stored P_PRE, and at least one matched "
                 "task/replicate has non-identical P_POST values across signals."
             ),
-            "ordering_examined": false,
+            "ordering_examined": False,
         },
         "interpretation_guardrails": [
             "This plumbing gate deliberately ignores whether E0, EU, and EV move in the intended direction.",
