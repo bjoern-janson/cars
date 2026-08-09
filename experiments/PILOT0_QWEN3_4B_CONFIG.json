@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "status": "frozen after zero-budget backend substitution",
+  "scientific_scope": "Qwen3-4B under this exact configuration on sampled MMLU-Pro task-prestate blocks",
+  "model": {
+    "repo_id": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "backend": "transformers-local",
+    "thinking": false
+  },
+  "generation": {
+    "base_seed": 20260809,
+    "do_sample": true,
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "parse_retries": 2,
+    "pre_max_new_tokens": 48,
+    "post_max_new_tokens": 24
+  },
+  "measurement": {
+    "name": "pre-treatment error suspicion",
+    "definition": "I = 1 - P(correct)",
+    "timing": "before treatment assignment is exposed to the model"
+  },
+  "treatment": {
+    "E0": "Review your previous answer and revise if necessary.",
+    "E+": "Verified feedback: your previous answer is incorrect.\nReview your previous answer and revise if necessary."
+  },
+  "outcome": "V = 1 if final answer matches the objective MMLU-Pro key, else 0",
+  "primary": "Delta_tau = tau_high - tau_low",
+  "invariant": "The same model revision, backend, thinking mode, temperature, top_p, top_k, and seed policy must be used for pre, E0, and E+. Only the experimental feedback text may differ between post-treatment arms."
+}
