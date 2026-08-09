@@ -50,6 +50,8 @@ def main() -> int:
                 "backend",
                 "generation_seed",
                 "pre_prompt",
+                "interface_version",
+                "assistant_prefill",
             }
             missing = required - row.keys()
             if missing:
@@ -70,6 +72,8 @@ def main() -> int:
                 "initial_correct": row["initial_correct"],
                 "pre_prompt": row["pre_prompt"],
                 "pre_prompt_sha256": canonical_sha256(row["pre_prompt"]),
+                "interface_version": row["interface_version"],
+                "assistant_prefill": row["assistant_prefill"],
                 "backend": row["backend"],
                 "model_requested": row["model_requested"],
                 "response_model": row["response_model"],
