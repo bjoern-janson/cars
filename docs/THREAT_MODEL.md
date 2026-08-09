@@ -1,253 +1,248 @@
 # Evaluation Threat Model
 
-CARS can appear successful for reasons unrelated to the intended capability. This document lists major threats to prompt-level evaluation, catalyst evaluation, and the recursive correction architecture.
+CARS can appear successful for reasons unrelated to the scientific object under test. This document covers the current causal-responsiveness assay, measurement/invariance testing, CARS prompt evaluation, and historical research surfaces.
 
-## Prompt-length advantage
+## Core threat: scientific object drift
 
-A longer intervention may simply induce more deliberation.
+The same notation can hide a different empirical object if the measurement structure changes.
 
-**Control:** length-conscious generic reasoning baselines and matched-cost comparisons where feasible.
-
-## Vocabulary leakage
-
-Tasks written using CARS-specific language may reward memorizing the intervention rather than exhibiting the intended reasoning behavior.
-
-**Control:** held-out surface language, independent case authorship, and cases that do not name the hidden failure class.
-
-## Judge preference
-
-LLM or human judges may prefer cautious, structured prose even when task performance is unchanged.
-
-**Control:** outcome-based scoring, blinded ratings, behavioral follow-up, and penalties for unnecessary interventions.
-
-## Excessive conservatism
-
-CARS may reduce false updates by refusing to update when it should.
-
-**Control:** paired true/false contradiction cases and missed-correction metrics.
-
-## Excessive unresolved states
-
-Permission to remain unresolved may become a generic escape hatch.
-
-**Control:** tasks where evidence is sufficient for a determinate conclusion.
-
-## Representation aversion
-
-The escalation gate may make models reluctant to revise genuinely inadequate representations.
-
-**Control:** representation-failure cases where within-representation repair is impossible.
-
-## False representation escalation
-
-The architecture may learn that difficult cases are rewarded when treated as representation failures.
-
-**Control:** matched worlds where shallow repair is sufficient, plus explicit false-escalation scoring.
-
-## Residual-mapping error
-
-The current residual representation
+For the current assay:
 
 ```text
-ρ_t = Φ_t(E_t)
+τ(i)
+=
+E[V(e₁)-V(e₀) | I=i]
 ```
 
-may be wrong or may collapse the distinction needed for correction. If evaluation treats `ρ_t` as ground truth, the architecture can certify revisions against its own mistaken partition.
+measurement partly constitutes the identity of `τ`.
 
-**Control:** hidden ground-truth worlds, alternate residual mappings, and cases where the supplied or inferred partition is deliberately misleading.
+**Control:** specify the admissible transformation class before testing invariance. Treat non-licensed transformations as potentially different estimands rather than automatic robustness failures.
 
-## Search-cost inflation
+## Ceiling / floor artifacts
 
-CARS may improve answers only by requesting much more evidence or generating many alternatives.
+Bounded outcome scales can create apparent treatment-effect heterogeneity when units differ in available observable headroom.
 
-**Control:** cost accounting and bounded-information variants.
+A constant latent treatment effect can become strongly positive or negative on a clipped observed scale.
 
-## Shared benchmark assumptions
+**Control:** dynamic-range analysis, headroom diagnostics, bounded-scale modeling, prespecified measurement choice, and synthetic worlds with known constant latent effects.
 
-Internally authored tasks may encode the same worldview as the prompt, catalyst, or research notes.
+## Nonlinear outcome remeasurement
 
-**Control:** external authors, structurally independent task sources, adversarial benchmark design, and cross-generator evaluation.
+A strictly increasing nonlinear transformation can change the sign or shape of additive treatment-effect heterogeneity.
 
-## Model-specific intervention interaction
-
-CARS may exploit instruction-following or notation priors of one model family.
-
-**Control:** cross-model evaluation and explicit model/version reporting.
-
-## Post-outcome intervention tuning
-
-Changing a prompt or catalyst after seeing failures can overfit a test suite and make results hard to interpret.
-
-**Control:** record the exact intervention text or commit. Use a new variant label for substantive post-outcome changes when comparison matters.
-
-The current deployable catalyst is intentionally frozen so the next change should be evidence-driven rather than aesthetic.
-
-## Narrative masking
-
-A model may use CARS terminology correctly while making the same substantive error.
-
-**Control:** score behavior, predictions, interventions, and later transfer rather than protocol recitation.
-
-# Catalyst-specific threats
-
-## Semantic collision
-
-Compact symbols may map onto strong pre-existing ontologies unrelated to CARS. A model can recover equation structure while interpreting `E`, `V`, `W`, `ρ`, or other symbols as exit, voice, weights, resistance, energy, or similarly plausible alternatives.
-
-**Control:** semantically typed catalyst symbols, blind ontology-recovery scoring, and comparison against earlier opaque notation.
-
-## Syntactic recovery mistaken for semantic recovery
-
-A model may correctly identify arrows, functions, and non-implications while assigning the wrong object types.
-
-**Control:** score ontology and relation recovery separately. A structurally coherent parse with the wrong ontology is not full decoding success.
-
-## Legend leakage
-
-Providing a symbol legend, CARS provenance, expected ontology labels, or prior interpretations turns a blind-decoding test into a guided explanation test.
-
-**Control:** keep blind conditions free of external legend/provenance and record exactly what context the model received.
-
-## Rubric leakage through the question
-
-A decoding prompt can accidentally name the distinctions it is supposed to test, such as “residual,” “candidate revision,” or “authority.”
-
-**Control:** use neutral decoding instructions and keep expected categories evaluator-side.
-
-## Scoring unencoded structure
-
-Evaluators may penalize a catalyst for failing to recover distinctions the tested variant never encoded.
-
-**Control:** score only the semantic content actually present in the intervention condition.
-
-## Equation/prose confounding
-
-If the frozen catalyst beats controls, the gain may come from the prose semantics rather than the equation, or from the equation's semantic typing rather than the prose.
-
-**Control:** equation-only, semantics-only, full-catalyst, and generic-careful-reasoning conditions.
-
-## Decode/execute conflation
-
-A model may explain the catalyst correctly but fail to use it on tasks.
-
-**Control:** score blind decoding and execution in separate stages.
-
-## Execution/efficacy conflation
-
-A model may follow the catalyst faithfully without improving substantive outcomes.
-
-**Control:** report execution fidelity separately from task performance and correction-capacity measures.
-
-# Architecture-specific threats
-
-## Validation-environment leakage
-
-A supposedly held-out validation world may contain information already available during candidate generation or selection.
-
-**Control:** define the selection-information boundary explicitly and exclude information capable of changing candidate generation or selection from later independent-validation claims.
-
-## Validator tuning after selection
-
-Even when the validation environment is unseen, the validation procedure `𝒱_t` may be chosen or tuned after inspecting candidate revisions.
-
-This creates a self-validating loop:
+**Control:** preserve the measurement boundary:
 
 ```text
-candidate selection
-→ validator tuning
-→ favorable validation outcome
+V' = aV+b, a>0
+→ licensed affine-equivalent transformation
+
+general nonlinear monotone g(V)
+→ generally a different additive estimand
 ```
 
-**Control:** require design-level insulation of both the validation procedure and validation environment from `I_sel,t`, or explicitly downgrade the evidence status.
+Do not claim ordinal invariance for an additive CATE.
 
-## Statistical independence confused with design independence
+## Moderator reparameterization / linear-model confusion
 
-A validation sample can be statistically unrelated yet still be selected or evaluated using knowledge of the candidate.
+A strictly increasing nonlinear transformation of `I` preserves the primitive ordering hypothesis but may destroy a linear `τ(i)=τ₀+δi` representation.
 
-**Control:** document methodological/design insulation:
+**Control:** test monotonicity or ordered CATE contrasts directly. Treat `δ` as a representation, not the scientific object.
+
+## Prognostic/predictive conflation
+
+`I` may strongly predict baseline or future outcome level without modifying the causal treatment effect.
+
+**Control:** randomized treatment assignment, constant-effect adversarial worlds, explicit separation of ordinary prognostic association from `I×E` moderation.
+
+Keep:
 
 ```text
-(𝒱_t, W_t^ind) ⟂_design I_sel,t
+β ≠ 0
+↛
+δ ≠ 0
 ```
 
-rather than asserting unsupported probabilistic independence.
+## Treatment confounding
 
-## Adaptive holdout reuse
+If treatment is not genuinely randomized or otherwise identified, baseline structure can manufacture apparent heterogeneous causal response.
 
-A validation benchmark may be independent for one transition but become selection information for later transitions once its results are observed.
+**Control:** randomization where feasible, assignment audits, positivity checks, attrition analysis, and deliberately confounded negative-control worlds.
 
-**Control:** treat exposed validation evidence as part of later selection history. Use renewable validation environments and a separate audit layer for lineage-level claims.
+## Headroom mistaken for responsiveness
 
-## Recursive lineage overfitting
+Higher or lower `I` groups can differ in recoverable deficit, task difficulty, saturation, or baseline state.
 
-Repeated successor selection can gradually optimize the lineage to a finite family of validation environments even when each local step appears clean.
+**Control:** measure baseline outcome or an appropriate analogue, inspect response range, use matched/headroom-aware designs where scientifically justified, and avoid interpreting raw treatment-effect differences as intrinsic responsiveness without these checks.
 
-**Control:** fresh validation environments, cross-generator transfer, and final audit cases unavailable to the lineage.
+## Generic plasticity mistaken for discriminative correction
 
-## CorrCap gaming
+A system may respond more strongly to any intervention as `I` rises.
 
-A correction-capacity metric may reward proxies such as verbosity, intervention count, uncertainty declarations, representation changes, or abstention.
-
-**Control:** negative-control worlds, restraint scoring, matched-cost conditions, and construct-validity tests for the metric itself.
-
-## Construct/metric collapse
-
-The theory may implicitly treat `CorrCap` as identical to the higher-level `C_improve` construct it is intended to operationalize.
-
-**Control:** preserve:
+**Control:** independently establish intervention status and compare:
 
 ```text
-C_improve ≠ CorrCap
+E⁺ warranted
+E⁰ neutral
+E⁻ misleading
 ```
 
-and test whether CorrCap tracks independent indicators of future correctability rather than only theory-selected proxies.
+Keep responsiveness and specificity as separate hypotheses.
 
-## Global-average dilution
+## Intervention-status circularity
 
-A successor may improve average performance while remaining worse on the residual that triggered revision.
+If the tested system itself determines which intervention counts as warranted, the specificity test can self-validate.
 
-**Control:** require residual-local reporting rather than relying only on aggregate performance.
+**Control:** establish `E⁺/E⁰/E⁻` using criteria independent of the tested system and independent of the response used to score it.
 
-## Arbitrary regression tolerance
+## Measurement correlation mistaken for equivalence
 
-A successor may be declared acceptable because the tolerated regression threshold was chosen after outcomes were seen.
+Two instruments can correlate highly while disagreeing on the exact treatment/moderator contrast.
 
-**Control:** predeclare non-inferiority or material-regression margins before validation.
+**Control:** independent interval-equivalence calibration and residual diagnostics:
 
-## Successor regression
+```text
+r = V^B - (aV^A+b)
+r ~ I + E + I×E
+```
 
-A revision can repair the triggering residual while damaging previously reliable correction behavior.
+A nonzero residual `I×E` term is a direct warning that the instruments disagree where the assay lives.
 
-**Control:** regression suites over unaffected cases and explicit tradeoff reporting. Local improvement is not sufficient for unrestricted adoption.
+## Calibration leakage
 
-## False dependency discovery
+If the affine link between instruments is tuned using the same treatment-effect data later used to test invariance, measurement equivalence can be manufactured post hoc.
 
-Conditions present during successful correction may be mistaken for necessary dependencies.
+**Control:** estimate and freeze calibration on independent data before treatment-effect analysis.
 
-**Control:** removal, perturbation, substitution, and transfer tests; include incidental and redundant conditions.
+## Shape-model misspecification
 
-## Spurious functional equivalence
+A nonlinear monotonic `τ(i)` can be misrepresented by a linear interaction coefficient.
 
-Two implementations may appear substitutable in a narrow test while differing on hidden or later-relevant functions.
+**Control:** inspect nonparametric or flexible CATE shape, preregister the shape test, and do not interpret `δ≈0` as monotonicity failure when the linear representation is inadequate.
 
-**Control:** validate substitution over the declared function and transfer scope; do not promote local substitutability into universal equivalence.
+## Insufficient power / restricted moderator range
 
-## Benchmark-generator dependence
+A true positive ordering can be hidden by weak treatment contrast, measurement noise, narrow `I` support, or small sample size.
 
-Success across many instances from one generator may reflect adaptation to the generator rather than general correction capacity.
+**Control:** sensitivity analysis, prespecified smallest effect of interest, uncertainty intervals, and explicit support reporting.
 
-**Control:** independently authored generators, structurally different task families, and external or natural failure cases where feasible.
+## Multiple-horizon fishing
 
-## Invalid self-certification
+Testing many horizons and reporting only the positive one can manufacture a persistence narrative.
 
-Because `Φ_t`, `G_t`, and `𝒱_t` may themselves be revised, the architecture can accidentally let a revised evaluator certify its own validity.
+**Control:** preregister horizons or multiplicity handling. Treat each `h` as part of the estimand.
 
-**Control:** the object being revised must not supply the sole authority for its successor. Apply the same leave/adopt separation and design-independent validation requirement to correction-surface revisions.
+## Transport overreach
+
+A result under one intervention, population, domain, or measurement system may not hold elsewhere.
+
+**Control:** transport one boundary at a time where feasible and report exact scope.
+
+## Semantic overinterpretation of I/E/V
+
+Models and researchers may infer familiar meanings from notation—`I=information/intelligence`, `V=value`, `E=environment/evidence`—that are not licensed by the assay definition.
+
+**Control:** define operational referents in the benchmark and keep semantic interpretation downstream of evidence.
+
+## Hypothesis/theorem collapse
+
+A model can recognize the CATE structure and then incorrectly infer that:
+
+```text
+∂τ(i)/∂i > 0
+```
+
+follows from the definition.
+
+**Control:** include zero-prior-context reasoning checks where the only correct answer is that monotonicity is an empirical/model-specific question.
+
+## Prompt-level threats
+
+### Prompt-length advantage
+
+A longer CARS intervention may simply induce more deliberation.
+
+**Control:** generic careful-reasoning baselines and cost accounting.
+
+### Vocabulary leakage
+
+Tasks using CARS terminology may reward protocol recognition rather than better reasoning.
+
+**Control:** held-out language and behavior-based scoring.
+
+### Judge preference
+
+Structured caution can be preferred stylistically without substantive improvement.
+
+**Control:** blinded/outcome-based scoring, transfer probes, penalties for unnecessary intervention.
+
+### Excessive conservatism
+
+CARS may reduce false updates by failing to update when evidence is sufficient.
+
+**Control:** matched true/false contradiction cases and missed-correction metrics.
+
+### Unresolved-state abuse
+
+Permission to remain unresolved can become an escape hatch.
+
+**Control:** cases where evidence clearly licenses a determinate answer.
+
+### False representation escalation
+
+Difficult cases may be mislabeled as representation failures.
+
+**Control:** matched shallow-repair worlds and explicit over-escalation scoring.
+
+## Historical catalyst threats
+
+Historical catalyst tests remain vulnerable to:
+
+- semantic collision;
+- syntactic recovery mistaken for semantic recovery;
+- legend/rubric leakage;
+- equation/prose confounding;
+- decoding/execution conflation.
+
+Use `eval/CATALYST_SCORING.md` if those experiments are reactivated.
+
+These are no longer the current empirical frontier.
+
+## Historical recursive-architecture threats
+
+Historical recursive-architecture tests remain vulnerable to:
+
+- residual-mapping error;
+- candidate-generation blind spots;
+- validator tuning after selection;
+- adaptive holdout reuse;
+- recursive lineage overfitting;
+- metric gaming;
+- global-average dilution;
+- arbitrary regression tolerances;
+- invalid self-certification.
+
+Use `eval/ARCHITECTURE_SCORING.md` if those experiments are reactivated.
 
 ## Falsification target
 
-The strongest adversarial objective is:
+The current adversarial objective is:
 
-> **Construct conditions under which CARS appears to earn correction authority without actually increasing independently validated correction capacity.**
+> **Construct conditions under which the assay reports that higher `I` orders larger causal responsiveness even though the true target effect is flat, opposite, or undefined under the claimed measurement equivalence.**
 
-If such conditions reliably manufacture positive results, the authority architecture has failed even if ordinary task performance looks impressive.
+The assay should fail closed: when measurement identity, causal identification, or estimator adequacy is unresolved, report the run as changed-estimand or inconclusive rather than promoting a positive causal claim.
+
+## Localization rule
+
+When a contradiction appears, inspect:
+
+```text
+1. intervention assignment / causal identification
+2. measurement equivalence / saturation / error
+3. scientific-object identity
+4. shape representation
+5. estimator / statistical specification
+6. implementation
+7. substantive proposition
+```
+
+Do not let the diagnostic ladder become a shield. If a licensed transformation, reliable measurement, identified causal contrast, adequate estimator, and opposite ordering all survive scrutiny, the contradiction reaches the scientific proposition.
