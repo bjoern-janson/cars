@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "status": "frozen before any A5 outcome generation",
+  "study": "Pilot 0 A5: randomized prior-state field/prose encoding localization",
+  "scope": "Fresh causal component test of whether field/value versus sentence/prose encoding of the same prior answer and P_CORRECT changes transition behavior when the surrounding canonical inline scaffold, single-user-turn topology, semantic state, signal text, revision opportunity, model, generation, and scoring are held fixed. A5 decomposes the broad A4c inline-rendering effect at the shallowest state-encoding boundary; it is not a pure lexical test and does not introduce a global correction construct.",
+  "lineage": {
+    "A3": "CAUSAL_INTERFACE_FORM_SIGNAL on T_change, T_instability, and T_verified",
+    "A4a": "conversational topology causal on T_verified only; T_change and T_instability practically small at +/-0.05",
+    "A4b": "historical-prestate rendering causal on T_change only; T_instability and T_verified practically small at +/-0.05",
+    "A4c": "legacy-versus-canonical inline rendering causal on T_change, T_instability, and T_verified; all point estimates exceeded 0.05; analyzer required documented post-generation audit repair only",
+    "A5_object": "isolate prior-state field/value encoding versus prose sentence encoding while keeping the rest of the canonical inline scaffold fixed",
+    "A1_V": "does not exist",
+    "B1_sensitivity": "deferred",
+    "CARS": "frozen"
+  },
+  "population": {
+    "raw_n": 400,
+    "sample_seed": 20260819,
+    "eligibility": "initially-wrong frozen prestates only",
+    "freshness": "exclude every prior Pilot 0 plumbing, Run 1, Run 2, B0-v1, B0-v2, B1, A3, A4a, A4b, A4c, and any A5 plumbing tasks from the confirmatory A5 cohort"
+  },
+  "invariants": {
+    "model": "Qwen/Qwen3-4B",
+    "model_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "generation_base_seed": 20260809,
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "parse_retries": 2,
+    "post_max_new_tokens": 24,
+    "assistant_prefill": "ANSWER: ",
+    "choice_constraint": "first-generated-token-valid-option-letter",
+    "thinking": "disabled",
+    "outcome": "final objective MMLU-Pro correctness",
+    "revision_horizon": "one post-signal revision opportunity",
+    "conversation_topology": "one user message -> assistant answer prefill"
+  },
+  "fixed_scaffold": {
+    "question_section": "QUESTION:\n<exact rendered question/options>",
+    "state_section_label": "PREVIOUS STATE:",
+    "signal_section": "SIGNAL:\n<exact E0 or EV signal text>",
+    "revision_section": "REVISION REQUEST:\n<exact common revision instruction>",
+    "section_order": ["QUESTION", "PREVIOUS STATE", "SIGNAL", "REVISION REQUEST"],
+    "section_separator": "two newline characters"
+  },
+  "encoding_factor": {
+    "R_fields": {
+      "state_body": "ANSWER: <exact frozen initial answer>\nP_CORRECT: <exact frozen p_correct rendered to six decimals>",
+      "interpretation": "explicit field/value encoding inherited from A4c canonical inline rendering"
+    },
+    "R_prose": {
+      "state_body": "Your previous answer was <exact frozen initial answer>. Before feedback, you assigned probability <exact frozen p_correct rendered to six decimals> that this answer was correct.",
+      "interpretation": "sentence/prose encoding using the prior-state wording inherited from A4c legacy inline rendering, inserted inside the same PREVIOUS STATE section"
+    },
+    "causal_object": "field/value versus prose-sentence encoding of the same prior answer and P_CORRECT inside an otherwise identical canonical inline scaffold",
+    "semantic_state_identity_requirements": [
+      "same frozen question/options",
+      "same realized initial answer",
+      "same frozen P_CORRECT numeric value",
+      "same benchmark key",
+      "same E0 or EV signal text",
+      "same revision instruction",
+      "same section labels outside the state body",
+      "same section order and separators",
+      "same initially-wrong frozen prestate identity"
+    ],
+    "allowed_difference": "only the body of the PREVIOUS STATE section may differ: explicit field/value syntax versus the prespecified prose sentence",
+    "not_authorized_as": [
+      "complete explanation of A4c",
+      "pure lexical mechanism identification",
+      "normative interface quality",
+      "global correction capacity"
+    ]
+  },
+  "factors": {
+    "encoding": {
+      "R_fields": "field/value prior-state encoding",
+      "R_prose": "prose prior-state encoding"
+    },
+    "signal": {
+      "E0": "Signal status: No new information is available about whether your previous answer is correct.",
+      "EV": "Signal status: It has been verified that your previous answer is incorrect."
+    },
+    "common_revision_instruction": "Review your previous answer and revise if necessary.\nReturn exactly one line: ANSWER: <one option letter>"
+  },
+  "cells": ["RF_E0", "RF_EV", "RP_E0", "RP_EV"],
+  "assignment": {
+    "blocking_unit": "one initially-wrong frozen prestate identified by task_id",
+    "branches_per_block": 8,
+    "branches_per_cell_per_block": 2,
+    "randomization_seed": 20260809,
+    "assignment_rule": "create eight branch units per eligible prestate and randomize the four cell labels within block with exact 2/2/2/2 balance",
+    "rng_rule": "each branch id fixes its own prespecified generation base seed via stable_seed(generation_base_seed, 'a5::' + branch_id); encoding and signal labels never enter the seed function",
+    "rng_interpretation": "the same seed-assignment rule applies to every cell. Different rendered token sequences need not consume or realize identical stochastic draws. No claim of shared realized randomness is made."
+  },
+  "primary_estimands": {
+    "Delta_R_change": "mean over blocks of [T_change(R_prose,E0) - T_change(R_fields,E0)]",
+    "Delta_R_instability": "mean over blocks of [T_instability(R_prose,E0) - T_instability(R_fields,E0)]",
+    "Delta_R_verified": "mean over blocks of [T_verified(R_prose,EV) - T_verified(R_fields,EV)]"
+  },
+  "transition_definitions": {
+    "T_change": "within an encoding arm's two E0 branches, fraction whose final answer differs from the realized initial wrong answer",
+    "T_instability": "within an encoding arm's two E0 branches, 1 iff their final answers differ, else 0",
+    "T_verified": "within an encoding arm's two EV branches, fraction ending on the objective benchmark key",
+    "Q_N": "within an encoding arm, pooled neutral correct revisions divided by pooled neutral revisions; conditional on revision and not a primary endpoint"
+  },
+  "secondary_estimands": {
+    "Q_N_encoding_difference": "Q_N(R_prose) - Q_N(R_fields), inferentially reported only if each encoding arm has at least 20 neutral revision events",
+    "tau_E_fields": "mean(V | R_fields,EV) - mean(V | R_fields,E0)",
+    "tau_E_prose": "mean(V | R_prose,EV) - mean(V | R_prose,E0)",
+    "Gamma_RE": "tau_E_prose - tau_E_fields; secondary encoding-by-signal interaction",
+    "G_verified_minus_neutral_by_encoding": "same within-encoding EV-minus-E0 final-correction contrast; transition-specific only and never a representation indicator"
+  },
+  "analysis": {
+    "unit": "frozen prestate block; generated branches are never treated as independent scientific observations",
+    "bootstrap": 5000,
+    "bootstrap_seed": 20260809,
+    "permutations": 5000,
+    "permutation_seed": 20260809,
+    "alpha_familywise": 0.05,
+    "primary_randomization_tests": "For Delta_R_change and Delta_R_instability, shuffle R_fields/R_prose labels only among the four E0 branches within each block preserving 2/2. For Delta_R_verified, shuffle R_fields/R_prose labels only among the four EV branches within each block preserving 2/2. Recompute block-level endpoints after every shuffle.",
+    "primary_multiplicity": "Holm-adjust the three two-sided blocked-randomization p-values; these are the only primary p-values.",
+    "effect_intervals": "95% whole-block bootstrap intervals for each primary block-level mean contrast",
+    "practical_equivalence_margin": 0.05,
+    "Q_N_min_revision_events_per_encoding": 20,
+    "Q_N_analysis": "If both encoding arms meet the revision-event threshold, report pooled Q_N difference with a 95% whole-block bootstrap interval; otherwise mark not adjudicable. Q_N does not enter the primary multiplicity family or A5 summary gate.",
+    "secondary_interaction": "Report Gamma_RE point estimate and 95% whole-block bootstrap interval; no secondary interaction p-value and no construct interpretation."
+  },
+  "decision_gate": {
+    "CAUSAL_PRIOR_STATE_ENCODING_SIGNAL": "At least one of the three Holm-adjusted primary p-values is < 0.05. Report exactly which transition dimensions earned the signal and their signs/magnitudes.",
+    "PRIOR_STATE_ENCODING_WEAKENED_AT_A2_SCALE": "No primary Holm-adjusted p-value is < 0.05 and all three primary 95% bootstrap intervals lie entirely inside [-0.05,+0.05]. This weakens prior-state field-versus-prose encoding as the active A4c subcomponent at the inherited A2 practical scale; it does not invalidate A4c.",
+    "A5_UNRESOLVED": "Neither of the above gates is satisfied.",
+    "no_omnibus_construct": "There is no global correction-capacity score and no requirement that all transition dimensions move together."
+  },
+  "interpretation_guardrails": [
+    "A5 tests prior-state field/value versus prose encoding only; it does not test which encoding is normatively better.",
+    "Question, PREVIOUS STATE label, signal section, revision section, section order, separators, state values, and intervention semantics are held fixed; only the state body encoding may differ.",
+    "A causal randomization result establishes a nonzero effect but does not by itself establish an effect exceeding the +/-0.05 practical threshold; causal difference and practical magnitude are separate gates.",
+    "A causal effect on one transition dimension does not imply effects on the others.",
+    "A null primary p-value alone does not weaken the component explanation; the frozen practical-equivalence gate is additionally required.",
+    "Cross-experiment A4c and A5 magnitudes are not algebraically decomposable because cohorts and manipulations differ.",
+    "Q_N remains conditional on revision and cannot be inferred when revision events are insufficient.",
+    "T_instability retains its exact two-replicate definition and has no inherent positive or negative normative valence.",
+    "Gamma_RE is a secondary factorial interaction, not a latent trait or new construct.",
+    "G_verified_minus_neutral is transition-specific and never a representation indicator.",
+    "If A5 is practically small across the A4c endpoints, the next localization should target the remaining outer-section framing differences rather than immediately invoking interaction.",
+    "No A5 result automatically updates B, C, H1, I1, S, or CARS; any such revision requires a separate earned update step."
+  ]
+}
