@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "status": "frozen before any A3 outcome generation",
+  "study": "Pilot 0 A3: randomized interface-form bundle localization",
+  "scope": "Fresh causal test of whether post-prestate interface presentation form changes transition behavior when model, frozen prestate, signal text, revision opportunity, generation, and scoring are held fixed. A3 tests interface form, not whether either interface is better and not a global correction trait.",
+  "lineage": {
+    "A2_D": "historical transition topology returned INTERFACE_CONDITIONED_PLAUSIBLE",
+    "causal_gap": "A2-D compared historical cohorts and cannot attribute the profile difference causally to interface form",
+    "A3_object": "randomize legacy-form versus reconstructed-form presentation under identical E0/EV signal text",
+    "B1_sensitivity": "deferred",
+    "A1_V": "does not exist",
+    "CARS": "frozen"
+  },
+  "population": {
+    "raw_n": 400,
+    "sample_seed": 20260815,
+    "eligibility": "initially-wrong frozen prestates only",
+    "freshness": "exclude every prior Pilot 0 plumbing, Run 1, Run 2, B0-v1, B0-v2, B1, and any A3 plumbing tasks from the confirmatory A3 cohort"
+  },
+  "invariants": {
+    "model": "Qwen/Qwen3-4B",
+    "model_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "generation_base_seed": 20260809,
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "parse_retries": 2,
+    "post_max_new_tokens": 24,
+    "assistant_prefill": "ANSWER: ",
+    "choice_constraint": "first-generated-token-valid-option-letter",
+    "thinking": "disabled",
+    "outcome": "final objective MMLU-Pro correctness",
+    "revision_horizon": "one post-signal revision opportunity"
+  },
+  "factors": {
+    "interface": {
+      "J_L": "legacy-form presentation: rendered question/options plus explicit restatement of realized previous answer and frozen P_CORRECT in one new user prompt; no reconstructed prior assistant turn",
+      "J_R": "reconstructed-form presentation: exact frozen pre_prompt as prior user turn plus exact frozen raw_model_output as prior assistant turn, followed by one new signal/revision user message",
+      "boundary": "J_L reproduces the legacy presentation form but is not word-for-word identical to historical RUN1/RUN2 because A3 deliberately uses identical E0/EV signal text across J_L and J_R"
+    },
+    "signal": {
+      "E0": "Signal status: No new information is available about whether your previous answer is correct.",
+      "EV": "Signal status: It has been verified that your previous answer is incorrect."
+    },
+    "common_revision_instruction": "Review your previous answer and revise if necessary.\nReturn exactly one line: ANSWER: <one option letter>"
+  },
+  "cells": [
+    "JL_E0",
+    "JL_EV",
+    "JR_E0",
+    "JR_EV"
+  ],
+  "assignment": {
+    "blocking_unit": "one initially-wrong frozen prestate identified by task_id",
+    "branches_per_block": 8,
+    "branches_per_cell_per_block": 2,
+    "randomization_seed": 20260809,
+    "assignment_rule": "create eight branch units per eligible prestate and randomize the four cell labels within block with exact 2/2/2/2 balance",
+    "rng_rule": "each branch id fixes its own prespecified generation base seed via stable_seed(generation_base_seed, 'a3::' + branch_id); interface and signal labels never enter the seed function",
+    "rng_interpretation": "the same seed-assignment rule applies to every cell. Different prompt token sequences need not consume or realize identical stochastic draws even when governed by the same pseudorandom mechanism. No claim of shared realized randomness is made."
+  },
+  "interface_messages": {
+    "JL": "rendered question/options + explicit previous-answer/P_CORRECT restatement + exact signal text + exact common revision instruction",
+    "JR": "exact frozen conversation history + exact signal text + exact common revision instruction",
+    "signal_identity_constraint": "The E0 and EV signal strings are byte-for-byte identical across J_L and J_R.",
+    "allowed_interface_difference": "Only the post-prestate presentation/history form may differ between J_L and J_R."
+  },
+  "primary_estimands": {
+    "Delta_J_change": "mean over blocks of [T_change(J_R,E0) - T_change(J_L,E0)]",
+    "Delta_J_instability": "mean over blocks of [T_instability(J_R,E0) - T_instability(J_L,E0)]",
+    "Delta_J_verified": "mean over blocks of [T_verified(J_R,EV) - T_verified(J_L,EV)]"
+  },
+  "transition_definitions": {
+    "T_change": "within an interface's two E0 branches, fraction whose final answer differs from the realized initial wrong answer",
+    "T_instability": "within an interface's two E0 branches, 1 iff their final answers differ, else 0",
+    "T_verified": "within an interface's two EV branches, fraction ending on the objective benchmark key",
+    "Q_N": "within an interface, pooled neutral correct revisions divided by pooled neutral revisions; conditional on revision and not a primary endpoint"
+  },
+  "secondary_estimands": {
+    "Q_N_interface_difference": "Q_N(J_R) - Q_N(J_L), reported inferentially only if each interface has at least 20 neutral revision events",
+    "tau_E_L": "mean(V | J_L,EV) - mean(V | J_L,E0)",
+    "tau_E_R": "mean(V | J_R,EV) - mean(V | J_R,E0)",
+    "Gamma_JE": "tau_E_R - tau_E_L; secondary interface-by-signal interaction",
+    "G_verified_minus_neutral_by_interface": "same within-interface EV-minus-E0 final-correction contrast, retained as transition-specific causal contrast and never as a representation indicator"
+  },
+  "analysis": {
+    "unit": "frozen prestate block; generated branches are never treated as independent scientific observations",
+    "bootstrap": 5000,
+    "bootstrap_seed": 20260809,
+    "permutations": 5000,
+    "permutation_seed": 20260809,
+    "alpha_familywise": 0.05,
+    "primary_randomization_tests": "For Delta_J_change and Delta_J_instability, shuffle J_L/J_R labels only among the four E0 branches within each block preserving 2/2. For Delta_J_verified, shuffle J_L/J_R labels only among the four EV branches within each block preserving 2/2. Recompute block-level endpoints after every shuffle.",
+    "primary_multiplicity": "Holm-adjust the three two-sided blocked-randomization p-values; these are the only primary p-values.",
+    "effect_intervals": "95% whole-block bootstrap intervals for each primary block-level mean contrast",
+    "practical_equivalence_margin": 0.05,
+    "Q_N_min_revision_events_per_interface": 20,
+    "Q_N_analysis": "If both interfaces meet the revision-event threshold, report pooled Q_N difference with a 95% whole-block bootstrap interval; otherwise mark not adjudicable. Q_N does not enter the primary multiplicity family or A3 summary gate.",
+    "secondary_interaction": "Report Gamma_JE point estimate and 95% whole-block bootstrap interval; no secondary interaction p-value and no construct interpretation."
+  },
+  "decision_gate": {
+    "CAUSAL_INTERFACE_FORM_SIGNAL": "At least one of the three Holm-adjusted primary p-values is < 0.05. Report exactly which transition dimensions earned the signal and their signs/magnitudes.",
+    "INTERFACE_FORM_WEAKENED_AT_A2_SCALE": "No primary Holm-adjusted p-value is < 0.05 and all three primary 95% bootstrap intervals lie entirely inside [-0.05,+0.05]. This weakens the interface-form explanation at the A2 practical scale but does not prove zero effect or eliminate other historical interface/context differences.",
+    "A3_UNRESOLVED": "Neither of the above gates is satisfied.",
+    "no_omnibus_construct": "There is no global correction-capacity score and no requirement that all transition dimensions move together."
+  },
+  "interpretation_guardrails": [
+    "A3 tests whether interface presentation form changes transition behavior; it does not test which interface is normatively better.",
+    "A causal effect on one transition dimension does not imply effects on the others.",
+    "A null primary p-value alone does not weaken the interface explanation; the frozen practical-equivalence gate is additionally required.",
+    "Q_N remains conditional on revision and cannot be inferred when revision events are insufficient.",
+    "T_instability retains its exact two-replicate definition and has no inherent positive or negative normative valence.",
+    "Gamma_JE is a secondary factorial interaction, not a latent trait or new construct.",
+    "G_verified_minus_neutral is transition-specific and never a representation indicator.",
+    "A3 J_L is legacy-form under common A3 signal semantics, not an exact replay of historical RUN1/RUN2 wording.",
+    "A3 does not decompose the interface bundle into components. Component ablation is permitted only after a causal interface-form signal is earned.",
+    "No A3 result automatically updates B, C, H1, I1, S, or CARS; any such revision requires a separate earned update step."
+  ]
+}
