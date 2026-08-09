@@ -298,14 +298,99 @@ def attack_discriminative_responsiveness(rng: random.Random, n: int) -> AttackRe
     )
 
 
+def attack_broken_randomization(rng: random.Random, n: int) -> AttackResult:
+    z = [rng.gauss(0, 1) for _ in range(n)]
+    i_vals = [0.85 * zz + rng.gauss(0, 0.35) for zz in z]
+    baseline = [40 + 12 * zz + 8 * zz * zz + rng.gauss(0, 4) for zz in z]
+    e_vals = []
+    for zz in z:
+        propensity = 1.0 / (1.0 + math.exp(-1.5 * zz))
+        e_vals.append(1 if rng.random() < propensity else 0)
+    y = [b + 5 * e + rng.gauss(0, 4) for b, e in zip(baseline, e_vals)]
+    unadj = fit_interaction(i_vals, e_vals, y)
+    adj = fit_interaction(i_vals, e_vals, y, baseline)
+    ok = abs(unadj.delta_ie) > 5.0 and abs(adj.delta_ie) < 0.25
+    return AttackResult(
+        "broken_randomization_confounding",
+        "survived" if ok else "failed",
+        {
+            "delta_unadjusted": unadj.delta_ie,
+            "delta_baseline_adjusted": adj.delta_ie,
+            "treated_fraction": sum(e_vals) / n,
+            "corr_I_baseline": corr(i_vals, baseline),
+        },
+        "When treatment assignment depends on latent baseline structure, a constant true effect can produce very large false moderation.",
+    )
+
+
+def attack_high_correlation_disagreement(rng: random.Random, n: int) -> AttackResult:
+    i_vals = [rng.gauss(0, 1) for _ in range(n)]
+    e_vals = [rng.randrange(2) for _ in range(n)]
+    base = [100 + 15 * i + rng.gauss(0, 2) for i in i_vals]
+    v_a = [
+        b + 5 * e + 0.6 * i * e + rng.gauss(0, 1)
+        for b, e, i in zip(base, e_vals, i_vals)
+    ]
+    v_b = [
+        3 * va + 7 - 2.4 * i * e + rng.gauss(0, 0.5)
+        for va, i, e in zip(v_a, i_vals, e_vals)
+    ]
+    delta_a = fit_interaction(i_vals, e_vals, v_a).delta_ie
+    delta_b = fit_interaction(i_vals, e_vals, v_b).delta_ie
+    residual = [vb - (3 * va + 7) for va, vb in zip(v_a, v_b)]
+    residual_delta = fit_interaction(i_vals, e_vals, residual).delta_ie
+    agreement = corr(v_a, v_b)
+    ok = agreement > 0.99 and delta_a > 0.3 and delta_b < -0.3 and residual_delta < -1.5
+    return AttackResult(
+        "high_correlation_causal_disagreement",
+        "survived" if ok else "failed",
+        {
+            "corr_VA_VB": agreement,
+            "delta_A": delta_a,
+            "delta_B": delta_b,
+            "residual_delta_IE": residual_delta,
+        },
+        "Very high ordinary correlation must not be treated as evidence that two instruments preserve the same heterogeneous causal contrast.",
+    )
+
+
+def attack_nonlinear_i_reparameterization(rng: random.Random, n: int) -> AttackResult:
+    i_vals = [rng.random() for _ in range(n)]
+    i_prime = [math.exp(4 * i) for i in i_vals]
+    e_vals = [rng.randrange(2) for _ in range(n)]
+    y = [
+        20 + 2 * i + 3 * e + 0.8 * i * e + rng.gauss(0, 1)
+        for i, e in zip(i_vals, e_vals)
+    ]
+    delta_i = fit_interaction(i_vals, e_vals, y).delta_ie
+    delta_ip = fit_interaction(i_prime, e_vals, y).delta_ie
+    _, _, ordering_i = quantile_strata_effect(i_vals, e_vals, y)
+    _, _, ordering_ip = quantile_strata_effect(i_prime, e_vals, y)
+    ok = ordering_i > 0.3 and abs(ordering_i - ordering_ip) < 1e-12 and abs(delta_i - delta_ip) > 0.5
+    return AttackResult(
+        "nonlinear_I_reparameterization",
+        "survived" if ok else "failed",
+        {
+            "tau_high_minus_low_I": ordering_i,
+            "tau_high_minus_low_Iprime": ordering_ip,
+            "delta_I": delta_i,
+            "delta_Iprime": delta_ip,
+        },
+        "Strictly increasing reparameterization of I preserves the primitive ordering while the numerical linear interaction coefficient can change substantially.",
+    )
+
+
 ATTACKS: list[Callable[[random.Random, int], AttackResult]] = [
     attack_constant_effect,
     attack_ceiling,
     attack_nonlinear_outcome,
     attack_affine_invariance,
     attack_baseline_randomization,
+    attack_broken_randomization,
     attack_generic_plasticity,
     attack_discriminative_responsiveness,
+    attack_high_correlation_disagreement,
+    attack_nonlinear_i_reparameterization,
 ]
 
 
