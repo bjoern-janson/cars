@@ -82,6 +82,33 @@ The post-treatment design uses four continuation branches per eligible block, ba
 2 × E+
 ```
 
+#### Sample MMLU-Pro tasks
+
+The repository includes a standard-library sampler using the Hugging Face dataset-viewer API.
+
+Plumbing sample:
+
+```text
+python scripts/sample_mmlupro.py \
+  pilot0_plumbing_tasks.jsonl \
+  --n 30 \
+  --seed 20260809
+```
+
+After plumbing decisions are complete, create a **fresh** confirmatory source sample with a different frozen seed and exclude all plumbing IDs:
+
+```text
+python scripts/sample_mmlupro.py \
+  pilot0_confirmatory_tasks.jsonl \
+  --n <FROZEN_RAW_SAMPLE_SIZE> \
+  --seed <FROZEN_CONFIRMATORY_SEED> \
+  --exclude-jsonl pilot0_plumbing_tasks.jsonl
+```
+
+Choose `<FROZEN_RAW_SAMPLE_SIZE>` after the plumbing stage using only design information such as the observed pre-treatment initial-error rate and budget. Freeze it before confirmatory treatment outcomes exist.
+
+The sampler records dataset row index, question ID, category/source metadata, sample seed, options, and objective answer fields.
+
 #### Pre-treatment run
 
 Input JSONL needs at least:
@@ -97,7 +124,7 @@ Run:
 
 ```text
 python scripts/run_pilot0_openai.py pre \
-  pilot0_tasks.jsonl \
+  pilot0_plumbing_tasks.jsonl \
   pilot0_pre.jsonl \
   --model gpt-5.6-luna \
   --effort low \
