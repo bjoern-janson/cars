@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "status": "frozen before any A4c outcome generation",
+  "study": "Pilot 0 A4c: randomized legacy-inline rendering localization",
+  "scope": "Fresh causal component test of whether legacy-style inline rendering versus canonical inline rendering changes transition behavior when single-user-turn topology, frozen semantic state, signal text, revision opportunity, model, generation, and scoring are held fixed. A4c tests the remaining adjacent main-effect boundary in the A3 interface-form decomposition; it is not a pure lexical test and does not introduce a global correction construct.",
+  "lineage": {
+    "A2_D": "historical transition topology returned INTERFACE_CONDITIONED_PLAUSIBLE",
+    "A3": "randomized interface-form bundle test returned CAUSAL_INTERFACE_FORM_SIGNAL on T_change, T_instability, and T_verified",
+    "A4a": "randomized conversational-topology test returned a causal positive effect on T_verified while T_change and T_instability were practically equivalent to zero at the inherited +/-0.05 scale",
+    "A4b": "randomized historical-prestate rendering test returned a causal negative effect on T_change while T_instability and T_verified were practically equivalent to zero at the inherited +/-0.05 scale",
+    "A4c_object": "isolate legacy-inline versus canonical-inline rendering while holding one-user-turn conversational topology fixed",
+    "A1_V": "does not exist",
+    "B1_sensitivity": "deferred",
+    "CARS": "frozen"
+  },
+  "population": {
+    "raw_n": 400,
+    "sample_seed": 20260818,
+    "eligibility": "initially-wrong frozen prestates only",
+    "freshness": "exclude every prior Pilot 0 plumbing, Run 1, Run 2, B0-v1, B0-v2, B1, A3, A4a, A4b, and any A4c plumbing tasks from the confirmatory A4c cohort"
+  },
+  "invariants": {
+    "model": "Qwen/Qwen3-4B",
+    "model_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "generation_base_seed": 20260809,
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "parse_retries": 2,
+    "post_max_new_tokens": 24,
+    "assistant_prefill": "ANSWER: ",
+    "choice_constraint": "first-generated-token-valid-option-letter",
+    "thinking": "disabled",
+    "outcome": "final objective MMLU-Pro correctness",
+    "revision_horizon": "one post-signal revision opportunity",
+    "conversation_topology": "one user message containing prestate rendering + signal + revision request -> assistant answer prefill"
+  },
+  "rendering_factor": {
+    "L_canonical": {
+      "user_message": "QUESTION:\n<exact rendered question/options>\n\nPREVIOUS STATE:\nANSWER: <exact frozen initial answer>\nP_CORRECT: <exact frozen p_correct rendered to six decimals>\n\nSIGNAL:\n<exact E0 or EV signal text>\n\nREVISION REQUEST:\n<exact common revision instruction>",
+      "interpretation": "canonicalized inline representation matching the A4a K_inline rendering family"
+    },
+    "L_legacy": {
+      "user_message": "<exact rendered question/options>\n\nYour previous answer was <exact frozen initial answer>. Before feedback, you assigned probability <exact frozen p_correct rendered to six decimals> that this answer was correct.\n\n<exact E0 or EV signal text>\n\n<exact common revision instruction>",
+      "interpretation": "legacy-style inline representation matching the A3 J_L rendering form under the common A4c E0/EV semantics"
+    },
+    "causal_object": "canonical versus legacy inline rendering of the same frozen state variables and intervention semantics under the same single-user-turn topology",
+    "operational_bridge": "L_canonical reconstructs the canonical inline representation used in A4a; L_legacy reconstructs the legacy inline rendering form used in A3 J_L under common A4c signal semantics. These are operational bridges, not identity claims with earlier experimental conditions.",
+    "semantic_state_identity_requirements": [
+      "same frozen question/options",
+      "same realized initial answer",
+      "same frozen P_CORRECT numeric value",
+      "same benchmark key",
+      "same E0 or EV signal text",
+      "same revision instruction",
+      "same initially-wrong frozen prestate identity"
+    ],
+    "allowed_rendering_differences": [
+      "section labels versus prose framing",
+      "state-variable labeling",
+      "sentence framing around prior answer and P_CORRECT",
+      "separator/section presentation inherent to canonical versus legacy inline forms"
+    ],
+    "not_authorized_as": [
+      "pure lexical wording manipulation",
+      "mechanism identification",
+      "historical A3 condition identity",
+      "normative interface quality"
+    ]
+  },
+  "factors": {
+    "rendering": {
+      "L_canonical": "canonical inline rendering",
+      "L_legacy": "legacy-style inline rendering"
+    },
+    "signal": {
+      "E0": "Signal status: No new information is available about whether your previous answer is correct.",
+      "EV": "Signal status: It has been verified that your previous answer is incorrect."
+    },
+    "common_revision_instruction": "Review your previous answer and revise if necessary.\nReturn exactly one line: ANSWER: <one option letter>"
+  },
+  "cells": [
+    "LC_E0",
+    "LC_EV",
+    "LL_E0",
+    "LL_EV"
+  ],
+  "assignment": {
+    "blocking_unit": "one initially-wrong frozen prestate identified by task_id",
+    "branches_per_block": 8,
+    "branches_per_cell_per_block": 2,
+    "randomization_seed": 20260809,
+    "assignment_rule": "create eight branch units per eligible prestate and randomize the four cell labels within block with exact 2/2/2/2 balance",
+    "rng_rule": "each branch id fixes its own prespecified generation base seed via stable_seed(generation_base_seed, 'a4c::' + branch_id); rendering and signal labels never enter the seed function",
+    "rng_interpretation": "the same seed-assignment rule applies to every cell. Different rendered token sequences need not consume or realize identical stochastic draws. No claim of shared realized randomness is made."
+  },
+  "primary_estimands": {
+    "Delta_L_change": "mean over blocks of [T_change(L_legacy,E0) - T_change(L_canonical,E0)]",
+    "Delta_L_instability": "mean over blocks of [T_instability(L_legacy,E0) - T_instability(L_canonical,E0)]",
+    "Delta_L_verified": "mean over blocks of [T_verified(L_legacy,EV) - T_verified(L_canonical,EV)]"
+  },
+  "transition_definitions": {
+    "T_change": "within a rendering arm's two E0 branches, fraction whose final answer differs from the realized initial wrong answer",
+    "T_instability": "within a rendering arm's two E0 branches, 1 iff their final answers differ, else 0",
+    "T_verified": "within a rendering arm's two EV branches, fraction ending on the objective benchmark key",
+    "Q_N": "within a rendering arm, pooled neutral correct revisions divided by pooled neutral revisions; conditional on revision and not a primary endpoint"
+  },
+  "secondary_estimands": {
+    "Q_N_rendering_difference": "Q_N(L_legacy) - Q_N(L_canonical), inferentially reported only if each rendering arm has at least 20 neutral revision events",
+    "tau_E_canonical": "mean(V | L_canonical,EV) - mean(V | L_canonical,E0)",
+    "tau_E_legacy": "mean(V | L_legacy,EV) - mean(V | L_legacy,E0)",
+    "Gamma_LE": "tau_E_legacy - tau_E_canonical; secondary rendering-by-signal interaction",
+    "G_verified_minus_neutral_by_rendering": "same within-rendering EV-minus-E0 final-correction contrast; transition-specific only and never a representation indicator"
+  },
+  "analysis": {
+    "unit": "frozen prestate block; generated branches are never treated as independent scientific observations",
+    "bootstrap": 5000,
+    "bootstrap_seed": 20260809,
+    "permutations": 5000,
+    "permutation_seed": 20260809,
+    "alpha_familywise": 0.05,
+    "primary_randomization_tests": "For Delta_L_change and Delta_L_instability, shuffle L_canonical/L_legacy labels only among the four E0 branches within each block preserving 2/2. For Delta_L_verified, shuffle L_canonical/L_legacy labels only among the four EV branches within each block preserving 2/2. Recompute block-level endpoints after every shuffle.",
+    "primary_multiplicity": "Holm-adjust the three two-sided blocked-randomization p-values; these are the only primary p-values.",
+    "effect_intervals": "95% whole-block bootstrap intervals for each primary block-level mean contrast",
+    "practical_equivalence_margin": 0.05,
+    "Q_N_min_revision_events_per_rendering": 20,
+    "Q_N_analysis": "If both rendering arms meet the revision-event threshold, report pooled Q_N difference with a 95% whole-block bootstrap interval; otherwise mark not adjudicable. Q_N does not enter the primary multiplicity family or A4c summary gate.",
+    "secondary_interaction": "Report Gamma_LE point estimate and 95% whole-block bootstrap interval; no secondary interaction p-value and no construct interpretation."
+  },
+  "decision_gate": {
+    "CAUSAL_LEGACY_INLINE_RENDERING_SIGNAL": "At least one of the three Holm-adjusted primary p-values is < 0.05. Report exactly which transition dimensions earned the signal and their signs/magnitudes.",
+    "LEGACY_INLINE_RENDERING_WEAKENED_AT_A2_SCALE": "No primary Holm-adjusted p-value is < 0.05 and all three primary 95% bootstrap intervals lie entirely inside [-0.05,+0.05]. This weakens legacy-versus-canonical inline rendering as the remaining A3 active main-effect boundary at the inherited A2 practical scale; it does not invalidate A3, A4a, or A4b and does not prove component interaction.",
+    "A4C_UNRESOLVED": "Neither of the above gates is satisfied.",
+    "no_omnibus_construct": "There is no global correction-capacity score and no requirement that all transition dimensions move together."
+  },
+  "interpretation_guardrails": [
+    "A4c tests legacy-style versus canonical inline rendering under a fixed single-user-turn topology; it does not test which rendering is normatively better.",
+    "L_legacy and L_canonical carry the same frozen state variables and intervention semantics but are not lexically identical; the rendering/framing difference is the manipulated object.",
+    "A causal randomization result establishes a nonzero effect but does not by itself establish an effect exceeding the +/-0.05 practical threshold; causal difference and practical magnitude are separate gates.",
+    "A causal effect on one transition dimension does not imply effects on the others.",
+    "A null primary p-value alone does not weaken the component explanation; the frozen practical-equivalence gate is additionally required.",
+    "If topology, historical rendering, and legacy-inline rendering main effects are all practically small for an A3 endpoint, component interaction or another omitted component becomes more plausible by elimination but is not established.",
+    "Cross-experiment A3, A4a, A4b, and A4c effect magnitudes are not algebraically decomposable because cohorts and manipulations differ.",
+    "Q_N remains conditional on revision and cannot be inferred when revision events are insufficient.",
+    "T_instability retains its exact two-replicate definition and has no inherent positive or negative normative valence.",
+    "Gamma_LE is a secondary factorial interaction, not a latent trait or new construct.",
+    "G_verified_minus_neutral is transition-specific and never a representation indicator.",
+    "A4c does not decompose inline rendering into labels, prose framing, separators, or state-variable syntax. Such ablation is downstream only if A4c earns causal authority.",
+    "No A4c result automatically updates B, C, H1, I1, S, or CARS; any such revision requires a separate earned update step."
+  ]
+}
