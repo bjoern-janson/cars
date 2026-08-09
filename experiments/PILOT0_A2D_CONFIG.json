@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "status": "frozen before A2-D transition-topology calculation",
+  "study": "Pilot 0 A2-D: historical transition-topology discovery",
+  "scope": "Use existing Run 1, Run 2, and B1 outcome branches to characterize whether transition behavior exhibits common, separable, and/or interface-conditioned structure. No new model generation and no construct validation.",
+  "semantic_contract": "experiments/PILOT0_A2_0_TRANSITION_SEMANTICS.json",
+  "interface_strata": {
+    "RUN1": {
+      "neutral_arm": "E0",
+      "verified_arm": "E+",
+      "interface_family": "legacy"
+    },
+    "RUN2": {
+      "neutral_arm": "E0",
+      "verified_arm": "E+",
+      "interface_family": "legacy"
+    },
+    "B1": {
+      "neutral_arm": "E0",
+      "verified_arm": "EV",
+      "interface_family": "reconstructed"
+    }
+  },
+  "block_construction": {
+    "eligibility": "initially-wrong frozen prestates only",
+    "neutral_branches_per_block": 2,
+    "verified_branches_per_block": 2,
+    "T_change": "neutral revision count / 2",
+    "Q_N": "neutral correct count / neutral revision count when neutral revision count > 0; otherwise missing by definition",
+    "T_instability": "1 iff the two neutral final answers disagree; otherwise 0",
+    "T_verified": "verified correct count / 2",
+    "C2_neutral_self_correction": "neutral correct count / 2",
+    "G_verified_minus_neutral": "T_verified - C2_neutral_self_correction"
+  },
+  "primary_dimensions": [
+    "T_change",
+    "Q_N",
+    "T_instability",
+    "T_verified"
+  ],
+  "derived_descriptive_only": [
+    "C2_neutral_self_correction",
+    "G_verified_minus_neutral"
+  ],
+  "analysis": {
+    "bootstrap": 5000,
+    "bootstrap_seed": 20260809,
+    "hypothesis_test_p_values": "none",
+    "pairwise_metric": "Spearman rho across complete blocks for each primary-dimension pair within each interface stratum",
+    "pairwise_bootstrap": "whole-block bootstrap within stratum",
+    "minimum_complete_blocks_for_pair": 30,
+    "directional_pair_cell": "95% bootstrap interval for Spearman rho lies strictly above or below zero",
+    "replicated_directional_edge": "same directional sign for a dimension pair in at least two independent historical strata, each meeting the minimum complete-block rule",
+    "conflicting_directional_edge": "a dimension pair has directional cells of opposite signs in different usable strata",
+    "weak_coupling_margin_abs_rho": 0.15,
+    "weak_coupling_cell": "95% bootstrap interval for Spearman rho lies entirely inside [-0.15,+0.15]",
+    "replicated_weak_coupling_edge": "same dimension pair satisfies the weak-coupling cell rule in at least two independent historical strata, each meeting the minimum complete-block rule",
+    "profile_measures": [
+      "T_change",
+      "Q_N",
+      "T_instability",
+      "T_verified"
+    ],
+    "Q_N_profile_estimator": "pooled neutral correct transitions / pooled neutral revisions within stratum",
+    "minimum_revision_events_for_Q_N_profile": 20,
+    "profile_bootstrap": "whole-block bootstrap; Q_N bootstrap draw is valid only when at least one revised neutral branch is present",
+    "minimum_valid_profile_bootstraps": 4000,
+    "interface_profile_practical_margin": 0.05,
+    "legacy_agreement_dimension": "absolute RUN1-RUN2 point difference <= 0.05 and the 95% bootstrap interval for RUN1-RUN2 includes zero",
+    "B1_divergence_dimension": "B1-RUN1 and B1-RUN2 point differences both have absolute magnitude >= 0.05, both 95% bootstrap intervals exclude zero, and both differences have the same sign",
+    "interface_conditioned_dimension": "legacy_agreement_dimension and B1_divergence_dimension are both true"
+  },
+  "representation_gates": {
+    "H_T1_COMMON_STRUCTURE_SIGNAL": "Build an undirected graph over the four primary dimensions using replicated directional edges. Signal true iff the graph is connected and there are no conflicting directional edges among usable cells.",
+    "H_T2_SEPARABLE_STRUCTURE_SIGNAL": "Signal true iff at least two distinct replicated weak-coupling edges exist and together involve at least three of the four primary dimensions. This indicates practically weak monotonic coupling, not statistical independence or a psychological multidimensional construct.",
+    "H_T3_INTERFACE_CONDITIONED_SIGNAL": "Signal true iff at least two primary profile dimensions satisfy the frozen interface-conditioned-dimension rule. This is evidence of interface-family-associated profile change, not causal attribution to interface because cohorts differ.",
+    "summary_state": {
+      "COMMON_STRUCTURE_PLAUSIBLE": "H_T1 only",
+      "SEPARABLE_STRUCTURE_PLAUSIBLE": "H_T2 only",
+      "INTERFACE_CONDITIONED_PLAUSIBLE": "H_T3 only",
+      "MIXED_STRUCTURE": "two or more representation signals are true",
+      "UNRESOLVED": "no representation signal is true"
+    }
+  },
+  "interpretation_guardrails": [
+    "C1 and C2 are not treated as exchangeable independent indicators; Q_N conditions on revision and C2 is otherwise derived descriptive output only.",
+    "No factor analysis, PCA, latent-variable model, composite correction score, or new moderator is permitted in A2-D.",
+    "A nonsignificant association does not count as separability; only the frozen practical weak-coupling interval rule does.",
+    "A common-structure signal means a common ordering remains empirically plausible; it does not establish a unitary latent trait.",
+    "A separable-structure signal means collapsing dimensions would likely lose monotonic information; it does not establish a psychological multidimensional construct.",
+    "An interface-conditioned signal is historical association with interface family, not a randomized causal interface effect.",
+    "G_verified_minus_neutral is descriptive/causal only within its frozen randomized interface and is excluded from representation gates to avoid double-counting.",
+    "No A2-D result updates B, C, H1, I1, S, or CARS and A1-V remains uncreated."
+  ]
+}
