@@ -394,6 +394,7 @@ benchmarks/
   README.md
 
 eval/
+  ASSAY_SCORING.md
   SCORING.md
   CATALYST_SCORING.md
   ARCHITECTURE_SCORING.md
@@ -406,6 +407,7 @@ scripts/
   validate_cases.py
 
 examples/
+  assay_evaluation_record.json
   evaluation_record.json
   catalyst_evaluation_record.json
   architecture_evaluation_record.json
