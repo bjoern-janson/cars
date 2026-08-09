@@ -2,9 +2,45 @@
 
 ## Status
 
-This document changes only the execution backend for Pilot 0.
+This document preserves the Pilot 0 **experimental architecture** while changing the tested model population and inference backend.
 
-The scientific design remains frozen:
+Keep explicit:
+
+```text
+SAME
+I
+E0 / E+
+V
+randomization
+pre-state freezing
+Δτ
+analysis
+```
+
+but:
+
+```text
+CHANGED
+model
+inference backend
+model-specific behavior
+scientific population / scope
+```
+
+Therefore:
+
+```text
+Qwen3-4B result
+→ evidence about Qwen3-4B under the frozen configuration
+
+Qwen3-4B result
+↛ GPT-5.6 Luna result
+↛ generic LLM result
+```
+
+No theory, measurement choice, treatment definition, scoring rule, randomization rule, or causal estimand is changed here.
+
+## Frozen scientific design
 
 ```text
 I = pre-treatment error suspicion
@@ -18,40 +54,69 @@ V = objective final-answer correctness
 primary = τ_high - τ_low
 ```
 
-No theory, measurement choice, treatment definition, scoring rule, randomization rule, or causal estimand is changed here.
+## Frozen zero-budget backend
 
-## Why this path exists
-
-The paid API backend is optional. A zero-cash experiment can use one fixed open-weight model on free notebook GPU compute.
-
-Recommended first backend:
+The execution configuration is machine-readable in:
 
 ```text
-compute: Kaggle GPU notebook
-model: Qwen/Qwen3-4B
-mode: non-thinking
-precision: fp16 on CUDA
+experiments/PILOT0_QWEN3_4B_CONFIG.json
 ```
 
-Record the exact model revision used by the notebook environment if available.
+Frozen model:
+
+```text
+repo: Qwen/Qwen3-4B
+revision: 1cfa9a7208912126459214e8b04321603b3df60c
+backend: transformers-local
+thinking: false
+```
+
+Frozen sampling regime:
+
+```text
+base_seed = 20260809
+do_sample = true
+temperature = 0.7
+top_p = 0.8
+top_k = 20
+```
+
+The same model snapshot, backend, thinking mode, temperature, top-p, top-k, and seed policy must govern pre, E0, and E+ generation. Only the experimental feedback text may differ between the post-treatment arms.
+
+Pre and post have different fixed maximum output lengths because their machine-readable response contracts differ; this is fixed before treatment outcomes and is identical across E0/E+.
 
 ## Environment
 
-In a Kaggle notebook with GPU enabled:
+Recommended free execution environment:
 
 ```text
-!pip install -q "transformers>=4.51.0" accelerate
+Kaggle GPU notebook
 ```
 
-Then clone the experiment branch or upload the scripts.
-
-Example:
+Install the required runtime and clone the experiment branch:
 
 ```text
+!pip install -q "transformers>=4.51.0" accelerate huggingface_hub
 !git clone https://github.com/bjoern-janson/cars.git
 %cd cars
 !git checkout agent/align-cars-assay-architecture
 ```
+
+## Cache the exact model snapshot
+
+Do not resolve `main` independently for pre and post.
+
+```text
+python scripts/cache_pilot0_qwen3_4b.py
+```
+
+This downloads the exact frozen revision and writes:
+
+```text
+/kaggle/working/pilot0-qwen3-4b/pilot0_model_manifest.json
+```
+
+The official frozen runner refuses to execute if the cached repository or revision differs from the frozen config.
 
 ## Plumbing workflow
 
@@ -64,14 +129,12 @@ python scripts/sample_mmlupro.py \
   --seed 20260809
 ```
 
-Generate one pre-treatment response per task:
+Generate one pre-treatment response per task using the frozen wrapper:
 
 ```text
-python scripts/run_pilot0_local.py pre \
+python scripts/run_pilot0_zero_budget_frozen.py pre \
   pilot0_plumbing_tasks.jsonl \
-  pilot0_pre_raw.jsonl \
-  --model Qwen/Qwen3-4B \
-  --seed 20260809
+  pilot0_pre_raw.jsonl
 ```
 
 Freeze the exact local pre-state:
@@ -109,15 +172,15 @@ python scripts/verify_pilot0_frozen_state.py \
   pilot0_assignments.jsonl
 ```
 
-Run post-treatment continuations:
+Run post-treatment continuations through the same frozen generation configuration:
 
 ```text
-python scripts/run_pilot0_local.py post \
+python scripts/run_pilot0_zero_budget_frozen.py post \
   pilot0_assignments.jsonl \
-  pilot0_completed.jsonl \
-  --model Qwen/Qwen3-4B \
-  --seed 20260809
+  pilot0_completed.jsonl
 ```
+
+The wrapper fails closed if branch metadata show that pre-treatment used a different model path/backend/thinking mode/temperature/top-p/top-k than the current frozen configuration.
 
 Analyze:
 
@@ -129,74 +192,90 @@ python scripts/analyze_llm_assay.py \
   --json-out pilot0_result.json
 ```
 
-## Frozen local generation defaults
+## Machine-readable response contracts
 
-The local runner uses Qwen3 non-thinking mode and freezes these sampling defaults unless plumbing forces a repair:
-
-```text
-temperature = 0.7
-top_p = 0.8
-top_k = 20
-```
-
-The pre-treatment response is parsed from:
+Pre-treatment:
 
 ```text
 ANSWER: <letter>
 P_CORRECT: <0..1>
 ```
 
-The post-treatment response is parsed from:
+Post-treatment:
 
 ```text
 ANSWER: <letter>
 ```
 
-Parse retry behavior is deterministic from the declared run seed and is recorded in the final generation seed.
+`P(correct)` is therefore observed directly before treatment rather than reconstructed from later prose.
 
-## Why Qwen3-4B
+## Stage boundary
 
-This is an execution choice, not a theoretical choice.
-
-It is small enough to be practical on commodity/free GPU notebooks while remaining an instruction-following reasoning-capable model. If plumbing shows that the model cannot reliably emit the required confidence or produces too few initially wrong responses for a useful assay, that is an instrumentation/backend failure.
-
-Allowed response:
+The first 30 items remain plumbing only:
 
 ```text
-backend plumbing failure
-→ choose another fixed open-weight model
-→ fresh plumbing sample
-→ refreeze
+30-item plumbing
+↛ hypothesis evidence
 ```
 
-Not allowed:
+Its only scientific authority is instrumentation/provenance:
 
 ```text
-look at treatment effect
-→ switch models to obtain preferred sign
+Did we execute the specified experiment?
 ```
+
+If plumbing forces any change to model revision, model, generation configuration, prompt, parser, measurement, treatment wording, assignment, or scoring:
+
+```text
+localize plumbing failure
+→ repair smallest necessary component
+→ freeze revised configuration
+→ use fresh items
+```
+
+Do not tune those components based on the sign of a treatment effect observed in plumbing.
+
+## Confirmatory sequence
+
+If plumbing succeeds:
+
+```text
+fresh MMLU-Pro sample
+→ frozen Qwen3-4B pre-states
+→ randomized E0/E+
+→ objective outcomes
+→ Δτ
+```
+
+The confirmatory result can legitimately be:
+
+```text
+Δτ > 0
+Δτ ≈ 0
+Δτ < 0
+non-monotonic
+measurement / instrumentation failure
+```
+
+All are valid outcomes when reported with the declared scope.
 
 ## Evidence status
 
-```text
-free compute
-≠ weaker causal identification
-```
+Free compute does not by itself weaken randomization-based causal identification if the experimental controls remain intact.
 
-if the assignment, pre-treatment freeze, intervention, and objective outcome remain intact.
-
-But:
+But population scope remains local:
 
 ```text
-one open-weight model result
-↛ paid frontier-model result
+Qwen3-4B result
+↛ frontier-model result
 ↛ cross-model transport
+↛ "LLMs exhibit X"
 ```
 
-A zero-budget confirmatory run is still real randomized evidence about the fixed model actually tested.
+A zero-budget confirmatory run can still provide the first real randomized evidence about the causal-response assay in the fixed artificial-system environment actually tested.
 
 ## Stop rule
 
-The zero-budget backend is a resource adaptation only.
+The zero-budget path is a resource-driven change of tested model population, not a reason to reopen the theory.
 
-Do not reopen the CARS architecture, causal object, `I`, `E`, or `V` because the paid API is unavailable.
+Do not modify CARS, the causal object, `I`, `E`, or `V` unless an observed failure earns that revision through the existing localization procedure.
