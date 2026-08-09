@@ -63,6 +63,7 @@ These are synthetic development checks only. They do not add "jump" to the CARS 
 Frozen protocol:
 
 - [`PILOT0_MMLU_PRO.md`](PILOT0_MMLU_PRO.md)
+- [`PILOT0_PROVENANCE.md`](PILOT0_PROVENANCE.md)
 
 Literal measurement:
 
@@ -82,32 +83,16 @@ The post-treatment design uses four continuation branches per eligible block, ba
 2 × E+
 ```
 
-#### Sample MMLU-Pro tasks
+#### Sample tasks
 
-The repository includes a standard-library sampler using the Hugging Face dataset-viewer API.
-
-Plumbing sample:
+Use a fixed benchmark sample and record/exclude plumbing IDs when constructing the later confirmatory sample.
 
 ```text
 python scripts/sample_mmlupro.py \
-  pilot0_plumbing_tasks.jsonl \
+  pilot0_tasks.jsonl \
   --n 30 \
   --seed 20260809
 ```
-
-After plumbing decisions are complete, create a **fresh** confirmatory source sample with a different frozen seed and exclude all plumbing IDs:
-
-```text
-python scripts/sample_mmlupro.py \
-  pilot0_confirmatory_tasks.jsonl \
-  --n <FROZEN_RAW_SAMPLE_SIZE> \
-  --seed <FROZEN_CONFIRMATORY_SEED> \
-  --exclude-jsonl pilot0_plumbing_tasks.jsonl
-```
-
-Choose `<FROZEN_RAW_SAMPLE_SIZE>` after the plumbing stage using only design information such as the observed pre-treatment initial-error rate and budget. Freeze it before confirmatory treatment outcomes exist.
-
-The sampler records dataset row index, question ID, category/source metadata, sample seed, options, and objective answer fields.
 
 #### Pre-treatment run
 
@@ -124,7 +109,7 @@ Run:
 
 ```text
 python scripts/run_pilot0_openai.py pre \
-  pilot0_plumbing_tasks.jsonl \
+  pilot0_tasks.jsonl \
   pilot0_pre.jsonl \
   --model gpt-5.6-luna \
   --effort low \
@@ -133,16 +118,38 @@ python scripts/run_pilot0_openai.py pre \
 
 The script records the initial answer, `P(correct)`, `I = 1-P(correct)`, objective correctness, API response/model metadata, and token usage.
 
-#### Freeze eligible prestates and create branches
+#### Freeze the complete pre-treatment state
+
+Before branch generation or treatment assignment:
+
+```text
+python scripts/freeze_pilot0_prestates.py \
+  pilot0_pre.jsonl \
+  pilot0_frozen_pre.jsonl
+```
+
+This records the exact pre-treatment prompt/configuration and creates canonical SHA-256 fingerprints for the prompt and complete audit object.
+
+Keep explicit:
+
+```text
+same frozen pre-state
++
+randomized treatment
+```
+
+must be auditable, not assumed.
+
+#### Create eligible branches
 
 ```text
 python scripts/prepare_pilot0_units.py \
-  pilot0_pre.jsonl \
+  pilot0_frozen_pre.jsonl \
   pilot0_branches.jsonl \
   --replicates 4
 ```
 
-Only initially wrong responses enter the primary Pilot 0 branch set.
+Only initially wrong responses enter the primary Pilot 0 branch set. Branches carry the canonical `pre_state_sha256`.
 
 #### Randomize within task
 
@@ -155,6 +162,18 @@ python scripts/randomize_llm_assay.py \
 ```
 
 Because every task has four branches and `stratum=task_id`, this produces two branches per arm inside each eligible task-prestate block.
+
+#### Verify frozen-state integrity
+
+Before any post-treatment API call:
+
+```text
+python scripts/verify_pilot0_frozen_state.py \
+  pilot0_frozen_pre.jsonl \
+  pilot0_assignments.jsonl
+```
+
+A verification failure blocks the post-treatment run.
 
 #### Post-treatment run
 
@@ -201,12 +220,18 @@ Primary quantity:
 
 The linear interaction coefficient is secondary.
 
-Important separation:
+Important separations:
 
 ```text
 plumbing pilot
 ↛
 hypothesis evidence
+```
+
+```text
+provenance integrity
+≠
+scientific validity
 ```
 
 If the plumbing run changes the model, prompt, parser, treatment wording, measurement, or scoring logic, freeze the new version before using fresh items for the hypothesis run.
