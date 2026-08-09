@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "status": "frozen before any A1-D correction-association inspection",
+  "study": "Pilot 0 A1-D: exploratory characterization of I1 versus constrained realized-choice margin S",
+  "scope": "Discovery-only comparison of two frozen pre-treatment measurements against existing correction-related observables. This stage does not validate a replacement moderator, does not create A1-V, and does not update B, C, H1, or CARS.",
+  "lineage": {
+    "I1": "I1 = 1 - self-reported P(correct); historical frozen operationalization with modest replicated validity for initial error likelihood and no established correction-susceptibility validity",
+    "S": "S = q(a*) - max_{a != a*} q(a), where q is the valid-option-normalized next-token distribution at the frozen pre-answer decision point and a* is the historically realized sampled answer",
+    "A1_D0": "extraction plumbing passed before this characterization contract was frozen",
+    "B1_sensitivity": "deferred; A1-D does not resolve B",
+    "A1_V": "does not exist at this stage"
+  },
+  "measurement_authority": {
+    "I1_label": "self-reported error-likelihood signal",
+    "S_label": "constrained realized-choice margin",
+    "S_not_authorized_as": [
+      "unconstrained native decision-policy strength",
+      "correction susceptibility",
+      "replacement for I1"
+    ],
+    "constraint_boundary": "The historical answer interface forced the first generated answer token to one valid option letter. q is therefore the conditional distribution over valid answer letters induced by that interface. Unconstrained valid-option vocabulary mass is diagnostic only and is not part of S."
+  },
+  "candidate_moderators": {
+    "I1": {
+      "field": "i",
+      "higher_means": "greater self-reported probability that the realized answer is wrong"
+    },
+    "S": {
+      "field": "s_realized_choice_margin",
+      "higher_means": "greater constrained preference for the realized answer over the strongest valid alternative"
+    }
+  },
+  "criteria": {
+    "C1_neutral_revision": "Within a frozen initially-wrong block, fraction of two neutral-review branches whose final answer differs from the initial answer.",
+    "C2_neutral_self_correction": "Within a frozen initially-wrong block, fraction of two neutral-review branches whose final answer equals the benchmark key.",
+    "C3_neutral_instability": "Within a frozen initially-wrong block, 1 iff the two neutral-review branch final answers disagree, else 0.",
+    "C4_verified_correction_success": "Within a frozen initially-wrong block, fraction of two verified-error branches whose final answer equals the benchmark key."
+  },
+  "interface_strata": {
+    "RUN1": {
+      "neutral_arm": "E0",
+      "verified_arm": "E+",
+      "interface_family": "legacy Pilot 0 post prompt with question and explicit previous answer/confidence restatement"
+    },
+    "RUN2": {
+      "neutral_arm": "E0",
+      "verified_arm": "E+",
+      "interface_family": "legacy Pilot 0 post prompt with question and explicit previous answer/confidence restatement"
+    },
+    "B1": {
+      "neutral_arm": "E0",
+      "verified_arm": "EV",
+      "interface_family": "B0-v2 conversational reconstruction followed by signal and one revision opportunity"
+    }
+  },
+  "analysis": {
+    "unit": "one frozen initially-wrong prestate/block after collapsing exactly two branches per criterion arm",
+    "stratification": "Never pool correction criteria across interface strata for the primary characterization summaries. Report RUN1, RUN2, and B1 separately. A legacy RUN1+RUN2 pooled summary may be reported secondarily because those two strata share the same post interface.",
+    "relationship_summary": "For every available moderator x criterion x stratum cell, report Spearman rho and a 95% whole-block bootstrap interval.",
+    "tail_summary": "For every available cell, report exact bottom/top quarters of the moderator using floor(n/4) blocks and deterministic outcome-blind SHA256 tie breaking with seed 20260809; report high-minus-low criterion mean.",
+    "bootstrap": 5000,
+    "bootstrap_seed": 20260809,
+    "tail_tie_seed": 20260809,
+    "hypothesis_test_p_values": "none",
+    "degenerate_criterion_rule": "If a criterion has zero variance within a stratum, report the relationship as undefined/degenerate rather than forcing a correlation.",
+    "missingness_rule": "A block is analyzed only if its frozen S extraction and required criterion branches are both present and internally consistent. Missing blocks are counted and reported; no imputation."
+  },
+  "candidate_decision": {
+    "purpose": "Discovery triage only; determines whether S is worth freezing for fresh A1-V validation, not whether S is valid.",
+    "WORTH_VALIDATING_S": "S shows a coherent correction-related pattern in at least two distinct criteria, with the same qualitative direction in at least two independent historical strata where those criteria are non-degenerate, and the corresponding I1 pattern is descriptively weaker or absent in those same cells.",
+    "I1_REMAINS_MORE_PROMISING": "I1 meets the same convergence rule and S does not.",
+    "BOTH_POTENTIALLY_RELEVANT": "Both I1 and S meet the convergence rule without one clearly dominating descriptively.",
+    "NEITHER_SHOWS_CONVERGENCE": "Neither moderator meets the convergence rule.",
+    "UNRESOLVED": "Data availability, criterion degeneracy, or inconsistent directions prevent the convergence rule from being adjudicated.",
+    "guardrail": "These labels are discovery decisions only. No label grants construct authority or licenses retrospective replacement of I1."
+  },
+  "forbidden_updates": [
+    "rename S as correction susceptibility",
+    "rename I1",
+    "select a different S extraction after viewing correction associations",
+    "pool unlike interface strata to obtain a stronger association",
+    "choose a winner from one attractive correlation",
+    "create or freeze A1-V before A1-D closes",
+    "update B, C, H1, or CARS from A1-D discovery associations"
+  ]
+}
