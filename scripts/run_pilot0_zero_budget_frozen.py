@@ -63,6 +63,7 @@ def expected_checks(config: dict, model_dir: Path, row: dict, prefix: str) -> di
         f"{prefix}top_k": row.get(f"{prefix}top_k") == generation["top_k"],
         f"{prefix}interface_version": row.get(f"{prefix}interface_version") == interface["version"],
         f"{prefix}assistant_prefill": row.get(f"{prefix}assistant_prefill") == interface["assistant_prefill"],
+        f"{prefix}choice_constraint": row.get(f"{prefix}choice_constraint") == interface["choice_constraint"],
     }
 
 
@@ -80,6 +81,7 @@ def verify_pre_output(config: dict, model_dir: Path, output_path: Path) -> None:
         normalized["pre_top_k"] = row.get("top_k")
         normalized["pre_interface_version"] = row.get("interface_version")
         normalized["pre_assistant_prefill"] = row.get("assistant_prefill")
+        normalized["pre_choice_constraint"] = row.get("choice_constraint")
         failed = [name for name, ok in expected_checks(config, model_dir, normalized, "pre_").items() if not ok]
         if failed:
             raise ValueError(f"pre row {row.get('id')!r}: frozen config mismatch: {failed}")
@@ -116,6 +118,8 @@ def verify_post_output(config: dict, model_dir: Path, output_path: Path) -> None
             failed.append("post_interface_version")
         if row.get("post_assistant_prefill") != interface["assistant_prefill"]:
             failed.append("post_assistant_prefill")
+        if row.get("post_choice_constraint") != interface["choice_constraint"]:
+            failed.append("post_choice_constraint")
         if failed:
             raise ValueError(f"post row {row.get('id')!r}: frozen config mismatch: {failed}")
 
