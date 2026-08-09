@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "status": "frozen before any B1 outcome generation",
+  "study": "Pilot 0 Localization B1: signal-specific correction benefit and moderation",
+  "scope": "Test whether the causal correction benefit and especially its relationship with frozen I1 differ between the B0-v2-validated uncertainty and verified-error signals. B1 does not retest B0 manipulation validity and does not revise CARS.",
+  "lineage": {
+    "I1": "I1 = 1 - P(correct), unchanged from Runs 1/2 and A0",
+    "A0": "I1 showed modest error-discrimination information but no demonstrated correction-susceptibility validity",
+    "B0_v1": "failed manipulation check because the probability probe induced baseline copying",
+    "B0_v2": "passed fresh manipulation validation under repaired conversational reconstruction",
+    "forecast_guardrail": "prior forecast about B weakening is not part of the B1 hypothesis test or analysis rule"
+  },
+  "population": {
+    "model": "Qwen/Qwen3-4B",
+    "model_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "benchmark": "pinned MMLU-Pro test snapshot used by Pilot 0",
+    "raw_n": 400,
+    "sample_seed": 20260814,
+    "eligibility": "retain only initially-wrong frozen prestates after the unchanged Pilot 0 pre-treatment procedure",
+    "freshness": "exclude all prior Pilot 0 plumbing samples, Run 1, Run 2, B0-v1, and B0-v2 sampled tasks"
+  },
+  "invariants": {
+    "pre_treatment_procedure": "unchanged frozen Pilot 0 Qwen3-4B procedure",
+    "I1": "1 - P(correct)",
+    "outcome_V": "1 iff final answer equals objective MMLU-Pro key; otherwise 0",
+    "revision_horizon": "one post-signal revision opportunity",
+    "generation_base_seed": 20260809,
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "parse_retries": 2,
+    "post_max_new_tokens": 24,
+    "assistant_prefill": "ANSWER: ",
+    "choice_constraint": "first-generated-token-valid-option-letter",
+    "post_rng_policy": "branch id fixes post-treatment stochastic stream; arm identity may change only signal text"
+  },
+  "interface": {
+    "history_user": "exact frozen pre_prompt",
+    "history_assistant": "exact frozen raw_model_output containing original ANSWER and P_CORRECT",
+    "new_user_message": "exact signal status text followed by: Review your previous answer and revise if necessary. Return exactly one line: ANSWER: <one option letter>",
+    "p_pre_restatement": false,
+    "revision_allowed": true
+  },
+  "signals": {
+    "E0": "Signal status: No new information is available about whether your previous answer is correct.",
+    "EU": "Signal status: There is unverified reason to doubt whether your previous answer is correct.",
+    "EV": "Signal status: It has been verified that your previous answer is incorrect."
+  },
+  "assignment": {
+    "blocking_unit": "one frozen initially-wrong task-prestate",
+    "assignment_unit": "one cloned post-treatment branch within block",
+    "branches_per_block": 6,
+    "arms": ["E0", "EU", "EV"],
+    "branches_per_arm_per_block": 2,
+    "randomization_seed": 20260809,
+    "randomization_rule": "balanced randomization within each frozen-prestate block; exactly 2 E0, 2 EU, and 2 EV branches"
+  },
+  "estimands": {
+    "tail_definition": "exact block-level bottom/top quarters of I1 using schema-v2 deterministic outcome-blind tie breaking",
+    "tail_size": "floor(number_of_unique_eligible_blocks / 4)",
+    "tail_tie_seed": 20260809,
+    "mu_s_t": "mean final correctness V under signal s within tail t, where s in {E0,EU,EV} and t in {low,high}",
+    "tau_U_t": "mu_EU_t - mu_E0_t",
+    "tau_V_t": "mu_EV_t - mu_E0_t",
+    "Delta_U": "tau_U_high - tau_U_low",
+    "Delta_V": "tau_V_high - tau_V_low",
+    "Gamma_B": "Delta_V - Delta_U",
+    "primary_B_question": "Does the I1 moderation of correction benefit differ between verified-error and uncertainty signals?",
+    "primary_null": "Gamma_B = 0",
+    "primary_alternative": "Gamma_B != 0",
+    "average_effect_U": "mean(V|EU) - mean(V|E0) across all eligible blocks",
+    "average_effect_V": "mean(V|EV) - mean(V|E0) across all eligible blocks",
+    "average_EV_minus_EU": "mean(V|EV) - mean(V|EU) across all eligible blocks"
+  },
+  "analysis": {
+    "primary_test": "two-sided blocked randomization inference for Gamma_B",
+    "permutations": 5000,
+    "permutation_seed": 20260809,
+    "permutation_rule": "shuffle the six observed arm labels only within each frozen-prestate block, preserving exact 2/2/2 arm counts",
+    "bootstrap": 5000,
+    "bootstrap_seed": 20260809,
+    "bootstrap_rule": "resample whole blocks; for tail estimands resample within the already-selected low/high tail block sets",
+    "alpha": 0.05,
+    "equivalence_margin_for_B_weakening": 0.025,
+    "equivalence_rationale": "chosen before B1 data and smaller than both absolute Run 1 and Run 2 observed moderation contrasts (~0.0515 and ~0.0333); used only to distinguish B weakened from B unresolved after a non-significant primary test",
+    "secondary_reporting": [
+      "average_effect_U",
+      "average_effect_V",
+      "average_EV_minus_EU",
+      "Delta_U",
+      "Delta_V",
+      "Gamma_B bootstrap interval"
+    ],
+    "secondary_p_values": "none; only the prespecified two-sided randomization p-value for Gamma_B is primary"
+  },
+  "interpretation_gate": {
+    "B_GAINS_SUPPORT": "primary two-sided randomization p-value for Gamma_B < 0.05",
+    "B_WEAKENS_AT_PRACTICAL_SCALE": "primary p-value >= 0.05 and the 95% block-bootstrap interval for Gamma_B lies entirely inside [-0.025,+0.025]",
+    "B_UNRESOLVED": "all other outcomes, including a non-significant primary test with a bootstrap interval not contained inside the equivalence region",
+    "average_effect_guardrail": "different average correction effects across signals do not by themselves establish B; B concerns differential I1 moderation",
+    "C_guardrail": "B weakening exposes C but does not confirm C; B unresolved gives C no additional authority",
+    "B0_guardrail": "B1 outcome data are not used to retroactively validate or invalidate B0-v2 manipulation validity"
+  },
+  "forbidden_updates_before_data": [
+    "change I1",
+    "change signal wording",
+    "change outcome V",
+    "change eligibility",
+    "change tail estimator",
+    "change primary Gamma_B estimand",
+    "change equivalence margin",
+    "promote C based on a null p-value alone",
+    "use B0 confidence shifts as B1 outcomes"
+  ]
+}
