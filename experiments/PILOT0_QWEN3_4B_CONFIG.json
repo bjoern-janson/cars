@@ -1,6 +1,6 @@
 {
-  "schema_version": 1,
-  "status": "frozen after zero-budget backend substitution",
+  "schema_version": 2,
+  "status": "refrozen after plumbing interface repair",
   "scientific_scope": "Qwen3-4B under this exact configuration on sampled MMLU-Pro task-prestate blocks",
   "model": {
     "repo_id": "Qwen/Qwen3-4B",
@@ -18,6 +18,11 @@
     "pre_max_new_tokens": 48,
     "post_max_new_tokens": 24
   },
+  "interface": {
+    "version": "pilot0-local-prefill-v1",
+    "assistant_prefill": "ANSWER: ",
+    "repair_reason": "30-item plumbing run showed Qwen3-4B could ignore the requested two-line format and exhaust the pre-treatment token cap before emitting ANSWER/P_CORRECT. Assistant prefilling repairs only the machine-readable response boundary."
+  },
   "measurement": {
     "name": "pre-treatment error suspicion",
     "definition": "I = 1 - P(correct)",
@@ -29,5 +34,5 @@
   },
   "outcome": "V = 1 if final answer matches the objective MMLU-Pro key, else 0",
   "primary": "Delta_tau = tau_high - tau_low",
-  "invariant": "The same model revision, backend, thinking mode, temperature, top_p, top_k, and seed policy must be used for pre, E0, and E+. Only the experimental feedback text may differ between post-treatment arms."
+  "invariant": "The same model revision, backend, thinking mode, interface prefill, temperature, top_p, top_k, and seed policy must be used for pre, E0, and E+. Only the experimental feedback text may differ between post-treatment arms."
 }
