@@ -1,238 +1,388 @@
 # Experiment Matrix
 
-CARS now has three experimentally distinct surfaces:
+The current notebook separates:
 
 ```text
-prompt intervention
-≠ catalyst intervention
-≠ recursive architecture
+CARS prompt intervention
+≠
+minimal causal-responsiveness assay
+≠
+measurement invariance tests
+≠
+optional longitudinal / historical experiments
 ```
 
-A result on one surface does not automatically establish a result on another.
+A result on one surface does not automatically establish another.
 
-## 1. Prompt-level minimum experiment
+## 1. Primary assay
+
+Define:
+
+```text
+τ(i)
+=
+E[V(e₁) - V(e₀) | I=i]
+```
+
+Primary proposition:
+
+```text
+i₁ > i₀
+⇒
+τ(i₁) > τ(i₀)
+```
+
+### Core conditions
+
+| Condition | Assignment | Purpose |
+|---|---|---|
+| A0 | `E=e₀` | control potential-outcome arm |
+| A1 | `E=e₁` | intervention potential-outcome arm |
+
+Measure `I` before randomization and `V` after the prespecified horizon.
+
+### Primary analyses
+
+| Analysis | Object | Question |
+|---|---|---|
+| P1 | stratum/ordered CATE | is `τ(i₁) > τ(i₀)` for prespecified `i₁>i₀`? |
+| P2 | monotonic shape | is `τ(i)` increasing over the relevant support? |
+| P3 | smooth representation | is `∂τ(i)/∂i > 0` where differentiability is justified? |
+| P4 | linear representation | if preregistered, is `δ>0` in `τ(i)=τ₀+δi`? |
+
+P4 is not a substitute for P1/P2 unless linearity is adequately supported.
+
+## 2. Constant-effect adversarial world
+
+Construct:
+
+```text
+τ(i) = constant
+```
+
+while allowing strong association between `I` and baseline outcome.
+
+Expected:
+
+```text
+no treatment-effect ordering by I
+```
+
+A positive moderation result is a benchmark failure requiring localization.
+
+## 3. Ceiling / floor world
+
+Keep the latent treatment effect constant and observe through:
+
+```text
+V_obs = clip(V_latent, lower, upper)
+```
+
+Vary the proportion of observations near the boundaries.
+
+Questions:
+
+- how much saturation is needed to manufacture apparent moderation?
+- can headroom controls detect the artifact?
+- does the sign reverse under realistic bounded measurement?
+
+## 4. Nonlinear outcome-measurement world
+
+Keep the underlying experimental states fixed while changing the measured outcome:
+
+| Condition | Measurement | Expected status |
+|---|---|---|
+| M0 | `V` | reference estimand |
+| M1 | `aV+b`, `a>0` | licensed affine-equivalent positive control |
+| M2 | `log(V+c)` | generally different additive estimand |
+| M3 | convex monotone transform | generally different additive estimand |
+
+The benchmark should preserve the distinction:
+
+```text
+licensed invariance failure
+≠
+estimand-changing transformation
+```
+
+## 5. Baseline-structure / identification worlds
+
+### R0 — randomized, prognostic moderator
+
+```text
+Z → I
+Z → V_t
+E randomized
+τ(i) constant
+```
+
+Expected: no manufactured treatment-effect ordering.
+
+### R1 — deliberately confounded treatment
+
+Let treatment assignment depend on `Z` or baseline state.
+
+Expected: naive analysis may manufacture heterogeneity; the benchmark should identify the causal-identification failure rather than promote the result.
+
+## 6. Generic-plasticity / specificity worlds
+
+Use intervention status established independently of the tested system:
+
+```text
+E⁺ = warranted correction
+E⁰ = neutral / irrelevant
+E⁻ = misleading
+```
+
+### S0 — generic plasticity
+
+Higher `I` amplifies response to all intervention types.
+
+Expected:
+
+```text
+primary responsiveness may pass
+specificity should fail
+```
+
+### S1 — discriminative responsiveness
+
+Higher `I` amplifies beneficial response to `E⁺` while leaving `E⁰` weak and avoiding beneficial response to `E⁻`.
+
+Test separately:
+
+```text
+H_primary:
+τ⁺ increases with I
+```
+
+and:
+
+```text
+H_specificity:
+[τ⁺(i₁)-τ⁻(i₁)]
+>
+[τ⁺(i₀)-τ⁻(i₀)]
+```
+
+## 7. I-side reparameterization
+
+Use strictly increasing transforms:
+
+```text
+I' = f(I)
+```
+
+including nonlinear `f`.
+
+Expected:
+
+```text
+ordering hypothesis preserved
+linear coefficient need not be preserved
+```
+
+This attack verifies that the benchmark distinguishes the scientific proposition from its parametric representation.
+
+## 8. V-side affine invariance positive control
+
+Use:
+
+```text
+V^B = aV^A + b
+a > 0
+```
+
+Expected:
+
+```text
+τ_B(i) = aτ_A(i)
+```
+
+and:
+
+```text
+sign[τ_B(i₁)-τ_B(i₀)]
+=
+sign[τ_A(i₁)-τ_A(i₀)]
+```
+
+Under a linear model:
+
+```text
+δ_B = aδ_A
+```
+
+Failure is an implementation, estimation, or protocol problem.
+
+## 9. Independent interval-instrument test
+
+Construct two outcome instruments independently:
+
+```text
+M_V^A ← target
+M_V^B ← target
+```
+
+### Gate A — calibration
+
+Using independent calibration data, test whether:
+
+```text
+V^B ≈ aV^A + b
+```
+
+within a prespecified tolerance.
+
+Freeze `a,b` before outcome analysis.
+
+### Gate B — causal ordering
+
+Test whether:
+
+```text
+sign[τ_B(i₁)-τ_B(i₀)]
+=
+sign[τ_A(i₁)-τ_A(i₀)]
+```
+
+If Gate A was genuinely passed and Gate B reverses with adequate precision, a real discrepancy exists.
+
+## 10. High-correlation causal disagreement
+
+After freezing the affine link:
+
+```text
+r = V^B - (aV^A+b)
+```
+
+fit/test:
+
+```text
+r ~ I + E + I×E
+```
+
+Key failure pattern:
+
+```text
+high corr(V^A,V^B)
++
+nonzero residual I×E
+```
+
+This shows construct-level agreement without causal-estimand equivalence.
+
+## 11. Sensitivity matrix
+
+Vary:
+
+- sample size;
+- treatment allocation;
+- variance of `I`;
+- measurement reliability;
+- treatment-effect magnitude;
+- moderator-effect magnitude;
+- ceiling/floor exposure;
+- attrition;
+- outcome noise.
+
+Determine the range in which the assay can distinguish:
+
+```text
+flat
+vs
+small positive
+vs
+negative
+vs
+non-monotonic
+```
+
+before treating null results as substantive.
+
+## 12. Horizon matrix
+
+For a positive within-horizon result, test prespecified horizons separately:
+
+```text
+h₁, h₂, h₃, ...
+```
+
+Do not assume:
+
+```text
+τ_{h₁}(i) = τ_{h₂}(i)
+```
+
+Possible patterns include transient gain, persistence, decay, reversal, or overshoot.
+
+## 13. Transport matrix
+
+Only after within-design validation, vary one boundary at a time where feasible:
+
+| Axis | Examples |
+|---|---|
+| intervention | correction type / intensity |
+| domain | task family |
+| population | model family / subject population |
+| moderator measure | `M_I^A`, `M_I^B` |
+| outcome measure | interval-equivalent `M_V^A`, `M_V^B` |
+| generator | independently authored benchmark family |
+
+Each boundary is a new empirical claim.
+
+## 14. CARS prompt experiment
+
+Keep the control-protocol experiment separate:
 
 | Condition | Intervention | Purpose |
 |---|---|---|
-| B0 | none | native model behavior |
-| B1 | Generic Careful-Reasoning Control v0.1 | generic deliberation/control condition |
-| C0 | CARS v0.1 | candidate structured intervention |
+| C0 | none | native reasoning |
+| C1 | generic careful-reasoning control | deliberation control |
+| C2 | `CARS-CONTROL-PROTOCOL.md` | structured epistemic-control intervention |
 
-### Prompt-level ablations
+Use `eval/SCORING.md`.
 
-| Condition | Change | Main question |
-|---|---|---|
-| A1 | remove representation-escalation gate | does the gate reduce over-escalation? |
-| A2 | remove departure/adoption separation | does it reduce successor capture? |
-| A3 | remove unresolved-state permission | does it prevent forced conclusions? |
-| A4 | remove independence emphasis | does it improve common-mode evidence handling? |
-| A5 | remove retest requirement | does it improve behavioral transfer? |
-| A6 | remove belief/decision separation | does it help decisions under uncertainty? |
-| A7 | invariants only | are compact principles sufficient? |
+Prompt efficacy does not establish the causal-responsiveness hypothesis.
 
-## 2. v0.2 dependency-tracing comparison
+## 15. Historical prompt/catalyst/architecture experiments
 
-| Condition | Change | Main question |
-|---|---|---|
-| D0 | CARS v0.1 | no explicit dependency trace |
-| D1 | CARS v0.2 candidate | does tracing distinguish load-bearing from incidental conditions? |
-| D2 | v0.2 without substitution | does substitution testing add value beyond removal? |
-| D3 | v0.2 on irrelevant tasks | does dependency tracing activate unnecessarily? |
+Historical v0.1/v0.2 prompt comparisons and August 8 catalyst/recursive-architecture experiments remain reproducible from their files.
 
-Cases should include:
+Use their dedicated scoring surfaces if reactivated.
 
-- present and necessary conditions;
-- present but incidental conditions;
-- redundant conditions;
-- substitutable implementations;
-- cases where no dependency analysis is needed.
+They are not the current empirical frontier and should not be silently merged into assay evidence.
 
-## 3. Catalyst blind-decoding experiment
-
-The frozen deployable catalyst is recorded in `notes/2026-08-08-catalyst-notation.md`.
-
-The first catalyst question is not whether CARS works. It is whether the compact intervention is semantically recoverable without importing an unrelated ontology.
-
-### Decoding conditions
-
-| Condition | Intervention | Main question |
-|---|---|---|
-| K0 | no catalyst / neutral symbol task | what ontology does the model infer without intervention? |
-| K1 | typed catalyst equation only | are the symbols sufficiently self-decoding? |
-| K2 | execution semantics only | how much structure is carried by prose alone? |
-| K3 | frozen deployable catalyst | does objective + typed equation + semantics recover the intended operation? |
-| K4 | older opaque catalyst form | does semantic typing reduce ontology drift? |
-
-Do not provide the CARS legend, repository provenance, expected ontology labels, or previous parses during blind decoding.
-
-Measure with `eval/CATALYST_SCORING.md`:
-
-- ontology recovery;
-- relation recovery;
-- ordering/process recovery;
-- authority recovery;
-- construct/metric separation where encoded;
-- independence semantics.
-
-### Catalyst execution conditions
-
-After decoding is scored, compare:
-
-| Condition | Intervention | Main question |
-|---|---|---|
-| E0 | no intervention | native correction behavior |
-| E1 | generic careful reasoning | generic deliberation control |
-| E2 | execution semantics only | does prose alone drive the behavior? |
-| E3 | frozen deployable catalyst | does the full compact intervention improve controlled execution? |
-
-Relevant task families should test:
-
-- real limitation vs ordinary difficulty;
-- provisional residual representation vs premature certainty;
-- candidate generation vs immediate successor promotion;
-- independent validation vs selection-contaminated validation;
-- leave/adopt separation;
-- downstream reuse of a valid correction.
-
-A positive decoding result is not an efficacy result. A positive execution result is not automatically a `CorrCap` result.
-
-## 4. Recursive correction architecture frontier
-
-The formal recursive architecture should be tested separately from the catalyst and prompt intervention. A useful blind benchmark should vary the hidden failure locus without naming it to the system.
-
-| World | Hidden structure | Successful behavior |
-|---|---|---|
-| R0 | shallow inference/model error | repair locally; do not escalate |
-| R1 | observation/interface collapses required distinction | identify non-identifiability; seek a new partition or observation |
-| R2 | residual mapper merges two mechanisms | revise `Φ_t` / recover the missing residual distinction |
-| R3 | detailed representation uses wrong partition | change partition rather than merely adding detail |
-| R4 | candidate generator shares incumbent blind spot | revise generation or obtain a new candidate source |
-| R5 | validation environment is unseen but validator is selection-tuned | reject independence claim |
-| R6 | validator and validation environment are design-insulated | permit validation evidence to bear succession weight |
-| R7 | apparent dependency is incidental | remove without damaging correction |
-| R8 | implementation is substitutable | migrate preservation claim toward tested function, within scope |
-| R9 | correction procedure itself is limiting | propose a procedural successor without self-authorizing it |
-| R10 | no deeper failure exists | preserve current correction architecture |
-| R11 | successor fixes residual but damages controls | reject or scope adoption according to predeclared regression rule |
-| R12 | repeated validation set has entered lineage history | detect adaptive holdout contamination |
-| R13 | new benchmark generator changes hidden structure | test cross-generator transfer |
-
-## Architecture-level comparison conditions
-
-At minimum compare:
-
-| Condition | Description |
-|---|---|
-| X0 | native model / no explicit correction architecture |
-| X1 | fixed correction discipline |
-| X2 | revisable residual mapping but fixed validator |
-| X3 | revisable residual mapping and validation procedure |
-| X4 | full succession gate with design-independent validation requirement |
-
-These are experiment-design placeholders, not claims that each condition is already implemented.
-
-## Prompt-level analysis
-
-At minimum compare:
-
-- substantive task success;
-- over-update rate;
-- missed-update rate;
-- premature representation-escalation rate;
-- premature successor-adoption rate;
-- unjustified unresolved rate;
-- common-mode evidence errors;
-- correction transfer;
-- token/latency/search cost.
-
-If CARS beats B0 but not B1, generic deliberation is a stronger explanation than a CARS-specific mechanism.
-
-If CARS beats B1 only on internally authored tasks, external transfer remains unresolved.
-
-## Catalyst-level analysis
-
-Report separately:
+## Falsification ladder
 
 ```text
-Decode
-Execute
-TaskPerf
+Does primary ordering hold?
+        │
+   ┌────┴────┐
+   │         │
+  NO        YES
+   │         │
+localize   attack measurement
+and report      │
+            ┌───┴───────────┐
+            │               │
+       dependency on    survives licensed
+       measurement      transformations
+            │               │
+           STOP        test specificity
+                            │
+                       test h
+                            │
+                       test transport
+                            │
+                       test independent
+                       measurement
 ```
 
-Do not collapse them into one score before checking for dissociation.
-
-Important failure patterns include:
-
-```text
-high relation recovery + low ontology recovery
-high decoding + low execution
-high execution fidelity + no task gain
-high task gain + no evidence of CorrCap gain
-```
-
-These are diagnostically different outcomes.
-
-## Architecture-level analysis
-
-Track at least:
-
-- true limitation detection;
-- false limitation / false escalation rate;
-- localization adequacy;
-- residual-mapping accuracy or usefulness;
-- recovery of unsupplied distinctions;
-- candidate-generation quality;
-- candidate-selection leakage;
-- validator-design independence;
-- residual-local `ΔCorrCap`;
-- control regression;
-- substitution discovery;
-- cross-instance transfer;
-- cross-generator transfer;
-- cost.
-
-Do not assume a single scalar captures all of these.
-
-## CorrCap construct-validity controls
-
-`C_improve` and `CorrCap` are not assumed identical.
-
-Challenge a candidate correction-capacity metric with agents or conditions that artificially increase:
-
-- reasoning length;
-- number of proposed interventions;
-- abstention;
-- representation changes;
-- uncertainty language;
-- search volume.
-
-A sound metric should not reward these behaviors unless they improve actual correction outcomes.
-
-Include matched worlds where the correct action is **not** to revise.
-
-## Sequential evaluation
-
-For recursive succession, use renewable independence:
-
-```text
-W_dev → W_val,1 → W_val,2 → … → W_audit
-```
-
-Once a validation environment is exposed, treat it as part of later lineage history. Do not repeatedly call the same benchmark held out.
-
-Where possible, reserve independently authored or externally generated worlds for final audit.
+The ladder is cumulative. Do not skip directly from one positive interaction coefficient to a general construct claim.
 
 ## Interpretation rule
 
-A positive result should be scoped to the exact intervention, model family, task distribution, selection-information boundary, validator design, validation generators, and regression tolerance actually tested.
+A positive result should be scoped to the exact scientific object, measurement structure, intervention assignment, horizon, population, estimator, and benchmark generator actually tested.
 
-In particular:
-
-```text
-catalyst decoding
-↛ catalyst efficacy
-↛ CorrCap improvement
-↛ recursive improvement
-```
-
-Repeated local succession does not by itself establish universal recursive improvement.
+A disagreement is informative only after determining whether the compared representations were licensed to preserve the same object.

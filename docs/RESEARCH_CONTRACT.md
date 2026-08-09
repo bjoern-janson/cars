@@ -1,120 +1,245 @@
-# CARS v0.1 Research Contract
+# CARS Research Contract
 
 ## Status
 
-Reference specification for evaluating the **v0.1 prompt snapshot**. This is notebook guidance, not repository-wide governance.
+This is the current repository-level research contract.
 
-The notebook now contains two broader research surfaces:
-
-- a frozen catalyst candidate for blind decoding / execution tests;
-- a proposed recursive correction architecture.
-
-Neither is retroactively part of CARS v0.1. See:
-
-- [`../notes/2026-08-08-catalyst-notation.md`](../notes/2026-08-08-catalyst-notation.md)
-- [`../notes/2026-08-08-recursive-correction-architecture.md`](../notes/2026-08-08-recursive-correction-architecture.md)
-
-Keep the evidence surfaces separate:
+It separates:
 
 ```text
-v0.1 prompt result
-≠ catalyst result
-≠ architecture result
+CARS control protocol
+≠
+heterogeneous causal-response assay
+≠
+optional longitudinal / equilibrium extensions
 ```
 
-## Primary research question
+Historical prompt, catalyst, and recursive-architecture artifacts remain available for lineage and separate experiments.
 
-**Does CARS v0.1 improve controlled adaptive reasoning relative to an unprompted baseline and a generic careful-reasoning control, while avoiding increased over-revision, premature representation change, and unjustified confidence?**
+## Primary empirical question
 
-## Unit of analysis
+For a pre-intervention measured quantity `I`, intervention `E ∈ {e₀,e₁}`, and prespecified outcome `V`, define:
 
-A model response to a task requiring at least one of:
+```text
+τ(i)
+=
+E[V(e₁) - V(e₀) | I=i]
+```
 
-- uncertainty management;
-- contradiction handling;
-- correction after feedback;
-- causal discrimination;
-- failure localization;
-- representation adequacy assessment;
-- decision under unresolved belief;
-- transfer after correction.
+The primary scientific proposition is:
 
-## Experimental conditions
+```text
+i₁ > i₀
+⇒
+τ(i₁) > τ(i₀)
+```
 
-### B0 — Baseline
+The experiment asks whether higher pre-intervention `I` orders larger causal treatment effects on later `V`.
 
-No CARS-specific intervention.
+## What the primary question does not assume
 
-### B1 — Generic reasoning control
+It does not assume that:
 
-A length-conscious generic instruction that asks the model to reason carefully, consider alternatives, check assumptions, and revise if warranted, without CARS-specific concepts such as authority laundering, representation escalation, departure/adoption separation, or unresolved-state preservation.
+- `I` is intelligence;
+- `I` causes `τ`;
+- `V` is value, viability, utility, welfare, or performance by definition;
+- the relation is linear;
+- `I ∝ τ`;
+- `I ∝ C_improve` is an empirical law;
+- generic intervention responsiveness is discriminative correction capacity.
 
-### CARS v0.1
+## Minimal design
 
-Use the exact `prompts/CARS-v0.1.md` file when running a v0.1 comparison.
+```text
+measure I_t
+→ randomize E_t
+→ measure V_{t+h}
+→ estimate τ_{t,h}(i)
+→ test ordering
+```
 
-## Primary hypothesis
+The temporal ordering is not a causal arrow from `I` to `τ`.
 
-CARS v0.1 improves aggregate controlled-adaptation score on held-out tasks relative to B0 and B1.
+## Measurement contract
 
-## Null / negative outcomes
+Measurement partly constitutes the identity of the scientific object.
 
-Scientifically meaningful negative or mixed results include:
+The admissible transformation classes must be specified before invariance claims are tested.
 
-- no reliable improvement over B1;
-- improvement only on internally authored or lexically similar tasks;
-- gains disappearing on held-out domains;
-- better verbal explanations without changed downstream behavior;
-- reduced false updates but excessive conservatism;
-- improved localization but worse task success;
-- increased token/search cost without commensurate benefit;
-- greater tendency to invent representation failures;
-- increased refusal to decide under uncertainty.
+### I side
 
-## Core outcome dimensions
+The primitive proposition uses order.
 
-1. Failure localization
-2. Evidence-scope control
-3. Hypothesis/authority separation
-4. Independence sensitivity
-5. Revision proportionality
-6. Representation-escalation control
-7. Departure/adoption separation
-8. Correct unresolved-state use
-9. Behavioral correction / transfer
-10. Belief/decision separation
-11. Task outcome quality
-12. Reasoning cost
+Strictly increasing transformations of `I` preserve the substantive ordering.
+
+### V side
+
+The additive CATE uses differences.
+
+Positive affine transformations:
+
+```text
+V' = aV + b
+a > 0
+```
+
+preserve:
+
+```text
+τ'(i) = aτ(i)
+```
+
+and therefore preserve the ordering of treatment-effect heterogeneity.
+
+General monotone nonlinear transformations are not assumed to preserve the same additive causal estimand.
+
+## Shape contract
+
+The scientific proposition is not identical to a parametric model.
+
+Where justified:
+
+```text
+∂τ(i)/∂i > 0
+```
+
+is a smooth representation.
+
+A preregistered linear approximation may use:
+
+```text
+τ(i) = τ₀ + δi
+δ > 0
+```
+
+but:
+
+```text
+δ failure
+↛
+monotonicity failure
+```
+
+unless linearity is itself established as adequate.
+
+## Identification contract
+
+Prefer randomized intervention assignment.
+
+Randomization is used to identify the causal contrast of `E` on `V` within the experimental design.
+
+Randomization does not make `I` causal. `I` remains a pre-treatment moderator.
+
+Record treatment assignment, exclusions, attrition, protocol deviations, and any design restriction that could compromise positivity or identification.
+
+## Primary outcome
+
+The primary outcome is the ordering of estimated conditional treatment effects over prespecified ordered `I` values, strata, or a monotonicity functional.
+
+A linear `I×E` coefficient is a secondary representation when the linear model is justified.
+
+## Primary negative outcomes
+
+Scientifically meaningful negative or mixed outcomes include:
+
+- flat `τ(i)` within adequate precision;
+- decreasing `τ(i)`;
+- non-monotonic `τ(i)` that violates the global ordering claim;
+- apparent moderation explained by ceiling/floor geometry;
+- sign dependence on an outcome transformation not licensed to preserve the same estimand;
+- disagreement between instruments that fail interval-equivalence calibration;
+- positive response under warranted intervention accompanied by equally strong response to misleading intervention;
+- results that disappear under independent measurement or held-out domains;
+- insufficient sensitivity to distinguish zero from the preregistered smallest effect of interest.
+
+## Red-team requirement
+
+Before strong positive interpretation, the assay should be challenged with adversarial worlds or controls designed to manufacture false moderation.
+
+Minimum attacks are described in `RED_TEAM_PROTOCOL.md`.
+
+Important families include:
+
+- constant effect + prognostic `I`;
+- ceiling/floor saturation;
+- nonlinear outcome measurement;
+- baseline structure and broken-randomization controls;
+- generic plasticity;
+- affine measurement positive controls;
+- independently constructed interval-equivalent instruments;
+- high-correlation causal disagreement;
+- nonlinear `I` reparameterization;
+- sensitivity limits.
+
+## Specificity extension
+
+A positive primary result licenses a stronger follow-up, not an automatic stronger interpretation.
+
+Use independently established intervention status:
+
+```text
+E⁺
+E⁰
+E⁻
+```
+
+to test whether higher `I` predicts discrimination between warranted and misleading interventions rather than generic susceptibility.
+
+## Transport contract
+
+A result is scoped to the tested:
+
+```text
+intervention
+outcome measurement
+moderator measurement
+horizon
+domain
+population
+estimator
+causal-identification design
+```
+
+Transport across any of these is a separate empirical claim.
+
+## CARS prompt experiment
+
+The CARS control protocol can separately be tested as a reasoning intervention against baseline and generic careful-reasoning controls.
+
+Prompt efficacy does not establish the heterogeneous-responsiveness hypothesis.
+
+Assay success does not establish prompt efficacy.
+
+## Historical research surfaces
+
+The August 8 catalyst and recursive-architecture artifacts remain historical research surfaces.
+
+They may be tested separately, but their results should not be silently promoted into the current assay claim.
+
+## Optional longitudinal extension
+
+Only if data warrant it, define:
+
+```text
+T_h^(e)(i)
+=
+E[I_{t+h} | do(E_t=e), I_t=i]
+```
+
+A fixed point or contraction result is a separate claim about longitudinal dynamics.
+
+Do not treat it as implied by the primary responsiveness assay.
 
 ## Claim rule
 
-A positive v0.1 result authorizes only the tested claim, model family, task distribution, intervention version, and evaluation conditions.
+A positive result authorizes only the tested scientific object under the measurement, identification, estimation, and scope conditions actually used.
 
-It does not establish:
+A negative result should be localized before revision.
 
-- a general theory or definition of intelligence;
-- `I ∝ C_improve` as an empirical law;
-- catalyst semantic recovery or efficacy;
-- general AI safety;
-- autonomous representation invention;
-- causal mechanism;
-- universal transfer;
-- recursive correction-capacity improvement;
-- validity of the notebook's later architecture;
-- validity of `CorrCap` as a measure of the higher-level `C_improve` construct.
-
-Likewise, a negative v0.1 result does not by itself falsify later catalyst or architecture hypotheses that were not instantiated by the v0.1 prompt.
-
-## Relationship to later research surfaces
-
-The catalyst asks whether a compact semantically typed intervention can be recovered and executed by unfamiliar models without requiring reconstruction of the full theory.
-
-The recursive architecture asks whether a correction process can discover when its own representation or correction machinery is limiting, generate a successor without self-authorizing it, and validate succession using information insulated from candidate selection.
-
-Those questions require separate experiments. They should not be answered by reinterpreting v0.1 benchmark results.
+A genuine contradiction at the scientific-proposition level requires that lower-level explanations—measurement identity, causal identification, shape representation, estimator adequacy, and implementation—have been sufficiently ruled out.
 
 ## Version discipline
 
-The notebook can evolve freely. For any experiment whose result matters, record the exact prompt file or commit used so later edits are not confused with the tested intervention.
+Record the exact prompt, assay specification, measurement instruments, intervention protocol, code, estimator, and repository commit used for any result whose evidential status matters.
 
-Substantive prompt variants should usually receive a new filename or version label for comparison. Research notes, catalyst studies, and architecture documents may evolve without forcing a prompt version bump unless they actually change the prompt intervention being tested.
+A changed object should receive a new version or explicit comparison condition rather than being silently treated as the same experiment.

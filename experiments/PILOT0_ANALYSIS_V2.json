@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "status": "frozen for next held-out replication after Run 1 estimator audit",
+  "scientific_prediction": "Delta_tau = tau_high - tau_low > 0",
+  "analysis_population": "eligible initially wrong frozen prestates only",
+  "blocking_unit": "frozen pre-treatment task-prestate identified by stratum/task_id",
+  "assignment_unit": "post-treatment branch within frozen-prestate block",
+  "assignment_structure": {
+    "branches_per_block": 4,
+    "E0_per_block": 2,
+    "E+_per_block": 2
+  },
+  "tail_definition": {
+    "unit": "unique frozen-prestate block",
+    "tail_size": "floor(number_of_blocks / 4)",
+    "ranking": "ascending I",
+    "low_tail": "first tail_size blocks",
+    "high_tail": "last tail_size blocks",
+    "tie_breaker": "ascending SHA-256 of '<tail_tie_seed>::<stratum>'",
+    "tail_tie_seed": 20260809,
+    "outcome_blind": true,
+    "treatment_blind": true,
+    "strict_ordering_check": "report whether max(I_low) < min(I_high)"
+  },
+  "primary_estimand": {
+    "tau_low": "mean(V|E+, low tail) - mean(V|E0, low tail)",
+    "tau_high": "mean(V|E+, high tail) - mean(V|E0, high tail)",
+    "Delta_tau": "tau_high - tau_low"
+  },
+  "randomization_inference": {
+    "permutation_seed": 20260809,
+    "permutations": 2000,
+    "rule": "shuffle observed E0/E+ labels only within each frozen-prestate stratum, preserving the observed arm counts in that block",
+    "primary_p_value": "one-sided P(T_perm >= T_observed) for prespecified Delta_tau > 0",
+    "secondary_p_values": [
+      "two-sided P(|T_perm| >= |T_observed|)",
+      "one-sided negative-direction diagnostic P(T_perm <= T_observed)"
+    ]
+  },
+  "secondary_representation": "linear I x E interaction delta; descriptive/secondary, not the primary scientific object",
+  "run1_policy": "Run 1 remains historical schema-v1 confirmatory data. Schema-v2 applied to Run 1 is post-hoc robustness only and cannot replace the as-executed Run 1 result."
+}

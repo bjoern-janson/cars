@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "study": "Pilot 0 A4c: randomized legacy-inline rendering localization",
+  "repair_id": "A4C_ANALYZER_REPAIR1",
+  "status": "frozen after analyzer validation failure and before any A4c estimand was produced by the analyzer",
+  "failure_locus": "interface/audit validation",
+  "trigger": "analyze_pilot0_a4c.py aborted in validate_rows with: block 10567 L_canonical: rendering changed across branches",
+  "root_cause": "The frozen analyzer required user_message_sha256 to be constant across all branches of one rendering arm. In A4c the full inline user message contains the signal text, so E0 and EV necessarily and correctly produce different full-message hashes within the same rendering. The runner and A4c design instead require semantic-state identity across renderings conditional on signal, and exact full-message replication only within each rendering-by-signal cell.",
+  "minimal_revision": "Replace only validate_rows so full rendered-message stability is checked within each rendering x signal cell. Preserve semantic-state identity checks across renderings within signal and preserve per-row rendering provenance checks.",
+  "unchanged": [
+    "generated A4c outcome rows",
+    "randomization assignments",
+    "generation seeds",
+    "primary estimands",
+    "transition definitions",
+    "block collapse",
+    "bootstrap procedure",
+    "blocked randomization procedure",
+    "Holm multiplicity adjustment",
+    "practical-equivalence margin",
+    "Q_N threshold",
+    "secondary interaction",
+    "A4c decision gate"
+  ],
+  "outcome_regeneration_required": false,
+  "authority": "plumbing/audit repair only; no scientific result or hypothesis update",
+  "original_analyzer": "scripts/analyze_pilot0_a4c.py",
+  "repair_wrapper": "scripts/analyze_pilot0_a4c_repair1.py",
+  "interpretation": [
+    "analyzer validation failure does not imply assay failure",
+    "audit repair does not authorize any A4c scientific conclusion until the repaired analyzer completes",
+    "the original frozen analyzer remains preserved for provenance"
+  ]
+}

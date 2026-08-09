@@ -1,141 +1,281 @@
 # Claims and Non-Claims
 
-## Current authorized claim
+## Current repository-level claim
 
-CARS is a **living research notebook containing candidate reasoning interventions, a frozen catalyst candidate for testing, evaluation scaffolding, and a proposed recursive architecture for controlled correction**.
-
-That is the current repository-level claim.
-
-None of those artifacts acquire empirical authority merely because they are mutually coherent.
-
-## Three distinct research surfaces
-
-The notebook now separates:
+CARS is a living research notebook containing:
 
 ```text
-prompt intervention
-≠ catalyst intervention
-≠ recursive architecture
+1. an epistemic control protocol;
+2. a minimal heterogeneous causal-response assay;
+3. a measurement-boundary specification;
+4. an adversarial falsification program;
+5. historical prompt, catalyst, and recursive-architecture lineage.
 ```
 
-- The **prompt** asks whether explicit CARS reasoning instructions improve controlled adaptation.
-- The **catalyst** asks whether a compact semantically typed intervention can be decoded and executed without full contextual reconstruction.
-- The **formal architecture** asks whether correction-surface succession can earn authority through design-independent validation and residual-local improvement.
+None of these artifacts acquire empirical authority merely because they are mutually coherent.
 
-Evidence for one surface does not automatically validate the others.
+## Role separation
 
-## Objective / metric boundary
+Keep the following distinction explicit:
 
-The broader research framing uses:
+```text
+CARS control protocol
+≠
+empirical assay
+```
+
+CARS governs how evidence is handled, failures are localized, authority is assigned, and revisions are made.
+
+The assay tests a specific proposition and produces evidence for CARS to process.
+
+Neither validates the other.
+
+## Motivating conjecture
+
+The broader research trajectory uses:
 
 ```text
 I ∝ C_improve
 ```
 
-where `C_improve` is the proposed construct “capacity to convert feedback into increased future correctability / viability.”
+as a motivating conjecture / design objective.
 
-This is a candidate research framing, **not** an established definition, law, or empirical measure of intelligence.
+This is not an established definition of intelligence, a causal law, or the frozen assay hypothesis.
 
-`CorrCap` is an operational measurement target used to test correction-capacity claims:
+## Current scientific object
 
-```text
-C_improve ≠ CorrCap
-```
-
-A metric does not become the construct simply because the theory names it.
-
-## Prompt-level claim
-
-CARS v0.1 is a candidate reasoning intervention with an explicit research contract and comparison scaffold.
-
-A positive v0.1 result would authorize only the tested prompt-level claim, model family, task distribution, and evaluation conditions.
-
-## Catalyst-level claim
-
-The frozen catalyst is documented in `notes/2026-08-08-catalyst-notation.md`.
-
-A positive blind-decoding result could support a scoped statement such as:
-
-> The exact catalyst string reliably communicates the intended operational structure to model family Y under blind-decoding protocol Z.
-
-A positive execution result could support a separate scoped statement such as:
-
-> The exact catalyst string changes correction behavior in the intended direction on task family X relative to specified controls.
-
-Neither statement establishes the full recursive architecture or correction-capacity improvement.
-
-## Current architecture hypothesis
-
-The notebook studies whether a system state
+The assay defines:
 
 ```text
-X_t = (C_t, O_t, M_t, Φ_t, G_t, 𝒱_t, …)
+τ(i)
+=
+E[V(e₁) - V(e₀) | I=i]
 ```
 
-can undergo controlled succession when:
+and tests the primitive ordering proposition:
 
-1. evidence is mapped into a provisional residual representation `ρ_t = Φ_t(E_t)`;
-2. candidate revisions are generated without receiving automatic adoption authority;
-3. rejection of the incumbent does not imply validation of a successor;
-4. validation design and validation environments are insulated from candidate-selection information;
-5. the complete successor improves correction capacity on the residual that triggered revision;
-6. unacceptable regression is controlled within the declared scope;
-7. correction-surface components remain revisable under the same authority discipline.
+```text
+i₁ > i₀
+⇒
+τ(i₁) > τ(i₀)
+```
 
-This is a proposed experimental architecture, not a demonstrated result.
+Where smoothness is justified, this can be represented as:
 
-## Claims that require evidence
+```text
+∂τ(i)/∂i > 0
+```
+
+Under an explicitly justified linear specification:
+
+```text
+τ(i) = τ₀ + δi
+δ > 0
+```
+
+The ordering proposition is the scientific object. The derivative and `δ` are representations of it.
+
+## What a positive primary result would authorize
+
+A valid positive result can support a scoped claim such as:
+
+> Within intervention `E`, outcome measurement `M_V`, moderator measurement `M_I`, horizon `h`, population `P`, and the stated causal-identification and estimation protocol, higher pre-intervention `I` is associated with larger causal treatment effects on `V`.
+
+It does not automatically establish:
+
+- a causal effect of `I`;
+- that `I` is intelligence;
+- that `V` is viability, value, welfare, or utility;
+- that `I ∝ τ`;
+- linearity;
+- a mechanism of responsiveness;
+- discriminative correction capacity;
+- transport to another intervention, domain, horizon, population, or measurement system.
+
+## Measurement claim boundary
+
+Measurement partly constitutes the identity of the scientific object.
+
+For `I`, the primitive hypothesis is ordering-based. Strictly increasing reparameterizations preserve that order.
+
+For `V`, the causal estimand is difference-based. For the current additive CATE, positive affine transformations preserve the treatment-effect ordering:
+
+```text
+V' = aV + b
+a > 0
+
+τ'(i) = aτ(i)
+```
+
+Therefore:
+
+```text
+sign[τ'(i₁)-τ'(i₀)]
+=
+sign[τ(i₁)-τ(i₀)]
+```
+
+General monotone nonlinear transformations of `V` are not assumed to preserve the same additive causal estimand.
+
+See `MEASUREMENT_BOUNDARY.md`.
+
+## Shape / estimator claim boundary
+
+Keep explicit:
+
+```text
+scientific object
+>
+shape representation
+>
+estimator
+```
+
+Accordingly:
+
+```text
+estimator failure
+↛
+shape failure
+```
+
+and:
+
+```text
+linear δ failure
+↛
+monotonicity failure
+```
+
+unless the corresponding estimator and linear shape assumptions have independently been established as adequate.
+
+## Responsiveness / specificity boundary
+
+A positive result under a warranted intervention does not automatically establish discriminative responsiveness.
+
+A system can satisfy:
+
+```text
+τ⁺ increasing with I
+```
+
+while also responding strongly to neutral or misleading interventions.
+
+Specificity therefore requires separate conditions such as:
+
+```text
+E⁺
+E⁰
+E⁻
+```
+
+with intervention status established independently of the tested system.
+
+## Dynamics / equilibrium boundary
+
+Keep distinct:
+
+```text
+causal heterogeneity
+≠
+longitudinal dynamics
+≠
+equilibrium
+≠
+stationary stochastic distribution
+```
+
+A positive responsiveness result does not establish a longitudinal transition law for `I`.
+
+If later work defines:
+
+```text
+T_h^(e)(i)
+=
+E[I_{t+h} | do(E_t=e), I_t=i]
+```
+
+then a fixed-point claim:
+
+```text
+i* = T_h^(e)(i*)
+```
+
+is a separate empirical statement requiring additional conditions.
+
+## CARS prompt claim
+
+`prompts/CARS-CONTROL-PROTOCOL.md` is a candidate epistemic control intervention.
+
+A prompt-level experiment may test whether CARS improves reasoning relative to baseline or generic careful-reasoning controls.
+
+That experiment is independent of the responsiveness assay. CARS prompt efficacy does not establish the assay hypothesis, and assay success does not establish CARS prompt efficacy.
+
+Historical prompt snapshots remain in `prompts/CARS-v0.1.md` and `prompts/CARS-v0.2-CANDIDATE.md`.
+
+## Historical catalyst / recursive-architecture claim
+
+The August 8 catalyst and recursive-architecture artifacts remain part of the research lineage.
+
+They are now treated primarily as:
+
+- historical candidate interventions;
+- mechanism hypotheses;
+- diagnostic scaffolding;
+- sources of adversarial benchmark dimensions.
+
+They are not required by the current headline assay.
+
+A catalyst-decoding result or recursive-architecture result should still be interpreted only within its own protocol if those historical surfaces are tested.
+
+## Claims requiring evidence
 
 Evidence may eventually support scoped statements such as:
 
-- CARS improves failure localization on benchmark X for model family Y.
-- CARS reduces premature representation escalation under specified conditions.
-- The frozen catalyst improves blind semantic recovery relative to an opaque notation control.
-- The frozen catalyst improves correction behavior relative to semantics-only and generic-deliberation controls.
-- A system identifies when its current representation is non-identifying for a target distinction.
-- A system recovers a useful distinction not explicitly supplied in the task ontology.
-- Dependency tracing improves identification of load-bearing correction conditions under specified interventions.
-- A successor correction procedure improves residual-local correction capacity under design-independent validation.
-- A sequence of revisions shows repeated improvement across fresh validation environments without unacceptable regression.
+- higher pre-intervention `I` orders larger causal response under a specified randomized intervention;
+- the ordering survives licensed positive-affine outcome remeasurement;
+- the result survives independently constructed interval-equivalent outcome instruments;
+- the result persists across prespecified horizons;
+- the result transfers across domains or populations;
+- `I` predicts responsiveness beyond ordinary prognostic capability;
+- higher `I` predicts greater discrimination between warranted and misleading intervention;
+- CARS prompt use improves specified reasoning outcomes relative to matched controls;
+- a longitudinal `I` transition map possesses a stable fixed point under a specified intervention regime.
 
 Each statement requires its own measurement, protocol, and scope.
 
-## Non-claims
+## Current non-claims
 
-This repository does not currently establish that CARS:
+This repository does not currently establish that:
 
-- is a theory or validated definition of intelligence;
-- establishes `I ∝ C_improve` as an empirical law;
-- establishes `CorrCap` as a valid measure of the full `C_improve` construct;
-- improves intelligence;
-- is generally safer than baseline reasoning;
-- solves alignment;
-- causes better real-world decisions;
-- discovers novel representations autonomously;
-- identifies the true residual or causal decomposition;
-- implements Controlled Representational Escape;
-- improves its own correction procedure;
-- validates successors independently in practice;
-- recursively improves across environments;
-- transfers across all models or domains;
-- identifies true causal mechanisms;
-- discovers universal correction functions or first principles;
-- provides independent scientific validation of adjacent research projects.
+- CARS improves reasoning, safety, or real-world decisions;
+- `I` is intelligence;
+- `I ∝ C_improve` is a validated law or definition;
+- `I ∝ τ`;
+- higher `I` predicts larger causal responsiveness in real systems;
+- the moderation relation is linear;
+- arbitrary monotone outcome transformations preserve the result;
+- generic intervention responsiveness is correction capacity;
+- the assay identifies the mechanism of response;
+- a stable mean equilibrium exists;
+- a stationary stochastic distribution exists;
+- the historical catalyst is effective;
+- the historical recursive architecture is validated;
+- the framework solves alignment or autonomous representation invention.
 
 ## Authority separation
 
-Observed task success does not automatically establish:
+Observed task success, treatment-effect heterogeneity, or measurement agreement does not automatically establish:
 
 - mechanism;
-- causal attribution;
+- causal attribution to `I`;
 - future reliability;
 - provenance quality;
-- transfer;
+- transport;
 - robustness;
 - safety;
-- representation adequacy;
-- validator independence;
-- correction-capacity improvement.
+- measurement equivalence;
+- construct identity.
 
 Likewise:
 
@@ -143,42 +283,26 @@ Likewise:
 A_leave ↛ A_adopt
 ```
 
-Evidence sufficient to withdraw authority from an incumbent does not automatically grant authority to any proposed successor.
+Evidence sufficient to withdraw authority from an incumbent claim does not automatically grant authority to a proposed replacement.
 
-## Catalyst claim boundary
+## Genuine contradiction rule
 
-Keep the following non-implications explicit:
+Before testing invariance, specify the transformation class licensed to preserve the object.
 
-```text
-semantic recovery
-↛ faithful execution
-↛ task improvement
-↛ CorrCap improvement
-↛ recursive improvement
-```
-
-A catalyst can be semantically transparent and ineffective. It can improve a task without establishing a general correction-capacity gain.
-
-## Independence claim boundary
-
-`independent validation` is a protocol-level claim, not shorthand for “different dataset.”
-
-A strong independence claim requires evidence that both the validation procedure and validation environment were insulated from information capable of influencing candidate generation or selection:
+A strong contradiction to a claimed measurement-form invariance requires:
 
 ```text
-(𝒱_t, W_t^ind) ⟂_design I_sel,t
+licensed transformation
++
+reliable measurement
++
+identified causal contrast
++
+adequate estimator
++
+opposite ordering
 ```
 
-If validation information affected candidate selection, it cannot later be counted as independent evidence for the same succession claim.
+If that occurs, localize the failure before revising the substantive proposition.
 
-## Correction-capacity claim boundary
-
-`CorrCap` is currently an operational research construct. A higher score does not by itself establish greater latent correction capacity unless the metric survives construct-validity tests against gaming, false escalation, intervention inflation, and benchmark-generator dependence.
-
-Residual-local improvement is stronger than a global average claim but remains scoped to the tested residual class and validation design.
-
-## Recursive claim boundary
-
-Even if one successor outperforms its predecessor, that does not establish recursive improvement as a general property.
-
-A recursive-improvement claim would require repeated prospective succession across fresh, structurally independent validation environments, with exposed validation evidence treated as part of later selection history and regressions explicitly controlled.
+The protocol is not designed to make claims unfalsifiable. It is designed to make the location of falsification explicit.

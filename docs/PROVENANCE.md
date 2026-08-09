@@ -2,7 +2,7 @@
 
 ## Research direction
 
-CARS is directed by **Björn Janson** as part of an independent research program on adaptive reasoning, representation failure, correction, dependency, and epistemic governance.
+CARS is directed by **Björn Janson** as part of an independent research program on adaptive reasoning, correction, causal responsiveness, measurement identity, representation failure, and epistemic governance.
 
 ## AI-assisted workflow
 
@@ -10,117 +10,196 @@ AI systems are used as research collaborators and development tools. Depending o
 
 - drafting and restructuring prose;
 - adversarial critique;
-- generating counterexamples;
+- generating counterexamples and synthetic worlds;
 - comparing alternative formulations;
 - repository construction;
 - code scaffolding;
 - documentation;
 - benchmark-case generation;
 - consistency checks;
-- formalization of candidate architectures and evaluation criteria;
+- formalization of candidate hypotheses and evaluation criteria;
+- measurement-theoretic analysis;
+- causal-inference design discussion;
 - notation design and blind-decoding diagnostics.
 
-The use of AI assistance is not hidden and should not be confused with independent validation.
-
-## Authority boundary
-
-AI-generated suggestions, implementations, benchmark cases, formal notation, critiques, or mutually agreeing model interpretations acquire no scientific authority merely because they are coherent, executable, or convergent.
-
-Research claims require evaluation under explicit protocols, ideally including independently authored tasks, design-independent validation, fresh evaluation environments, and independent replication where feasible.
+AI assistance is not independent scientific validation.
 
 ## Current artifact lineage
 
 The following were developed within the same broader AI-assisted research workflow:
 
-- CARS prompt variants;
+- CARS prompt variants and current control protocol;
 - design rationale and claims documents;
-- seed benchmark;
-- typed-attribution and representation-authority notes;
-- recursive correction architecture;
-- catalyst notation and execution semantics;
-- current evaluation scaffolding.
+- seed prompt-level benchmark;
+- historical typed-attribution / representation-authority notes;
+- historical recursive correction architecture;
+- historical catalyst notation and execution semantics;
+- current minimal causal-responsiveness assay;
+- current measurement-boundary theorem/specification;
+- current adversarial assay red-team protocol;
+- evaluation, experiment, and result-reporting scaffolding.
 
-They should therefore be treated as **internally generated research artifacts**, not independent evidence for one another.
+They are internally generated research artifacts, not independent evidence for one another.
 
 In particular:
 
-- convergence among notebook notes does not validate the architecture;
-- the seed cases do not validate the prompt that helped motivate their design;
-- the recursive architecture does not validate CARS v0.1 or v0.2;
-- the catalyst does not validate the formal architecture it compresses;
-- the formal architecture does not validate the catalyst's efficacy;
-- internally generated validators or benchmark worlds are not independent merely because they are stored in separate files;
-- AI critique inside the same workflow is adversarial development input, not independent replication.
+```text
+CARS control protocol
+↛ assay hypothesis true
 
-## Catalyst diagnostics
+assay architecture
+↛ CARS prompt effective
 
-Blind or semi-blind parses by external model systems can be useful **development diagnostics** for semantic recoverability.
+measurement theorem
+↛ empirical measurement equivalence
 
-A parse that reveals ontology drift can motivate a catalyst revision. However:
+synthetic red-team result
+↛ real-world treatment-effect heterogeneity
 
-- one model parse is not a validated estimate of `DecodeAcc`;
-- agreement among several related models is not automatically independent evidence;
-- exposing prior parses to later models contaminates a blind-decoding condition;
-- a successful parse establishes semantic recovery only within the tested context, not correction efficacy.
+historical recursive architecture
+↛ current assay validated
+```
 
-For reported catalyst experiments, preserve the exact tested catalyst string and the full context shown to the model.
+## Current empirical object provenance
+
+The current scientific object is:
+
+```text
+τ(i)
+=
+E[V(e₁)-V(e₀) | I=i]
+```
+
+with the primitive ordering proposition:
+
+```text
+i₁ > i₀
+⇒
+τ(i₁) > τ(i₀).
+```
+
+This proposition emerged from a longer research trajectory beginning with the motivating conjecture:
+
+```text
+I ∝ C_improve
+```
+
+and later causal-response compressions.
+
+The lineage matters because the current assay should not be treated as an independently discovered empirical law. It is a candidate hypothesis generated inside the same research program and must therefore face external/adversarial evidence.
+
+## Measurement-boundary provenance
+
+The current measurement rule was sharpened through adversarial counterexample analysis.
+
+The working boundary is:
+
+```text
+I
+→ order structure
+→ strictly increasing transforms preserve the primitive ordering
+
+V
+→ additive difference structure
+→ positive affine transforms preserve additive-CATE ordering
+```
+
+This is a mathematical constraint on the current estimand, not empirical evidence that any real measurement instrument is valid or interval-equivalent.
+
+Claims that two independently constructed outcome instruments belong to the same affine-equivalence class require separate calibration evidence.
+
+## Red-team provenance
+
+Synthetic or constructed attacks are development evidence.
+
+They are useful for demonstrating that an estimator or scientific claim can fail under known conditions, including:
+
+- constant-effect worlds;
+- ceiling/floor artifacts;
+- nonlinear outcome remeasurement;
+- confounded treatment assignment;
+- generic plasticity;
+- measurement-equivalence failures.
+
+A synthetic counterexample can falsify an overstrong mathematical or methodological claim, but synthetic survival does not establish empirical validity in real systems.
+
+## CARS prompt provenance
+
+The current control protocol is in `prompts/CARS-CONTROL-PROTOCOL.md`.
+
+Historical prompt snapshots remain in `prompts/CARS-v0.1.md` and `prompts/CARS-v0.2-CANDIDATE.md`.
+
+Prompt versions should be treated as interventions. If a prompt experiment matters, record the exact file/hash and all context supplied to the model.
+
+## Historical catalyst diagnostics
+
+Blind or semi-blind model parses of the August 8 catalyst remain useful development diagnostics for semantic recoverability.
+
+They do not constitute evidence for the current causal-responsiveness assay.
+
+If catalyst experiments are reactivated, preserve the exact tested string and full context shown to the model.
 
 ## Selection-information boundary
 
-For architecture-level experiments, provenance should record what information could have influenced candidate generation or selection.
+Any benchmark, calibration set, model parse, critique, prior result, or synthetic attack that can influence assay design, measurement choice, estimator choice, or threshold selection becomes part of the research lineage.
 
-Let:
+Do not later relabel exposed development information as fresh independent validation.
 
-```text
-I_sel,t := all information capable of influencing candidate generation or selection
-```
-
-A strong independence claim requires design insulation of both the validation procedure and validation environment:
-
-```text
-(𝒱_t, W_t^ind) ⟂_design I_sel,t
-```
-
-If information from a benchmark, validator, critique, prior model parse, or earlier result could have changed the selected revision, that information belongs to the relevant selection history and cannot later be counted as independent validation evidence for the same succession claim.
+For independently constructed measurement instruments, keep calibration data separate from treatment-effect data when claiming independent interval-equivalence testing.
 
 ## Sequential provenance
 
-Validation evidence can change status over time.
+Evidence changes status over time.
 
-A world may be fresh for transition `t`, then become part of the lineage's effective information history once its outcome is observed.
+A benchmark or calibration set may be fresh for one decision, then become part of later design history once its results are observed.
 
-For repeated succession, record:
+For sequential revisions, record:
 
-- when each validation environment was first exposed;
-- what revisions occurred after exposure;
-- which benchmark generators were reused;
-- which audit cases remained unavailable to the lineage.
-
-Renewable independence requires renewable provenance tracking.
+- when each benchmark/calibration environment was first exposed;
+- what revisions occurred afterward;
+- which generators or instruments were reused;
+- which audit cases remained unavailable to the development lineage.
 
 ## Construct / metric provenance
 
-The broader framing distinguishes:
+The motivating conjecture and operational measures remain distinct.
 
 ```text
-C_improve ≠ CorrCap
+I ∝ C_improve
 ```
 
-`C_improve` is the higher-level candidate construct. `CorrCap` is an operational measurement target.
+is a research framing, not a validated definition.
 
-A CorrCap definition developed within the same theoretical workflow does not acquire construct validity by provenance alone. It must survive empirical tests against proxy capture and metric gaming.
+`I`, `M_I`, `V`, and `M_V` used in an experiment are operational measurements. Their interpretation must be earned through reliability, invariance, predictive validity, causal-response relations, and transport—not through symbol names.
 
-## Future evidence
+## Independence dimensions
 
 Stronger evidence should increase independence along dimensions such as:
 
 - case authorship;
 - benchmark generator;
-- validation design;
-- validation environment;
-- model family;
-- implementation;
+- intervention construction;
+- measurement instrument construction;
+- calibration data;
+- analysis implementation;
+- estimator;
+- model family / population;
 - evaluator;
 - replication team.
 
 Independence is not binary by default. Claims should state which dimensions were actually separated and which remain shared.
+
+## Authority boundary
+
+AI-generated suggestions, simulations, implementations, benchmark cases, formal notation, critiques, or agreeing model interpretations acquire no scientific authority merely because they are coherent, executable, or convergent.
+
+The current protocol should therefore be read as:
+
+```text
+assay
+→ data
+→ CARS localization
+→ revision only if earned
+```
+
+not as a closed loop in which internally generated theory validates itself.

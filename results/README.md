@@ -1,117 +1,259 @@
 # Results
 
-No efficacy, catalyst-efficacy, recursive-improvement, or correction-capacity result is currently authorized.
+## Pilot 0 terminal status
 
-Future result packages should record enough information to reconstruct **what was tested, what context was exposed, what information could have influenced selection, and what claim the result actually supports**.
+Pilot 0 is now **closed** under an epistemic stopping rule. The repository contains scoped positive causal results about representation-dependent transition behavior, but these do **not** establish a global correction construct, psychological mechanism, transport invariance, or general intelligence claim.
+
+Terminal record:
+
+- [`PILOT0_TERMINAL_RECORD.md`](PILOT0_TERMINAL_RECORD.md)
+
+The original moderation hypothesis was **not supported**. The later representation-localization program earned endpoint-specific causal authority, and the R1 replication/transport branch established a small replicated positive prior-state-encoding effect on `T_instability` whose common 95% interval lies entirely inside the inherited `±0.05` practical region.
+
+Keep the stopping rule explicit:
+
+```text
+STOP
+≠ truth
+≠ completeness
+≠ certainty
+
+STOP
+= no presently justified escalation
+```
+
+No A8, R2, or further `T_instability` decomposition is currently earned. A future experiment requires a genuinely new scientific question and a new pre-outcome contract.
+
+Future result packages should record enough information to reconstruct:
+
+```text
+what scientific object was tested
+what measurement structure instantiated it
+how treatment was assigned
+what estimator represented it
+what transformations were licensed
+what claim the result actually supports
+```
 
 ## Result surfaces
 
-Keep three result types distinct:
+Keep distinct:
 
 ```text
 prompt result
-≠ catalyst result
-≠ architecture result
+≠
+causal-responsiveness result
+≠
+measurement-invariance result
+≠
+specificity result
+≠
+longitudinal/equilibrium result
+≠
+historical catalyst/architecture result
 ```
 
 A positive result on one surface does not automatically promote claims on another.
 
-## Prompt-level result package
+## Primary assay result package
 
-Record:
+For:
 
-- exact intervention version and hash;
-- control prompt version and hash;
-- model/version/date;
-- task source and authorship;
-- evaluator identity or evaluation method;
-- scoring rule;
-- excluded cases and reasons;
-- per-dimension scores;
-- substantive outcome metrics;
-- cost metrics;
+```text
+τ(i)
+=
+E[V(e₁)-V(e₀) | I=i]
+```
+
+record:
+
+- exact operational definition of `I` / `M_I`;
+- exact intervention levels `e₀,e₁`;
+- randomization/assignment procedure;
+- exact operational definition of `V` / `M_V`;
+- horizon `h`;
+- population/model family;
+- treatment counts across relevant `I` support;
+- baseline outcome or headroom variables where used;
+- attrition/missingness;
+- estimator and version/code;
+- whether the primary test was ordered strata, monotonicity, derivative, or linear interaction;
+- uncertainty intervals;
+- smallest effect/order difference the design was intended to resolve;
+- ceiling/floor exposure;
 - protocol deviations;
-- raw outputs where licensing/privacy permits.
+- raw or auditable outputs where licensing/privacy permits.
 
-## Catalyst-level result package
+Report the scientific proposition before the parametric representation.
 
-For blind decoding or execution tests, record:
+For example:
 
-- exact catalyst text, byte-for-byte where practical;
-- repository commit containing the tested catalyst;
-- whether the condition used equation-only, semantics-only, full catalyst, older opaque notation, or a control;
-- all context shown before the model response;
-- model/version/date;
-- decoding prompt or execution task prompt;
-- whether CARS provenance, symbol legends, intended ontology labels, prior parses, or rubric language were withheld;
-- decoding scores from `eval/CATALYST_SCORING.md`;
-- execution scores where applicable;
-- raw model interpretation/output;
-- evaluator identity or scoring method;
-- disagreements or ambiguous parses;
-- token/latency/tool cost;
-- protocol deviations.
+```text
+τ(i₁) - τ(i₀)
+```
+
+before or alongside:
+
+```text
+δ
+```
+
+when a linear model is used.
+
+## Measurement / invariance result package
+
+Before reporting an invariance result, record the transformation class that was licensed to preserve the object.
+
+### I-side
+
+For a strictly increasing reparameterization:
+
+```text
+I' = f(I)
+```
+
+record whether the primitive ordering of `τ` across `I` was preserved.
+
+Do not require a linear coefficient to remain numerically invariant under nonlinear `f`.
+
+### V-side
+
+For a positive affine transformation:
+
+```text
+V' = aV + b
+a > 0
+```
+
+record whether:
+
+```text
+τ'(i) = aτ(i)
+```
+
+within estimation uncertainty and whether treatment-effect ordering is preserved.
+
+For nonlinear monotone outcome transforms, label the run as a changed/additional estimand unless a separate measurement model licenses equivalence.
+
+## Independent-instrument result package
+
+For independently constructed `M_V^A` and `M_V^B`, report:
+
+- instrument construction process;
+- calibration data source;
+- evidence that calibration data were independent of the treatment-effect analysis;
+- fitted/frozen affine link `V^B ≈ aV^A+b`;
+- prespecified tolerance for interval equivalence;
+- calibration uncertainty;
+- treatment-effect ordering under both instruments;
+- residual diagnostic:
+
+```text
+r = V^B - (aV^A+b)
+r ~ I + E + I×E
+```
+
+- ordinary correlation only as secondary information.
+
+Do not describe high correlation alone as measurement equivalence.
+
+## Red-team result package
+
+For every adversarial attack in `docs/RED_TEAM_PROTOCOL.md`, report one of:
+
+```text
+survived
+failed
+estimand changed
+inconclusive
+```
+
+Record the synthetic/known truth where applicable.
+
+A useful red-team report should make false positives visible rather than optimize for a green dashboard.
+
+## Specificity result package
+
+For:
+
+```text
+E⁺
+E⁰
+E⁻
+```
+
+record how intervention status was established independently of the tested system.
 
 Report separately:
 
 ```text
-Decode
-Execute
-TaskPerf
-CorrCap
+τ⁺(i)
+τ⁰(i)
+τ⁻(i)
 ```
 
-Do not collapse these into a single “catalyst worked” statement.
+and the specificity contrast if used.
 
-A blind-decoding result can establish only semantic recovery within the tested model/protocol scope. An execution result is a separate claim.
+Do not promote responsiveness under `E⁺` into discriminative correction capacity without these comparisons.
 
-## Architecture-level result package
+## Horizon / transport result package
 
-In addition, record:
+Treat each horizon as a separate estimand unless pooling is preregistered and justified.
 
-- exact definition of `X_t` used in the experiment;
-- residual mapper `Φ_t` or equivalent procedure;
-- observed residual representation `ρ_t`;
-- candidate generator `G_t`;
-- candidate set or selection trace where publishable;
-- the full selection-information boundary `I_sel,t` as operationalized;
-- validation procedure `𝒱_t`;
-- validation environment `W_t^ind`;
-- evidence for `(𝒱_t, W_t^ind) ⟂_design I_sel,t`, or an explicit downgrade if independence is partial/unknown;
-- predeclared succession rule;
-- residual-local `ΔCorrCap_{ρ_t}`;
-- regression-control results and predeclared tolerance;
-- whether validation evidence had been exposed to an earlier lineage step;
-- benchmark generator and whether transfer crossed generators;
-- component-level validation claims separately from system-level succession claims;
-- architecture scoring dimensions from `eval/ARCHITECTURE_SCORING.md`;
-- invalidation conditions encountered.
+Record each boundary crossed:
 
-## Construct-validity reporting
+- intervention;
+- domain;
+- population/model family;
+- moderator instrument;
+- outcome instrument;
+- benchmark generator.
 
-If `CorrCap` is used, record its operational definition and the evidence that it is not merely tracking proxies such as verbosity, intervention count, abstention, search volume, or representation changes.
+A result that survives one boundary gains only the corresponding scoped transport authority.
 
-Keep explicit:
+## Prompt-level result package
+
+For CARS prompt/control-protocol evaluation, record:
+
+- exact CARS prompt file/hash;
+- generic control prompt/hash;
+- baseline condition;
+- model/version/date;
+- task source/authorship;
+- per-dimension scores from `eval/SCORING.md`;
+- substantive task outcome;
+- cost metrics;
+- exclusions/protocol deviations.
+
+Prompt efficacy remains independent of the causal-responsiveness assay.
+
+## Optional longitudinal / equilibrium result package
+
+If later work estimates:
 
 ```text
-C_improve ≠ CorrCap
+T_h^(e)(i)
+=
+E[I_{t+h} | do(E_t=e), I_t=i]
 ```
 
-A CorrCap result is evidence about the operational measure under the tested design. It does not automatically establish the full higher-level `C_improve` construct.
+record:
 
-## Sequential lineage reporting
+- exact repeated `I` measurement procedure;
+- intervention regime `e`;
+- horizon;
+- evidence for time-homogeneous/iterable dynamics if repeated-map claims are made;
+- fixed-point estimate and uncertainty;
+- self-map/domain conditions;
+- contraction/stability diagnostics if claimed.
 
-For repeated transitions
+Do not infer equilibrium from a positive responsiveness assay.
 
-```text
-X_0 → X_1 → … → X_T
-```
+## Historical catalyst / architecture result package
 
-record which validation environments were fresh at each step and when each became part of later selection history.
+If the August 8 catalyst or recursive architecture is tested, retain the historical reporting requirements and dedicated scoring surfaces.
 
-Do not describe a repeatedly inspected benchmark as held out for the lineage.
-
-A lineage-level recursive-improvement claim requires more than a sequence of local wins. Report fresh-environment performance, cross-generator transfer, control regression, and failed or rejected successors.
+Do not silently merge those results with the current assay evidence.
 
 ## Result classification
 
@@ -120,37 +262,43 @@ Classify each result as one of:
 - **positive within scope**;
 - **negative/null**;
 - **mixed tradeoff**;
+- **estimand changed**;
 - **invalid/inconclusive**.
 
-Invalid runs are not evidence for either efficacy or inefficacy.
+Invalid or changed-estimand runs are not automatically evidence for or against the primitive proposition.
 
-Examples of invalidating conditions include:
+## Genuine contradiction reporting
 
-- catalyst legend/rubric leakage in a blind condition;
-- validation leakage;
-- validator tuning after candidate selection without disclosure;
-- adaptive holdout contamination;
-- post-outcome threshold selection;
-- broken scoring or construct validity;
-- benchmark-generator leakage;
-- protocol violations that change the claim being tested.
+For a claimed measurement-form contradiction, state whether all of the following were satisfied:
+
+```text
+licensed transformation
++
+reliable measurement
++
+identified causal contrast
++
+adequate estimator
++
+opposite ordering
+```
+
+If yes, document the localization sequence and explain why lower-level failure loci were ruled out.
 
 ## Claim discipline
 
-A positive result should state exactly **what gained authority and within what scope**.
+A positive result should state exactly what gained authority and within what scope.
 
 Do not promote:
 
 ```text
-catalyst decoding
-→ execution
-→ task success
-→ mechanism
-→ representation validity
-→ validator independence
-→ CorrCap improvement
-→ C_improve validation
-→ recursive improvement
+positive interaction
+→ I is intelligence
+→ mechanism understood
+→ discriminative correction capacity
+→ cross-domain transport
+→ equilibrium
+→ theory validated
 ```
 
 without separate evidence for each transition.

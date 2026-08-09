@@ -1,0 +1,79 @@
+{
+  "surface": "causal_responsiveness_assay",
+  "status": "example_only",
+  "scientific_object": {
+    "estimand": "tau(i) = E[V(e1) - V(e0) | I=i]",
+    "primary_proposition": "for i1 > i0, tau(i1) > tau(i0)",
+    "horizon": "prespecified"
+  },
+  "moderator_measurement": {
+    "name": "M_I",
+    "pretreatment": true,
+    "intended_structure": "ordered",
+    "admissible_transformations": "strictly increasing",
+    "reliability": null
+  },
+  "intervention": {
+    "levels": ["e0", "e1"],
+    "assignment": "randomized",
+    "randomization_protocol": null,
+    "positivity_check": null,
+    "attrition_check": null
+  },
+  "outcome_measurement": {
+    "name": "M_V",
+    "intended_structure": "additive_difference",
+    "admissible_transformations": "positive affine",
+    "ceiling_floor_check": null,
+    "reliability": null
+  },
+  "primary_analysis": {
+    "type": "ordered_cate_contrast",
+    "i0": null,
+    "i1": null,
+    "tau_i0": null,
+    "tau_i1": null,
+    "difference": null,
+    "uncertainty": null,
+    "conclusion": "not_run"
+  },
+  "shape_analysis": {
+    "monotonicity": null,
+    "derivative_representation_used": false,
+    "linear_model_used": false,
+    "delta": null,
+    "linearity_diagnostics": null
+  },
+  "measurement_invariance": {
+    "transformation_class_declared_before_test": false,
+    "affine_positive_control": null,
+    "independent_interval_instrument": null,
+    "residual_i_by_e_test": null
+  },
+  "red_team": {
+    "constant_effect_world": "not_run",
+    "ceiling_floor_world": "not_run",
+    "nonlinear_outcome_remeasurement": "not_run",
+    "randomized_baseline_structure": "not_run",
+    "confounded_assignment_control": "not_run",
+    "generic_plasticity_world": "not_run",
+    "nonlinear_i_reparameterization": "not_run",
+    "sensitivity_attack": "not_run"
+  },
+  "specificity": {
+    "tested": false,
+    "e_plus": null,
+    "e_zero": null,
+    "e_minus": null,
+    "status_assignment_independent_of_tested_system": null
+  },
+  "scope": {
+    "population": null,
+    "domain": null,
+    "benchmark_generator": null,
+    "model_or_subject_version": null
+  },
+  "result_classification": "example_only",
+  "protocol_deviations": [],
+  "notes": "Populate only after freezing the assay, measurement, intervention, and analysis protocol."
+}

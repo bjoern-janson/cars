@@ -2,335 +2,374 @@
 
 ## Goal
 
-Measure whether CARS changes reasoning behavior in the intended direction, not whether evaluators prefer its language or notation.
+Evaluate the scientific object actually under test, then localize failures before revising higher-level claims.
 
-The notebook now distinguishes three related but different evaluation targets:
-
-1. **prompt-level evaluation** — does a CARS prompt intervention improve controlled reasoning relative to baselines?
-2. **catalyst-level evaluation** — can an unfamiliar model recover and execute the intended correction operation from the frozen compact catalyst?
-3. **architecture-level evaluation** — can a correction process earn succession authority through residual-local, design-independent validation without overfitting its own evaluation machinery?
-
-Evidence at one level does not automatically validate the others.
+The current repository separates four evaluation surfaces:
 
 ```text
-Decode catalyst
-↛ execute catalyst
-↛ improve task performance
-↛ improve CorrCap
-↛ establish recursive improvement
+1. CARS prompt/control-protocol evaluation
+2. minimal causal-responsiveness assay
+3. measurement / invariance validation
+4. optional historical catalyst or recursive-architecture evaluation
 ```
 
-## Prompt-level conditions
+Evidence at one surface does not automatically validate another.
 
-Run identical tasks under:
+## A. Minimal assay
 
-1. B0 baseline
-2. B1 generic careful-reasoning control
-3. CARS v0.1
-4. optional ablations or later prompt variants
-
-Randomize condition order where the evaluation setup permits it.
-
-## Prompt-level benchmark composition
-
-A useful suite should contain adversarial pairs covering:
-
-- genuine contradiction vs false contradiction;
-- shallow vs deep failure;
-- bad incumbent vs seductive successor;
-- correlated confirmation vs independent probes;
-- explanation vs prediction;
-- uncertainty vs urgent action;
-- local fit vs held-out transfer;
-- model failure vs representation failure.
-
-The prompt-level benchmark should test behavior, not recognition of CARS terminology.
-
-## Catalyst-level object
-
-The current deployable catalyst is frozen in:
-
-[`../notes/2026-08-08-catalyst-notation.md`](../notes/2026-08-08-catalyst-notation.md)
-
-Use the exact string recorded there for a canonical catalyst condition. Do not silently edit punctuation, symbol names, prose, or ordering and still call the result the same catalyst.
-
-Catalyst evaluation has two stages:
+Define:
 
 ```text
-blind semantic recovery
-→ execution
-```
-
-Use [`../eval/CATALYST_SCORING.md`](../eval/CATALYST_SCORING.md) for the proposed decoding/execution dimensions.
-
-## Blind catalyst decoding
-
-During a blind-decoding condition, do **not** provide:
-
-- the CARS name or repository;
-- the symbol legend beyond what is inside the frozen catalyst itself;
-- intended ontology labels;
-- the formal architecture;
-- expected decoding categories;
-- prior model interpretations of the notation.
-
-Ask the model to explain what operation the catalyst specifies or to reconstruct the process it implies.
-
-Measure separately:
-
-- ontology recovery;
-- relation recovery;
-- process/order recovery;
-- authority recovery;
-- construct/metric separation where encoded;
-- interpretation of independent validation.
-
-A structurally plausible parse with the wrong ontology is a decoding failure, not a success.
-
-## Catalyst execution
-
-After blind decoding is measured, test whether the frozen catalyst changes reasoning behavior on cases where its structure is relevant.
-
-A minimal comparison should include, where feasible:
-
-1. **K0 — no catalyst**;
-2. **K1 — equation only**;
-3. **K2 — execution semantics only**;
-4. **K3 — frozen deployable catalyst**;
-5. **K4 — generic careful-reasoning control**.
-
-This separates semantic typing, prose execution guidance, and generic deliberation effects.
-
-Do not infer catalyst efficacy from decoding alone.
-
-## Architecture-level object
-
-The current formal architecture is documented in:
-
-[`../notes/2026-08-08-recursive-correction-architecture.md`](../notes/2026-08-08-recursive-correction-architecture.md)
-
-A compact state representation is:
-
-```text
-X_t = (C_t, O_t, M_t, Φ_t, G_t, 𝒱_t, …)
-ρ_t = Φ_t(E_t)
-```
-
-with:
-
-```text
-X_t
-  --(E_t, Φ_t)--> ρ_t
-  --G_t--> R_cand,t
-  --(𝒱_t, W_t^ind)--> V_t^ind
-  --[A_leave ↛ A_adopt; Ind_t = 1]--> X_{t+1}
-```
-
-The architecture-level test must not assume that `ρ_t` is correct, that `Φ_t` is adequate, or that `𝒱_t` is an external oracle.
-
-## Architecture-level benchmark families
-
-A useful blind benchmark should include worlds in which:
-
-### Ordinary local repair is sufficient
-
-A shallow inference or model repair solves the problem. Escalation should be penalized.
-
-### The current representation is non-identifying
-
-Different hidden states requiring different treatment are collapsed by the current observation/interface.
-
-### The residual partition is wrong
-
-The current `ρ_t = Φ_t(E_t)` merges distinct mechanisms or splits one mechanism misleadingly.
-
-### Candidate generation is the limiting factor
-
-The residual is represented adequately, but all generated revisions share the same blind spot.
-
-### Validation is the limiting factor
-
-The validator cannot discriminate viable from non-viable successors, or is tuned using candidate-selection information.
-
-### A candidate dependency is incidental
-
-A condition is present during successful correction but removal leaves the relevant function intact.
-
-### A candidate dependency is substitutable
-
-A historical implementation can be replaced while the tested correction function survives.
-
-### The correction procedure itself is limiting
-
-The system must identify a failure in its own discovery, generation, validation, or succession machinery.
-
-### No deeper correction is warranted
-
-Hard or surprising cases where the current correction architecture is adequate. These are required negative controls.
-
-## Candidate-generation / validation firewall
-
-Let:
-
-```text
-I_sel,t := all information capable of influencing candidate generation or selection
-```
-
-Strong validation independence is design-level:
-
-```text
-(𝒱_t, W_t^ind) ⟂_design I_sel,t
-```
-
-A protocol may also record:
-
-```text
-Ind_t := Ind(𝒱_t, W_t^ind ; I_sel,t)
-```
-
-The independence claim is methodological, not probabilistic.
-
-A validation result should not count as independent evidence for a candidate if information used to construct the validator or validation environment could have changed which candidate was generated or selected.
-
-## Residual-local succession
-
-A global average can hide failure on the exact residual that triggered revision.
-
-Architecture-level succession should therefore report:
-
-```text
-ΔCorrCap_{ρ_t}
+τ(i)
 =
-CorrCap(X_{t+1}; W_t^ind | ρ_t)
--
-CorrCap(X_t; W_t^ind | ρ_t)
+E[V(e₁) - V(e₀) | I=i]
 ```
 
-and require positive residual-local improvement for the claimed succession scope.
-
-This does not eliminate the need for regression testing elsewhere.
-
-## Construct / metric boundary
-
-The broader research objective `C_improve` and the operational target `CorrCap` are distinct:
+Primary proposition:
 
 ```text
-C_improve ≠ CorrCap
+i₁ > i₀
+⇒
+τ(i₁) > τ(i₀)
 ```
 
-`CorrCap` should be treated as a measurement model whose construct validity must be tested.
+Use a randomized intervention whenever feasible.
 
-A higher `CorrCap` score is not automatically evidence for greater latent future correctability if the metric can be gamed by verbosity, search volume, abstention, intervention count, or representation escalation.
-
-## Component-level vs system-level validation
-
-A local revision should be evaluated against the function it claims to improve.
-
-Examples:
-
-- residual-mapper revision → residual discrimination;
-- generator revision → useful candidate generation;
-- validator revision → discrimination between viable and non-viable successors.
-
-The complete successor makes the stronger claim and should demonstrate residual-local correction-capacity improvement plus acceptable regression behavior.
-
-Do not require every enabling component to independently improve the terminal metric, and do not infer system improvement from one successful component test.
-
-## Sequential validity
-
-A validation environment can be independent for one transition and contaminated for later transitions once its results become visible.
-
-Use separate roles where feasible:
+### Required ordering
 
 ```text
-W_dev
-W_val,t
-W_audit
+measure I_t
+→ randomize E_t
+→ measure V_{t+h}
+→ estimate τ_{t,h}(i)
+→ test ordering
 ```
 
-After `W_val,t` is exposed, its information belongs to later selection history. Recursive succession therefore requires **renewable independence** rather than repeated reuse of one static holdout.
+`I_t` is a pre-treatment moderator. Do not describe the result as a causal effect of `I` unless `I` is itself experimentally manipulated in a separate design.
 
-Stronger evidence uses fresh environments, independently authored generators, and audit cases unavailable to the revision lineage.
+## B. Scientific object before estimator
 
-## Anti-leakage guidance
+Evaluate at the most primitive level the data support.
 
-- Do not expose expected labels or rubric language in task prompts.
-- Avoid benchmark cases that repeat CARS vocabulary.
-- Hold out domains and surface forms from prompt development where possible.
-- Keep test cases independently authored where feasible.
-- Blind human raters to condition where feasible.
-- Record exact prompt/catalyst text, code, candidate-selection process, validator, and validation environment.
-- Treat exposed validation information as part of later lineage history.
-- Do not call validation independent solely because it used a different dataset.
-- For catalyst decoding, do not leak the intended ontology through the question itself.
+Preferred hierarchy:
 
-## Scoring surfaces
+```text
+LEVEL 1 — scientific proposition
+τ(i₁) > τ(i₀) for i₁ > i₀
 
-Use:
+LEVEL 2 — shape representation
+∂τ(i)/∂i > 0
+or monotonicity over support
 
-- `eval/SCORING.md` and `eval/rubric.json` for prompt-level work;
-- `eval/CATALYST_SCORING.md` for catalyst decoding/execution;
-- `eval/ARCHITECTURE_SCORING.md` for recursive architecture work.
+LEVEL 3 — parametric representation
+τ(i) = τ₀ + δi
 
-Preserve individual dimensions before aggregation. An aggregate can hide tradeoffs and severe failures.
+LEVEL 4 — estimator
+regression / learner / nonparametric estimator
+```
 
-## Behavioral follow-up
+A failed lower-level representation does not automatically falsify a higher-level object.
 
-For correction tasks, include later items where the corrected distinction matters again. Verbal acceptance without changed downstream behavior is not full correction.
+## C. Measurement requirements
 
-For catalyst tests, distinguish correct explanation of the catalyst from actual use of the catalyst on later cases.
+Measurement partly constitutes the identity of `τ`.
 
-For architecture-level tests, include fresh cases where the discovered representation, dependency, or procedural change must be reused without replaying the original failure trace.
+Before testing invariance, specify the admissible transformation class.
 
-## Held-out evaluation
+### Moderator `I`
 
-At minimum, hold out task instances. Stronger evidence holds out:
+The primary proposition uses order.
 
-- domain;
-- author;
-- task template;
-- failure mechanism;
-- residual structure;
-- benchmark generator;
-- model family.
+Strictly increasing reparameterizations preserve the substantive ordering.
 
-Cross-instance transfer from one generator should not be reported as cross-generator transfer.
+A nonlinear monotone reparameterization may destroy linearity without changing the ordering hypothesis.
 
-## Regression control
+### Outcome `V`
 
-A successor may repair the triggering residual while damaging unaffected correction behavior.
+The additive CATE uses differences.
 
-Where succession claims matter, predeclare the tolerated regression / non-inferiority margin before validation and report uncertainty around both local gain and regression.
+Positive affine transformations preserve the additive-treatment-effect ordering:
 
-## Cost accounting
+```text
+V' = aV + b
+a > 0
 
-Record where possible:
+τ'(i) = aτ(i)
+```
 
-- tokens;
+General monotone nonlinear transforms are treated as potentially different causal estimands unless a separate measurement theory licenses equivalence.
+
+See `MEASUREMENT_BOUNDARY.md`.
+
+## D. Primary analysis
+
+Where possible, report the conditional treatment-effect curve or prespecified stratum contrasts directly.
+
+For ordered moderator values or strata:
+
+```text
+Δτ_10
+=
+τ(i₁) - τ(i₀)
+```
+
+with `i₁ > i₀`.
+
+Primary question:
+
+```text
+Δτ_10 > 0 ?
+```
+
+If the linear model is preregistered and adequate:
+
+```text
+V_{t+h}
+=
+α + βI_t + γE_t + δ(I_t×E_t) + λV_t + ε
+```
+
+report `β`, `γ`, and `δ` separately.
+
+Do not use `δ` as a substitute for checking the shape of `τ(i)` when nonlinear heterogeneity is plausible.
+
+## E. Sensitivity and power
+
+Before interpreting a null result, predeclare or estimate the smallest treatment-effect ordering difference the design is intended to resolve.
+
+A null result with wide uncertainty is not the same as precise evidence for flat `τ(i)`.
+
+Report:
+
+- support/range of `I`;
+- treatment counts across relevant `I` strata;
+- uncertainty on `τ(i)` or contrasts;
+- attrition and missingness;
+- ceiling/floor exposure;
+- outcome reliability;
+- effective sample size under the estimator.
+
+## F. Red-team phase
+
+A positive result should not be promoted before the assay is attacked.
+
+Use `RED_TEAM_PROTOCOL.md`.
+
+At minimum include:
+
+1. constant treatment effect + prognostic `I`;
+2. ceiling/floor world;
+3. nonlinear outcome remeasurement;
+4. randomized baseline-structure control;
+5. broken-randomization negative control;
+6. generic-plasticity world;
+7. positive affine measurement control;
+8. independent interval-instrument test;
+9. high-correlation residual `I×E` disagreement test;
+10. nonlinear `I` reparameterization;
+11. sensitivity / low-power attacks.
+
+Classify each attack as:
+
+```text
+survived
+failed
+estimand changed
+inconclusive
+```
+
+## G. Measurement-equivalence testing
+
+For independently constructed outcome instruments `A` and `B`, first use independent calibration data to test whether they are legitimately interval-equivalent within declared tolerance:
+
+```text
+V^B ≈ aV^A + b
+a > 0
+```
+
+Freeze `a,b` before the treatment-effect analysis.
+
+Then test the primary ordering on both instruments.
+
+A useful residual diagnostic is:
+
+```text
+r = V^B - (aV^A + b)
+
+r ~ I + E + I×E
+```
+
+A systematic `I×E` residual indicates disagreement exactly where the scientific claim lives.
+
+High ordinary correlation between instruments is not sufficient evidence of causal-estimand equivalence.
+
+## H. Specificity phase
+
+Only after the primary responsiveness result survives measurement attacks should the benchmark test discriminative responsiveness.
+
+Use independently established intervention status:
+
+```text
+E⁺ = warranted correction
+E⁰ = neutral / irrelevant
+E⁻ = misleading
+```
+
+Estimate separate conditional treatment-effect functions:
+
+```text
+τ⁺(i)
+τ⁰(i)
+τ⁻(i)
+```
+
+Keep primary and specificity hypotheses distinct.
+
+A stronger specificity contrast is:
+
+```text
+[τ⁺(i₁)-τ⁻(i₁)]
+>
+[τ⁺(i₀)-τ⁻(i₀)]
+```
+
+for `i₁ > i₀`.
+
+## I. Horizon and transport
+
+Treat each horizon `h` as part of the estimand.
+
+```text
+τ_{t,h₁}(i)
+≠
+τ_{t,h₂}(i)
+```
+
+in general.
+
+Do not silently pool horizons.
+
+After within-design validation, test transport across:
+
+- intervention family;
+- task/domain;
+- population/model family;
+- moderator instrument;
+- outcome instrument;
+- benchmark generator.
+
+Transport is a new empirical claim at each boundary.
+
+## J. CARS prompt evaluation
+
+The CARS control protocol can separately be evaluated as a reasoning intervention.
+
+Use identical tasks under:
+
+```text
+B0 — no CARS-specific intervention
+B1 — generic careful-reasoning control
+C0 — CARS control protocol
+```
+
+Score behavior, not vocabulary recognition.
+
+Useful dimensions remain:
+
+- failure localization;
+- scope control;
+- possibility/authority separation;
+- independence sensitivity;
+- revision proportionality;
+- representation-escalation control;
+- departure/adoption separation;
+- unresolved-state calibration;
+- behavioral transfer;
+- belief/decision separation;
+- task outcome;
+- cost.
+
+Use `eval/SCORING.md`.
+
+A positive prompt result does not establish the heterogeneous-responsiveness assay.
+
+## K. Historical catalyst / architecture evaluation
+
+The August 8 catalyst and recursive-architecture documents are retained for lineage and optional separate testing.
+
+If those experiments are run, continue to use their dedicated scoring surfaces:
+
+- `eval/CATALYST_SCORING.md`;
+- `eval/ARCHITECTURE_SCORING.md`.
+
+Do not treat their results as evidence for the current assay unless the relevant causal and measurement objects are explicitly instantiated.
+
+## L. Failure localization protocol
+
+When an apparent contradiction appears, inspect the shallowest plausible locus first:
+
+```text
+1. intervention assignment / causal identification
+2. measurement equivalence / saturation / error
+3. scientific-object identity
+4. shape representation
+5. estimator / statistical specification
+6. implementation
+7. substantive proposition
+```
+
+This ordering is diagnostic, not ontological.
+
+Stop escalation once independent evidence identifies the failure.
+
+## M. Genuine contradiction criterion
+
+A strong measurement-form contradiction requires:
+
+```text
+licensed transformation
++
+reliable measurement
++
+identified causal contrast
++
+adequate estimator
++
+opposite ordering
+```
+
+If those conditions hold, the discrepancy cannot be dismissed as harmless reparameterization.
+
+## N. Cost accounting
+
+Record where feasible:
+
+- tokens / compute;
 - latency;
-- external tool/search calls;
-- number of requested observations;
-- number of proposed interventions;
-- abstention/unresolved rate;
-- number of representation or procedure escalations.
+- external tool calls;
+- number of observations or interventions requested;
+- abstention rate;
+- measurement burden;
+- benchmark construction cost.
 
-Improvement that depends on uncontrolled cost expansion should be reported as such.
+A stronger result that depends on uncontrolled cost expansion should be reported as such.
 
-## Valid outcomes
+## O. Result classes
 
-Classify results as:
+Classify each result as:
 
-- positive within scope;
-- negative/null;
-- mixed tradeoff;
-- invalid/inconclusive.
+- **positive within scope**;
+- **negative/null**;
+- **mixed tradeoff**;
+- **estimand changed**;
+- **invalid/inconclusive**.
 
-Invalidating conditions can include leakage, scoring failure, benchmark contamination, validator contamination, or protocol violation.
+Do not force every run into positive/negative if the scientific object was not preserved or identification failed.
 
-Do not convert an invalid experiment into a positive or negative claim.
+## P. Reporting principle
 
-## Notebook note
+A positive result should state exactly what gained authority and under which measurement, intervention, horizon, population, and estimator conditions.
 
-This protocol is a reusable experiment template, not a requirement that every exploratory notebook change be preregistered or frozen.
+A failed invariance test should state whether the tested transformation was licensed to preserve the same object.
 
-The current catalyst has been intentionally frozen so the next information-bearing step is testing rather than further notation revision.
+The evaluation protocol is successful when it makes the location of failure explicit rather than merely labeling a run as robust or non-robust.

@@ -1,0 +1,89 @@
+{
+  "schema_version": 2,
+  "status": "frozen before A2-D transition-topology calculation",
+  "study": "Pilot 0 A2-0: structural audit of transition observables",
+  "scope": "Semantic and logical contract only. No new model generation, no latent-factor inference, no predictor search, and no update to B, C, H1, or CARS.",
+  "terminology": {
+    "retire_unqualified_term": "correction responsiveness",
+    "preferred_generic_term": "transition behavior",
+    "reserved_term": "evidence-conditioned correction",
+    "reserved_for": "success under the verified-error intervention within the relevant frozen interface"
+  },
+  "population_boundary": "All transition quantities are defined only on initially-wrong frozen prestates, matching the historical eligible populations.",
+  "primary_transition_dimensions": {
+    "T_change": {
+      "definition": "neutral revision count divided by two neutral branches",
+      "identified_property": "propensity to leave the realized wrong answer under neutral review",
+      "not_authorized_as": ["adaptivity", "correction quality", "epistemic improvement"]
+    },
+    "Q_N": {
+      "definition": "neutral branches ending correct divided by neutral branches that revised; undefined when no neutral branch revised",
+      "identified_property": "quality of a neutral transition conditional on revision",
+      "not_authorized_as": ["unconditional self-correction rate", "global correction capacity"]
+    },
+    "T_instability": {
+      "definition": "1 iff the two neutral-review branches end on different option letters, else 0",
+      "identified_property": "replicate-level transition instability under neutral review",
+      "not_authorized_as": ["beneficial flexibility", "harmful noise"]
+    },
+    "T_verified": {
+      "definition": "verified-error branches ending correct divided by two verified-error branches",
+      "identified_property": "evidence-conditioned correction success under the relevant verified-error interface",
+      "not_authorized_as": ["global correction capacity", "neutral revisability"]
+    }
+  },
+  "derived_contrast": {
+    "G_verified_minus_neutral": {
+      "definition": "T_verified - C2_neutral_self_correction_rate within the same frozen-prestate block",
+      "label": "verified-minus-neutral correction-success contrast",
+      "authority": "Within a randomized historical interface this contrasts final correctness under verified-error versus neutral-review branches. It is not an interface-invariant scalar called evidence responsiveness.",
+      "independent_indicator": false
+    }
+  },
+  "logical_dependencies": [
+    "For an initially-wrong prestate, every neutral self-correction is necessarily a revision.",
+    "At the branch level: neutral_correct => neutral_revised.",
+    "At the block-rate level: C2_neutral_self_correction <= T_change.",
+    "C2_neutral_self_correction > 0 => T_change > 0.",
+    "Q_N is undefined when T_change = 0 and is therefore conditioned on the occurrence of neutral revision.",
+    "With exactly two neutral replicates, T_change = 0 implies T_instability = 0.",
+    "With exactly two neutral replicates, T_change = 0.5 implies T_instability = 1.",
+    "With exactly two neutral replicates, T_change = 1 permits T_instability in {0,1}.",
+    "Therefore covariance between T_change and Q_N or between T_change and T_instability can be induced partly by conditioning/sampling geometry and cannot by itself support a common or separable target representation.",
+    "High T_change does not imply high Q_N.",
+    "High T_instability does not imply beneficial or harmful transition quality.",
+    "Low T_change does not imply poor epistemic adaptation.",
+    "High T_verified does not imply high neutral revisability.",
+    "A state property does not imply a transition property; a transition property does not imply transition quality."
+  ],
+  "representation_edge_policy": {
+    "report_all_pairwise_relationships": true,
+    "excluded_from_H_T1_and_H_T2_edges": [
+      "T_change__Q_N",
+      "T_change__T_instability"
+    ],
+    "reason": "These pairs have direct conditioning or two-replicate support constraints. They remain structural diagnostics but cannot create common-structure or weak-coupling representation edges."
+  },
+  "prohibited_representations": [
+    "Treat C1, C2, C3, and C4 as exchangeable indicators in a factor analysis.",
+    "Count C1 and C2 as independent evidence for dimensionality despite their logical nesting.",
+    "Use T_change-Q_N or T_change-T_instability covariance as representation evidence without accounting for their structural dependence.",
+    "Interpret revision frequency as correction capacity without transition-quality evidence.",
+    "Interpret instability normatively without an external quality criterion.",
+    "Interpret G_verified_minus_neutral as interface-invariant evidence responsiveness.",
+    "Introduce S2, S3, a composite confidence score, or a new moderator during A2.",
+    "Create A1-V or expand B1 sensitivity during A2."
+  ],
+  "A2_D_question": "What empirical transition topology is supported by T_change, Q_N, T_instability, and T_verified across the existing historical interface strata after respecting their logical and sampling-geometry dependencies?",
+  "representation_hypotheses": {
+    "H_T1_COMMON": "The structurally eligible transition-dimension relationships exhibit sufficiently coherent replicated ordering that a common target representation remains plausible.",
+    "H_T2_SEPARABLE": "At least several structurally eligible transition-dimension relationships are empirically weakly coupled enough that collapsing them to one ordering would lose substantive information.",
+    "H_T3_INTERFACE_CONDITIONED": "The transition profile differs between interface families beyond the variation observed across the two legacy-interface replications."
+  },
+  "non_exclusivity": "H_T1, H_T2, and H_T3 are representation signals, not mutually exclusive exhaustive truths. A2-D may return mixed structure or unresolved structure.",
+  "authority_boundary": [
+    "A2-0 contains no empirical topology result.",
+    "A2-D will be historical discovery, not prospective construct validation.",
+    "No A2 result by itself licenses a latent trait, new moderator, B/C update, H1 update, or CARS revision."
+  ]
+}

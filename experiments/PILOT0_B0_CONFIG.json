@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "status": "frozen before B0 data",
+  "study": "Pilot 0 Localization B0: correction-signal manipulation validation",
+  "scope": "Validate that signal identity produces the intended ordered confidence-state update; B0 does not test final correctness, H1, B, or C.",
+  "sampling": {
+    "raw_n": 120,
+    "sample_seed": 20260812,
+    "eligibility": "retain only initially-wrong frozen prestates after the unchanged Pilot 0 pre-treatment procedure"
+  },
+  "design": {
+    "signals_per_prestate": 3,
+    "replicates_per_signal": 2,
+    "matched_rng": "within each frozen prestate and replicate index, E0/EU/EV use the same generation seed",
+    "revision_allowed": false,
+    "final_correctness_scored": false
+  },
+  "signals": {
+    "E0": "Signal status: No new information is available about whether your previous answer is correct.",
+    "EU": "Signal status: There is unverified reason to doubt whether your previous answer is correct.",
+    "EV": "Signal status: It has been verified that your previous answer is incorrect."
+  },
+  "measurement": {
+    "p_pre": "reuse the already-recorded frozen pre-treatment P(correct); never regenerate baseline confidence inside B0",
+    "p_post": "reported probability after signal that the unchanged previous answer is correct, measured before any reconsideration or revision",
+    "M": "P_post - P_pre",
+    "primary_ordering": "mean(M_E0) >= mean(M_EU) >= mean(M_EV)",
+    "expected_but_not_required": "M_E0 approximately 0; M_EU < 0; M_EV < M_EU"
+  },
+  "generation": {
+    "base_seed": 20260809,
+    "do_sample": true,
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "max_new_tokens": 12,
+    "assistant_prefill": "P_POST: ",
+    "parse_retries": 0
+  },
+  "analysis": {
+    "unit": "one frozen prestate/block",
+    "replicate_collapse": "average the two P_post values within each signal before across-block analysis",
+    "bootstrap": 5000,
+    "bootstrap_seed": 20260809,
+    "contrasts": [
+      "M_E0 - M_EU",
+      "M_EU - M_EV",
+      "M_E0 - M_EV"
+    ],
+    "pass_rule": "PASS only if mean(M_E0-M_EU) > 0 and mean(M_EU-M_EV) > 0 and the 95% block-bootstrap lower bounds for both adjacent contrasts are > 0.",
+    "unresolved_rule": "UNRESOLVED if both adjacent mean contrasts are positive but either adjacent 95% bootstrap interval includes 0.",
+    "fail_order_rule": "FAIL_ORDER if either adjacent mean contrast is <= 0.",
+    "non_circularity": "final-answer correctness and moderation are not used to establish manipulation validity"
+  },
+  "interpretation": {
+    "PASS": "the E0/EU/EV informational contrast is behaviorally instantiated; this does not support B or H1",
+    "UNRESOLVED": "signal ordering is directionally present but not cleanly separated; B remains unresolved and B1 does not run",
+    "FAIL_ORDER": "the intended signal ordering is not behaviorally instantiated; repair signal manipulation only; C gains no authority"
+  }
+}

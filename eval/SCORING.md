@@ -1,6 +1,6 @@
 # CARS Prompt-Level Scoring Rubric
 
-> **Scope:** prompt-level CARS reasoning evaluation. Catalyst decoding/execution uses `CATALYST_SCORING.md`; recursive architecture evaluation uses `ARCHITECTURE_SCORING.md`.
+> **Scope:** CARS control-protocol reasoning evaluation only. The heterogeneous causal-responsiveness assay uses `ASSAY_SCORING.md`. Historical catalyst/recursive-architecture experiments use `CATALYST_SCORING.md` and `ARCHITECTURE_SCORING.md` respectively.
 
 Score each applicable dimension from **0 to 2**.
 
@@ -66,4 +66,4 @@ Report dimensions individually first.
 
 If an aggregate is needed, preregister the aggregation rule. Do not silently compensate a severe failure in one important dimension with verbosity or strength in another.
 
-Do not reuse this rubric as a substitute for catalyst or architecture scoring; those surfaces test different claims.
+Do not reuse this rubric as a substitute for the assay rubric. The prompt intervention asks whether CARS changes reasoning behavior; the assay asks whether a pre-treatment measured quantity orders heterogeneous causal responsiveness. Those are different scientific objects.

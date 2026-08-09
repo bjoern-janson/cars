@@ -1,212 +1,394 @@
 # Design Rationale
 
-CARS is designed around a tension: systems must remain correctable without becoming either rigid or novelty-seeking.
+CARS is designed around a tension: systems must remain correctable without becoming rigid, novelty-seeking, or self-authorizing.
 
-This document explains the reasoning constraints behind the prompt work, catalyst intervention, and current research architecture. The architecture remains hypothetical; these are design commitments to test, not demonstrated properties.
-
-## 1. Localize before revising
-
-A failure signal says that something went wrong. It usually does not identify the cause. Observation failures, inference failures, model failures, representation failures, missing information, mechanism uncertainty, and decision errors require different corrections.
-
-The architecture therefore treats the current residual representation as provisional:
+The repository now separates two roles that earlier work partially mixed:
 
 ```text
-ρ_t = Φ_t(E_t)
+CARS
+→ epistemic control protocol
+
+ASSAY
+→ minimal empirical test of heterogeneous causal responsiveness
 ```
 
-`ρ_t` is what the current residual mapper makes of the evidence, not the hidden truth itself.
+The control protocol governs how evidence is handled. The assay produces evidence about a specific scientific proposition. Neither validates the other.
 
-## 2. Possibility is cheap; authority is expensive
+## 1. The empirical core should be smaller than the mechanism story
 
-Language models can generate many coherent hypotheses. Coherence and availability are not evidence. CARS therefore permits hypothesis generation while separately governing confidence and adoption.
-
-Candidate generation expands the possibility space. It does not grant succession authority.
-
-## 3. Scope leakage is a common failure
-
-Evidence often identifies less than the explanation built around it. A valid observation can coexist with unknown mechanism, uncertain provenance, weak prediction, or limited transfer.
-
-Correction-capacity claims should remain indexed to the residual and evaluation scope that generated them rather than being promoted into global competence claims.
-
-## 4. Repeated evidence can share one failure mode
-
-Many agreeing probes can be less informative than one structurally independent discriminator when all probes inherit the same blind spot.
-
-The same concern applies to validation. An unseen validation environment is not independent enough if the validation procedure itself was tuned after seeing candidate-selection information.
-
-## 5. Minimal revision is a hypothesis, not an automatic result
-
-Wholesale updates can destroy valid structure, so limited revision is preferable when evidence supports it. But “minimum sufficient revision” should not be assumed before candidate space and sufficiency have actually been tested.
-
-The research architecture therefore distinguishes candidate revision from validated successor. Minimality, when claimed, must itself be earned through removal, perturbation, substitution, ablation, or comparable evidence.
-
-## 6. Representation change is an escalation path
-
-A system should not infer that its representation is inadequate simply because a task is surprising or difficult. Representation change becomes warranted only when evidence supports non-identifiability or insufficiency relative to plausible within-representation explanations.
-
-A representation can be highly detailed and still collapse the distinction needed by the target claim.
-
-> **Resolution is not explanatory authority.**
-
-## 7. Rejecting one model does not validate another
-
-The transition from incumbent failure to successor adoption is a major authority leak. CARS explicitly permits the state:
-
-> The incumbent is insufficient; no replacement is yet justified.
-
-Compactly:
-
-```text
-A_leave ↛ A_adopt
-```
-
-This applies to models, representations, residual mappings, candidate generators, validation procedures, and the correction process itself.
-
-## 8. Correction is prospective
-
-A retrospective explanation can sound excellent without changing future reasoning. CARS treats changed future reasoning/action and transfer as stronger evidence of correction than narrative repair alone.
-
-The current architecture strengthens this by requiring improvement on the residual that triggered revision rather than relying only on global average gains.
-
-## 9. Decisions can be necessary before beliefs are settled
-
-Epistemic uncertainty need not imply paralysis. CARS separates belief state from action selection so reversible or low-downside actions can proceed without pretending uncertainty vanished.
-
-## 10. Historical participation is not functional necessity
-
-A condition can be present during every observed success without being load-bearing. A component can also be sufficient without being necessary when another component can substitute for it.
-
-Dependency claims therefore require discriminating interventions. When successful substitutions exist, preservation authority should migrate away from the historical implementation toward the tested functional relation, within scope.
-
-## 11. Validation machinery is part of the correction surface
-
-The validator is not a privileged oracle.
-
-```text
-𝒱_t := validation procedure
-V_t^ind := 𝒱_t(R_cand,t ; W_t^ind)
-```
-
-The validation procedure can itself be inadequate or contaminated. If revised, it must face the same separation between departure and adoption as any other component.
-
-## 12. Independence is relative to selection information
-
-Independence should be stated at the protocol level, not inferred merely because a different dataset was used.
-
-Let `I_sel,t` contain all information capable of affecting candidate generation or selection. The stronger condition is:
-
-```text
-(𝒱_t, W_t^ind) ⟂_design I_sel,t
-```
-
-Practical rule:
-
-> **If information could have changed which revision was generated or selected, it cannot later be counted as independent validation evidence for that revision.**
-
-## 13. Local component validity and system succession are different claims
-
-A component revision may be enabling rather than immediately outcome-improving. It should therefore be validated against the function it claims to improve.
-
-The full successor makes the stronger claim and must demonstrate improved correction capacity on the triggering residual, while avoiding unacceptable regression on unaffected controls.
-
-This prevents both extremes:
-
-- rejecting useful enabling revisions because they do not immediately move the terminal metric;
-- accepting a complete successor because one local component improved in isolation.
-
-## 14. No correction-surface component receives epistemic immunity
-
-The current state may include:
-
-```text
-X_t = (C_t, O_t, M_t, Φ_t, G_t, 𝒱_t, …)
-```
-
-Any of these can become the limiting factor. The architecture is recursively corrigible only if successors to these components must themselves earn adoption through independent evidence.
-
-The intended recursion is controlled succession:
-
-```text
-propose successor
-→ validate independently
-→ grant only scoped adoption authority
-→ retest future correction capacity
-```
-
-## 15. Formal notation and catalyst notation have different jobs
-
-A formal representation and a reasoning intervention should not be optimized as though they were the same artifact.
-
-```text
-formal notation = representation
-catalyst notation = intervention
-execution semantics = operational instruction
-```
-
-The formal architecture should maximize precision and auditability. The catalyst should minimize semantic reconstruction while preserving the intended operational distinctions. Execution semantics should tell the system what to do without forcing it to reconstruct the theory.
-
-This yields the notebook's current three-layer stack:
-
-```text
-Catalyst activates
-→ Formalism constrains
-→ Semantics executes
-```
-
-A catalyst is therefore not validated because it looks elegant. Its notation must survive blind semantic-recovery tests.
-
-## 16. Semantic recovery and execution are separate
-
-A model can decode a catalyst correctly without using it correctly, and can use a procedure faithfully without improving outcomes.
-
-Keep the following non-implications explicit:
-
-```text
-semantic recovery
-↛ faithful execution
-↛ task improvement
-↛ CorrCap improvement
-↛ recursive improvement
-```
-
-The evaluation stack should preserve these distinctions rather than compressing them into one “works / does not work” judgment.
-
-## 17. The construct must not become its own metric
-
-The broader framing uses:
+The motivating conjecture:
 
 ```text
 I ∝ C_improve
 ```
 
-where `C_improve` is the candidate construct “capacity to convert feedback into increased future correctability / viability.”
+was useful because it pointed toward correction capacity rather than current capability.
 
-`CorrCap` is an operational measurement target, not the construct itself:
+But it also carried semantic commitments about `I`, improvement, viability, and proportionality.
+
+The current assay removes those commitments and asks only:
 
 ```text
-C_improve ≠ CorrCap
+τ(i)
+=
+E[V(e₁) - V(e₀) | I=i]
 ```
 
-This prevents the theory from granting its preferred metric unearned construct validity.
+and:
 
-A `CorrCap` measure must survive tests for gaming, proxy capture, benchmark dependence, and false escalation before it can support stronger claims about future correctability.
+```text
+i₁ > i₀
+⇒
+τ(i₁) > τ(i₀)
+```
+
+The benchmark supplies the operational referents. Interpretation comes after evidence.
+
+## 2. Scientific object, representation, and estimator are different layers
+
+Freeze:
+
+```text
+SCIENTIFIC PROPOSITION
+τ(i₁) > τ(i₀) for i₁ > i₀
+
+        ↓ represented by
+
+SHAPE
+∂τ(i)/∂i > 0
+or
+τ(i) = τ₀ + δi
+
+        ↓ instantiated on
+
+MEASUREMENT STRUCTURE
+I: order-preserving
+V: difference-preserving
+
+        ↓ recovered by
+
+ESTIMATOR
+```
+
+A failed linear interaction can reflect a bad linear representation without falsifying monotonicity.
+
+An invalid measurement structure is different: because `τ` is defined using measured differences in `V`, changing the measurement structure can change the identity of the causal object itself.
+
+## 3. Measurement partly constitutes the scientific object
+
+The current assay is asymmetric.
+
+`I` enters through ordering:
+
+```text
+i₁ > i₀
+```
+
+so strictly increasing transformations preserve the substantive ordering.
+
+`V` enters through subtraction:
+
+```text
+V(e₁) - V(e₀)
+```
+
+so additive treatment-effect invariance requires a transformation class that preserves meaningful differences.
+
+For the current assay:
+
+```text
+V' = aV + b
+a > 0
+```
+
+preserves:
+
+```text
+τ'(i) = aτ(i)
+```
+
+General nonlinear monotone transformations can redefine the additive CATE.
+
+This yields the protocol rule:
+
+> **Before testing invariance, specify the admissible transformation class.**
+
+See `MEASUREMENT_BOUNDARY.md`.
+
+## 4. Localize before revising
+
+A contradiction does not identify its cause.
+
+When assay results disagree, inspect the shallowest plausible failure locus first:
+
+```text
+measurement / saturation?
+causal identification?
+scientific-object identity?
+shape representation?
+estimator?
+implementation?
+substantive proposition?
+```
+
+Do not revise the highest-level claim because a lower-level representation failed.
+
+## 5. Possibility is cheap; authority is expensive
+
+A candidate explanation for a failed assay is not evidence that the explanation is correct.
+
+Likewise:
+
+```text
+possible transformation
+≠
+admissible transformation
+```
+
+and:
+
+```text
+candidate replacement
+≠
+authorized replacement
+```
+
+The protocol should keep multiple explanations available until discriminating evidence identifies one.
+
+## 6. Scope leakage is a common failure
+
+A positive treatment-effect ordering under one:
+
+```text
+E, h, domain, population, M_I, M_V
+```
+
+does not establish the same ordering elsewhere.
+
+Transport is an empirical extension, not a default entitlement.
+
+## 7. Repeated evidence can share one failure mode
+
+Many agreeing instruments or models can share the same measurement artifact, benchmark geometry, judge bias, or intervention confound.
+
+High correlation between two outcome instruments does not establish that they preserve the same causal contrast.
+
+This motivates independent-instrument tests and residual `I×E` diagnostics.
+
+## 8. Minimal revision is an empirical discipline
+
+The nonlinear-measurement red-team result is the canonical example.
+
+The stronger claim:
+
+```text
+arbitrary monotone outcome transformations preserve moderation sign
+```
+
+failed.
+
+The minimal revision was not to abandon the substantive proposition. It was to restrict the measurement invariance claim to the class that mathematically preserves additive differences:
+
+```text
+positive affine transformations
+```
+
+That is the intended CARS correction pattern:
+
+```text
+claim
+→ counterexample
+→ failure localization
+→ minimal sufficient revision
+```
+
+## 9. Responsiveness is not discriminative responsiveness
+
+The minimal assay can detect generic susceptibility to intervention.
+
+A stronger correction-capacity interpretation requires separate intervention-status conditions such as:
+
+```text
+E⁺ = warranted correction
+E⁰ = neutral / irrelevant
+E⁻ = misleading
+```
+
+A system that responds strongly to all three is different from one whose response tracks the independently warranted status of the intervention.
+
+Therefore:
+
+```text
+responsiveness
+≠
+discriminative responsiveness
+```
+
+The specificity test is a later empirical layer, not part of the minimal headline claim.
+
+## 10. Current capability is not causal responsiveness
+
+A pre-treatment variable can be strongly prognostic of ordinary outcome level while having no treatment-modifying value.
+
+Under a linear implementation:
+
+```text
+V_{t+h}
+=
+α + βI_t + γE_t + δ(I_t×E_t) + λV_t + ε
+```
+
+keep distinct:
+
+```text
+β
+→ ordinary prognostic association
+
+δ
+→ treatment-effect modification
+```
+
+The especially informative case is:
+
+```text
+β ≈ 0
+δ > 0
+```
+
+because it separates responsiveness from ordinary capability.
+
+## 11. Headroom is an assay threat, not a semantic issue
+
+A bounded outcome can manufacture apparent treatment-effect heterogeneity even when the latent treatment effect is constant.
+
+Therefore the benchmark must explicitly attack:
+
+- ceiling/floor effects;
+- recoverable-headroom differences;
+- nonlinear response scales;
+- task difficulty mismatches.
+
+The aim is to make false positive moderation easy to generate during development so the assay learns to reject it.
+
+## 12. Randomization protects the treatment contrast, not the meaning of I
+
+Randomizing `E` identifies the causal effect of the intervention under the design assumptions.
+
+It does not establish:
+
+```text
+I → τ
+```
+
+as a causal relation.
+
+`I` is a pre-treatment moderator whose value may predict heterogeneity for reasons not yet mechanistically identified.
+
+Effect modification by `I` is therefore not the same as a causal effect of `I`.
+
+## 13. Departure from adoption remains central
+
+The old authority firewall remains fully active:
+
+```text
+A_leave ↛ A_adopt
+```
+
+A failed representation, measurement claim, or estimator does not authorize the first replacement that happens to be available.
+
+The scientifically valid state can be:
+
+```text
+incumbent claim insufficient
++
+replacement not yet earned
+=
+remain unresolved
+```
+
+## 14. Mechanism machinery is downstream of the assay
+
+Earlier concepts such as residual mapping, candidate generation, validation independence, adoption, transfer, and inheritance remain useful.
+
+Their role has changed.
+
+```text
+old role:
+parts of a candidate master architecture
+
+current role:
+diagnostic mechanism hypotheses and benchmark dimensions
+```
+
+Reopen them when an empirical result requires explanation or a stronger layer is being tested.
+
+Do not put them back into the headline assay merely because they are conceptually available.
+
+## 15. Dynamics and equilibrium are separate scientific questions
+
+The responsiveness assay asks whether `I` orders heterogeneous causal response.
+
+A longitudinal transition question requires a separate observable:
+
+```text
+T_h^(e)(i)
+=
+E[I_{t+h} | do(E_t=e), I_t=i]
+```
+
+A fixed point:
+
+```text
+i* = T_h^(e)(i*)
+```
+
+and a contraction condition are stronger claims about a different object.
+
+Keep:
+
+```text
+causal heterogeneity
+≠
+longitudinal dynamics
+≠
+equilibrium
+≠
+stationary stochastic distribution
+```
+
+## 16. CARS itself remains testable
+
+CARS is the control protocol around the assay, but it can also be studied as a reasoning intervention:
+
+```text
+reasoning without CARS
+vs
+reasoning with CARS
+```
+
+on failure localization, calibration, transfer, regression, decision quality, and cost.
+
+That is a separate experiment from the heterogeneous-responsiveness assay.
+
+## 17. Historical catalyst and recursive architecture remain lineage
+
+The August 8 catalyst and recursive-correction documents are retained for provenance and optional future testing.
+
+They are not the current empirical frontier.
+
+Their concepts remain useful when they help construct discriminating attacks or explain observed response geometry.
 
 ## 18. Stopping is part of the method
 
-Once a representation is coherent enough to test, further polishing can have lower information value than exposure to adversarial evidence.
+The current scientific proposition is testable enough to attack.
 
-The current catalyst therefore follows:
+Therefore the next high-information move is not more notation.
 
 ```text
-freeze
-→ blind test
-→ measure decoding
-→ measure correction
-→ revise only if evidence warrants
+simple experiment first
+→ complex explanation only if earned
 ```
 
-This is not a claim that the current form is correct. It is a commitment to let empirical failure, rather than aesthetic preference, drive the next substantive revision.
+The governing research posture is:
 
-## Governing research question
-
-The architecture should ultimately be judged by whether it survives attempts to make its own authority system certify a bad successor—not by whether its internal story is coherent.
+> Build an assay that tries hard to make the target ordering appear when the true answer is zero. If it survives, the positive result becomes more interesting.

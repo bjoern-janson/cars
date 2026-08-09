@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "status": "frozen before any A7 outcome generation",
+  "study": "Pilot 0 A7: randomized prior-state-encoding x section-scaffold interaction localization",
+  "scope": "Fresh 2x2 causal representation-factorial test of field/value versus prose prior-state encoding crossed with labeled versus unlabeled section scaffolding, with E0/EV signal retained. A7 estimates whether the joint representation configuration produces transition effects beyond the two component main-effect edges localized by A5 and A6. It does not introduce a global correction construct.",
+  "lineage": {
+    "A3": "CAUSAL_INTERFACE_FORM_SIGNAL on T_change, T_instability, and T_verified",
+    "A4a": "conversational topology causal on T_verified only; T_change and T_instability practically small at +/-0.05",
+    "A4b": "historical-prestate rendering causal on T_change only; T_instability and T_verified practically small at +/-0.05",
+    "A4c": "legacy-versus-canonical inline rendering causal on T_change, T_instability, and T_verified",
+    "A5": "prior-state field-versus-prose encoding causal on T_change and T_verified; T_instability practically small at +/-0.05",
+    "A6": "section scaffold causal on T_change; T_instability and T_verified practically small at +/-0.05",
+    "A7_object": "test encoding x scaffold interaction in one fresh randomized cohort by closing the previously missing unlabeled-fields representation cell",
+    "A1_V": "does not exist",
+    "B1_sensitivity": "deferred",
+    "CARS": "frozen"
+  },
+  "population": {
+    "raw_n": 400,
+    "sample_seed": 20260821,
+    "eligibility": "initially-wrong frozen prestates only",
+    "freshness": "exclude every prior Pilot 0 plumbing, Run 1, Run 2, B0-v1, B0-v2, B1, A3, A4a, A4b, A4c, A5, A6, and any A7 plumbing tasks from the confirmatory A7 cohort"
+  },
+  "invariants": {
+    "model": "Qwen/Qwen3-4B",
+    "model_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "generation_base_seed": 20260809,
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "parse_retries": 2,
+    "post_max_new_tokens": 24,
+    "assistant_prefill": "ANSWER: ",
+    "choice_constraint": "first-generated-token-valid-option-letter",
+    "thinking": "disabled",
+    "outcome": "final objective MMLU-Pro correctness",
+    "revision_horizon": "one post-signal revision opportunity",
+    "conversation_topology": "one user message -> assistant answer prefill"
+  },
+  "representation_factorial": {
+    "factors": {
+      "encoding": {
+        "F": "field/value prior-state body: ANSWER: <A> newline P_CORRECT: <p>",
+        "P": "prose prior-state body: Your previous answer was <A>. Before feedback, you assigned probability <p> that this answer was correct."
+      },
+      "scaffold": {
+        "L": "explicit labels QUESTION:, PREVIOUS STATE:, SIGNAL:, REVISION REQUEST:",
+        "U": "same semantic chunks with those labels absent"
+      }
+    },
+    "cells": {
+      "LF": "labeled + fields; canonical reference",
+      "LP": "labeled + prose; A5 prose edge / A6 labeled edge",
+      "UF": "unlabeled + fields; previously missing representation cell",
+      "UP": "unlabeled + prose; legacy-style endpoint of the A4c bridge"
+    },
+    "causal_object": "encoding x section-scaffold interaction: whether the effect of prose versus fields differs between unlabeled and labeled scaffolds",
+    "interaction_orientation": "Gamma_FS = (UP - UF) - (LP - LF); positive means the prose-minus-fields effect is more positive under the unlabeled scaffold",
+    "semantic_identity_requirements": [
+      "same frozen question/options",
+      "same realized initial answer",
+      "same frozen P_CORRECT numeric value",
+      "same benchmark key",
+      "same E0 or EV signal text",
+      "same revision instruction",
+      "same semantic chunk order",
+      "same two-newline separators between chunks",
+      "same single-turn topology",
+      "same initially-wrong frozen prestate identity"
+    ],
+    "allowed_differences": [
+      "prior-state body is fields or prose according to encoding factor",
+      "four section labels are present or absent according to scaffold factor"
+    ],
+    "not_authorized_as": [
+      "psychological mechanism identification",
+      "complete explanation of A4c",
+      "normative interface quality",
+      "global correction capacity"
+    ]
+  },
+  "factors": {
+    "signal": {
+      "E0": "Signal status: No new information is available about whether your previous answer is correct.",
+      "EV": "Signal status: It has been verified that your previous answer is incorrect."
+    },
+    "common_revision_instruction": "Review your previous answer and revise if necessary.\nReturn exactly one line: ANSWER: <one option letter>"
+  },
+  "cells": [
+    "LF_E0",
+    "LF_EV",
+    "LP_E0",
+    "LP_EV",
+    "UF_E0",
+    "UF_EV",
+    "UP_E0",
+    "UP_EV"
+  ],
+  "assignment": {
+    "blocking_unit": "one initially-wrong frozen prestate identified by task_id",
+    "branches_per_block": 16,
+    "branches_per_cell_per_block": 2,
+    "randomization_seed": 20260809,
+    "assignment_rule": "create sixteen branch units per eligible prestate and randomize the eight cell labels within block with exact two branches per representation x signal cell",
+    "rng_rule": "each branch id fixes its own prespecified generation base seed via stable_seed(generation_base_seed, 'a7::' + branch_id); representation and signal labels never enter the seed function",
+    "rng_interpretation": "the same seed-assignment rule applies to every cell. Different rendered token sequences need not consume or realize identical stochastic draws. No claim of shared realized randomness is made."
+  },
+  "primary_estimands": {
+    "Gamma_FS_change": "mean over blocks of [(T_change(UP,E0)-T_change(UF,E0)) - (T_change(LP,E0)-T_change(LF,E0))]",
+    "Gamma_FS_instability": "mean over blocks of [(T_instability(UP,E0)-T_instability(UF,E0)) - (T_instability(LP,E0)-T_instability(LF,E0))]",
+    "Gamma_FS_verified": "mean over blocks of [(T_verified(UP,EV)-T_verified(UF,EV)) - (T_verified(LP,EV)-T_verified(LF,EV))]"
+  },
+  "transition_definitions": {
+    "T_change": "within one representation cell's two E0 branches, fraction whose final answer differs from the realized initial wrong answer",
+    "T_instability": "within one representation cell's two E0 branches, 1 iff their final answers differ, else 0",
+    "T_verified": "within one representation cell's two EV branches, fraction ending on the objective benchmark key",
+    "Q_N": "within one representation cell, pooled neutral correct revisions divided by pooled neutral revisions; conditional on revision and secondary"
+  },
+  "analysis": {
+    "unit": "frozen prestate block; generated branches are never treated as independent scientific observations",
+    "bootstrap": 5000,
+    "bootstrap_seed": 20260809,
+    "bootstrap_test_seed": 20260810,
+    "alpha_familywise": 0.05,
+    "primary_inference": "For each primary interaction, use the block-level interaction contrasts. Report a 95% whole-block percentile-bootstrap interval. For the two-sided null Gamma_FS=0, construct a centered whole-block bootstrap null by subtracting the observed block-mean interaction from each block contrast, resampling blocks with replacement, and comparing the absolute null mean to the absolute observed mean. Holm-adjust the three resulting p-values.",
+    "why_not_cell_label_permutation": "A3-A6 style cell-label permutation would test the stronger sharp null of no representation effects. A7 must allow nonzero encoding and scaffold main effects while testing the interaction contrast, so the primary interaction p-values use centered whole-block bootstrap inference instead.",
+    "primary_multiplicity": "Holm-adjust the three two-sided centered whole-block bootstrap p-values; these are the only primary p-values",
+    "practical_equivalence_margin": 0.05,
+    "Q_N_min_revision_events_per_representation_cell": 20,
+    "Q_N_analysis": "Report Q_N by LF, LP, UF, and UP. An interaction-style Q_N contrast is adjudicable only if all four representation cells have at least 20 neutral revision events; otherwise mark it not adjudicable. Q_N never enters the primary multiplicity family or A7 summary gate."
+  },
+  "decision_gate": {
+    "CAUSAL_ENCODING_SCAFFOLD_INTERACTION_SIGNAL": "At least one of the three Holm-adjusted primary interaction p-values is < 0.05. Report exactly which transition dimensions earned the signal.",
+    "ENCODING_SCAFFOLD_INTERACTION_WEAKENED_AT_A2_SCALE": "No primary Holm-adjusted p-value is < 0.05 and all three primary 95% bootstrap intervals lie entirely inside [-0.05,+0.05].",
+    "A7_UNRESOLVED": "Neither of the above gates is satisfied.",
+    "no_omnibus_construct": "There is no global correction-capacity score and no requirement that all transition dimensions interact."
+  },
+  "interpretation_guardrails": [
+    "Gamma_FS_instability is the highest-information residual target motivating A7, but all three Gamma_FS endpoints remain co-primary in one Holm family.",
+    "A causal interaction means the effect of state encoding differs by section scaffold for the named endpoint under the frozen assay; it does not identify a psychological or mechanistic cause.",
+    "A null interaction does not invalidate A4c, A5, or A6.",
+    "A causal interaction with |point estimate| < 0.05 is localized but point-estimate practically small at the inherited scale.",
+    "A causal interaction with |point estimate| >= 0.05 has a point estimate above the inherited practical margin; only a confidence interval entirely outside [-0.05,+0.05] supports an effect beyond that margin at the interval level.",
+    "Cross-experiment A4c, A5, A6, and A7 magnitudes are not algebraically decomposable because cohorts and manipulations differ.",
+    "Q_N remains conditional on revision and does not determine whether a representation interaction exists.",
+    "T_instability retains its exact two-replicate definition and has no inherent positive or negative normative valence.",
+    "If A7 interaction is practically small for T_instability, the remaining A4c instability contrast should be localized to another operational difference or context dependence rather than automatically escalating complexity.",
+    "No A7 result automatically updates B, C, H1, I1, S, or CARS; any such revision requires a separate earned update step."
+  ]
+}

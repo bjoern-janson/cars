@@ -1,397 +1,421 @@
 # CARS — Controlled Adaptive Reasoning System
 
-> **Status:** living research notebook containing candidate reasoning interventions, a frozen catalyst candidate for testing, and a proposed recursive correction architecture. Nothing here should be treated as an established theory, demonstrated performance improvement, validated intelligence definition, or validated self-improving system.
+> **Status:** living research notebook. CARS is an epistemic control protocol around an empirical research program. Pilot 0 is now **closed** under an epistemic stopping rule. The repository contains scoped randomized evidence about representation-dependent transition behavior, but nothing here establishes a general theory of intelligence, a global correction-capacity construct, a psychological mechanism, or a validated self-improving system.
 
-CARS studies a simple question with increasingly demanding forms:
+## Current architecture
 
-```text
-Can feedback produce a correction that improves future correction?
-```
-
-The current research frontier is:
-
-> **Can a reasoning system discover when its own representation or correction process is the limiting factor, propose a successor without self-authorizing it, and earn adoption through evidence insulated from the process that selected that successor?**
-
-## Current research posture
-
-The notebook is now intentionally in a **test-before-refine** state.
+CARS and the assay have different jobs.
 
 ```text
-freeze
-→ blind test
-→ measure decoding
-→ measure correction
-→ revise only if evidence warrants
+CARS
+│
+├── governs how reasoning responds to evidence
+└── governs how assay results are localized, interpreted, and revised
+
+ASSAY
+│
+├── tests a specific empirical proposition
+└── produces evidence that CARS then processes
 ```
 
-Prompt snapshots remain unchanged. The current catalyst is frozen as an exact intervention for the next decoding/execution tests. The formal architecture remains a hypothesis to be attacked, not a theory to be protected.
+Neither supplies the authority of the other.
 
-A valid negative result is a valid result.
+Current control protocol:
 
-## Three research surfaces
+- [`prompts/CARS-CONTROL-PROTOCOL.md`](prompts/CARS-CONTROL-PROTOCOL.md)
 
-CARS now keeps three experimental surfaces distinct:
+Core assay specification:
 
-```text
-prompt intervention
-≠ catalyst intervention
-≠ recursive architecture
-```
+- [`docs/ASSAY_SPEC.md`](docs/ASSAY_SPEC.md)
 
-### Prompt intervention
+Pilot 0 frozen protocol and terminal record:
 
-Tests whether explicit CARS reasoning instructions improve controlled adaptation relative to baselines.
+- [`experiments/PILOT0_MMLU_PRO.md`](experiments/PILOT0_MMLU_PRO.md)
+- [`experiments/PILOT0_PROVENANCE.md`](experiments/PILOT0_PROVENANCE.md)
+- [`results/PILOT0_TERMINAL_RECORD.md`](results/PILOT0_TERMINAL_RECORD.md)
 
-### Catalyst intervention
+## Motivating conjecture
 
-Tests whether a compact semantically typed intervention can be recovered and executed without requiring the model to reconstruct the entire theory.
-
-### Recursive architecture
-
-Tests whether correction-surface revisions can earn succession authority through design-independent validation, residual-local correction gain, and regression control.
-
-Evidence at one level does not automatically validate the others.
-
-## Canonical representation stack
-
-```text
-Catalyst activates
-→ Formalism constrains
-→ Semantics executes
-```
-
-The layers optimize different things:
-
-```text
-formal notation = representation
-catalyst notation = intervention
-execution semantics = operational instruction
-```
-
-See [`notes/2026-08-08-catalyst-notation.md`](notes/2026-08-08-catalyst-notation.md).
-
-## Frozen deployable catalyst
-
-The current exact catalyst candidate is:
-
-```text
-I ∝ C_improve
-I = intelligence; C_improve = capacity to convert feedback into increased future viability.
-E_evidence,lim → C_revision; ρ_res = Φ_res(E); V_val^ind = 𝒱(R_candidate; W_val^ind); A_leave ↛ A_adopt; ΔCorrCap_ρres > 0.
-Feedback reveals a limitation → represent the residual provisionally → generate candidate revisions → independently validate them → do not infer successor authority from authority to leave the incumbent → adopt only when the successor demonstrates greater correction capacity on the residual that triggered revision.
-```
-
-This is a **candidate catalyst**, not an empirical law.
-
-In particular:
+The research trajectory began from:
 
 ```text
 I ∝ C_improve
 ```
 
-is a research objective / framing, not an established definition of intelligence.
+where `C_improve` is a design objective: capacity to convert feedback into increased future correction capacity / viability.
 
-The construct and operational measure remain distinct:
+This remains a motivating conjecture and reasoning objective, not an established definition of intelligence and not a validated empirical law.
 
-```text
-C_improve ≠ CorrCap
-```
-
-`C_improve` is the higher-level capacity to convert feedback into increased future correctability / viability. `CorrCap` is an operational measurement target whose construct validity must be tested.
-
-## Formal recursive architecture
-
-The full architecture is documented in [`notes/2026-08-08-recursive-correction-architecture.md`](notes/2026-08-08-recursive-correction-architecture.md).
-
-Let:
+The empirical program strips that conjecture down to a conditional causal-response object:
 
 ```text
-X_t = (C_t, O_t, M_t, Φ_t, G_t, 𝒱_t, …)
+τ(i)
+=
+E[V(e₁) - V(e₀) | I=i]
 ```
 
-where the correction procedure, observation/interface, model, residual mapper, candidate generator, and validation procedure are all potentially revisable.
-
-The current residual representation is:
+and the primitive scientific proposition:
 
 ```text
-ρ_t = Φ_t(E_t)
+i₁ > i₀
+⇒
+τ(i₁) > τ(i₀)
 ```
 
-Crucially:
+The ordering proposition is the scientific object. A derivative or linear interaction coefficient is a representation of it, not the object itself.
+
+## Scientific object > representation > estimator
+
+Freeze the hierarchy:
 
 ```text
-ρ_t ≠ ρ*
+SCIENTIFIC PROPOSITION
+τ(i₁) > τ(i₀) for i₁ > i₀
+
+        ↓ represented by
+
+SHAPE
+∂τ(i)/∂i > 0
+or
+τ(i) = τ₀ + δi
+
+        ↓ instantiated on
+
+MEASUREMENT STRUCTURE
+I: order-preserving
+V: difference-preserving
+
+        ↓ recovered by
+
+ESTIMATOR
 ```
 
-is permitted. The residual representation is provisional; it is not assumed to be the true hidden failure class.
-
-The compact succession architecture is:
+Failure implications are asymmetric:
 
 ```text
-X_t
-  --(E_t, Φ_t)--> ρ_t
-  --G_t--> R_cand,t
-  --(𝒱_t, W_t^ind)--> V_t^ind
-  --[A_leave ↛ A_adopt; Ind_t = 1]--> X_{t+1}
+estimator failure
+↛ shape failure
+
+shape failure
+↛ scientific-proposition failure
 ```
 
-subject to residual-local improvement:
+Measurement is not merely downstream instrumentation. It partly constitutes the identity of the scientific object.
+
+See [`docs/MEASUREMENT_BOUNDARY.md`](docs/MEASUREMENT_BOUNDARY.md).
+
+## Pilot 0 — terminal status
+
+Pilot 0 used a literal measurement rather than calling it intelligence:
 
 ```text
-ΔCorrCap_{ρ_t} > 0
+I₁ = 1 - P(correct)
 ```
 
-and, where unrestricted succession is claimed, regression control on unaffected behavior.
+under one frozen Qwen3-4B configuration on MMLU-Pro.
 
-## Independent validation
-
-The validation procedure and validation outcome are different objects:
+The original moderation hypothesis was:
 
 ```text
-𝒱_t := validation procedure
-V_t^ind := 𝒱_t(R_cand,t ; W_t^ind)
+higher I₁
+→ greater causal benefit from verified-error feedback
 ```
 
-An unseen validation environment is not enough if the validation procedure itself was tuned after candidate selection.
-
-Let:
+Terminal status:
 
 ```text
-I_sel,t := all information capable of influencing candidate generation or selection
+H1
+NOT SUPPORTED
 ```
 
-The strong independence condition is design-level:
+`I₁` showed modest criterion validity for initial error likelihood, but correction-related validity was not demonstrated:
 
 ```text
-(𝒱_t, W_t^ind) ⟂_design I_sel,t
+error detection
+≠ correction susceptibility
 ```
 
-Practical rule:
+The subsequent diagnostic program localized transition-specific representation effects.
 
-> **If information could have changed which revision was generated or selected, it cannot later be counted as independent validation evidence for that revision.**
+### Terminal endpoint ledger
 
-## Authority firewall
+| Object | Terminal status |
+| --- | --- |
+| `T_change` × prior-state encoding | **CAUSAL** |
+| `T_change` × section scaffold | **CAUSAL** |
+| `T_change` × encoding×scaffold | **CAUSAL INTERACTION** |
+| `T_verified` × prior-state encoding | **CAUSAL** |
+| `T_verified` × conversational topology | **CAUSAL** |
+| `T_verified` × section scaffold | **PRACTICALLY SMALL** |
+| `T_verified` × encoding×scaffold | **UNRESOLVED** |
+| `T_instability` × broad inline representation | **CAUSAL** |
+| `T_instability` × prior-state encoding | **CAUSAL / REPLICATED / PRACTICALLY SMALL** |
+| `T_instability` × section scaffold | **PRACTICALLY SMALL** |
+| `T_instability` × encoding×scaffold | **PRACTICALLY SMALL** |
+| excess R1 cohort variation | **NOT DETECTED** |
+| transport invariance | **NOT ESTABLISHED** |
+| global correction capacity | **NOT ESTABLISHED** |
+| psychological mechanism | **NOT ESTABLISHED** |
+| general intelligence claim | **NOT ESTABLISHED** |
 
-A central invariant is:
+The unresolved `T_verified` interaction is endpoint-local:
+
+```text
+unresolved T_verified interaction
+↛ reopen T_instability
+```
+
+### R1 replication / transport
+
+R1 directly tested the A5↔A7 replication discrepancy for the labeled-scaffold, E0-only prior-state prose-versus-fields effect on `T_instability` across four fresh disjoint prestate cohorts.
+
+```text
+C1  +0.030043
+C2  +0.045267
+C3  +0.025974
+C4  +0.034615
+
+Δ_common = +0.033975
+95% CI   = [+0.021316,+0.047791]
+p        = 0.00019996
+```
+
+The effect is nonzero/reproduced while the entire common-effect interval lies inside the inherited `±0.05` practical region.
+
+Transport diagnostic:
+
+```text
+Q = 1.120334
+df = 3
+p = 0.772168
+I² = 0
+tau²_DL = 0
+```
+
+Authorized:
+
+```text
+observed cohort effects
+→ compatible with a common-effect model
+```
+
+Not authorized:
+
+```text
+compatible with common effect
+→ proven transport invariance
+```
+
+See [`results/PILOT0_TERMINAL_RECORD.md`](results/PILOT0_TERMINAL_RECORD.md) for the complete terminal lineage and authority boundary.
+
+## Pilot 0 stopping rule
+
+Pilot 0 is not closed because nothing else could theoretically be tested.
+
+It is closed because nothing else is presently justified to test.
+
+```text
+sufficiently contracted live hypothesis space
++
+alternatives discriminated
++
+surviving effects replicated / bounded
++
+remaining uncertainty locally contained
++
+no sufficiently discriminating next experiment
+────────────────────────────────────────────
+                        ↓
+                      STOP
+```
+
+Keep explicit:
+
+```text
+STOP
+≠ truth
+≠ completeness
+≠ certainty
+
+STOP
+= no presently justified escalation
+```
+
+Therefore:
+
+```text
+A-series representation localization
+→ sufficiently resolved
+
+R1 replication/transport
+→ closed
+
+A8
+→ NOT EARNED
+
+R2
+→ NOT EARNED
+
+additional T_instability decomposition
+→ NOT EARNED
+```
+
+Any future empirical branch requires a genuinely new scientific question and a fresh pre-outcome contract.
+
+## CARS control protocol
+
+CARS remains a reasoning protocol, not an empirical theorem.
+
+Its core responsibilities are:
+
+- localize failure before revising;
+- separate possibility from epistemic authority;
+- match claims to the scope actually identified by evidence;
+- prevent validity, mechanism, causation, provenance, and future reliability from laundering into one another;
+- prefer discriminating and structurally independent probes;
+- revise the smallest thing the evidence requires;
+- escalate to representation/interface change only when warranted;
+- separate departure from adoption;
+- permit unresolved states;
+- retest correction prospectively;
+- preserve scoped authority and reopenability;
+- separate belief from decision when action cannot wait.
+
+Core invariants include:
+
+```text
+Possibility space ≠ epistemic authority space
+```
+
+```text
+Search allocates attention; evidence allocates authority.
+```
+
+```text
+Evidence can authorize departure without authorizing destination.
+```
+
+```text
+Failure does not identify its cause.
+```
 
 ```text
 A_leave ↛ A_adopt
 ```
 
-Evidence sufficient to withdraw authority from an incumbent does not automatically grant authority to a successor.
+CARS is used to interpret whether and where an assay fails. It does not make the assay hypothesis true.
 
-This applies not only to models, but to representations, residual mappings, candidate generators, validators, and correction procedures themselves.
+## Evidence and authority boundaries
 
-## Prompt track
-
-[`prompts/CARS-v0.1.md`](prompts/CARS-v0.1.md) is the first reference prompt snapshot.
-
-[`prompts/CARS-v0.2-CANDIDATE.md`](prompts/CARS-v0.2-CANDIDATE.md) is a narrow experimental variant that asks whether successful corrections should trigger dependency tracing. It adds one candidate invariant:
-
-> **Historical presence ≠ functional necessity.**
-
-It does **not** instruct the model to search for first principles, universal functions, or recursive self-modification.
-
-Version numbers organize experimental variants; they do not imply epistemic superiority.
-
-## Core research invariants
-
-> **Possibility space ≠ epistemic authority space.**
-
-> **Search allocates attention; evidence allocates authority.**
-
-> **Evidence can authorize departure without authorizing destination.**
-
-> **Historical presence ≠ functional necessity.** *(v0.2 candidate)*
-
-> **Resolution is not explanatory authority.** *(research note; not a prompt rule)*
-
-No correction-surface component receives epistemic immunity merely because it is part of the current architecture.
-
-## What CARS is trying to prevent
-
-Recurring failure modes include:
-
-- updating at the wrong depth;
-- treating possibility as evidence for itself;
-- overgeneralizing beyond evidence-supported scope;
-- laundering validity into causal, mechanistic, provenance, predictive, or future-reliability authority;
-- counting common-mode confirmation as independent validation;
-- treating incumbent failure as successor validation;
-- forcing determinate conclusions when unresolved is warranted;
-- producing retrospective explanation without changed future behavior;
-- confusing historical participation with functional necessity;
-- granting explanatory authority to representations that collapse the required distinction;
-- treating the current residual partition as truth;
-- tuning validation after candidate selection and then calling it independent;
-- hiding failure on the triggering residual behind global average improvement;
-- optimizing the correction metric rather than correction capacity itself.
-
-See [`docs/FAILURE_MODEL.md`](docs/FAILURE_MODEL.md) and [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md).
-
-## Evaluation stack
-
-The evaluation protocol is in [`docs/EVALUATION_PROTOCOL.md`](docs/EVALUATION_PROTOCOL.md).
-
-Use distinct scoring surfaces:
-
-- [`eval/SCORING.md`](eval/SCORING.md) and [`eval/rubric.json`](eval/rubric.json) — prompt-level reasoning;
-- [`eval/CATALYST_SCORING.md`](eval/CATALYST_SCORING.md) — catalyst decoding and execution;
-- [`eval/ARCHITECTURE_SCORING.md`](eval/ARCHITECTURE_SCORING.md) — recursive architecture behavior.
-
-Keep the evidence ladder explicit:
+Keep distinct:
 
 ```text
-semantic recovery
-↛ faithful execution
-↛ task improvement
-↛ CorrCap improvement
-↛ recursive improvement
+causal heterogeneity
+≠ longitudinal dynamics
+≠ equilibrium
+≠ stationary stochastic distribution
 ```
 
-A single aggregate should not erase these distinctions.
+A scoped randomized result does not automatically establish:
 
-## Current empirical sequence
+- a causal effect of the moderator itself;
+- construct identity;
+- mechanism;
+- discriminative correction capacity;
+- cross-model or cross-domain transport;
+- transport invariance;
+- safety;
+- equilibrium;
+- theory validation.
 
-The next high-information work is empirical rather than conceptual.
+See [`docs/CLAIMS_AND_NONCLAIMS.md`](docs/CLAIMS_AND_NONCLAIMS.md).
 
-### 1. Blind catalyst decoding
+## Synthetic red-team track
 
-Test whether unfamiliar models recover the intended operational ontology without receiving the CARS legend, repository provenance, expected labels, or prior parses.
+The repository retains synthetic and adversarial checks for assay failure modes:
 
-Useful comparison conditions include:
+- [`docs/RED_TEAM_PROTOCOL.md`](docs/RED_TEAM_PROTOCOL.md)
+- [`docs/JUMP_WORLD_STRESS_TESTS.md`](docs/JUMP_WORLD_STRESS_TESTS.md)
+- [`results/SYNTHETIC_ASSAY_REFERENCE.md`](results/SYNTHETIC_ASSAY_REFERENCE.md)
 
-- typed equation only;
-- execution semantics only;
-- frozen deployable catalyst;
-- older opaque notation;
-- generic reasoning control for execution tests.
+Synthetic survival is development evidence only:
 
-### 2. Catalyst execution
+```text
+synthetic red-team survival
+↛ plumbing success
+↛ real randomized evidence
+↛ replication
+↛ transport invariance
+↛ stable law
+```
 
-Test whether semantic recovery translates into the intended correction behavior on fresh tasks.
+## Prompt and historical tracks
 
-### 3. Recursive architecture stress test
+Historical prompt snapshots remain intact:
 
-Construct worlds where the architecture can appear to earn succession authority without genuinely improving independently validated correction capacity.
+- [`prompts/CARS-v0.1.md`](prompts/CARS-v0.1.md)
+- [`prompts/CARS-v0.2-CANDIDATE.md`](prompts/CARS-v0.2-CANDIDATE.md)
 
-Strong benchmark families should include:
+The current role-separated control protocol is:
 
-- shallow repair sufficient;
-- representation non-identifiability;
-- wrong residual partition;
-- candidate-generation failure;
-- validator contamination;
-- incidental dependency;
-- substitutable implementation;
-- correction-procedure failure;
-- no-escalation negative controls;
-- successor regression;
-- adaptive holdout contamination;
-- cross-generator transfer.
+- [`prompts/CARS-CONTROL-PROTOCOL.md`](prompts/CARS-CONTROL-PROTOCOL.md)
 
-See [`docs/EXPERIMENT_MATRIX.md`](docs/EXPERIMENT_MATRIX.md).
-
-## Evidence status
-
-This repository currently provides **candidate interventions, formal hypotheses, internally generated notes, and evaluation scaffolding**.
-
-It does **not** establish that CARS:
-
-- improves reasoning or safety;
-- increases intelligence;
-- validates `I ∝ C_improve` as a law or definition;
-- validates `CorrCap` as a measure of the full `C_improve` construct;
-- discovers novel representations autonomously;
-- identifies the true residual or causal decomposition;
-- improves its own correction procedure;
-- validates successors independently in practice;
-- improves correction capacity;
-- recursively improves across environments;
-- discovers universal correction functions or first principles;
-- solves Controlled Representational Escape or alignment.
-
-The current seed suite is internally authored and is development evidence only.
-
-See [`docs/CLAIMS_AND_NONCLAIMS.md`](docs/CLAIMS_AND_NONCLAIMS.md) and [`docs/PROVENANCE.md`](docs/PROVENANCE.md).
-
-## Notebook philosophy
-
-This repository preserves a research lineage while keeping revision cheap enough to remain corrigible.
-
-- Prompt versions are reference snapshots, not sacred artifacts.
-- Notes may advance without changing prompts.
-- Git history provides default provenance.
-- Exact intervention text and evaluation context should be recorded when results matter.
-- Stronger preregistration/release discipline should be added when the evidential claim warrants it.
-- Internally coherent artifacts are not independent evidence for one another.
-- Further refinement should be driven by observed failure once the current object is testable.
-
-The goal is to remain **reopenable, testable, and corrigible without confusing notebook evolution with empirical progress**.
+Historical catalyst and recursive-correction artifacts remain research lineage, not validated current theory.
 
 ## Repository map
 
 ```text
 prompts/
-  CARS-v0.1.md
-  CARS-v0.2-CANDIDATE.md
-  GENERIC-CONTROL-v0.1.md
-
-notes/
-  2026-08-08-one-layer-enough.md
-  2026-08-08-typed-attribution.md
-  2026-08-08-representation-authority.md
-  2026-08-08-recursive-correction-architecture.md
-  2026-08-08-catalyst-notation.md
+  CARS-CONTROL-PROTOCOL.md
 
 docs/
-  RESEARCH_CONTRACT.md
-  DESIGN_RATIONALE.md
+  ASSAY_SPEC.md
+  MEASUREMENT_BOUNDARY.md
+  RED_TEAM_PROTOCOL.md
   CLAIMS_AND_NONCLAIMS.md
   FAILURE_MODEL.md
-  EVALUATION_PROTOCOL.md
-  EXPERIMENT_MATRIX.md
-  ABLATIONS.md
-  THREAT_MODEL.md
-  INDEPENDENT_CASE_AUTHOR_BRIEF.md
-  PROVENANCE.md
+  RESEARCH_CONTRACT.md
 
-benchmarks/
-  seed_cases.jsonl
+experiments/
   README.md
-
-eval/
-  SCORING.md
-  CATALYST_SCORING.md
-  ARCHITECTURE_SCORING.md
-  rubric.json
-
-scripts/
-  validate_cases.py
-
-examples/
-  evaluation_record.json
-  catalyst_evaluation_record.json
-  architecture_evaluation_record.json
+  PILOT0_MMLU_PRO.md
+  PILOT0_PROVENANCE.md
+  PILOT0_*_CONFIG.json
+  LLM_ASSAY_PROTOCOL.md
 
 results/
   README.md
+  PILOT0_TERMINAL_RECORD.md
+  SYNTHETIC_ASSAY_REFERENCE.md
+
+scripts/
+  frozen Pilot 0 runners / analyzers
+  randomized-assay utilities
+  synthetic red-team utilities
 ```
 
-## Relationship to adjacent work
+## Notebook philosophy
 
-CARS is separate from, but informed by, a broader research trajectory around correction, representation adequacy, and adaptive evaluation.
+The repository should remain reopenable, testable, and cheap to revise without confusing notebook evolution with empirical progress.
 
-- **The Correctable Lineage:** governance of scope, provenance, authority, and reopening.
-- **Negative-Space Search:** when representation search should expand.
-- **MAGIKARP:** whether prospective failure-depth diagnosis predicts held-out recovery under supplied correction mechanisms.
-- **CARS:** candidate reasoning interventions and a notebook architecture for studying controlled correction.
+```text
+simple experiment first
+→ complex explanation only if earned
+```
 
-Success or failure of CARS does not retroactively validate or invalidate those other artifacts.
+Pilot 0 adds the complementary terminal discipline:
+
+```text
+CORRECTION
+→ contraction of the live hypothesis space
+→ not perpetual hypothesis generation
+```
+
+Successful correction can terminate when no remaining uncertainty supports a sufficiently discriminating next experiment.
 
 ## Authorship and workflow
 
-Research direction, conceptual architecture, claims, and evaluation priorities are directed by **Björn Janson**. AI systems are used as research collaborators and implementation tools for drafting, critique, repository construction, comparison, code assistance, formalization, and adversarial development.
+Research direction, conceptual architecture, claims, and evaluation priorities are directed by **Björn Janson**. AI systems are used as research collaborators and implementation tools for drafting, critique, repository construction, comparison, code assistance, formalization, simulation, and adversarial development.
 
 AI-assisted agreement is not independent scientific validation. See [`docs/PROVENANCE.md`](docs/PROVENANCE.md).
 

@@ -1,243 +1,290 @@
 # CARS Ablation Plan
 
-Ablations are intended to identify which constraints matter **if an effect is observed**.
+Ablations identify which assumptions, measurements, or protocol components matter **after an effect or failure is observed**.
 
-Keep the experimental surfaces distinct:
+Keep experimental surfaces distinct:
 
 ```text
-prompt ablation
-≠ catalyst ablation
-≠ recursive-architecture ablation
+CARS prompt ablation
+≠
+assay ablation
+≠
+measurement ablation
+≠
+historical catalyst/architecture ablation
 ```
 
-A later architecture result must not be retroactively attributed to a prompt component that did not instantiate it.
+## 1. CARS prompt-level ablations
 
-## Prompt-level ablations
+Use these only for the control-protocol experiment.
 
-### A0 — Generic careful reasoning
+### P0 — generic careful reasoning
 
-Remove CARS-specific concepts while keeping a generic instruction to reason carefully, consider alternatives, and check assumptions.
+Remove CARS-specific concepts while keeping a generic instruction to reason carefully, consider alternatives, check assumptions, and revise when warranted.
 
 **Purpose:** control for generic deliberation and prompt attention.
 
-### A1 — No representation-escalation gate
+### P1 — no representation-escalation gate
 
-Remove Rule 7 while preserving other rules.
+Remove the rule that representation/interface change requires evidence of representation insufficiency.
 
-**Primary risk:** ontology/representation expansion after ordinary failures.
+**Risk:** over-escalation after ordinary errors.
 
-### A2 — No departure/adoption separation
-
-Remove Rule 8.
-
-**Primary risk:** incumbent rejection becomes successor validation.
-
-### A3 — No unresolved-state permission
-
-Remove Rule 9.
-
-**Primary risk:** forced narrative completion and unjustified certainty.
-
-### A4 — No independent-evidence emphasis
-
-Remove the independence language from Rules 2 and 5.
-
-**Primary risk:** repeated common-mode evidence receives excessive weight.
-
-### A5 — No behavioral retest requirement
-
-Remove Rule 10.
-
-**Primary risk:** retrospective verbal correction without future behavior change.
-
-### A6 — No belief/decision separation
-
-Remove Rule 12.
-
-**Primary risk:** either false certainty or decision paralysis under uncertainty.
-
-### A7 — Invariants only
-
-Provide only the core invariants without the operating rules.
-
-**Purpose:** test whether compact principles are sufficient.
-
-## Catalyst ablations / controls
-
-The canonical catalyst is frozen in `notes/2026-08-08-catalyst-notation.md`. Catalyst variants should be labeled as experimental conditions rather than silently replacing that string.
-
-### K0 — Equation only
-
-Use only the typed catalyst equation, without the objective definition or execution-semantics sentence.
-
-**Question:** are the symbols self-decoding enough to recover the intended operation?
-
-### K1 — Semantics only
-
-Use only the execution-semantics chain / sentence.
-
-**Question:** does the prose alone carry the operational effect?
-
-### K2 — No objective line
-
-Remove `I ∝ C_improve` and its definition while preserving the operational equation and semantics.
-
-**Question:** does the higher-level objective materially change decoding or execution?
-
-### K3 — Opaque notation
-
-Replace semantically typed symbols with the earlier compressed form while preserving relation structure.
-
-**Primary risk:** syntactic recovery with ontology drift.
-
-### K4 — No leave/adopt firewall
-
-Remove `A_leave ↛ A_adopt` and corresponding execution language.
-
-**Primary risk:** incumbent failure becomes successor promotion.
-
-### K5 — No independence semantics
-
-Retain “validation” but remove explicit independent-validation language from the execution semantics.
-
-**Primary risk:** validation collapses into any favorable test, including selection-contaminated checks.
-
-### K6 — Generic careful reasoning
-
-Replace the catalyst with a concise generic instruction to reason carefully and revise when warranted.
-
-**Purpose:** control for extra deliberation rather than CARS-specific structure.
-
-Catalyst ablations should report decoding and execution separately. An ablation can hurt semantic recovery without changing downstream behavior, or vice versa.
-
-## Dependency-tracing ablations
-
-### D0 — No dependency trace
-
-Use CARS v0.1.
-
-**Purpose:** baseline for the v0.2 candidate.
-
-### D1 — No substitution test
-
-Allow dependency tracing and removal but not substitution.
-
-**Primary risk:** historical implementations are mistaken for necessary functions.
-
-### D2 — Always trace dependencies
-
-Force tracing after every correction rather than activating conditionally.
-
-**Primary risk:** cost inflation and spurious dependency narratives.
-
-## Recursive architecture ablations
-
-These are design-level experiments, not prompt-rule deletions.
-
-### R0 — Fixed residual mapper
-
-Hold `Φ_t` fixed while allowing downstream correction.
-
-**Question:** does revisable residual mapping add value when the current partition is wrong?
-
-### R1 — Supplied residual labels
-
-Provide the correct residual class rather than requiring `ρ_t = Φ_t(E_t)` to be inferred.
-
-**Question:** how much performance depends on diagnosis being supplied rather than discovered?
-
-### R2 — Fixed candidate generator
-
-Hold `G_t` fixed.
-
-**Question:** can failure be localized correctly while candidate generation remains the bottleneck?
-
-### R3 — Fixed validator
-
-Hold `𝒱_t` fixed even when validation itself is the failure locus.
-
-**Question:** is validator corrigibility necessary in worlds with validation failure?
-
-### R4 — Validation environment only
-
-Use an unseen `W_t^ind` but permit `𝒱_t` to be selected after inspecting candidates.
-
-**Purpose:** test whether environment holdout alone permits selection leakage.
-
-### R5 — No design-independence gate
+### P2 — no departure/adoption separation
 
 Remove:
 
 ```text
-(𝒱_t, W_t^ind) ⟂_design I_sel,t
+A_leave ↛ A_adopt
 ```
 
-**Primary risk:** self-validating candidate/validator loops.
+**Risk:** incumbent rejection becomes successor validation.
 
-### R6 — No departure/adoption firewall
+### P3 — no unresolved-state permission
 
-Permit rejection of the incumbent to count as support for the proposed successor.
+**Risk:** forced narrative completion.
 
-**Primary risk:** successor capture.
+### P4 — no independence emphasis
 
-### R7 — Global CorrCap only
+**Risk:** common-mode evidence receives excessive authority.
 
-Evaluate aggregate correction-capacity change without conditioning on the triggering residual.
+### P5 — no behavioral retest
 
-**Primary risk:** global-average dilution hides a failed local correction.
+**Risk:** retrospective explanation without future correction.
 
-### R8 — Residual-local CorrCap only, no regression suite
+### P6 — no belief/decision separation
 
-Require local improvement but do not test unaffected controls.
+**Risk:** false certainty or decision paralysis.
 
-**Primary risk:** major regression elsewhere.
+### P7 — invariants only
 
-### R9 — Static holdout reuse
+Provide only compact CARS invariants.
 
-Reuse the same validation environment across repeated lineage updates.
+**Question:** are the operating rules necessary beyond the principles?
 
-**Primary risk:** adaptive holdout overfitting.
+## 2. Assay scientific-object ablations
 
-### R10 — No false-escalation worlds
+These tests probe whether a reported result depends on stronger assumptions than the primitive proposition requires.
 
-Evaluate only cases where deep revision is genuinely needed.
+### A0 — ordered-strata test
 
-**Primary risk:** escalation becomes a benchmark shortcut.
-
-### R11 — Single benchmark generator
-
-Evaluate many instances from one generator but no independent generator.
-
-**Primary risk:** generator dependence masquerades as transfer.
-
-### R12 — CorrCap without gaming controls
-
-Use the candidate aggregate metric without matched verbosity/intervention/abstention controls.
-
-**Primary risk:** metric optimization without genuine correction improvement.
-
-### R13 — CorrCap treated as C_improve
-
-Treat improvement in the operational `CorrCap` measure as direct validation of the higher-level `C_improve` construct.
-
-**Primary risk:** construct/metric collapse.
-
-## Interpretation
-
-An ablation result should not automatically be read causally unless prompt length, ordering, interaction effects, benchmark structure, and selection leakage are controlled. Components may interact strongly.
-
-For catalyst work, distinguish:
+Test only:
 
 ```text
-semantic recovery
-≠ execution
-≠ task outcome
+i₁ > i₀
+?
+τ(i₁) > τ(i₀)
 ```
 
-For architecture-level work, distinguish:
+**Purpose:** closest representation of the scientific object.
 
-- a component improving the function it claims to perform;
-- the complete successor improving residual-local correction capacity;
-- the lineage demonstrating repeated improvement across fresh environments.
+### A1 — smooth derivative representation
 
-Evidence for one does not automatically establish the others.
+Use:
+
+```text
+∂τ(i)/∂i > 0
+```
+
+**Question:** does smoothness add useful information or exclude valid monotone structure?
+
+### A2 — linear moderation
+
+Use:
+
+```text
+τ(i) = τ₀ + δi
+```
+
+**Question:** is linearity an adequate approximation?
+
+A linear-model failure should not be promoted into a monotonicity failure without checking A0/A1.
+
+## 3. Moderator measurement ablations
+
+### I0 — affine reparameterization
+
+```text
+I' = aI+b
+a>0
+```
+
+Expected: ordering and linear shape preserved up to coefficient rescaling.
+
+### I1 — nonlinear monotone reparameterization
+
+```text
+I' = f(I)
+f strictly increasing
+```
+
+Expected: primitive ordering preserved; linearity may not be.
+
+**Purpose:** verify that the benchmark distinguishes scientific-proposition invariance from parametric invariance.
+
+### I2 — degraded moderator reliability
+
+Inject measurement noise or use a lower-reliability instrument.
+
+**Question:** how quickly does attenuation or misclassification destroy detectable heterogeneity?
+
+## 4. Outcome measurement ablations
+
+### V0 — positive affine transform
+
+```text
+V' = aV+b
+a>0
+```
+
+Expected:
+
+```text
+τ'(i)=aτ(i)
+```
+
+and identical treatment-effect ordering.
+
+**Purpose:** positive control for licensed measurement invariance.
+
+### V1 — nonlinear monotone transform
+
+Examples:
+
+```text
+log(V+c)
+```
+
+or a convex monotone transform.
+
+**Expected:** additive CATE may change; classify as a changed estimand unless independent measurement theory licenses equivalence.
+
+### V2 — clipping / saturation
+
+```text
+V_obs = clip(V_latent, lower, upper)
+```
+
+**Question:** can bounded measurement manufacture moderation from constant latent treatment effect?
+
+### V3 — independent interval instrument
+
+Use a separately constructed `M_V^B` and independently calibrated affine link to `M_V^A`.
+
+**Question:** does the treatment-effect ordering survive genuine interval-equivalent measurement?
+
+## 5. Causal-identification ablations
+
+### C0 — randomized assignment
+
+Reference causal design.
+
+### C1 — intentionally confounded assignment
+
+Let treatment depend on baseline/latent structure.
+
+**Purpose:** confirm that naive analysis can manufacture false HTE and that the evaluation protocol catches the identification failure.
+
+### C2 — restricted positivity
+
+Reduce treatment overlap in parts of the `I` support.
+
+**Question:** does the estimator overstate certainty or extrapolate unsupported treatment effects?
+
+### C3 — differential attrition
+
+Make follow-up observation depend on treatment and/or `I`.
+
+**Question:** does the assay detect loss of identification?
+
+## 6. Headroom ablations
+
+### H0 — matched baseline/headroom
+
+Construct groups with similar current outcome opportunity but different `I`.
+
+**Purpose:** reduce trivial response-range explanations.
+
+### H1 — deliberately mismatched headroom
+
+High and low `I` groups have different proximity to bounds.
+
+**Purpose:** test artifact susceptibility.
+
+### H2 — difficulty-adaptive outcome measurement
+
+Use an instrument designed to maintain dynamic range across the `I` support.
+
+**Question:** does moderation survive reduced ceiling/floor pressure?
+
+## 7. Specificity ablations
+
+### S0 — warranted intervention only
+
+Tests primary responsiveness.
+
+### S1 — add neutral intervention
+
+Tests whether higher `I` responds indiscriminately to extra input.
+
+### S2 — add misleading intervention
+
+Tests discriminative responsiveness.
+
+### S3 — intervention labels chosen by tested system
+
+**Purpose:** negative control for circular authority assignment.
+
+Expected: downgrade specificity evidence because intervention status is not independent.
+
+## 8. Horizon ablations
+
+Test:
+
+```text
+h₁, h₂, h₃
+```
+
+separately.
+
+Possible patterns:
+
+- transient effect;
+- persistent effect;
+- decay;
+- reversal;
+- overshoot.
+
+Do not treat horizon dependence as a failure unless the claim was explicitly horizon-invariant.
+
+## 9. Estimator ablations
+
+Compare where justified:
+
+- ordered-strata differences;
+- flexible/nonparametric CATE estimation;
+- preregistered linear interaction;
+- alternative robust estimators.
+
+The goal is not estimator shopping. Freeze the primary estimator before confirmatory testing and use alternatives diagnostically.
+
+## 10. Historical catalyst and recursive-architecture ablations
+
+The earlier catalyst and recursive-architecture ablations remain recoverable from Git history and the August 8 research notes.
+
+If those surfaces are reactivated, preserve their original experimental identity rather than silently merging them into the current assay.
+
+## Interpretation rule
+
+For every ablation, state what level it targets:
+
+```text
+scientific object?
+shape?
+measurement?
+causal identification?
+estimator?
+prompt mechanism?
+```
+
+A useful ablation localizes dependence. It should not be used to make a lower-level implementation artifact look like a high-level scientific result.
