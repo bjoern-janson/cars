@@ -1,10 +1,121 @@
 # Experiments
 
-## Current executable path
+## Current status
 
-The repository now has one concrete Pilot 0 workflow, one general randomized-LLM workflow, and two synthetic red-team workflows.
+Pilot 0 is **closed**. Its representation-localization and replication/transport branches reached an epistemic stopping point; no A8, R2, or additional `T_instability` decomposition is currently earned.
 
-### 1. Synthetic assay red-team
+Authoritative terminal interpretation:
+
+- [`../results/PILOT0_TERMINAL_RECORD.md`](../results/PILOT0_TERMINAL_RECORD.md)
+
+Frozen original protocol and provenance requirements remain unchanged as historical pre-outcome contracts:
+
+- [`PILOT0_MMLU_PRO.md`](PILOT0_MMLU_PRO.md)
+- [`PILOT0_PROVENANCE.md`](PILOT0_PROVENANCE.md)
+
+Keep explicit:
+
+```text
+CLOSED
+≠ theory established
+≠ certainty
+≠ zero uncertainty
+
+CLOSED
+= no presently justified escalation
+```
+
+Any future empirical branch requires a genuinely new scientific question and a fresh pre-outcome contract.
+
+## Pilot 0 terminal summary
+
+The original moderation hypothesis was not supported:
+
+```text
+higher I₁ → greater benefit from verified-error feedback
+STATUS: NOT SUPPORTED
+```
+
+The subsequent diagnostic program localized representation-dependent transition behavior without promoting a global correction construct.
+
+Terminal endpoint ledger:
+
+| Object | Status |
+| --- | --- |
+| `T_change` × prior-state encoding | **CAUSAL** |
+| `T_change` × section scaffold | **CAUSAL** |
+| `T_change` × encoding×scaffold | **CAUSAL INTERACTION** |
+| `T_verified` × prior-state encoding | **CAUSAL** |
+| `T_verified` × conversational topology | **CAUSAL** |
+| `T_verified` × section scaffold | **PRACTICALLY SMALL** |
+| `T_verified` × encoding×scaffold | **UNRESOLVED** |
+| `T_instability` × broad inline representation | **CAUSAL** |
+| `T_instability` × prior-state encoding | **CAUSAL / REPLICATED / PRACTICALLY SMALL** |
+| `T_instability` × section scaffold | **PRACTICALLY SMALL** |
+| `T_instability` × encoding×scaffold | **PRACTICALLY SMALL** |
+| excess R1 cohort variation | **NOT DETECTED** |
+| transport invariance | **NOT ESTABLISHED** |
+
+The unresolved `T_verified` interaction is endpoint-local and does not reopen the closed `T_instability` branch.
+
+## Pilot 0 experiment lineage
+
+The executable Pilot 0 artifacts are retained for provenance and reproducibility.
+
+### Core frozen implementation
+
+- [`PILOT0_QWEN3_4B_CONFIG.json`](PILOT0_QWEN3_4B_CONFIG.json)
+- [`PILOT0_ANALYSIS_V2.json`](PILOT0_ANALYSIS_V2.json)
+- [`PILOT0_CONFIRMATORY_RUN1_2026-08-09.md`](PILOT0_CONFIRMATORY_RUN1_2026-08-09.md)
+
+### Measurement and signal diagnostics
+
+- [`PILOT0_A1D_CHARACTERIZATION_CONFIG.json`](PILOT0_A1D_CHARACTERIZATION_CONFIG.json)
+- [`PILOT0_A2D_CONFIG.json`](PILOT0_A2D_CONFIG.json)
+- [`PILOT0_B0_CONFIG.json`](PILOT0_B0_CONFIG.json)
+- [`PILOT0_B0_V2_CONFIG.json`](PILOT0_B0_V2_CONFIG.json)
+- [`PILOT0_B1_CONFIG.json`](PILOT0_B1_CONFIG.json)
+
+### Representation localization
+
+- [`PILOT0_A3_CONFIG.json`](PILOT0_A3_CONFIG.json)
+- [`PILOT0_A4A_CONFIG.json`](PILOT0_A4A_CONFIG.json)
+- [`PILOT0_A4B_CONFIG.json`](PILOT0_A4B_CONFIG.json)
+- [`PILOT0_A4C_CONFIG.json`](PILOT0_A4C_CONFIG.json)
+- [`PILOT0_A4C_ANALYZER_REPAIR1.json`](PILOT0_A4C_ANALYZER_REPAIR1.json)
+- [`PILOT0_A5_CONFIG.json`](PILOT0_A5_CONFIG.json)
+- [`PILOT0_A6_CONFIG.json`](PILOT0_A6_CONFIG.json)
+- [`PILOT0_A7_CONFIG.json`](PILOT0_A7_CONFIG.json)
+
+### Replication / transport
+
+- [`PILOT0_R1_CONFIG.json`](PILOT0_R1_CONFIG.json)
+
+R1 is deliberately not part of an endless A-series localization ladder. It directly tested whether the inherited prior-state-encoding effect on `T_instability` reproduced across four independently sampled prestate cohorts.
+
+Its terminal common effect was:
+
+```text
+Δ_common = +0.033975
+95% CI   = [+0.021316,+0.047791]
+p        = 0.00019996
+```
+
+The effect is nonzero/reproduced while the entire common-effect interval lies inside the inherited `±0.05` practical region.
+
+Transport diagnostic:
+
+```text
+Q = 1.120334
+df = 3
+p = 0.772168
+I² = 0
+tau²_DL = 0
+```
+
+Interpret only as compatibility with a common-effect model under the prespecified diagnostic, not proof of transport invariance.
+
+## Synthetic assay red-team
 
 Run:
 
@@ -30,7 +141,7 @@ Reference results:
 - [`../results/SYNTHETIC_ASSAY_REFERENCE.md`](../results/SYNTHETIC_ASSAY_REFERENCE.md)
 - [`../results/synthetic_assay_reference.json`](../results/synthetic_assay_reference.json)
 
-### 2. Threshold / rare-jump stress tests
+## Threshold / rare-jump stress tests
 
 Run:
 
@@ -49,194 +160,14 @@ non-smooth / mixture response truth
 → check that smoothness is not silently promoted
 ```
 
-These tests ask whether the primitive ordering survives a step-function response and whether a rare-event mean CATE can be correctly separated from claims about jump probability or jump magnitude.
-
 Documentation:
 
 - [`../docs/JUMP_WORLD_STRESS_TESTS.md`](../docs/JUMP_WORLD_STRESS_TESTS.md)
 - [`../results/jump_worlds_reference.json`](../results/jump_worlds_reference.json)
 
-These are synthetic development checks only. They do not add "jump" to the CARS prompt or scientific hypothesis.
+These are synthetic development checks only. They do not add `jump` to the CARS prompt or scientific hypothesis.
 
-### 3. Pilot 0 — MMLU-Pro
-
-Frozen protocol:
-
-- [`PILOT0_MMLU_PRO.md`](PILOT0_MMLU_PRO.md)
-- [`PILOT0_PROVENANCE.md`](PILOT0_PROVENANCE.md)
-
-Literal measurement:
-
-```text
-I = pre-treatment error suspicion
-I_i = 1 - P_i(correct)
-```
-
-The first stage is a 20–30-item **plumbing run**, not a hypothesis test.
-
-After plumbing succeeds and the prompt/parser/configuration is frozen, the confirmatory target is approximately 200 eligible task-prestate blocks whose initial answer is objectively wrong.
-
-The post-treatment design uses four continuation branches per eligible block, balanced within task:
-
-```text
-2 × E0
-2 × E+
-```
-
-#### Sample tasks
-
-Use a fixed benchmark sample and record/exclude plumbing IDs when constructing the later confirmatory sample.
-
-```text
-python scripts/sample_mmlupro.py \
-  pilot0_tasks.jsonl \
-  --n 30 \
-  --seed 20260809
-```
-
-#### Pre-treatment run
-
-Input JSONL needs at least:
-
-```text
-id
-question
-options
-answer   # or answer_index
-```
-
-Run:
-
-```text
-python scripts/run_pilot0_openai.py pre \
-  pilot0_tasks.jsonl \
-  pilot0_pre.jsonl \
-  --model gpt-5.6-luna \
-  --effort low \
-  --limit 30
-```
-
-The script records the initial answer, `P(correct)`, `I = 1-P(correct)`, objective correctness, API response/model metadata, and token usage.
-
-#### Freeze the complete pre-treatment state
-
-Before branch generation or treatment assignment:
-
-```text
-python scripts/freeze_pilot0_prestates.py \
-  pilot0_pre.jsonl \
-  pilot0_frozen_pre.jsonl
-```
-
-This records the exact pre-treatment prompt/configuration and creates canonical SHA-256 fingerprints for the prompt and complete audit object.
-
-Keep explicit:
-
-```text
-same frozen pre-state
-+
-randomized treatment
-```
-
-must be auditable, not assumed.
-
-#### Create eligible branches
-
-```text
-python scripts/prepare_pilot0_units.py \
-  pilot0_frozen_pre.jsonl \
-  pilot0_branches.jsonl \
-  --replicates 4
-```
-
-Only initially wrong responses enter the primary Pilot 0 branch set. Branches carry the canonical `pre_state_sha256`.
-
-#### Randomize within task
-
-```text
-python scripts/randomize_llm_assay.py \
-  pilot0_branches.jsonl \
-  pilot0_assignments.jsonl \
-  --arms E0 E+ \
-  --seed 20260809
-```
-
-Because every task has four branches and `stratum=task_id`, this produces two branches per arm inside each eligible task-prestate block.
-
-#### Verify frozen-state integrity
-
-Before any post-treatment API call:
-
-```text
-python scripts/verify_pilot0_frozen_state.py \
-  pilot0_frozen_pre.jsonl \
-  pilot0_assignments.jsonl
-```
-
-A verification failure blocks the post-treatment run.
-
-#### Post-treatment run
-
-```text
-python scripts/run_pilot0_openai.py post \
-  pilot0_assignments.jsonl \
-  pilot0_completed.jsonl \
-  --model gpt-5.6-luna \
-  --effort low
-```
-
-Treatment text is frozen in the script/protocol:
-
-```text
-E0:
-Review your previous answer and revise if necessary.
-
-E+:
-Verified feedback: your previous answer is incorrect.
-Review your previous answer and revise if necessary.
-```
-
-Outcome:
-
-```text
-V = 1 if final answer matches benchmark key, else 0
-```
-
-#### Analyze
-
-```text
-python scripts/analyze_llm_assay.py \
-  pilot0_completed.jsonl \
-  --treated E+ \
-  --control E0 \
-  --json-out pilot0_result.json
-```
-
-Primary quantity:
-
-```text
-Δτ = τ_high - τ_low
-```
-
-The linear interaction coefficient is secondary.
-
-Important separations:
-
-```text
-plumbing pilot
-↛
-hypothesis evidence
-```
-
-```text
-provenance integrity
-≠
-scientific validity
-```
-
-If the plumbing run changes the model, prompt, parser, treatment wording, measurement, or scoring logic, freeze the new version before using fresh items for the hypothesis run.
-
-### 4. General randomized LLM assay
+## General randomized LLM assay
 
 Protocol:
 
@@ -261,56 +192,19 @@ python scripts/analyze_llm_assay.py \
   --json-out result.json
 ```
 
-Default required completed-run fields:
-
-```text
-id
-arm
-i
-v
-```
-
-Optional fields:
-
-```text
-baseline
-stratum
-```
-
-The analysis reports the primitive ordering statistic first:
-
-```text
-τ_high - τ_low
-```
-
-and the linear interaction coefficient second:
-
-```text
-δ
-```
-
-This preserves:
-
-```text
-scientific proposition
-≠
-parametric representation
-```
+The analysis reports the scientific proposition before any optional parametric representation.
 
 ## Evidence ladder
 
-Keep the status explicit:
+Keep the authority ladder explicit:
 
 ```text
 synthetic red-team survival
-↛
-plumbing success
-↛
-real randomized evidence
-↛
-transport
-↛
-stable law
+↛ plumbing success
+↛ real randomized evidence
+↛ replication
+↛ transport invariance
+↛ stable law
 ```
 
-A narrow randomized LLM result would be real causal-response evidence within the tested artificial-system scope. It would not establish a general theory of intelligence.
+Pilot 0 earned scoped randomized and replication evidence about transition-specific representation effects. It did not establish a general theory of intelligence or global correction capacity.
