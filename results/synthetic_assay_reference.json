@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "seed": 20260809,
+  "n_per_attack": 20000,
+  "evidence_status": "synthetic development evidence only",
+  "results": [
+    {
+      "name": "constant_effect_prognostic_I",
+      "status": "survived",
+      "metrics": {
+        "delta_hat": -0.021721927323181095,
+        "tau_low": 5.149723270720759,
+        "tau_high": 5.266910412356808,
+        "tau_high_minus_low": 0.11718714163604815,
+        "corr_I_baseline": 0.9490893158479603
+      },
+      "expectation": "True treatment effect is constant; moderation should be approximately zero despite strong prognostic I."
+    },
+    {
+      "name": "ceiling_measurement",
+      "status": "survived",
+      "metrics": {
+        "latent_delta_hat": 0.16349689050198565,
+        "observed_delta_hat": -5.140843707916652,
+        "upper_clip_fraction": 0.17025
+      },
+      "expectation": "Latent moderation is zero; bounded measurement should be able to manufacture negative observed moderation."
+    },
+    {
+      "name": "nonlinear_outcome_remeasurement",
+      "status": "estimand changed",
+      "metrics": {
+        "delta_identity": -3.797262217357092e-12,
+        "delta_log": -0.14595791946955708,
+        "delta_square": 841.981594250302
+      },
+      "expectation": "Same latent states can yield zero, negative, or positive additive moderation under nonlinear monotone outcome transformations."
+    },
+    {
+      "name": "positive_affine_outcome",
+      "status": "survived",
+      "metrics": {
+        "delta_A": 0.5708501310917535,
+        "delta_B": 1.7125503932753512,
+        "delta_ratio": 3.0000000000001585,
+        "expected_ratio": 3.0
+      },
+      "expectation": "Positive affine outcome remeasurement must preserve moderation sign and scale the linear coefficient by a."
+    },
+    {
+      "name": "baseline_structure_under_randomization",
+      "status": "survived",
+      "metrics": {
+        "delta_unadjusted": -0.2559526575005583,
+        "delta_adjusted": -0.021496801694804918,
+        "corr_I_baseline": 0.8035375495508538
+      },
+      "expectation": "Strong shared baseline structure should not manufacture systematic moderation when treatment is genuinely randomized."
+    },
+    {
+      "name": "generic_plasticity",
+      "status": "survived",
+      "metrics": {
+        "delta_plus": 0.6163603268819684,
+        "delta_minus": 0.6137768764909168,
+        "delta_plus_minus_delta_minus": 0.002583450391051567
+      },
+      "expectation": "Primary responsiveness can be positive while discrimination is approximately zero."
+    },
+    {
+      "name": "discriminative_responsiveness",
+      "status": "survived",
+      "metrics": {
+        "delta_plus": 0.640250614754667,
+        "delta_minus": -0.5194279893583866,
+        "delta_plus_minus_delta_minus": 1.1596786041130538
+      },
+      "expectation": "A discriminative world should separate warranted from misleading intervention responsiveness."
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "failed": 0,
+    "failed_attacks": []
+  }
+}
