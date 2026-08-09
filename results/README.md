@@ -1,6 +1,28 @@
 # Results
 
-No positive causal-responsiveness, measurement-invariance, prompt-efficacy, equilibrium, catalyst-efficacy, or recursive-improvement result is currently authorized.
+## Pilot 0 terminal status
+
+Pilot 0 is now **closed** under an epistemic stopping rule. The repository contains scoped positive causal results about representation-dependent transition behavior, but these do **not** establish a global correction construct, psychological mechanism, transport invariance, or general intelligence claim.
+
+Terminal record:
+
+- [`PILOT0_TERMINAL_RECORD.md`](PILOT0_TERMINAL_RECORD.md)
+
+The original moderation hypothesis was **not supported**. The later representation-localization program earned endpoint-specific causal authority, and the R1 replication/transport branch established a small replicated positive prior-state-encoding effect on `T_instability` whose common 95% interval lies entirely inside the inherited `±0.05` practical region.
+
+Keep the stopping rule explicit:
+
+```text
+STOP
+≠ truth
+≠ completeness
+≠ certainty
+
+STOP
+= no presently justified escalation
+```
+
+No A8, R2, or further `T_instability` decomposition is currently earned. A future experiment requires a genuinely new scientific question and a new pre-outcome contract.
 
 Future result packages should record enough information to reconstruct:
 
