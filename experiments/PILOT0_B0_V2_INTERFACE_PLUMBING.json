@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "status": "candidate B0-v2 interface for plumbing only; not frozen for manipulation inference",
+  "study": "Pilot 0 Localization B0-v2 interface plumbing",
+  "purpose": "Verify that reconstructing the original pre-treatment conversation escapes the deterministic P_PRE-copying regime observed in B0-v1. This plumbing check has no authority over the E0/EU/EV ordering, B, C, or H1.",
+  "lineage": {
+    "predecessor": "PILOT0_B0_CONFIG.json / B0-v1",
+    "observed_failure": "E0 and EU copied P_PRE on 142/142 replicate rows; EV copied P_PRE on 128/142 rows",
+    "localized_failure": "B0-v1 probability-probe interface induced baseline copying",
+    "minimal_repair": "preserve the original pre-treatment user message and exact original assistant response as conversation history; present the signal only in a new user message; do not restate P_PRE in that new message"
+  },
+  "interface": {
+    "history_user": "exact frozen pre_prompt",
+    "history_assistant": "exact frozen raw_model_output containing the original ANSWER and P_CORRECT",
+    "new_user_message": "signal text followed by a request for current probability that the unchanged previous answer is correct; no P_PRE restatement and no answer revision",
+    "assistant_prefill": "P_POST: ",
+    "revision_allowed": false,
+    "final_correctness_scored": false
+  },
+  "signals": {
+    "E0": "Signal status: No new information is available about whether your previous answer is correct.",
+    "EU": "Signal status: There is unverified reason to doubt whether your previous answer is correct.",
+    "EV": "Signal status: It has been verified that your previous answer is incorrect."
+  },
+  "measurement": {
+    "p_pre": "reuse the already-recorded frozen pre-treatment P(correct) externally when computing M; do not restate it in the new B0-v2 user message",
+    "p_post": "reported probability after the new signal, before any reconsideration or answer revision",
+    "M": "P_post - stored P_pre"
+  },
+  "generation": {
+    "base_seed": 20260809,
+    "do_sample": true,
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "max_new_tokens": 12,
+    "assistant_prefill": "P_POST: ",
+    "parse_retries": 0,
+    "matched_rng": "within each frozen prestate and replicate index, E0/EU/EV use the same generation seed"
+  },
+  "plumbing": {
+    "recommended_blocks": 12,
+    "replicates_per_signal": 2,
+    "reuse_existing_b0_v1_prestates": true,
+    "pass_rule": "PASS iff every requested probe parses, at least one replicate-level P_POST differs from stored P_PRE, and at least one matched task/replicate produces non-identical P_POST values across the three signals.",
+    "forbidden_in_plumbing_gate": [
+      "desired E0/EU/EV mean ordering",
+      "bootstrap separation of signal means",
+      "final correctness",
+      "I1-by-signal moderation",
+      "any update to B, C, or H1"
+    ]
+  }
+}
