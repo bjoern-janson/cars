@@ -318,6 +318,7 @@ def pairwise_summary(records: Sequence[dict], config: dict, stratum: str) -> dic
     min_n = int(config["analysis"]["minimum_complete_blocks_for_pair"])
     min_valid = int(config["analysis"]["minimum_valid_pairwise_bootstraps"])
     weak = float(config["analysis"]["weak_coupling_margin_abs_rho"])
+    exclusions = set(str(x) for x in config["analysis"]["representation_edge_exclusions"])
     out: dict[str, dict] = {}
     for x_field, y_field in itertools.combinations(DIMENSIONS, 2):
         key = f"{x_field}__{y_field}"
@@ -326,11 +327,13 @@ def pairwise_summary(records: Sequence[dict], config: dict, stratum: str) -> dic
             if row.get(x_field) is not None and row.get(y_field) is not None
         ]
         n = len(complete)
+        gate_eligible = key not in exclusions
         if n < min_n:
             out[key] = {
                 "dimensions": [x_field, y_field],
                 "n_complete_blocks": n,
                 "adjudicable": False,
+                "representation_gate_eligible": gate_eligible,
                 "spearman_rho": None,
                 "bootstrap_95": {"low": None, "high": None, "valid_bootstraps": 0},
                 "directional_flag": None,
@@ -350,6 +353,7 @@ def pairwise_summary(records: Sequence[dict], config: dict, stratum: str) -> dic
                 "dimensions": [x_field, y_field],
                 "n_complete_blocks": n,
                 "adjudicable": False,
+                "representation_gate_eligible": gate_eligible,
                 "spearman_rho": rho,
                 "bootstrap_95": ci,
                 "directional_flag": None,
@@ -373,11 +377,16 @@ def pairwise_summary(records: Sequence[dict], config: dict, stratum: str) -> dic
             "dimensions": [x_field, y_field],
             "n_complete_blocks": n,
             "adjudicable": True,
+            "representation_gate_eligible": gate_eligible,
             "spearman_rho": rho,
             "bootstrap_95": ci,
             "directional_flag": directional,
             "weak_coupling_flag": weak_flag,
             "weak_coupling_margin_abs_rho": weak,
+            "structural_note": (
+                "reported descriptively but excluded from H_T1/H_T2 edges"
+                if not gate_eligible else None
+            ),
         }
     return out
 
@@ -400,16 +409,29 @@ def graph_connected(nodes: Sequence[str], edges: Sequence[tuple[str, str]]) -> b
     return seen == set(nodes)
 
 
-def topology_edges(pairwise_by_stratum: dict[str, dict]) -> dict:
+def topology_edges(pairwise_by_stratum: dict[str, dict], config: dict) -> dict:
+    exclusions = set(str(x) for x in config["analysis"]["representation_edge_exclusions"])
     replicated_directional = []
     replicated_weak = []
     conflicts = []
+    excluded_pair_diagnostics = []
     for a, b in itertools.combinations(DIMENSIONS, 2):
         key = f"{a}__{b}"
+        if key in exclusions:
+            excluded_pair_diagnostics.append({
+                "dimensions": [a, b],
+                "pair_key": key,
+                "reason": config["analysis"]["representation_edge_exclusion_reason"],
+                "reported_in_pairwise_tables": True,
+                "used_in_representation_gates": False,
+            })
+            continue
+
         directional = {
             stratum: pairwise_by_stratum[stratum][key]["directional_flag"]
             for stratum in STRATA
             if pairwise_by_stratum[stratum][key]["adjudicable"]
+            and pairwise_by_stratum[stratum][key]["representation_gate_eligible"]
         }
         positives = sorted(s for s, sign in directional.items() if sign == "positive")
         negatives = sorted(s for s, sign in directional.items() if sign == "negative")
@@ -423,6 +445,7 @@ def topology_edges(pairwise_by_stratum: dict[str, dict]) -> dict:
         weak_strata = sorted(
             stratum for stratum in STRATA
             if pairwise_by_stratum[stratum][key]["adjudicable"]
+            and pairwise_by_stratum[stratum][key]["representation_gate_eligible"]
             and pairwise_by_stratum[stratum][key]["weak_coupling_flag"]
         )
         if len(weak_strata) >= 2:
@@ -435,6 +458,8 @@ def topology_edges(pairwise_by_stratum: dict[str, dict]) -> dict:
         weak_nodes.update(item["dimensions"])
     separable_signal = len(replicated_weak) >= 2 and len(weak_nodes) >= 3
     return {
+        "representation_edge_exclusions": sorted(exclusions),
+        "excluded_pair_diagnostics": excluded_pair_diagnostics,
         "replicated_directional_edges": replicated_directional,
         "conflicting_directional_edges": conflicts,
         "replicated_weak_coupling_edges": replicated_weak,
@@ -583,6 +608,12 @@ def main() -> int:
         raise ValueError("A2-0 semantic contract is not frozen")
     if tuple(config["primary_dimensions"]) != DIMENSIONS:
         raise ValueError("A2-D primary dimensions differ from analyzer")
+    semantic_exclusions = set(
+        str(x) for x in semantics["representation_edge_policy"]["excluded_from_H_T1_and_H_T2_edges"]
+    )
+    config_exclusions = set(str(x) for x in config["analysis"]["representation_edge_exclusions"])
+    if semantic_exclusions != config_exclusions:
+        raise ValueError("A2-0 semantic edge exclusions differ from A2-D config")
 
     paths = {
         "RUN1": args.run1_outcomes,
@@ -602,7 +633,7 @@ def main() -> int:
 
     profiles = {s: profile_summary(records[s], config, s) for s in STRATA}
     pairwise = {s: pairwise_summary(records[s], config, s) for s in STRATA}
-    edge_gate = topology_edges(pairwise)
+    edge_gate = topology_edges(pairwise, config)
     interface_gate = interface_profile_gate(records, profiles, config)
 
     common = bool(edge_gate["H_T1_COMMON_STRUCTURE_SIGNAL"])
@@ -613,18 +644,27 @@ def main() -> int:
     logical_audit = {}
     for stratum in STRATA:
         recs = records[stratum]
-        violations = sum(
+        c2_violations = sum(
             float(row["C2_neutral_self_correction"]) > float(row["T_change"]) + 1e-12
             for row in recs
         )
+        instability_geometry_violations = 0
+        for row in recs:
+            t_change = float(row["T_change"])
+            t_instability = float(row["T_instability"])
+            if math.isclose(t_change, 0.0, abs_tol=1e-12) and not math.isclose(t_instability, 0.0, abs_tol=1e-12):
+                instability_geometry_violations += 1
+            if math.isclose(t_change, 0.5, abs_tol=1e-12) and not math.isclose(t_instability, 1.0, abs_tol=1e-12):
+                instability_geometry_violations += 1
         logical_audit[stratum] = {
             "n_blocks": len(recs),
-            "C2_le_T_change_violations": violations,
+            "C2_le_T_change_violations": c2_violations,
+            "T_change_T_instability_geometry_violations": instability_geometry_violations,
             "blocks_with_neutral_revision": sum(int(row["neutral_revision_count"]) > 0 for row in recs),
             "neutral_revision_events": sum(int(row["neutral_revision_count"]) for row in recs),
         }
-        if violations:
-            raise ValueError(f"{stratum}: logical nesting violations detected")
+        if c2_violations or instability_geometry_violations:
+            raise ValueError(f"{stratum}: logical/sampling-geometry dependency violations detected")
 
     report = {
         "schema_version": 1,
@@ -636,6 +676,7 @@ def main() -> int:
             "retired_unqualified_term": semantics["terminology"]["retire_unqualified_term"],
             "primary_dimensions": semantics["primary_transition_dimensions"],
             "derived_contrast": semantics["derived_contrast"],
+            "representation_edge_policy": semantics["representation_edge_policy"],
         },
         "join_and_structure_audit": audits,
         "logical_dependency_audit": logical_audit,
