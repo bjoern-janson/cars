@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "status": "frozen before any A1-D correction-association inspection",
+  "study": "Pilot 0 A1-D0: realized-choice margin extraction",
+  "scope": "Recover a pre-treatment decision-strength candidate S from historical frozen prestates without generating new answers and without reading correction outcomes. This stage validates measurement extraction only; it does not validate S as correction susceptibility and does not create A1-V.",
+  "lineage": {
+    "I1": "I1 = 1 - self-reported P(correct), retained unchanged as the historical operationalization",
+    "A0": "I1 modestly and reproducibly discriminated initial error likelihood; correction-related validity was not demonstrated",
+    "B0_v2": "signal manipulation validated",
+    "B1": "differential I1 moderation unresolved; B1 sensitivity deferred",
+    "next_layer": "measurement discovery around pre-treatment decision state"
+  },
+  "candidate": {
+    "name": "S_realized_choice_margin",
+    "definition": "S = q(a*) - max_{a != a*} q(a)",
+    "a_star": "the actually sampled initial answer stored in the frozen prestate",
+    "interpretation": "signed strength with which the constrained pre-answer decision distribution preferred the realized sampled answer over its strongest valid alternative",
+    "negative_values": "allowed and meaningful: the stochastic realized answer was not the modal valid option"
+  },
+  "extraction": {
+    "history_used": "exact frozen pre_prompt only; no correction messages and no correction outcomes",
+    "forward_pass_location": "next-token logits immediately after the exact assistant prefill 'ANSWER: ' and before the first-token choice logits processor is applied",
+    "chat_template": "same tokenizer.apply_chat_template path as frozen Pilot 0 pre-treatment generation, with continue_final_message=true and enable_thinking=false",
+    "assistant_prefill": "ANSWER: ",
+    "valid_options": "A through the task-specific last option letter, exactly as in the frozen pre-treatment runner",
+    "valid_option_tokenization": "each valid option letter must encode to exactly one token and round-trip to the same letter; otherwise fail closed",
+    "normalization": "softmax over raw next-token logits for valid option-letter tokens only",
+    "constraint_relation": "the historical first-token constraint set invalid-vocabulary logits to -infinity while preserving valid-option logits, so valid-option-only softmax reconstructs the constrained sampling distribution",
+    "invalid_vocabulary_mass": "compute and report the unconstrained full-vocabulary probability mass assigned to valid option letters as a diagnostic only; exclude it from S",
+    "tie_handling": "S uses the maximum alternative probability, so ties do not alter S; report every exactly tied strongest-alternative letter and every exactly tied modal letter",
+    "numeric_path": "take model next-token logits from the historical model dtype, move the completed logits vector to CPU float64, and perform normalization/diagnostics in float64",
+    "no_generation": true,
+    "no_rng": true,
+    "p_correct_usage": "P(correct) and I1 are carried through for later characterization but are not inputs to q or S",
+    "outcome_blind": "the extractor accepts prestate files only and has no correction-outcome input"
+  },
+  "reproducibility_checks": {
+    "model": "same Qwen3-4B repo id and pinned revision as frozen Pilot 0",
+    "prestate_interface": "model/backend/generation/interface metadata must match the frozen Pilot 0 configuration",
+    "prompt_tokens": "reconstructed pre-decision input-token count must exactly equal the historical pre-treatment input_tokens count",
+    "realized_answer": "ANSWER parsed from frozen raw_model_output must equal stored initial_answer",
+    "probability_simplex": "valid-option q values must be finite, nonnegative, and sum to 1 within 1e-12",
+    "margin_identity": "stored S must equal q(a*) minus the maximum alternative q within 1e-12"
+  },
+  "plumbing": {
+    "recommended_prestates": 12,
+    "reuse_historical_prestates": true,
+    "pass_rule": "PASS iff every requested prestate passes frozen-interface and token-location checks, all q vectors satisfy the simplex and margin identities, and the extracted S values are not all identical.",
+    "forbidden_in_plumbing": [
+      "reading final answers after correction",
+      "reading revision, self-correction, instability, or verified-correction outcomes",
+      "testing relationships between I1 or S and correction criteria",
+      "selecting a different extraction location after seeing correction associations",
+      "creating or freezing A1-V"
+    ]
+  },
+  "authority_boundary": [
+    "A1-D0 PASS means only that S can be recovered reproducibly from frozen prestates.",
+    "A1-D0 PASS does not mean S predicts correction responsiveness.",
+    "A1-D0 FAIL localizes to extraction/instrumentation and does not update B, C, H1, I1, or CARS.",
+    "A1-D characterization must be frozen after extraction plumbing passes and before correction associations are inspected."
+  ]
+}
