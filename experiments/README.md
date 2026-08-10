@@ -15,12 +15,122 @@ ID1 finite-data identification
 Future plasticity forecast benchmark
 → FROZEN G0–G3 CONTRACT
 → scientific result pending canonical MNIST data
+
+ASI-0 evidence-assignment causal attribution
+→ FROZEN CAUSAL SKELETON
+→ IMPLEMENTATION PASS
+→ SYNTHETIC SMOKE PASS
+→ canonical scientific instance not yet frozen
+→ Δ_align UNKNOWN
 ```
 
 The current repository-level theory and authority state are documented in:
 
 - [`../docs/INTELLIGENCE_THEORY.md`](../docs/INTELLIGENCE_THEORY.md)
 - [`../docs/CURRENT_RESEARCH_STATE.md`](../docs/CURRENT_RESEARCH_STATE.md)
+
+## ASI-0 — active causal-attribution seam
+
+ASI-0 is deliberately narrower than an ASI, intelligence, viability, or recursive-self-improvement experiment.
+
+Scientific question:
+
+> **Can a fixed-base-model agent use development evidence to select bounded modifications that produce greater concealed future capability than evidence-misaligned selection under matched resources?**
+
+Frozen treatment object:
+
+```text
+A = evidence → target assignment mechanism
+```
+
+Primary interventional estimand:
+
+```text
+Δ_align
+=
+E[Y_concealed | do(A = aligned)]
+-
+E[Y_concealed | do(A = misaligned)]
+```
+
+Primary contrast:
+
+```text
+E-ALIGNED
+vs
+E-MISALIGNED
+```
+
+The misaligned arm uses a prospectively seeded within-stratum derangement so evidence quantity/type and other nuisance structure are preserved while evidence-target relevance is broken.
+
+Where technically feasible the primary pair holds fixed:
+
+```text
+base agent
+candidate pool
+candidate count
+candidate-generation machinery
+selection opportunity
+resource budget
+protected-regression gate
+evaluator
+concealed suite
+```
+
+and changes only:
+
+```text
+evidence → candidate-selection mapping
+```
+
+Secondary controls remain:
+
+```text
+STATIC
+RANDOM-EDIT
+```
+
+but they are not the primary attribution test.
+
+Frozen artifacts:
+
+- [`ASI0_EVIDENCE_ASSIGNMENT.md`](ASI0_EVIDENCE_ASSIGNMENT.md)
+- [`ASI0_EVIDENCE_ASSIGNMENT_CONFIG.json`](ASI0_EVIDENCE_ASSIGNMENT_CONFIG.json)
+- [`../scripts/run_asi0_assignment_experiment.py`](../scripts/run_asi0_assignment_experiment.py)
+- [`../results/ASI0_EVIDENCE_ASSIGNMENT_STATUS.md`](../results/ASI0_EVIDENCE_ASSIGNMENT_STATUS.md)
+
+Current state:
+
+```text
+CAUSAL DESIGN SKELETON  FROZEN
+IMPLEMENTATION           PASS
+SYNTHETIC SMOKE          PASS
+SCIENTIFIC INSTANCE      NOT YET FROZEN
+SCIENTIFIC RUN           NOT EXECUTED
+Δ_align                  UNKNOWN
+INTERPRETATION           ∅
+```
+
+The config contains `MUST_FREEZE_BEFORE_SCIENTIFIC_RUN` placeholders for unresolved canonical instance fields, and the runner refuses scientific preparation until those are replaced prospectively.
+
+Keep explicit:
+
+```text
+synthetic smoke
+↛ ASI-0 scientific evidence
+
+E-aligned > E-misaligned
+→ evidence-target relation has incremental causal leverage
+→ STOP
+
+positive Δ_align
+↛ intelligence
+↛ viability
+↛ recursive self-improvement
+↛ ASI
+```
+
+A null closes ASI-0 at the tested mutation-surface/task/resource/measurement boundary; it may not be rescued by inventing a new `Z`, expanding autonomy, widening the mutation surface post hoc, or claiming the effect must emerge at scale.
 
 ## Pilot 0 — closed
 
@@ -146,9 +256,9 @@ Records:
 
 Do not run another replication merely to recover the original sign. Longer horizons, richer intervention algebra, and a more complicated adaptive mechanism are not earned by ID1.
 
-## Future plasticity forecast benchmark — current frozen experiment
+## Future plasticity forecast benchmark — independent frozen experiment
 
-This benchmark is independently motivated by established continual-learning plasticity variation. It does not descend from ID1 and does not use the A/N framing.
+This benchmark is independently motivated by established continual-learning plasticity variation. It does not descend from ID1 and does not use the A/N framing. It remains frozen and pending canonical MNIST data; ASI-0 does not overwrite or reinterpret it.
 
 Neutral object:
 
@@ -222,7 +332,7 @@ General randomized LLM assay:
 
 - [`LLM_ASSAY_PROTOCOL.md`](LLM_ASSAY_PROTOCOL.md)
 
-These are not the active future-plasticity benchmark and do not inherit its authority.
+These are not ASI-0 and do not inherit its authority.
 
 ## Evidence ladder
 
@@ -239,8 +349,11 @@ predictive forecastability
 future learning difference
 ↛ viability gain
 
-viability gain
-↛ evidence-mediated intelligence
+correct evidence assignment → concealed capability gain
+↛ viability
+↛ intelligence
+↛ recursive self-improvement
+↛ ASI
 ```
 
 A new experiment requires a genuinely discriminating question and a fresh pre-outcome contract.
