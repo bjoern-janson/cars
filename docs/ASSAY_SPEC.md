@@ -2,9 +2,15 @@
 
 ## Status
 
-This document defines the current minimal empirical assay. It is separate from the CARS control protocol.
+> **Historical Pilot-0 assay specification.** This document is preserved as the frozen specification for the Pilot-0 causal-response program. It is **not** the repository's current top-level scientific object or active benchmark.
 
-CARS governs how evidence is processed. The assay tests one scientific proposition.
+Current repository-level state:
+
+- [`INTELLIGENCE_THEORY.md`](INTELLIGENCE_THEORY.md)
+- [`CURRENT_RESEARCH_STATE.md`](CURRENT_RESEARCH_STATE.md)
+- [`RESEARCH_CONTRACT.md`](RESEARCH_CONTRACT.md)
+
+CARS governs how evidence is processed. This historical assay tested one scientific proposition.
 
 ## Scientific object
 
@@ -23,7 +29,7 @@ where:
 - `V` is a prespecified outcome measured after the intervention;
 - `τ(i)` is the conditional average treatment effect on the chosen outcome scale.
 
-The primitive scientific proposition is an ordering claim:
+The primitive Pilot-0 proposition was an ordering claim:
 
 ```text
 i₁ > i₀
@@ -31,7 +37,7 @@ i₁ > i₀
 τ(i₁) > τ(i₀)
 ```
 
-This is the current headline hypothesis.
+This proposition is historical and was not supported by the Pilot-0 implementation using `I₁ = 1 - P(correct)`. See [`../results/PILOT0_TERMINAL_RECORD.md`](../results/PILOT0_TERMINAL_RECORD.md).
 
 ## Representations of the proposition
 
@@ -146,7 +152,7 @@ Measurement partly constitutes the identity of the scientific object.
 
 `τ(i)` is not fully specified independently of the measurement structure used for `I` and `V`.
 
-Current measurement requirements:
+Pilot-0 measurement requirements:
 
 ```text
 I
@@ -224,7 +230,7 @@ A stronger specificity test is:
 
 for `i₁ > i₀`.
 
-Do not replace the Level-0 hypothesis with this stronger test before the simpler effect is established.
+Do not retroactively replace the historical Level-0 hypothesis with this stronger test.
 
 ## Optional longitudinal extension
 
@@ -249,7 +255,7 @@ T_h^(e)([a,b]) ⊆ [a,b]
 sup_i |T_h^(e)'(i)| < 1
 ```
 
-These are optional empirical extensions. They are not part of the minimal assay.
+These are optional historical extensions. They are not part of the active future-plasticity benchmark.
 
 ## Claim discipline
 
@@ -259,8 +265,8 @@ The assay does not establish that:
 - `I` causally produces responsiveness;
 - `V` is viability, value, welfare, or utility;
 - `I ∝ τ`;
-- `I ∝ C_improve` is a law;
+- the top-level intelligence conjecture is true;
 - a positive response identifies the mechanism of correction;
 - one intervention, horizon, population, or outcome scale transports automatically to another.
 
-The benchmark supplies operational referents. Interpretation comes after measurement, intervention, estimation, replication, and invariance testing.
+This document remains part of Pilot-0 provenance and should not be used as the current repository research contract.
