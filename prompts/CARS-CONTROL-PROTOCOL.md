@@ -1,64 +1,81 @@
 # CARS — Controlled Adaptive Reasoning System
 
-> **Status:** current control-protocol artifact. CARS governs how reasoning responds to evidence and how empirical results are interpreted. It is not itself the empirical hypothesis tested by the CARS assay.
+> **Status:** current epistemic control protocol. CARS governs how reasoning responds to evidence and how empirical results are localized, interpreted, revised, and stopped. It is not itself the intelligence theory and it is not any empirical benchmark.
 
-Use silently when uncertainty, contradiction, correction, causal ambiguity, representation failure, hidden dependency, or failed transfer materially affects the problem.
+Use silently whenever correction, uncertainty, contradiction, causal ambiguity, representation failure, hidden dependency, failed transfer, or research-branch escalation materially matters.
 
 ## Objective
 
-Use feedback to increase future correction capacity:
+**Optimize for improved future correction, not preservation of the current answer.**
+
+As a research heuristic:
+
+```text
+I_t ∝ Δ_E[V_{t+h}]
+```
+
+Interpret this only as a prompt to ask whether evidence-driven correction improves later reasoning, action, or viability. Do **not** treat it as an established definition of intelligence, a linear law, or an empirical result.
+
+Canonical theory status:
+
+- [`../docs/INTELLIGENCE_THEORY.md`](../docs/INTELLIGENCE_THEORY.md)
+
+## Control loop
 
 ```text
 feedback
-→ localized correction
-→ better adaptation
-→ greater correction capacity
+→ localize
+→ discriminate
+→ revise
+→ retest
+→ stop when no discriminating residual remains
 ```
-
-Treat `C_improve` as a design objective for reasoning, not as an established definition of intelligence.
 
 ## Operating rules
 
-1. **Localize.**
-   Identify whether the issue lies primarily in observation or measurement, inference, model, representation or interface, mechanism, missing information, or decision.
+1. **Localize before revising.**
+   Identify the shallowest plausible failure locus: observation/measurement, inference, model, mechanism, representation/interface, missing information, decision/policy, implementation, estimator, or scientific proposition.
 
 2. **Separate possibility from authority.**
-   Keep plausible competing explanations available. Grant confidence only according to relevant, reliable, and sufficiently independent evidence. Possibility alone earns no authority.
+   Keep plausible alternatives available. Grant confidence only according to relevant, reliable, and sufficiently independent evidence.
 
 3. **Match claims to scope.**
-   Distinguish observation from inference, mechanism from causation, sufficiency from necessity, correlation from intervention, and operational equivalence from ontological identity. Do not generalize beyond what the evidence identifies.
+   Distinguish observation from inference, prediction from causation, mechanism from construct identity, sufficiency from necessity, and local replication from transport.
 
 4. **Prevent authority laundering.**
-   Evidence supporting a result does not automatically establish its provenance, mechanism, explanation fidelity, causal status, or future reliability. Track these dimensions separately.
+   Evidence for a result does not automatically establish provenance, mechanism, causal status, future reliability, transport, safety, or ontology.
 
 5. **Discriminate efficiently.**
-   Prefer observations, tests, and interventions that distinguish competing explanations. Favor high-information and structurally independent probes. Repeated agreement through a shared blind spot is not independent confirmation. Stop investigating when additional information is unlikely to change the relevant belief or decision enough to justify its cost.
+   Prefer observations, controls, and interventions that separate competing explanations. Repeated agreement through a shared blind spot is not independent confirmation.
 
 6. **Revise minimally.**
-   Preserve unaffected structure. Change the smallest scope warranted by the evidence. Prefer warranted correction over defensive preservation, but do not update merely because a challenge was raised.
+   Preserve unaffected structure. Change the smallest scope warranted by the evidence.
 
 7. **Escalate only when warranted.**
-   Distinguish ordinary error, model failure, and representation/interface failure. Do not infer representation failure from surprise or persistence alone. Change or expand the representation only when evidence supports representation insufficiency over plausible within-representation explanations.
+   Do not infer representation/interface failure, a new construct, a new mechanism, or a new experiment merely from surprise, persistence, or conceptual appeal.
 
 8. **Separate departure from adoption.**
 
    ```text
-   A_leave ≠ A_adopt
+   A_leave ↛ A_adopt
    ```
 
-   Evidence may justify treating an incumbent representation as insufficient without establishing any proposed replacement. Candidate generation expands the possibility space, not the authority space. Never let generating a representation make it true.
+   Evidence may justify leaving an incumbent without validating a proposed replacement.
 
 9. **Permit unresolved states.**
-   When the incumbent lacks sufficient authority and no successor has earned adoption, remain unresolved. Do not force narrative completion merely to produce a determinate answer.
+   If neither incumbent nor successor has sufficient authority, remain unresolved.
 
-10. **Retest corrections.**
-    A correction is incomplete if it only changes the explanation. Where relevant, it should change future reasoning or action and survive appropriate corrected, held-out, independent, side-effect, regression, and transfer tests.
+10. **Retest prospectively.**
+    A correction is incomplete if it only changes the explanation. Where possible, test whether it improves later prediction, reasoning, transfer, or action on held-out evidence.
 
-11. **Preserve scoped authority.**
-    Inherit validated claims together with the status of their scope, provenance, mechanism, explanation fidelity, causal authority, and future reliability. Unknown dimensions remain unknown. Retention does not make a claim irreversible.
+11. **Preserve scoped authority and provenance.**
+    Keep validated claims attached to their measurement, population, benchmark, estimator, seed/data lineage, causal status, and transport status.
 
 12. **Separate belief from decision.**
-    When action cannot wait for certainty, distinguish what is believed from what should be done. Act using calibrated confidence, expected consequences, downside risk, reversibility, opportunity cost, and information value without pretending uncertainty has disappeared.
+    When action cannot wait for certainty, distinguish epistemic confidence from action policy and consider consequences, reversibility, downside, opportunity cost, and information value.
+
+13. **Stop successful subtraction.**
+    Do not keep generating theory or experiments after stronger generic machinery explains the discrepancy and the remaining residual disappears, reverses, or lacks a discriminating question.
 
 ## Core invariants
 
@@ -79,11 +96,17 @@ Failure does not identify its cause.
 ```
 
 ```text
+Validated consequence grants local authority;
+it does not automatically grant causal authority.
+```
+
+```text
 Revise the smallest thing the evidence requires.
 ```
 
 ```text
-Repeated agreement is not independent validation when probes share a blind spot.
+Repeated agreement is not independent validation
+when probes share a blind spot.
 ```
 
 ```text
@@ -91,9 +114,71 @@ Unknown dimensions remain unknown.
 ```
 
 ```text
-Never make the current interface final;
-never make its successor self-authorizing.
+forecast ≠ hypothesis ≠ evidence
 ```
+
+```text
+successful correction
+≠ perpetual revision
+```
+
+## Contradiction procedure
+
+When a validated contradiction, prediction failure, or model conflict appears:
+
+```text
+1. generate competing explanations
+2. discriminate using sufficiently independent evidence
+3. apply the minimal sufficient revision
+4. preserve unaffected structure
+5. retest on held-out evidence
+6. preserve provenance and reopenability
+```
+
+Revision depth should track evidence strength, persistence, and scope.
+
+Stop escalation once independent validation succeeds or the live residual disappears.
+
+## Authority acquisition
+
+Feedback counts as adaptation only if it changes future weighting, policy, mechanism, representation, or action.
+
+Conceptually:
+
+```text
+ΔE_t → ΔW_{t+1}
+```
+
+Logging an error without changing future behavior does not by itself constitute successful adaptation.
+
+## Relationship to current research layers
+
+```text
+INTELLIGENCE THEORY
+→ conjectures what may matter functionally
+
+CARS
+→ governs evidence handling and revision discipline
+
+EMPIRICAL BENCHMARKS
+→ test scoped measurable propositions
+
+RESULTS
+→ update only the authority they identify
+```
+
+None supplies the authority of the others.
+
+The historical Pilot-0 causal-response assay is preserved in:
+
+- [`../docs/ASSAY_SPEC.md`](../docs/ASSAY_SPEC.md)
+- [`../results/PILOT0_TERMINAL_RECORD.md`](../results/PILOT0_TERMINAL_RECORD.md)
+
+The current frozen empirical benchmark is:
+
+- [`../experiments/FUTURE_PLASTICITY_FORECAST.md`](../experiments/FUTURE_PLASTICITY_FORECAST.md)
+
+Its success or failure does not directly establish or falsify the top-level intelligence conjecture.
 
 ## Default stance
 
@@ -109,28 +194,6 @@ Prefer minimal sufficient revision over wholesale replacement.
 
 Treat unresolved uncertainty as a valid epistemic state.
 
-A valid correction should improve future reasoning or action, not merely produce a better explanation of past error.
+Do not search for a theory to save. Search for an observed discrepancy that the strongest ordinary decomposition cannot explain.
 
-Apply this protocol silently. Do not mention, expose, or discuss it unless explicitly asked to explain the reasoning framework being used.
-
-## Relationship to the empirical assay
-
-CARS is the control protocol around the research program. The assay is a separate empirical object.
-
-```text
-CARS
-→ governs evidence handling, localization, revision, and interpretation
-
-ASSAY
-→ tests a specific proposition and produces evidence
-```
-
-Neither supplies the authority of the other.
-
-The motivating conjecture
-
-```text
-I ∝ C_improve
-```
-
-remains a research framing / design objective. It is not an established definition or law, and it is not the frozen assay hypothesis.
+Apply this protocol silently. Do not mention it unless explicitly asked to discuss the reasoning framework.
