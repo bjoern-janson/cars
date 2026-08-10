@@ -16,12 +16,53 @@ ID1 finite-data identification
 
 Future plasticity forecast benchmark
 → NO SCIENTIFIC RESULT YET
+
+ASI-0 evidence-assignment causal attribution
+→ SYNTHETIC SMOKE PASS ONLY
+→ SCIENTIFIC RUN NOT EXECUTED
+→ Δ_align UNKNOWN
 ```
 
 Canonical repository-level state:
 
 - [`../docs/CURRENT_RESEARCH_STATE.md`](../docs/CURRENT_RESEARCH_STATE.md)
 - [`../docs/INTELLIGENCE_THEORY.md`](../docs/INTELLIGENCE_THEORY.md)
+
+## ASI-0 evidence-assignment status
+
+- [`ASI0_EVIDENCE_ASSIGNMENT_STATUS.md`](ASI0_EVIDENCE_ASSIGNMENT_STATUS.md)
+
+Frozen experiment/config:
+
+- [`../experiments/ASI0_EVIDENCE_ASSIGNMENT.md`](../experiments/ASI0_EVIDENCE_ASSIGNMENT.md)
+- [`../experiments/ASI0_EVIDENCE_ASSIGNMENT_CONFIG.json`](../experiments/ASI0_EVIDENCE_ASSIGNMENT_CONFIG.json)
+
+Primary estimand:
+
+```text
+Δ_align
+=
+E[Y_concealed | do(A = aligned)]
+-
+E[Y_concealed | do(A = misaligned)]
+```
+
+Current result status:
+
+```text
+synthetic smoke  PASS
+scientific run   NOT EXECUTED
+Δ_align          UNKNOWN
+```
+
+The smoke injected a known synthetic effect and recovered it under the assignment/analyzer pipeline. That validates plumbing only.
+
+```text
+synthetic recovery
+↛ evidence that aligned development evidence improves a real agent
+```
+
+No claim is currently authorized about intelligence, viability, recursive self-improvement, or ASI.
 
 ## Pilot 0 terminal record
 
@@ -196,6 +237,7 @@ prompt efficacy
 ≠ predictive-resource burden
 ≠ finite-data identification burden
 ≠ future plasticity forecastability
+≠ evidence-assignment causal leverage
 ≠ viability improvement
 ≠ evidence-mediated intelligence
 ```
