@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "study": "Future plasticity forecast benchmark: G0-G3",
+  "status": "PRE-OUTCOME CONTRACT",
+  "authority": "independently motivated continual-learning benchmark; asks whether checkpoint measurements forecast paired future trainability on concealed Permuted-MNIST tasks; no correction construct, adaptive-complexity construct, or new theory",
+  "dataset": {
+    "name": "MNIST",
+    "family": "permuted_mnist",
+    "root": "data/mnist",
+    "download": false,
+    "canonical_raw_md5": {
+      "train-images-idx3-ubyte.gz": "f68b3c2dcbeaaa9fbdd348bbdeb94873",
+      "train-labels-idx1-ubyte.gz": "d53e105ee54ea40749a09fcbcd1e9432",
+      "t10k-images-idx3-ubyte.gz": "9fb629c4189551a2d022fa330f9573f3",
+      "t10k-labels-idx1-ubyte.gz": "ec29112dd5afa0611ce80d1b7f02629c"
+    },
+    "task_train_size": 4096,
+    "task_test_size": 1000,
+    "probe_size": 256,
+    "subset_seed": 20261001
+  },
+  "model": {
+    "architecture": "MLP",
+    "hidden_sizes": [64, 64],
+    "activation": "relu",
+    "num_classes": 10,
+    "shared_initialization_across_histories": true,
+    "initialization_seed": 20261002,
+    "optimizer": "SGD",
+    "learning_rate": 0.05,
+    "momentum": 0.0,
+    "weight_decay": 0.0,
+    "batch_size": 128
+  },
+  "history": {
+    "runs": 12,
+    "max_tasks": 24,
+    "checkpoint_task_ages": [1, 4, 8, 16, 24],
+    "task_permutation_seed": 20261003,
+    "example_order_seed": 20261004
+  },
+  "checkpoint_measurements": {
+    "capability": [
+      "task_age",
+      "current_task_accuracy",
+      "current_task_loss"
+    ],
+    "plasticity": [
+      "parameter_l2",
+      "mean_abs_parameter",
+      "distance_from_initialization_l2",
+      "gradient_l2_on_probe",
+      "dead_relu_fraction",
+      "activation_effective_rank_fraction",
+      "activation_std"
+    ],
+    "rich_parameter_sketch": {
+      "type": "fixed_rademacher_projection_of_parameter_delta",
+      "dimensions": 32,
+      "seed": 20261005
+    }
+  },
+  "future_task": {
+    "identity_rule": "new pixel permutation drawn from a separate future-task stream after checkpoint measurements are frozen; future identity is never an input to checkpoint predictors",
+    "future_permutation_seed": 20261006,
+    "future_example_order_seed": 20261007,
+    "learning_curve_fractions": [0.0, 0.125, 0.25, 0.5, 1.0],
+    "fresh_reference": "same architecture and exact shared initial weights as the history run before continual training; trained on the identical future task and example order",
+    "t_epsilon_fraction_of_fresh_final_accuracy": 0.9,
+    "not_reached_value": 1.25
+  },
+  "outcomes": {
+    "primary": [
+      "delta_auc_accuracy",
+      "t90_gap_fraction"
+    ],
+    "definitions": {
+      "delta_auc_accuracy": "trapezoidal AUC(checkpoint future-task test accuracy over normalized training progress) minus matched fresh-network AUC",
+      "t90_gap_fraction": "checkpoint progress fraction minus fresh progress fraction required to reach 90% of fresh final accuracy; not reached is encoded as 1.25"
+    },
+    "retain_full_curve": true
+  },
+  "forecast": {
+    "group_unit": "history_run",
+    "outer_group_folds": 4,
+    "inner_group_folds": 3,
+    "ridge_alphas": [0.01, 0.1, 1.0, 10.0, 100.0],
+    "models": {
+      "age_only": ["task_age"],
+      "capability": ["task_age", "current_task_accuracy", "current_task_loss"],
+      "plasticity": "capability plus all prospectively defined plasticity measurements",
+      "rich": "plasticity plus 32-dimensional fixed parameter sketch"
+    },
+    "null": "outer-fold training mean for each outcome",
+    "metrics": ["rmse", "mae", "r2"],
+    "bootstrap_history_resamples": 2000,
+    "bootstrap_seed": 20261008
+  },
+  "gates": {
+    "G0": "forecastability: rich model has lower out-of-fold RMSE than null; report bootstrap 95% interval for null-RMSE minus rich-RMSE on each primary outcome",
+    "G1": "current capability: capability model versus age-only",
+    "G2": "established plasticity measurements: plasticity model versus capability",
+    "G3": "broader checkpoint state: rich model versus plasticity",
+    "escalation": "G4 cross-family transport and any compression-specific search remain unauthorized in this benchmark pass regardless of descriptive G0-G3 outcomes"
+  },
+  "provenance": {
+    "scientific_seed_streams": "frozen before outcome generation",
+    "future_task_concealment": "checkpoint measurements are constructed before future task permutation seeds are consumed",
+    "smoke": "smoke mode uses synthetic data and a separate seed; it is development evidence only",
+    "pilot0": "read-only and unrelated to this benchmark",
+    "id1": "closed and not used to select benchmark outcomes or features"
+  },
+  "nonclaims": [
+    "forecastability does not imply a new adaptive property",
+    "failure of the rich sketch does not prove the full checkpoint contains no predictive information",
+    "task age prediction is an ordinary temporal explanation, not a mechanism",
+    "paired plasticity loss is not correction capacity",
+    "Permuted-MNIST transport does not imply cross-domain transport",
+    "no G4-G6 claim is authorized by this pass"
+  ]
+}
