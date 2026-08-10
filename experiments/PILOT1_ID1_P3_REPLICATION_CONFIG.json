@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "study": "Pilot 1 ID1-R1: P3 finite-data system-identification replication",
+  "status": "PRE-OUTCOME CONTRACT",
+  "authority": "synthetic replication only; tests whether the tiny positive P3 A-N structural-NMSE discrepancy from ID1 persists on a fresh random stream under otherwise unchanged generator, observation, grammar, identifier, sample grid, endpoint, and decision logic",
+  "confirmatory_seed": 20260831,
+  "interventions": {
+    "A": [1.0, 0.0],
+    "B": [0.8, 0.6],
+    "C": [0.0, 1.0]
+  },
+  "sequences": {
+    "train": ["AA", "BB", "CC", "AB", "AC", "BC"],
+    "structural_holdout": ["BA", "CA", "CB"]
+  },
+  "dynamics": {
+    "base_matrix": [[0.62, 0.18], [-0.12, 0.56]],
+    "theta_matrix_1": [[0.20, 0.06], [0.02, -0.10]],
+    "theta_matrix_2": [[-0.06, 0.16], [0.11, 0.04]],
+    "control_matrix": [[0.36, 0.04], [-0.03, 0.34]]
+  },
+  "adaptation": {
+    "rho": 0.90,
+    "eta": 0.25,
+    "exogenous_driver_schedule": [[0.7071067812, -0.7071067812], [-0.7071067812, 0.7071067812]]
+  },
+  "sampling": {
+    "x0_scale": 1.0,
+    "theta0_scale": 0.5,
+    "train_per_sequence_pool": 1000,
+    "iid_test_per_sequence": 500,
+    "structural_test_per_sequence": 500,
+    "train_per_sequence_grid": [8, 16, 32, 64, 128, 256, 512, 1000]
+  },
+  "identifier": {
+    "family": "multi-output ridge local transition model over generic polynomial features",
+    "ridge_alpha": 0.0001,
+    "degrees": [3],
+    "primary_degree": 3,
+    "raw_input": "current full state (x,theta), intervention descriptor, one-hot step index",
+    "output": "next full state (x_next,theta_next)",
+    "rollout": "recursive horizon-2 prediction"
+  },
+  "readouts": {
+    "primary_distortion": "structural_nmse",
+    "tolerances": [0.01, 0.005, 0.001],
+    "slope_min_total_train_trajectories": 384,
+    "curve_axis": "log10 structural_nmse versus log10 total training trajectories"
+  },
+  "primary_contrast": "P3 A_minus_N_structural_nmse at total_train_trajectories=6000",
+  "decision_rule": {
+    "sign_disappears_or_reverses": "primary contrast <= 0 -> close ID1 discrepancy",
+    "same_sign_but_unstable": "primary contrast > 0 but magnitude/curve pattern not comparable to ID1 -> treat as finite/model variance; no interpretation escalation",
+    "same_sign_comparable": "primary contrast > 0 with broadly comparable magnitude/curve behavior -> earn one additional replication only; still no adaptive-complexity interpretation"
+  },
+  "reference": {
+    "ID1_primary_A_minus_N_structural_nmse": 0.000000470792,
+    "ID1_N_structural_nmse_at_6000": 0.000234729771,
+    "ID1_A_structural_nmse_at_6000": 0.000235200562
+  },
+  "scope": {
+    "systems": ["N", "A"],
+    "horizon": 2,
+    "structural_holdout": "unseen order reversals only",
+    "changes_from_ID1": "fresh confirmatory random stream and P3-only execution; no scientific generator, grammar, estimator, endpoint, or sample-grid change",
+    "new_construct": false,
+    "new_theory": false
+  }
+}
