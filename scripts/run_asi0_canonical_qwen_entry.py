@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
+import argparse
 import importlib.util
+import json
 import random
 import re
+import sys
+import time
 from pathlib import Path
 
 BASE = Path(__file__).with_name("run_asi0_canonical_qwen.py")
@@ -119,5 +123,281 @@ m.unique_items = unique_items
 m.load_model = load_model
 m.generate_batch = generate_batch
 
+
+class StageLogger:
+    def __init__(self, path, manifest_hash):
+        self.path = Path(path)
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.path.write_text("", encoding="utf-8")
+        self.manifest_hash = manifest_hash
+        self.started = time.monotonic()
+
+    def emit(self, stage, items_started, items_completed, batch_index):
+        row = {
+            "stage": stage,
+            "elapsed_seconds": round(time.monotonic() - self.started, 6),
+            "items_started": int(items_started),
+            "items_completed": int(items_completed),
+            "batch_index": int(batch_index),
+            "input_manifest_hash": self.manifest_hash,
+        }
+        with self.path.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(row, sort_keys=True) + "\n")
+        print("EXECUTION_CHECKPOINT=" + json.dumps(row, sort_keys=True), flush=True)
+
+
+def diagnostic_load_model(cfg, device, logger):
+    import torch
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+
+    if device == "cuda" and not torch.cuda.is_available():
+        raise RuntimeError("diagnostic GPU requested but torch.cuda.is_available() is false")
+    logger.emit("model_load", 0, 0, 0)
+    torch.set_num_threads(int(cfg["runtime"]["torch_num_threads"]))
+    mid = cfg["model"]["id"]
+    rev = cfg["model"]["revision"]
+    tok = AutoTokenizer.from_pretrained(mid, revision=rev)
+    tok.padding_side = "left"
+    if tok.pad_token_id is None:
+        tok.pad_token_id = tok.eos_token_id
+    model = AutoModelForCausalLM.from_pretrained(mid, revision=rev, torch_dtype=torch.float32)
+    model.to(device)
+    model.eval()
+    logger.emit("model_load", 0, 0, 0)
+    return tok, model
+
+
+def materialize_diagnostic_case(case):
+    surface = case["surface"]
+    if surface == "candidate_selection":
+        family = case["family"]
+        target = {
+            "family": family,
+            "target_context": case["target_context"],
+            "candidates": m.candidate_pool(family),
+        }
+        return {
+            "case_id": case["case_id"],
+            "surface": surface,
+            "system": m.base_system(),
+            "user": m.selection_prompt(target, case["assigned_evidence_text"]),
+            "candidate_family": family,
+            "max_new_tokens_kind": "selection",
+        }
+    if surface in ("task_answering", "regression"):
+        family = case["policy_family"]
+        rule = case["policy_rule_name"]
+        candidate = next(c for c in m.candidate_pool(family) if c["rule_name"] == rule)
+        return {
+            "case_id": case["case_id"],
+            "surface": surface,
+            "system": m.patched_system(candidate["text"]),
+            "user": case["prompt"],
+            "candidate_family": None,
+            "max_new_tokens_kind": "answer",
+        }
+    raise ValueError(f"unknown diagnostic surface: {surface}")
+
+
+def canonical_user_prompts(cfg):
+    prompts = set()
+    for phase in ("primary", "replication"):
+        manifest = m.build_manifest(cfg, phase)
+        assignments = m.assign_evidence(manifest, int(cfg["phases"][phase]["assignment_seed"]))
+        amap = {(r["target_id"], r["arm"]): r for r in assignments}
+        for target in manifest:
+            for item in target["development_items"]:
+                prompts.add(item["prompt"])
+            for item in target["concealed_items"]:
+                prompts.add(item["prompt"])
+            for arm in ("aligned", "misaligned"):
+                assigned = amap[(target["target_id"], arm)]
+                prompts.add(m.selection_prompt(target, assigned["assigned_evidence_text"]))
+    for item in m.regression_suite():
+        prompts.add(item["prompt"])
+    return prompts
+
+
+def validate_diagnostic_manifest(cfg, diag, materialized):
+    if diag.get("status") != "FROZEN EXECUTION DIAGNOSTIC; NON-SCIENTIFIC":
+        raise ValueError("diagnostic manifest status is not frozen/non-scientific")
+    if diag["model"]["id"] != cfg["model"]["id"] or diag["model"]["revision"] != cfg["model"]["revision"]:
+        raise ValueError("diagnostic model/revision does not match canonical config")
+    case_ids = [x["case_id"] for x in materialized]
+    if len(case_ids) != len(set(case_ids)):
+        raise ValueError("diagnostic case_id values must be unique")
+    canonical_prompts = canonical_user_prompts(cfg)
+    overlap = sorted(x["case_id"] for x in materialized if x["user"] in canonical_prompts)
+    if overlap:
+        raise ValueError("diagnostic manifest overlaps canonical user prompts: " + ", ".join(overlap))
+    return {"canonical_exact_prompt_overlap_count": 0, "n_cases": len(materialized)}
+
+
+def diagnostic_generate_group(tok, model, cases, cfg, device, logger, stage):
+    import torch
+
+    outs = []
+    batch_size = int(cfg["runtime"]["batch_size"])
+    max_new_tokens = int(
+        cfg["generation"]["selection_max_new_tokens"]
+        if cases[0]["max_new_tokens_kind"] == "selection"
+        else cfg["generation"]["answer_max_new_tokens"]
+    )
+    total = len(cases)
+    completed = 0
+    batch_index = 0
+    for start in range(0, total, batch_size):
+        group = cases[start : start + batch_size]
+        batch_index += 1
+        end = start + len(group)
+        logger.emit(stage, end, completed, batch_index)
+        texts = []
+        for case in group:
+            msgs = [{"role": "system", "content": case["system"]}, {"role": "user", "content": case["user"]}]
+            texts.append(tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True))
+        batch = tok(texts, return_tensors="pt", padding=True)
+        input_width = int(batch["input_ids"].shape[1])
+        batch = batch.to(device)
+        with torch.inference_mode():
+            gen = model.generate(
+                **batch,
+                do_sample=False,
+                max_new_tokens=max_new_tokens,
+                pad_token_id=tok.eos_token_id,
+            )
+        for i in range(gen.shape[0]):
+            outs.append(tok.decode(gen[i][input_width:].detach().cpu(), skip_special_tokens=True).strip())
+        completed = end
+        logger.emit(stage, completed, completed, batch_index)
+    return outs
+
+
+def parse_diagnostic_output(case, text):
+    if case["surface"] == "candidate_selection":
+        candidates = m.candidate_pool(case["candidate_family"])
+        return m.extract_candidate(text, candidates)
+    return m.normalize_answer(text)
+
+
+def compare_reference(reference_path, current_rows):
+    reference = m.load_json(reference_path)
+    ref_rows = reference.get("parsed_outputs", [])
+    ref_map = {(r["case_id"], r["surface"]): r["parsed_output"] for r in ref_rows}
+    cur_map = {(r["case_id"], r["surface"]): r["parsed_output"] for r in current_rows}
+    keys = sorted(set(ref_map) | set(cur_map))
+    mismatches = [
+        {"case_id": key[0], "surface": key[1]}
+        for key in keys
+        if ref_map.get(key) != cur_map.get(key)
+    ]
+    return {
+        "reference_manifest_hash": reference.get("diagnostic_manifest_hash"),
+        "parsed_outputs_identical": len(mismatches) == 0,
+        "mismatch_cases": mismatches,
+    }
+
+
+def diagnostic_main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("config")
+    ap.add_argument("--mode", choices=["diagnostic"], required=True)
+    ap.add_argument("--diagnostic-manifest", required=True)
+    ap.add_argument("--device", choices=["cpu", "cuda"], required=True)
+    ap.add_argument("--outdir", default="results/asi0_execution_diagnostic")
+    ap.add_argument("--reference-output")
+    args = ap.parse_args()
+
+    cfg = m.load_json(args.config)
+    diag = m.load_json(args.diagnostic_manifest)
+    manifest_hash = m.sha256_obj(diag)
+    materialized = [materialize_diagnostic_case(case) for case in diag["cases"]]
+    separation = validate_diagnostic_manifest(cfg, diag, materialized)
+
+    outdir = Path(args.outdir)
+    outdir.mkdir(parents=True, exist_ok=True)
+    checkpoint_path = outdir / "diagnostic_checkpoints.jsonl"
+    logger = StageLogger(checkpoint_path, manifest_hash)
+    overall_start = time.monotonic()
+
+    tok, model = diagnostic_load_model(cfg, args.device, logger)
+    parsed_rows = []
+    stages = [
+        ("diagnostic_candidate_selection", "candidate_selection"),
+        ("diagnostic_task_answering", "task_answering"),
+        ("diagnostic_regression", "regression"),
+    ]
+    for stage, surface in stages:
+        cases = [x for x in materialized if x["surface"] == surface]
+        if not cases:
+            continue
+        raw = diagnostic_generate_group(tok, model, cases, cfg, args.device, logger, stage)
+        logger.emit("diagnostic_parsing", len(cases), 0, 0)
+        for case, text in zip(cases, raw):
+            parsed_rows.append(
+                {
+                    "case_id": case["case_id"],
+                    "surface": case["surface"],
+                    "parsed_output": parse_diagnostic_output(case, text),
+                }
+            )
+        logger.emit("diagnostic_parsing", len(cases), len(cases), 0)
+
+    parsed_rows.sort(key=lambda r: (r["surface"], r["case_id"]))
+    total_runtime = time.monotonic() - overall_start
+    summary = {
+        "schema_version": 1,
+        "mode": "diagnostic",
+        "scientific_result": False,
+        "scientific_outcomes_exposed": False,
+        "device": args.device,
+        "model": {"id": cfg["model"]["id"], "revision": cfg["model"]["revision"]},
+        "diagnostic_manifest_hash": manifest_hash,
+        "canonical_exact_prompt_overlap_count": separation["canonical_exact_prompt_overlap_count"],
+        "n_cases": separation["n_cases"],
+        "runtime_seconds": round(total_runtime, 6),
+        "parsed_outputs": parsed_rows,
+    }
+
+    exit_code = 0
+    if args.reference_output:
+        equivalence = compare_reference(args.reference_output, parsed_rows)
+        equivalence["same_manifest_hash"] = equivalence["reference_manifest_hash"] == manifest_hash
+        equivalence["pass"] = bool(equivalence["same_manifest_hash"] and equivalence["parsed_outputs_identical"])
+        summary["behavioral_equivalence"] = equivalence
+        if not equivalence["pass"]:
+            exit_code = 2
+
+    m.write_json(outdir / "diagnostic_summary.json", summary)
+    logger.emit("end", len(materialized), len(materialized), 0)
+    print(
+        "DIAGNOSTIC_COMPLETE="
+        + json.dumps(
+            {
+                "scientific_result": False,
+                "device": args.device,
+                "diagnostic_manifest_hash": manifest_hash,
+                "n_cases": len(parsed_rows),
+                "runtime_seconds": round(total_runtime, 6),
+                "behavioral_equivalence_pass": (
+                    summary.get("behavioral_equivalence", {}).get("pass")
+                    if args.reference_output
+                    else None
+                ),
+            },
+            sort_keys=True,
+        ),
+        flush=True,
+    )
+    raise SystemExit(exit_code)
+
+
 if __name__ == "__main__":
-    m.main()
+    if "--mode" in sys.argv:
+        mode_index = sys.argv.index("--mode")
+        mode = sys.argv[mode_index + 1] if mode_index + 1 < len(sys.argv) else None
+        if mode == "diagnostic":
+            diagnostic_main()
+        else:
+            raise SystemExit(f"unsupported mode: {mode}")
+    else:
+        m.main()
