@@ -45,7 +45,7 @@ OTHER
 UNKNOWN
 ```
 
-`OTHER` is used only when the component's function is identifiable but does not fit the other classes. A subtype is stated explicitly, for example `OTHER — authority-boundary application`.
+`OTHER` is used only when the component's function is identifiable but does not fit the other classes. Any subtype is stated outside the classification value.
 
 ### SPECIFICATION
 
@@ -90,6 +90,19 @@ RULE: UNKNOWN-RULE
 ```
 
 That distinction is central to the audit.
+
+### Ontology discipline
+
+Classification fields use only the exact frozen values above. Qualifiers such as `FOR THIS CASE`, `AS HISTORICAL STATUS`, or `PARTIALLY RECOVERABLE` are not additional ontology states.
+
+When one row contains two epistemically different questions:
+
+```text
+split the component
+→ do not enrich the category
+```
+
+Nuance belongs in the explanatory text, not in the classification token.
 
 ## Source boundary
 
@@ -161,12 +174,14 @@ Do not promote the A5 result into complete explanation, psychological mechanism,
 **Classification**
 
 ```text
-FUNCTION: OTHER — authority-boundary application
+FUNCTION: OTHER
 SPECIFICATION: EXPLICIT
 MECHANICAL REPRODUCIBILITY: YES
 RATIONALE: RECOVERABLE
 RULE: RECOVERABLE
 ```
+
+Function subtype: `authority-boundary application`.
 
 **Why**
 
@@ -223,7 +238,7 @@ NOT RECOVERED
 
 ---
 
-## D1.4 — Defer immediate interaction under the A5 conditional guardrail
+## D1.4a — Recover the A5 conditional guardrail as written
 
 **Observed component**
 
@@ -233,16 +248,41 @@ The A5 contract names remaining outer framing before immediate interaction under
 
 ```text
 FUNCTION: STRUCTURAL
-SPECIFICATION: EXPLICIT AS A CONDITIONAL GUARDRAIL
-MECHANICAL REPRODUCIBILITY: PARTIAL
+SPECIFICATION: EXPLICIT
+MECHANICAL REPRODUCIBILITY: YES
 RATIONALE: RECOVERABLE
-RULE: RECOVERABLE FOR THE STATED CONDITION,
-      NOT SUFFICIENT FOR THE REALIZED MIXED ENDPOINT STATE
+RULE: RECOVERABLE
 ```
 
 **Why**
 
-The historical guardrail exists, but its antecedent was phrased as A5 being practically small across the A4c endpoints. The realized A5 result was mixed. The exact realized-decision comparison is therefore not mechanically supplied by that guardrail alone.
+The guardrail and its antecedent are written explicitly in the historical contract. This component asks only whether that conditional rule can be recovered as written.
+
+**Authority consequence**
+
+The historical record contains an explicit conditional preference for outer framing before immediate interaction under the stated antecedent.
+
+---
+
+## D1.4b — Determine whether the guardrail mechanically decides the realized mixed-A5 state
+
+**Observed component**
+
+The realized A5 result was mixed across endpoints rather than practically small across all A4c endpoints.
+
+**Classification**
+
+```text
+FUNCTION: STRUCTURAL
+SPECIFICATION: NOT-RECOVERABLE
+MECHANICAL REPRODUCIBILITY: NO
+RATIONALE: UNKNOWN-RATIONALE
+RULE: UNKNOWN-RULE
+```
+
+**Why**
+
+The recorded conditional antecedent does not match the realized state exactly. The historical record does not supply an additional rule explaining how that guardrail should compose with the mixed outcome.
 
 **Automation gap exposed**
 
@@ -266,13 +306,13 @@ A6 was selected. The trace does not establish historical consideration of finer 
 FUNCTION: STRUCTURAL
 SPECIFICATION: NOT-RECOVERABLE
 MECHANICAL REPRODUCIBILITY: NO
-RATIONALE: RECOVERABLE FOR A6'S PURPOSE
-RULE: UNKNOWN-RULE FOR COMPARATIVE SELECTION
+RATIONALE: RECOVERABLE
+RULE: UNKNOWN-RULE
 ```
 
 **Why**
 
-The purpose of A6 is documented. A rule establishing that A6 was preferable to all available alternatives is not.
+The purpose of A6 is documented. A rule establishing that A6 was preferable to all available alternatives is not. `RATIONALE: RECOVERABLE` refers only to the documented purpose of A6; it does not imply recovery of the comparative selection rule.
 
 **Authority consequence**
 
@@ -289,7 +329,7 @@ comparative action ranking
 
 ---
 
-## D1.6 — Continue rather than stop
+## D1.6a — Recover the local purpose of continuing with A6
 
 **Observed component**
 
@@ -297,19 +337,43 @@ comparative action ranking
 CONTINUE WITH A6
 ```
 
+with A6's outer-scaffold purpose documented in the frozen contract.
+
 **Classification**
 
 ```text
 FUNCTION: STRUCTURAL
 SPECIFICATION: IMPLICIT-RECOVERABLE
-MECHANICAL REPRODUCIBILITY: NO
-RATIONALE: PARTIALLY RECOVERABLE
+MECHANICAL REPRODUCIBILITY: PARTIAL
+RATIONALE: RECOVERABLE
 RULE: UNKNOWN-RULE
 ```
 
 **Why**
 
-The selected next object and its purpose are recorded, so continuation is observable and its local purpose is recoverable. The record does not establish a general continuation threshold or show that A6 dominated every alternative.
+The continuation action is observed and the selected experiment's local purpose is recoverable. The historical record does not encode a general continuation rule.
+
+---
+
+## D1.6b — Recover the comparative continue-vs-stop rationale
+
+**Observed component**
+
+The program continued with A6 rather than stopping at D1.
+
+**Classification**
+
+```text
+FUNCTION: STRUCTURAL
+SPECIFICATION: NOT-RECOVERABLE
+MECHANICAL REPRODUCIBILITY: NO
+RATIONALE: UNKNOWN-RATIONALE
+RULE: UNKNOWN-RULE
+```
+
+**Why**
+
+The record does not establish a comparative rationale showing why continuation was preferable to stopping or every other analytically possible action.
 
 **Automation gap exposed**
 
@@ -370,9 +434,9 @@ interaction
 ```text
 FUNCTION: STRUCTURAL
 SPECIFICATION: EXPLICIT
-MECHANICAL REPRODUCIBILITY: YES FOR RECOVERING THE FORK
+MECHANICAL REPRODUCIBILITY: YES
 RATIONALE: RECOVERABLE
-RULE: RECOVERABLE FOR GENERATING THE TWO-WAY FORK
+RULE: RECOVERABLE
 ```
 
 **Authority consequence**
@@ -463,9 +527,13 @@ NOT SELECTED: finer rendering branch
 FUNCTION: STRUCTURAL
 SPECIFICATION: NOT-RECOVERABLE
 MECHANICAL REPRODUCIBILITY: NO
-RATIONALE: RECOVERABLE FOR WHAT A7 TESTS
-RULE: UNKNOWN-RULE FOR WHY A7 DOMINATED THE OTHER DOCUMENTED FORK
+RATIONALE: RECOVERABLE
+RULE: UNKNOWN-RULE
 ```
+
+**Why**
+
+The purpose and object of A7 are recoverable. The comparative rule explaining why A7 dominated the other documented fork member is not.
 
 **Authority consequence**
 
@@ -482,13 +550,15 @@ This is not repaired by labeling the move `earned complexity escalation`; that l
 
 ---
 
-## D2.6 — Continue with A7
+## D2.6a — Recover the local purpose of continuing with A7
 
 **Observed component**
 
 ```text
 CONTINUE WITH A7
 ```
+
+with a missing factorial cell and direct interaction test explicitly documented.
 
 **Classification**
 
@@ -497,12 +567,34 @@ FUNCTION: STRUCTURAL
 SPECIFICATION: IMPLICIT-RECOVERABLE
 MECHANICAL REPRODUCIBILITY: PARTIAL
 RATIONALE: RECOVERABLE
-RULE: UNKNOWN-RULE FOR CONTINUE VS STOP
+RULE: UNKNOWN-RULE
 ```
 
 **Why**
 
-The missing factorial cell and direct interaction test are explicit. A comparative stopping rule is not.
+The selected experiment's local purpose is explicit even though no general continue rule is encoded.
+
+---
+
+## D2.6b — Recover the comparative continue-vs-stop rationale
+
+**Observed component**
+
+The program continued with A7 rather than stopping at D2.
+
+**Classification**
+
+```text
+FUNCTION: STRUCTURAL
+SPECIFICATION: NOT-RECOVERABLE
+MECHANICAL REPRODUCIBILITY: NO
+RATIONALE: UNKNOWN-RATIONALE
+RULE: UNKNOWN-RULE
+```
+
+**Why**
+
+The historical record does not provide a comparative rule or rationale establishing that continuation dominated stopping.
 
 **Automation gap exposed**
 
@@ -556,12 +648,14 @@ different cohort / experiment point estimates
 **Classification**
 
 ```text
-FUNCTION: OTHER — authority-boundary application
+FUNCTION: OTHER
 SPECIFICATION: EXPLICIT
 MECHANICAL REPRODUCIBILITY: YES
 RATIONALE: RECOVERABLE
 RULE: RECOVERABLE
 ```
+
+Function subtype: `authority-boundary application`.
 
 **Why**
 
@@ -617,7 +711,7 @@ when does a discrepancy warrant replication/transport?
 
 ---
 
-## D3.4 — Stop the A-series and explicitly decline A8
+## D3.4a — Recover the historical A-series STOP / no-A8 status
 
 **Observed component**
 
@@ -632,15 +726,37 @@ A8
 
 ```text
 FUNCTION: STRUCTURAL
-SPECIFICATION: EXPLICIT AS HISTORICAL STATUS
-MECHANICAL REPRODUCIBILITY: PARTIAL
-RATIONALE: PARTIALLY RECOVERABLE
+SPECIFICATION: EXPLICIT
+MECHANICAL REPRODUCIBILITY: YES
+RATIONALE: RECOVERABLE
 RULE: UNKNOWN-RULE
 ```
 
 **Why**
 
-The R1 lineage explicitly records that the A-series stopped and no A8 finer-formatting ablation was authorized. It does not provide a general rule sufficient to reproduce this scope closure from arbitrary evidence states.
+The historical scope outcome is explicit in the R1 lineage. The record supports recovery of the status and its local context, but not a general rule that would generate the same closure from arbitrary evidence states.
+
+---
+
+## D3.4b — Recover the generating rule for A-series closure
+
+**Observed component**
+
+The A-series was closed and A8 was not authorized before R1.
+
+**Classification**
+
+```text
+FUNCTION: STRUCTURAL
+SPECIFICATION: NOT-RECOVERABLE
+MECHANICAL REPRODUCIBILITY: NO
+RATIONALE: UNKNOWN-RATIONALE
+RULE: UNKNOWN-RULE
+```
+
+**Why**
+
+No formal or general branch-local stopping criterion is recorded at this decision point.
 
 **Automation gap exposed**
 
@@ -665,15 +781,19 @@ Historical consideration of stopping before R1 or continuing other decomposition
 
 ```text
 FUNCTION: STRUCTURAL
-SPECIFICATION: NOT-RECOVERABLE FOR COMPARATIVE SELECTION
+SPECIFICATION: NOT-RECOVERABLE
 MECHANICAL REPRODUCIBILITY: NO
-RATIONALE: RECOVERABLE FOR R1'S PURPOSE
+RATIONALE: RECOVERABLE
 RULE: UNKNOWN-RULE
 ```
 
+**Why**
+
+R1's purpose is recoverable. A comparative action-selection rationale and generating rule are not. Unrecorded alternatives remain historically unknown rather than retroactively rejected.
+
 **Authority consequence**
 
-R1 becomes authorized; unrecorded alternatives remain historically unknown rather than retroactively rejected.
+R1 becomes authorized; unrecorded alternatives do not gain historical status.
 
 **Automation gap exposed**
 
@@ -703,7 +823,7 @@ FUNCTION: FORMAL
 SPECIFICATION: EXPLICIT
 MECHANICAL REPRODUCIBILITY: YES
 RATIONALE: RECOVERABLE
-RULE: RECOVERABLE AS THE FROZEN R1 CONTRACT
+RULE: RECOVERABLE
 ```
 
 **Authority consequence**
@@ -716,7 +836,7 @@ None for executing the frozen design once selected. Selection of that design rem
 
 ---
 
-## D3.7 — Continue R1 while the A-series remains stopped
+## D3.7a — Recover the historical scope transition
 
 **Observed component**
 
@@ -729,15 +849,37 @@ R1: CONTINUE
 
 ```text
 FUNCTION: STRUCTURAL
-SPECIFICATION: EXPLICIT AS HISTORICAL SCOPE STATUS
-MECHANICAL REPRODUCIBILITY: PARTIAL
+SPECIFICATION: EXPLICIT
+MECHANICAL REPRODUCIBILITY: YES
 RATIONALE: RECOVERABLE
 RULE: UNKNOWN-RULE
 ```
 
 **Why**
 
-The scope transition is explicit. A general nested-scope control rule is not present in the historical record.
+The scope transition itself is explicit in the historical record.
+
+---
+
+## D3.7b — Recover a general rule for scope-specific continuation / stopping
+
+**Observed component**
+
+One branch stopped while a different replication/transport branch continued.
+
+**Classification**
+
+```text
+FUNCTION: STRUCTURAL
+SPECIFICATION: NOT-RECOVERABLE
+MECHANICAL REPRODUCIBILITY: NO
+RATIONALE: UNKNOWN-RATIONALE
+RULE: UNKNOWN-RULE
+```
+
+**Why**
+
+A general nested-scope control rule is not present in the historical record.
 
 **Automation gap exposed**
 
@@ -845,12 +987,14 @@ unresolved T_verified interaction
 **Classification**
 
 ```text
-FUNCTION: OTHER — authority-boundary application
+FUNCTION: OTHER
 SPECIFICATION: EXPLICIT
-MECHANICAL REPRODUCIBILITY: YES FOR THIS NAMED BOUNDARY
+MECHANICAL REPRODUCIBILITY: YES
 RATIONALE: RECOVERABLE
-RULE: RECOVERABLE FOR THIS CASE
+RULE: RECOVERABLE
 ```
+
+Function subtype: `authority-boundary application`.
 
 **Authority consequence**
 
@@ -876,7 +1020,7 @@ additional T_instability work    NOT EARNED
 
 ```text
 FUNCTION: STRUCTURAL
-SPECIFICATION: EXPLICIT AS TERMINAL STATUS
+SPECIFICATION: EXPLICIT
 MECHANICAL REPRODUCIBILITY: PARTIAL
 RATIONALE: RECOVERABLE
 RULE: UNKNOWN-RULE
@@ -912,7 +1056,7 @@ no unresolved question supports a sufficiently discriminating next experiment
 
 ```text
 FUNCTION: STRUCTURAL
-SPECIFICATION: EXPLICIT AS RATIONALE
+SPECIFICATION: EXPLICIT
 MECHANICAL REPRODUCIBILITY: NO
 RATIONALE: RECOVERABLE
 RULE: UNKNOWN-RULE
@@ -1048,18 +1192,18 @@ These are exposed automation boundaries. They are **not** automatically controll
 
 ## Negative audit result is valid
 
-The audit explicitly permits:
+The audit explicitly permits component-level outcomes such as:
 
 ```text
 component observed
 → function identifiable
-→ rationale partly or fully recoverable
-→ rule not recoverable
+→ RATIONALE = RECOVERABLE or UNKNOWN-RATIONALE
+→ RULE = UNKNOWN-RULE
 → mechanical reproduction unavailable
 → NO ABSTRACTION AUTHORIZED FROM THIS FACT ALONE
 ```
 
-That outcome occurs multiple times in Pilot 0.
+No intermediate rationale or rule category is introduced to make an awkward component fit.
 
 ---
 
