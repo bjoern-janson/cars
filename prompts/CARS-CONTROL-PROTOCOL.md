@@ -174,11 +174,31 @@ The historical Pilot-0 causal-response assay is preserved in:
 - [`../docs/ASSAY_SPEC.md`](../docs/ASSAY_SPEC.md)
 - [`../results/PILOT0_TERMINAL_RECORD.md`](../results/PILOT0_TERMINAL_RECORD.md)
 
-The current frozen empirical benchmark is:
+The current live causal-attribution seam is:
+
+- [`../experiments/ASI0_EVIDENCE_ASSIGNMENT.md`](../experiments/ASI0_EVIDENCE_ASSIGNMENT.md)
+
+It tests only whether correct evidence-to-target assignment has incremental causal leverage over bounded modification selection and concealed future capability under matched conditions.
+
+The independent future-plasticity benchmark remains separately frozen and pending:
 
 - [`../experiments/FUTURE_PLASTICITY_FORECAST.md`](../experiments/FUTURE_PLASTICITY_FORECAST.md)
 
-Its success or failure does not directly establish or falsify the top-level intelligence conjecture.
+Neither benchmark's success or failure directly establishes or falsifies the top-level intelligence conjecture.
+
+Keep the ASI-0 ceiling explicit:
+
+```text
+E-aligned > E-misaligned
+→ evidence-target relation has incremental causal leverage
+→ STOP
+
+concealed capability gain
+↛ viability
+↛ intelligence
+↛ recursive self-improvement
+↛ ASI
+```
 
 ## Default stance
 
