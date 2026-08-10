@@ -1,268 +1,133 @@
 # Results
 
-## Current authority state
+## Canonical authority state
 
 ```text
-Pilot 0
-→ CLOSED
-
-Pilot 1 predictive-resource toy
-→ estimator-level structural-generalization difference only
-→ intrinsic adaptive predictive-resource burden NOT DEMONSTRATED
-
-ID1 finite-data identification
-→ CLOSED after fresh-seed sign reversal
-→ adaptive-specific identification/sample-complexity burden NOT DEMONSTRATED
-
-Future plasticity forecast benchmark
-→ NO SCIENTIFIC RESULT YET
-
-ASI-0 evidence-assignment causal attribution
-→ SYNTHETIC SMOKE PASS ONLY
-→ SCIENTIFIC RUN NOT EXECUTED
-→ Δ_align UNKNOWN
+Pilot 0                     CLOSED
+Pilot 1 predictive toy      CLOSED
+ID1                         CLOSED
+Future plasticity forecast  UNOBSERVED / FROZEN
+ASI-0                       CLOSED NEGATIVE PRIMARY
 ```
 
-Canonical repository-level state:
+Canonical repository state:
 
 - [`../docs/CURRENT_RESEARCH_STATE.md`](../docs/CURRENT_RESEARCH_STATE.md)
-- [`../docs/INTELLIGENCE_THEORY.md`](../docs/INTELLIGENCE_THEORY.md)
 
-## ASI-0 evidence-assignment status
+## ASI-0
+
+Terminal record:
+
+- [`ASI0_TERMINAL_RECORD.md`](ASI0_TERMINAL_RECORD.md)
+
+Mechanism diagnosis:
+
+- [`ASI0_PRIMARY_MECHANISM_FAILURE_REPORT.md`](ASI0_PRIMARY_MECHANISM_FAILURE_REPORT.md)
+
+Status ledger:
 
 - [`ASI0_EVIDENCE_ASSIGNMENT_STATUS.md`](ASI0_EVIDENCE_ASSIGNMENT_STATUS.md)
 
-Frozen experiment/config:
-
-- [`../experiments/ASI0_EVIDENCE_ASSIGNMENT.md`](../experiments/ASI0_EVIDENCE_ASSIGNMENT.md)
-- [`../experiments/ASI0_EVIDENCE_ASSIGNMENT_CONFIG.json`](../experiments/ASI0_EVIDENCE_ASSIGNMENT_CONFIG.json)
-
-Primary estimand:
+Frozen primary:
 
 ```text
-Δ_align
-=
-E[Y_concealed | do(A = aligned)]
--
-E[Y_concealed | do(A = misaligned)]
+C      0
+A      0
+L_C    0
+L_A    0
+PRIMARY STOP
+REPLICATION NOT AUTHORIZED
+ASI-0 GREEN FALSE
 ```
 
-Current result status:
+Mean concealed scores:
 
 ```text
-synthetic smoke  PASS
-scientific run   NOT EXECUTED
-Δ_align          UNKNOWN
+base         0.20833333333333331
+aligned      0.20833333333333331
+misaligned   0.20833333333333331
+random-edit  0.20833333333333331
 ```
 
-The smoke injected a known synthetic effect and recovered it under the assignment/analyzer pipeline. That validates plumbing only.
+Selection / acceptance:
 
 ```text
-synthetic recovery
-↛ evidence that aligned development evidence improves a real agent
+aligned valid selection      14/16
+misaligned valid selection   14/16
+aligned admission             0/16
+misaligned admission          0/16
 ```
 
-No claim is currently authorized about intelligence, viability, recursive self-improvement, or ASI.
+Post-outcome diagnosis:
 
-## Pilot 0 terminal record
+```text
+pool property:
+15/16 frozen candidate patches failed baseline protected-behavior preservation
+
+realized-arm property:
+28/28 valid selected patches were rejected
+
+all valid selected patches newly failed exact_PINE
+```
+
+Earned interpretation:
+
+> Under the frozen proposal + protected-acceptance policy, correctly assigned development evidence produced no concealed capability gain and no incremental outcome leverage relative to misaligned assignment.
+
+ASI-0 is immutable. It is not to be rerun as a rescue, and replication was not authorized.
+
+## Pilot 0
 
 - [`PILOT0_TERMINAL_RECORD.md`](PILOT0_TERMINAL_RECORD.md)
 
-The original moderation hypothesis was **not supported**. Later diagnostic work established scoped representation-dependent transition effects, including a replicated but practically small prior-state-encoding effect on `T_instability`.
+The original moderation hypothesis was not supported. Later diagnostic work established scoped representation-dependent transition effects, including a replicated but practically small prior-state-encoding effect on `T_instability`.
 
-Keep explicit:
-
-```text
-Pilot 0 closure
-≠ theory established
-≠ global correction capacity
-≠ psychological mechanism
-≠ transport invariance
-≠ general intelligence claim
-```
-
-No A8, R2, or further `T_instability` decomposition is earned by that lineage.
+No A8, R2, or further localization is authorized from that lineage.
 
 ## Pilot 1 predictive-resource toy
 
-Primary repaired result:
-
 - [`PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md`](PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md)
+- [`PILOT1_PREDICTIVE_RESOURCE_TOY_RUN1.md`](PILOT1_PREDICTIVE_RESOURCE_TOY_RUN1.md) — quarantined initial run
 
-Quarantined initial run:
+The restricted predictor showed a structural-generalization difference, but exact known-dynamics prediction removed the apparent intrinsic adaptive burden.
 
-- [`PILOT1_PREDICTIVE_RESOURCE_TOY_RUN1.md`](PILOT1_PREDICTIVE_RESOURCE_TOY_RUN1.md)
-
-Match1 paired the same realized `(x0, θ0)` states across F/N/A.
-
-Observed under the restricted ridge predictor:
-
-```text
-structurally held-out order reversals
-A > N descriptively
-
-IID structure
-A ≈ N
-```
-
-The exact known-dynamics simulator then yielded:
-
-```text
-D = 0 for N
-D = 0 for A
-```
-
-with the same full-state dimensionality and essentially the same per-step computational class.
-
-Therefore:
-
-```text
-restricted-predictor A/N difference
-→ estimator / approximation phenomenon
-
-intrinsic adaptive predictive-resource excess
-→ NOT DEMONSTRATED
-```
-
-## ID1 finite-data system identification
-
-Primary result:
+## ID1 finite-data identification
 
 - [`PILOT1_ID1_SYSTEM_IDENTIFICATION.md`](PILOT1_ID1_SYSTEM_IDENTIFICATION.md)
-- [`pilot1_id1_system_identification_result.json`](pilot1_id1_system_identification_result.json)
-
-Replication:
-
 - [`PILOT1_ID1_P3_REPLICATION.md`](PILOT1_ID1_P3_REPLICATION.md)
-- [`pilot1_id1_p3_replication_result.json`](pilot1_id1_p3_replication_result.json)
 
-The weaker P2 identifier showed a visible positive A/N structural gap. The stronger generic P3 identifier reduced the high-resource absolute gap by approximately **99.46%**.
+A stronger generic identifier removed approximately 99.46% of the earlier high-resource gap. The remaining tiny discrepancy reversed sign under fresh-seed replication. No adaptive-specific sample-complexity regime was established.
 
-Frozen P3 high-resource ID1 contrast:
-
-```text
-A - N
-= +4.70792e-7 structural NMSE
-```
-
-The direct sample-threshold comparison was identical for N and A:
-
-```text
-ε = 0.01   → 48 / 48
-ε = 0.005  → 48 / 48
-ε = 0.001  → 96 / 96
-```
-
-Fresh-seed P3 replication:
-
-```text
-A - N
-= -3.90770244e-6
-```
-
-The sign reversed under the frozen rule. No distinct sample-scaling regime was established.
-
-Terminal classification:
-
-```text
-ID1 tiny P3 discrepancy
-→ CLOSED
-
-replication of positive sign
-→ FAILED
-
-finite-data adaptive identification burden
-→ NOT DEMONSTRATED
-
-distinct sample-complexity regime
-→ NOT DEMONSTRATED
-
-new construct
-→ NOT EARNED
-
-new theory
-→ NOT EARNED
-```
-
-Do not run another replication merely to recover the sign.
-
-## Future plasticity forecast benchmark
-
-Current status:
+## Future plasticity forecast
 
 - [`FUTURE_PLASTICITY_FORECAST_STATUS.md`](FUTURE_PLASTICITY_FORECAST_STATUS.md)
-
-Frozen benchmark:
-
-- [`../experiments/FUTURE_PLASTICITY_FORECAST.md`](../experiments/FUTURE_PLASTICITY_FORECAST.md)
-- [`../experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json`](../experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json)
-
-Current state:
 
 ```text
 DESIGN          PASS
 IMPLEMENTATION  PASS
 SMOKE           PASS
-CANONICAL DATA  unavailable in active execution environment
 SCIENTIFIC RUN  NOT EXECUTED
-RESULT          ∅
-INTERPRETATION  ∅
+RESULT          UNOBSERVED
 ```
 
-The synthetic smoke is plumbing evidence only. No Permuted-MNIST scientific outcome exists yet.
+No surrogate result has scientific authority.
 
-## Reporting discipline
+## Reporting rule
 
-Future result packages should make reconstructible:
+Every result package should preserve:
 
 ```text
 scientific object
 measurement structure
 pre-outcome contract
 assignment / data-generation process
-predictor / estimator
+estimator
 resource budget
 held-out structure
 uncertainty
 protocol deviations
 claim actually earned
+stopping / replication authorization
 ```
 
-Keep surfaces separate:
-
-```text
-prompt efficacy
-≠ causal responsiveness
-≠ structural generalization
-≠ predictive-resource burden
-≠ finite-data identification burden
-≠ future plasticity forecastability
-≠ evidence-assignment causal leverage
-≠ viability improvement
-≠ evidence-mediated intelligence
-```
-
-## Classification rule
-
-Classify results as one of:
-
-- **positive within scope**;
-- **negative/null**;
-- **mixed tradeoff**;
-- **estimand changed**;
-- **invalid/inconclusive**;
-- **development/smoke only**.
-
-A positive result on one surface does not promote authority on another.
-
-## Governing stopping rule
-
-```text
-apparent discrepancy
-→ strongest generic explanation
-→ minimal repair / stronger estimator
-→ replication
-→ close if residual disappears or reverses
-```
-
-Do not escalate complexity merely because a branch produced an interesting number.
+Keep result surfaces separate. A positive or negative result on one surface does not automatically acquire authority on another.
