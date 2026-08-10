@@ -1,145 +1,172 @@
 # CARS — Controlled Adaptive Reasoning System
 
-> **Status:** living research notebook. CARS is an epistemic control protocol around an empirical research program. Pilot 0 is now **closed** under an epistemic stopping rule. The repository contains scoped randomized evidence about representation-dependent transition behavior, but nothing here establishes a general theory of intelligence, a global correction-capacity construct, a psychological mechanism, or a validated self-improving system.
+> **Status:** living research notebook. The project now separates a broad functional intelligence conjecture from a subtractive empirical program. Pilot 0 is closed, the Pilot-1/ID1 synthetic predictive-resource lineage is closed at its tested questions, and an independent future-plasticity forecast benchmark is frozen but has **no scientific result yet** because canonical MNIST was unavailable in the active execution environment.
 
-## Current architecture
+## Top-level theory
 
-CARS and the assay have different jobs.
+Canonical statement:
+
+> **Intelligence is the capacity of a system to convert appropriately informative new evidence into increased expected future viability.**
+
+Compact shorthand:
 
 ```text
-CARS
-│
-├── governs how reasoning responds to evidence
-└── governs how assay results are localized, interpreted, and revised
-
-ASSAY
-│
-├── tests a specific empirical proposition
-└── produces evidence that CARS then processes
+I_t ∝ Δ_E[V_{t+h}]
 ```
 
-Neither supplies the authority of the other.
+The proportionality symbol is shorthand, **not** a claimed linear law. The scientifically meaningful commitment is:
 
-Current control protocol:
+```text
+greater evidence-mediated expected future-viability gain
+→ greater intelligence under the conjecture
+```
+
+The theory is currently a **conjecture**. Its mechanism is unspecified and current empirical support is not established.
+
+See:
+
+- [`docs/INTELLIGENCE_THEORY.md`](docs/INTELLIGENCE_THEORY.md)
+- [`docs/CURRENT_RESEARCH_STATE.md`](docs/CURRENT_RESEARCH_STATE.md)
+
+## Theory ≠ mechanism
+
+The theory is functional rather than architectural.
+
+```text
+informative evidence
+        ↓
+system-mediated update
+        ↓
+changed state / policy / representation / memory
+        ↓
+changed future trajectory
+        ↓
+changed expected viability
+```
+
+Nothing in the current evidence establishes a special intelligence mechanism, correction controller, correction-specific state, adaptive-complexity variable, or novel predictive-state ontology.
+
+Keep frozen:
+
+```text
+current performance
+≠ intelligence
+
+learning speed
+≠ intelligence
+
+behavioral change
+≠ intelligence
+
+prediction
+≠ intelligence
+
+evidence response
+≠ viability gain
+
+viability gain without evidence mediation
+≠ evidence-conversion intelligence
+```
+
+## Current empirical hierarchy
+
+```text
+THEORY
+Intelligence concerns evidence → future viability
+        │
+        ▼
+FORECASTABILITY
+Can present state predict future response to unseen tasks/evidence?
+        │
+        ▼
+PREDICTIVE STRUCTURE
+What ordinary state variables explain that response?
+        │
+        ▼
+RESOURCE QUESTION
+How much representation / computation / data is required?
+        │
+        ▼
+ADAPTATION
+Is the response actually evidence-mediated change?
+        │
+        ▼
+VIABILITY
+Does that change improve future outcomes?
+        │
+        ▼
+CAUSAL MEDIATION
+Did the system's use of evidence cause the gain?
+        │
+        ▼
+CONSTRUCT VALIDITY
+Does this relation earn the name intelligence?
+```
+
+Each arrow is a separate empirical burden. A benchmark is not allowed to inherit the conclusion it is meant to earn.
+
+## CARS control protocol
+
+CARS is the epistemic-control layer around the research process. It governs how evidence is localized, interpreted, revised, and bounded.
+
+```text
+feedback
+→ localize
+→ discriminate
+→ revise minimally
+→ retest
+→ stop when no discriminating residual remains
+```
+
+Core rules include:
+
+```text
+possibility ≠ authority
+failure ≠ cause
+A_leave ↛ A_adopt
+validated consequence grants local authority only
+```
+
+Current protocol:
 
 - [`prompts/CARS-CONTROL-PROTOCOL.md`](prompts/CARS-CONTROL-PROTOCOL.md)
 
-Core assay specification:
+CARS does not make any assay hypothesis true. Empirical results do not validate CARS merely because CARS helped interpret them.
 
-- [`docs/ASSAY_SPEC.md`](docs/ASSAY_SPEC.md)
+## Pilot 0 — closed
 
-Pilot 0 frozen protocol and terminal record:
-
-- [`experiments/PILOT0_MMLU_PRO.md`](experiments/PILOT0_MMLU_PRO.md)
-- [`experiments/PILOT0_PROVENANCE.md`](experiments/PILOT0_PROVENANCE.md)
-- [`results/PILOT0_TERMINAL_RECORD.md`](results/PILOT0_TERMINAL_RECORD.md)
-
-## Motivating conjecture
-
-The research trajectory began from:
-
-```text
-I ∝ C_improve
-```
-
-where `C_improve` is a design objective: capacity to convert feedback into increased future correction capacity / viability.
-
-This remains a motivating conjecture and reasoning objective, not an established definition of intelligence and not a validated empirical law.
-
-The empirical program strips that conjecture down to a conditional causal-response object:
-
-```text
-τ(i)
-=
-E[V(e₁) - V(e₀) | I=i]
-```
-
-and the primitive scientific proposition:
-
-```text
-i₁ > i₀
-⇒
-τ(i₁) > τ(i₀)
-```
-
-The ordering proposition is the scientific object. A derivative or linear interaction coefficient is a representation of it, not the object itself.
-
-## Scientific object > representation > estimator
-
-Freeze the hierarchy:
-
-```text
-SCIENTIFIC PROPOSITION
-τ(i₁) > τ(i₀) for i₁ > i₀
-
-        ↓ represented by
-
-SHAPE
-∂τ(i)/∂i > 0
-or
-τ(i) = τ₀ + δi
-
-        ↓ instantiated on
-
-MEASUREMENT STRUCTURE
-I: order-preserving
-V: difference-preserving
-
-        ↓ recovered by
-
-ESTIMATOR
-```
-
-Failure implications are asymmetric:
-
-```text
-estimator failure
-↛ shape failure
-
-shape failure
-↛ scientific-proposition failure
-```
-
-Measurement is not merely downstream instrumentation. It partly constitutes the identity of the scientific object.
-
-See [`docs/MEASUREMENT_BOUNDARY.md`](docs/MEASUREMENT_BOUNDARY.md).
-
-## Pilot 0 — terminal status
-
-Pilot 0 used a literal measurement rather than calling it intelligence:
+Pilot 0 used Qwen3-4B on MMLU-Pro and tested the literal moderator:
 
 ```text
 I₁ = 1 - P(correct)
 ```
 
-under one frozen Qwen3-4B configuration on MMLU-Pro.
-
-The original moderation hypothesis was:
+The original hypothesis was:
 
 ```text
 higher I₁
 → greater causal benefit from verified-error feedback
 ```
 
-Terminal status:
+Terminal result:
 
 ```text
 H1
-NOT SUPPORTED
+→ NOT SUPPORTED
 ```
 
-`I₁` showed modest criterion validity for initial error likelihood, but correction-related validity was not demonstrated:
+`I₁` retained modest criterion validity for initial error likelihood, but correction-related validity was not established:
 
 ```text
 error detection
 ≠ correction susceptibility
 ```
 
-The subsequent diagnostic program localized transition-specific representation effects.
+The diagnostic program nevertheless localized representation-dependent transition effects.
 
-### Terminal endpoint ledger
+### Pilot 0 terminal endpoint ledger
 
-| Object | Terminal status |
+| Object | Status |
 | --- | --- |
 | `T_change` × prior-state encoding | **CAUSAL** |
 | `T_change` × section scaffold | **CAUSAL** |
@@ -158,209 +185,161 @@ The subsequent diagnostic program localized transition-specific representation e
 | psychological mechanism | **NOT ESTABLISHED** |
 | general intelligence claim | **NOT ESTABLISHED** |
 
-The unresolved `T_verified` interaction is endpoint-local:
+Authoritative records:
 
-```text
-unresolved T_verified interaction
-↛ reopen T_instability
-```
+- [`experiments/PILOT0_MMLU_PRO.md`](experiments/PILOT0_MMLU_PRO.md)
+- [`experiments/PILOT0_PROVENANCE.md`](experiments/PILOT0_PROVENANCE.md)
+- [`results/PILOT0_TERMINAL_RECORD.md`](results/PILOT0_TERMINAL_RECORD.md)
 
-### R1 replication / transport
+Pilot 0 remains read-only. No A8, R2, or further `T_instability` decomposition is earned by that lineage.
 
-R1 directly tested the A5↔A7 replication discrepancy for the labeled-scaffold, E0-only prior-state prose-versus-fields effect on `T_instability` across four fresh disjoint prestate cohorts.
+## Post-Pilot-0 subtraction
 
-```text
-C1  +0.030043
-C2  +0.045267
-C3  +0.025974
-C4  +0.034615
+The project repeatedly attempted to isolate a correction-specific scientific object. Candidate controller, transition, lineage, sufficiency, discovery, compression, and challengeability formulations were progressively absorbed by ordinary state, dynamics, information, policy/search, update, controlled observation, predictive-state, and decision-theoretic machinery.
 
-Δ_common = +0.033975
-95% CI   = [+0.021316,+0.047791]
-p        = 0.00019996
-```
+Current scoped conclusion:
 
-The effect is nonzero/reproduced while the entire common-effect interval lies inside the inherited `±0.05` practical region.
-
-Transport diagnostic:
-
-```text
-Q = 1.120334
-df = 3
-p = 0.772168
-I² = 0
-tau²_DL = 0
-```
-
-Authorized:
-
-```text
-observed cohort effects
-→ compatible with a common-effect model
-```
-
-Not authorized:
-
-```text
-compatible with common effect
-→ proven transport invariance
-```
-
-See [`results/PILOT0_TERMINAL_RECORD.md`](results/PILOT0_TERMINAL_RECORD.md) for the complete terminal lineage and authority boundary.
-
-## Pilot 0 stopping rule
-
-Pilot 0 is not closed because nothing else could theoretically be tested.
-
-It is closed because nothing else is presently justified to test.
-
-```text
-sufficiently contracted live hypothesis space
-+
-alternatives discriminated
-+
-surviving effects replicated / bounded
-+
-remaining uncertainty locally contained
-+
-no sufficiently discriminating next experiment
-────────────────────────────────────────────
-                        ↓
-                      STOP
-```
+> **Within the audited Pilot-0 phenomenon space, no empirically independent correction-specific primitive is presently required.**
 
 Keep explicit:
 
 ```text
-STOP
-≠ truth
-≠ completeness
-≠ certainty
+no residual found
+≠ no residual exists
 
-STOP
-= no presently justified escalation
+generic representability
+≠ complete mechanistic explanation
+
+negative differentiation
+≠ philosophical reduction
 ```
+
+The detailed historical subtraction branches remain provenance. The canonical current summary is in [`docs/CURRENT_RESEARCH_STATE.md`](docs/CURRENT_RESEARCH_STATE.md).
+
+## Pilot 1 — predictive-resource subtraction toy
+
+Pilot 1 asked a genuinely new synthetic question using:
+
+```text
+F — frozen dynamics
+N — exogenously changing dynamics
+A — intervention-coupled changing dynamics
+```
+
+A restricted predictor showed a small A>N distortion on structurally held-out order reversals. But with full state and known equations, an exact simulator predicted both N and A with zero distortion.
 
 Therefore:
 
 ```text
-A-series representation localization
-→ sufficiently resolved
+estimator-level structural-generalization difference
+→ YES
 
-R1 replication/transport
-→ closed
-
-A8
-→ NOT EARNED
-
-R2
-→ NOT EARNED
-
-additional T_instability decomposition
-→ NOT EARNED
+intrinsic adaptive predictive-resource burden
+→ NOT DEMONSTRATED
 ```
 
-Any future empirical branch requires a genuinely new scientific question and a fresh pre-outcome contract.
+Record:
 
-## CARS control protocol
+- [`results/PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md`](results/PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md)
 
-CARS remains a reasoning protocol, not an empirical theorem.
+## ID1 — finite-data system identification, closed
 
-Its core responsibilities are:
+ID1 hid the transition/update equations and required finite-data identification.
 
-- localize failure before revising;
-- separate possibility from epistemic authority;
-- match claims to the scope actually identified by evidence;
-- prevent validity, mechanism, causation, provenance, and future reliability from laundering into one another;
-- prefer discriminating and structurally independent probes;
-- revise the smallest thing the evidence requires;
-- escalate to representation/interface change only when warranted;
-- separate departure from adoption;
-- permit unresolved states;
-- retest correction prospectively;
-- preserve scoped authority and reopenability;
-- separate belief from decision when action cannot wait.
+A weak P2 identifier showed a visible A/N gap. A stronger generic P3 identifier removed approximately **99.46%** of the high-resource gap.
 
-Core invariants include:
+At the frozen high-resource P3 cell:
 
 ```text
-Possibility space ≠ epistemic authority space
+ID1
+A - N = +4.70792e-7 structural NMSE
 ```
+
+A fresh-seed replication produced:
 
 ```text
-Search allocates attention; evidence allocates authority.
+ID1-R1
+A - N = -3.90770244e-6
 ```
+
+The sign reversed, sample-threshold crossings remained identical, and no distinct sample-scaling regime was established.
+
+Therefore:
 
 ```text
-Evidence can authorize departure without authorizing destination.
+finite-data adaptive identification burden
+→ NOT DEMONSTRATED
+
+distinct sample-complexity regime
+→ NOT DEMONSTRATED
+
+ID1 discrepancy
+→ CLOSED
 ```
+
+Records:
+
+- [`results/PILOT1_ID1_SYSTEM_IDENTIFICATION.md`](results/PILOT1_ID1_SYSTEM_IDENTIFICATION.md)
+- [`results/PILOT1_ID1_P3_REPLICATION.md`](results/PILOT1_ID1_P3_REPLICATION.md)
+
+Do not run another replication merely to recover the original sign.
+
+## Independent future-plasticity forecast benchmark — frozen
+
+The next authorized benchmark does **not** descend from the failed ID1 toy. It uses an independently established continual-learning phenomenon: plasticity variation under Online Permuted MNIST.
+
+Neutral object:
 
 ```text
-Failure does not identify its cause.
+Γ_t(E*)
+=
+future learning trajectory from checkpoint S_t
+on concealed future task transformation E*
 ```
+
+Each checkpoint is compared to a matched fresh network on the exact same future task, data order, initialization family, optimizer, and training budget.
+
+The first pass tests only:
 
 ```text
-A_leave ↛ A_adopt
+G0 — forecastability
+G1 — current capability beyond age
+G2 — established plasticity variables beyond capability
+G3 — broader checkpoint-state sketch beyond plasticity variables
 ```
 
-CARS is used to interpret whether and where an assay fails. It does not make the assay hypothesis true.
+Frozen artifacts:
 
-## Evidence and authority boundaries
+- [`experiments/FUTURE_PLASTICITY_FORECAST.md`](experiments/FUTURE_PLASTICITY_FORECAST.md)
+- [`experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json`](experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json)
+- [`scripts/run_future_plasticity_forecast.py`](scripts/run_future_plasticity_forecast.py)
+- [`results/FUTURE_PLASTICITY_FORECAST_STATUS.md`](results/FUTURE_PLASTICITY_FORECAST_STATUS.md)
 
-Keep distinct:
+Current state:
 
 ```text
-causal heterogeneity
-≠ longitudinal dynamics
-≠ equilibrium
-≠ stationary stochastic distribution
+DESIGN          PASS
+IMPLEMENTATION  PASS
+SMOKE           PASS
+CANONICAL DATA  unavailable in active execution environment
+SCIENTIFIC RUN  NOT EXECUTED
+RESULT          ∅
+INTERPRETATION  ∅
 ```
 
-A scoped randomized result does not automatically establish:
+No surrogate dataset, G4–G6 escalation, new `Z`, new construct, or theory interpretation is authorized before the canonical run.
 
-- a causal effect of the moderator itself;
-- construct identity;
-- mechanism;
-- discriminative correction capacity;
-- cross-model or cross-domain transport;
-- transport invariance;
-- safety;
-- equilibrium;
-- theory validation.
+## Current research contract
 
-See [`docs/CLAIMS_AND_NONCLAIMS.md`](docs/CLAIMS_AND_NONCLAIMS.md).
+Repository-level authority and escalation rules:
 
-## Synthetic red-team track
+- [`docs/RESEARCH_CONTRACT.md`](docs/RESEARCH_CONTRACT.md)
+- [`docs/CLAIMS_AND_NONCLAIMS.md`](docs/CLAIMS_AND_NONCLAIMS.md)
+- [`docs/CURRENT_RESEARCH_STATE.md`](docs/CURRENT_RESEARCH_STATE.md)
 
-The repository retains synthetic and adversarial checks for assay failure modes:
+The governing rule is:
 
-- [`docs/RED_TEAM_PROTOCOL.md`](docs/RED_TEAM_PROTOCOL.md)
-- [`docs/JUMP_WORLD_STRESS_TESTS.md`](docs/JUMP_WORLD_STRESS_TESTS.md)
-- [`results/SYNTHETIC_ASSAY_REFERENCE.md`](results/SYNTHETIC_ASSAY_REFERENCE.md)
-
-Synthetic survival is development evidence only:
-
-```text
-synthetic red-team survival
-↛ plumbing success
-↛ real randomized evidence
-↛ replication
-↛ transport invariance
-↛ stable law
-```
-
-## Prompt and historical tracks
-
-Historical prompt snapshots remain intact:
-
-- [`prompts/CARS-v0.1.md`](prompts/CARS-v0.1.md)
-- [`prompts/CARS-v0.2-CANDIDATE.md`](prompts/CARS-v0.2-CANDIDATE.md)
-
-The current role-separated control protocol is:
-
-- [`prompts/CARS-CONTROL-PROTOCOL.md`](prompts/CARS-CONTROL-PROTOCOL.md)
-
-Historical catalyst and recursive-correction artifacts remain research lineage, not validated current theory.
+> **The theory specifies what may matter. The empirical program gives ordinary machinery every opportunity to explain it away. Only what survives that subtraction earns additional scientific structure.**
 
 ## Repository map
 
@@ -369,49 +348,56 @@ prompts/
   CARS-CONTROL-PROTOCOL.md
 
 docs/
+  INTELLIGENCE_THEORY.md
+  CURRENT_RESEARCH_STATE.md
+  CLAIMS_AND_NONCLAIMS.md
+  RESEARCH_CONTRACT.md
   ASSAY_SPEC.md
   MEASUREMENT_BOUNDARY.md
-  RED_TEAM_PROTOCOL.md
-  CLAIMS_AND_NONCLAIMS.md
   FAILURE_MODEL.md
-  RESEARCH_CONTRACT.md
+  RED_TEAM_PROTOCOL.md
 
 experiments/
   README.md
-  PILOT0_MMLU_PRO.md
-  PILOT0_PROVENANCE.md
-  PILOT0_*_CONFIG.json
-  LLM_ASSAY_PROTOCOL.md
+  PILOT0_*                         historical frozen Pilot 0
+  PILOT1_PREDICTIVE_RESOURCE_*    closed synthetic predictive-resource toy
+  PILOT1_ID1_*                    closed finite-data identification toy
+  FUTURE_PLASTICITY_FORECAST.*    current frozen independent benchmark
 
 results/
   README.md
   PILOT0_TERMINAL_RECORD.md
-  SYNTHETIC_ASSAY_REFERENCE.md
+  PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md
+  PILOT1_ID1_SYSTEM_IDENTIFICATION.md
+  PILOT1_ID1_P3_REPLICATION.md
+  FUTURE_PLASTICITY_FORECAST_STATUS.md
 
 scripts/
-  frozen Pilot 0 runners / analyzers
-  randomized-assay utilities
-  synthetic red-team utilities
+  frozen Pilot 0 runners/analyzers
+  Pilot 1 / ID1 synthetic runners
+  future-plasticity forecast runner
 ```
 
-## Notebook philosophy
-
-The repository should remain reopenable, testable, and cheap to revise without confusing notebook evolution with empirical progress.
+## Evidence discipline
 
 ```text
-simple experiment first
-→ complex explanation only if earned
+smoke
+↛ scientific result
+
+predictive gain
+↛ causal mechanism
+
+viability gain
+↛ evidence mediation
+
+measurable evidence-mediated viability gain
+↛ automatically intelligence
+
+successful subtraction
+↛ universal completeness
 ```
 
-Pilot 0 adds the complementary terminal discipline:
-
-```text
-CORRECTION
-→ contraction of the live hypothesis space
-→ not perpetual hypothesis generation
-```
-
-Successful correction can terminate when no remaining uncertainty supports a sufficiently discriminating next experiment.
+The project is allowed to terminate branches with the empty set.
 
 ## Authorship and workflow
 
