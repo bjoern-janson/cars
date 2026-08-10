@@ -2,9 +2,15 @@
 
 ## Status
 
-**PROSPECTIVE SCIENTIFIC REPAIR — NOT YET FROZEN**
+**FROZEN PRE-OUTCOME BOOLEAN REPAIR**
 
 This document reopens exactly one layer of the canonical ASI-0 instance: the finite Boolean input domain. No scientific outcome has been observed. Canonical execution attempt 1 remains `Y = ∅` because the original `boolean_pair` generator could not realize the frozen requirement of 3 distinct development inputs plus 3 disjoint concealed inputs.
+
+The repair was prospectively specified, validated independently, cross-checked against the implementation, and only then frozen. Validation record:
+
+- `results/ASI0_BOOLEAN_TRIPLE_REPAIR_VALIDATION.json`
+- GitHub Actions run `31393480741`
+- validated implementation commit `583f28f0f262c25c1f9441696f8cd1b864c2dc32`
 
 ## Failure localized
 
@@ -31,7 +37,7 @@ Therefore:
 
 The original canonical Boolean instance is constructively impossible. This is not a stochastic failure and does not provide evidence about C or A.
 
-## Minimal repair
+## Minimal frozen repair
 
 Replace only:
 
@@ -50,9 +56,9 @@ This restores room for 3 diagnostic development inputs and 3 disjoint concealed 
 
 No nuisance tag or ignored identifier is introduced.
 
-## Frozen candidate ontology proposed
+## Frozen candidate ontology
 
-Retain the four original Boolean operation names and extend them to three inputs by their standard n-ary semantics:
+Retain the four original Boolean operation names and extend them to three inputs by their standard n-ary/parity semantics:
 
 1. `and`
    - output `true` iff `p`, `q`, and `r` are all true.
@@ -65,7 +71,7 @@ Retain the four original Boolean operation names and extend them to three inputs
 
 Thus `xor`/`xnor` preserve the parity interpretation of the original pair rules rather than introducing a new Boolean construct.
 
-Candidate textual policies:
+Candidate textual policies are frozen as:
 
 ```text
 boolean_triple:and
@@ -81,9 +87,7 @@ boolean_triple:xnor
 For TASK inputs with booleans p, q, and r, return true iff an even number of p, q, and r are true. Return only true or false.
 ```
 
-## Prospective acceptance tests
-
-The repair may be frozen only if all tests pass before any canonical model outcome is generated.
+## Acceptance tests — PASSED
 
 ### A. Cardinality
 
@@ -91,7 +95,7 @@ The repair may be frozen only if all tests pass before any canonical model outco
 |D_boolean_triple| = 8 >= 6
 ```
 
-For every Boolean target in both primary and replication manifests:
+For every Boolean target in both primary and replication frozen-seed realizations:
 
 ```text
 len(dev) = 3
@@ -100,30 +104,34 @@ len(concealed) = 3
 |dev ∩ concealed| = 0
 ```
 
+**PASS.**
+
 ### B. Development diagnosticity
 
-For each generated 3-input development set, the four candidate operations must induce four distinct output signatures:
+For each generated 3-input development set, the four candidate operations induce four distinct output signatures.
 
-```text
-signature(and) != signature(or)
-signature(and) != signature(xor)
-...
-all 4 signatures unique
-```
-
-The deterministic generator may prospectively resample development inputs until this condition holds, exactly as in the pre-existing diagnosticity rule.
+**PASS for all 8 frozen-seed Boolean targets.**
 
 ### C. Exhaustive existence check
 
-Across the complete 8-point Boolean-triple domain, enumerate all `C(8,3)=56` three-input development subsets. At least one must uniquely identify all four candidates. The validation record should report the exact number of identifying subsets.
+Across the complete 8-point Boolean-triple domain:
+
+```text
+C(8,3) = 56 possible three-input development subsets
+36 / 56 uniquely identify all four candidate rules
+```
+
+**PASS.**
 
 ### D. Frozen-seed realization
 
-Using the already frozen primary and replication task seeds and the unchanged per-family/per-rule seed derivation, all eight Boolean targets (4 primary + 4 replication) must terminate and satisfy A and B.
+Using the already frozen primary and replication task seeds and unchanged per-family/per-rule seed derivation, all eight Boolean targets terminate and satisfy cardinality + diagnosticity.
+
+**PASS.**
 
 ### E. Non-change assertions
 
-The validation must verify that the following remain unchanged:
+Validation cross-checked that the following remain unchanged:
 
 ```text
 Qwen/Qwen2.5-0.5B-Instruct @ 7ae5576
@@ -131,21 +139,41 @@ Qwen/Qwen2.5-0.5B-Instruct @ 7ae5576
 3 concealed examples per target
 4 targets per family
 16 targets per phase
-same evidence-assignment mechanism
-same protected regressions
-same C and A estimands
-same one-sided bootstrap gate
-same replication rule
+primary and replication seeds
+evidence-assignment mechanism
+protected regressions
+C and A estimands
+one-sided target-cluster bootstrap parameters
+L_C > 0 AND L_A > 0 green rule
+conditional replication rule
 ```
+
+**PASS.**
+
+## Frozen implementation
+
+Canonical Boolean repair wrapper:
+
+```text
+scripts/run_asi0_canonical_qwen_boolean_triple.py
+```
+
+The original runner and hardened entry wrapper are retained for provenance. The repair wrapper mutates only the Boolean family/input-domain implementation before delegating to the unchanged canonical pipeline.
 
 ## Authority boundary
 
-Passing these tests authorizes only this repair:
+This validation authorizes only:
 
 ```text
 boolean_pair → boolean_triple
 ```
 
-It does not authorize changing model, example counts, estimands, inferential thresholds, mutation surface, candidate-generation mechanism, or replication rule.
+It does not authorize changing model, example counts, estimands, inferential thresholds, mutation surface, candidate-generation mechanism, assignment, or replication rule.
 
-After validation passes, this document and the canonical config/runner implementation may be marked **FROZEN PRE-OUTCOME BOOLEAN REPAIR**. Canonical attempt #2 remains blocked until that freeze is complete.
+Canonical execution attempt 1 remains:
+
+```text
+Y = ∅
+```
+
+No canonical attempt #2 has been launched by this repair/freeze process.
