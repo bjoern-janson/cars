@@ -56,9 +56,18 @@ def sample_pair_bank(sequences, n_per_sequence, rng, cfg):
 
 
 def raw_input(state, e, t):
-    time = np.zeros(2, dtype=float)
-    time[int(t)] = 1.0
-    return np.concatenate([state, e, time])
+    state = np.asarray(state, dtype=float)
+    e = np.asarray(e, dtype=float)
+    if state.ndim == 1:
+        time = np.zeros(2, dtype=float)
+        time[int(t)] = 1.0
+        return np.concatenate([state, e, time])
+
+    n = len(state)
+    e_rows = np.broadcast_to(e, (n, 2))
+    time = np.zeros((n, 2), dtype=float)
+    time[:, int(t)] = 1.0
+    return np.column_stack([state, e_rows, time])
 
 
 def monomial_powers(n_variables, degree):
@@ -70,6 +79,8 @@ def monomial_powers(n_variables, degree):
 
 def polynomial_features(raw, powers):
     raw = np.asarray(raw, dtype=float)
+    if raw.ndim == 1:
+        raw = raw[None, :]
     phi = np.empty((len(raw), len(powers)), dtype=float)
     for j, combo in enumerate(powers):
         if not combo:
@@ -151,16 +162,28 @@ def fit_identifier(transition_bank, cached_phi, selection_orders, per_sequence_n
 
 def predict_truth_rows(beta, truth_rows, powers, cfg):
     predictions = np.empty((len(truth_rows), 4), dtype=float)
+    by_sequence = {}
     for i, row in enumerate(truth_rows):
-        state = np.concatenate([row["x0"], row["theta0"]]).astype(float)
-        trajectory = []
-        for t, intervention_name in enumerate(row["sequence"]):
+        by_sequence.setdefault(row["sequence"], []).append(i)
+
+    for seq, indices in by_sequence.items():
+        states = np.column_stack(
+            [
+                np.stack([truth_rows[i]["x0"] for i in indices]),
+                np.stack([truth_rows[i]["theta0"] for i in indices]),
+            ]
+        )
+        trajectory = np.empty((len(indices), 4), dtype=float)
+
+        for t, intervention_name in enumerate(seq):
             e = vec(cfg["interventions"][intervention_name])
-            raw = raw_input(state, e, t)[None, :]
+            raw = raw_input(states, e, t)
             phi = polynomial_features(raw, powers)
-            state = (phi @ beta).reshape(-1)
-            trajectory.extend(state[:2].tolist())
-        predictions[i] = np.asarray(trajectory, dtype=float)
+            states = phi @ beta
+            trajectory[:, 2 * t : 2 * t + 2] = states[:, :2]
+
+        predictions[np.asarray(indices, dtype=int)] = trajectory
+
     return predictions
 
 
@@ -264,17 +287,11 @@ def run(cfg, smoke=False):
     per_sequence_grid = [int(x) for x in local_cfg["sampling"]["train_per_sequence_grid"]]
 
     rows = []
-    system_cache = {}
 
     for system in SYSTEMS:
         transition_bank = build_transition_bank(system, train_pairs, train_sequences, local_cfg)
         iid_truth = build_truth(system, iid_pairs, train_sequences, local_cfg)
         structural_truth = build_truth(system, structural_pairs, structural_sequences, local_cfg)
-
-        system_cache[system] = {
-            "iid_truth": iid_truth,
-            "structural_truth": structural_truth,
-        }
 
         for degree in degrees:
             powers = monomial_powers(8, degree)
@@ -389,6 +406,7 @@ def run(cfg, smoke=False):
         "schema_version": 1,
         "study": local_cfg["study"],
         "status": "SMOKE_ONLY" if smoke else "PILOT1_ID1_SYNTHETIC_OUTCOME",
+        "implementation_revision": "V2 vectorized evaluation only; no scientific settings changed",
         "seed": seed,
         "authority": local_cfg["authority"],
         "rows": rows,
@@ -428,6 +446,7 @@ def main():
         json.dumps(
             {
                 "status": result["status"],
+                "implementation_revision": result["implementation_revision"],
                 "seed": result["seed"],
                 "rows": len(result["rows"]),
                 "primary_decision": result["primary_decision"],
