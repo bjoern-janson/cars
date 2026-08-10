@@ -95,13 +95,275 @@ Does the relation explain intelligence better than alternatives?
 
 Each arrow is a separate empirical burden.
 
-## Current empirical question
+ASI-0 does not jump this hierarchy. It tests only a lower mechanistic fragment:
 
-The active frozen benchmark is **not** a direct intelligence test.
+```text
+development evidence
+→ modification selection
+→ bounded agent modification
+→ concealed future capability
+```
+
+## Current live causal question — ASI-0
+
+ASI-0 is **not** a direct intelligence, viability, recursive-self-improvement, or ASI test.
 
 It asks:
 
-> **Can prospectively measured checkpoint state forecast how much a continually trained neural network's future trainability will differ from a matched fresh network on the same concealed future task transformation?**
+> **Can a fixed-base-model agent use development evidence to select bounded modifications that produce greater concealed future capability than evidence-misaligned selection under matched resources?**
+
+Treatment object:
+
+```text
+A = evidence → target assignment mechanism
+```
+
+Primary estimand:
+
+```text
+Δ_align
+=
+E[Y_concealed | do(A = aligned)]
+-
+E[Y_concealed | do(A = misaligned)]
+```
+
+This is an interventional contrast. The randomized/permuted assignment mechanism is what licenses the causal reading.
+
+Frozen contract:
+
+- [`../experiments/ASI0_EVIDENCE_ASSIGNMENT.md`](../experiments/ASI0_EVIDENCE_ASSIGNMENT.md)
+- [`../experiments/ASI0_EVIDENCE_ASSIGNMENT_CONFIG.json`](../experiments/ASI0_EVIDENCE_ASSIGNMENT_CONFIG.json)
+- [`../scripts/run_asi0_assignment_experiment.py`](../scripts/run_asi0_assignment_experiment.py)
+- [`../results/ASI0_EVIDENCE_ASSIGNMENT_STATUS.md`](../results/ASI0_EVIDENCE_ASSIGNMENT_STATUS.md)
+
+Current status:
+
+```text
+CAUSAL DESIGN SKELETON   FROZEN
+IMPLEMENTATION            PASS
+SYNTHETIC SMOKE           PASS
+CANONICAL MODEL           NOT YET FROZEN
+CANONICAL TARGET MANIFEST NOT YET FROZEN
+CONCEALED SUITE           NOT YET FROZEN
+SCIENTIFIC RUN            NOT EXECUTED
+Δ_align                   UNKNOWN
+INTERPRETATION            ∅
+```
+
+## ASI-0 assignment contract
+
+For each target `i` with development evidence `E_i`:
+
+```text
+ALIGNED
+E_i → target i
+
+MISALIGNED
+E_{π(i)} → target i
+π(i) ≠ i
+```
+
+The misaligned arm is a prospectively seeded within-stratum derangement. It is not a nonsense-evidence control.
+
+The design preserves generic information structure while breaking relevance.
+
+Where feasible, matching strata preserve:
+
+```text
+task family
+evidence type
+trace-length bucket
+difficulty bucket
+candidate count
+resource budget
+```
+
+A stratum unable to support a derangement is ineligible for the primary contrast.
+
+## ASI-0 matched candidate-pool contract
+
+The candidate pool is frozen before assignment and reused exactly across the primary aligned/misaligned pair.
+
+```text
+same target
+same candidate IDs
+same candidate texts
+same candidate count
+same candidate-generation machinery
+same candidate-generation evidence access
+
+ONLY CHANGE
+assigned evidence used for candidate selection
+```
+
+Candidate generation is not the treatment. Correct evidence assignment is the treatment.
+
+This is intentionally a hard null: generic candidate diversity and generic information richness are available to both primary arms.
+
+## ASI-0 fixed-base and mutation contract
+
+Every branch resets from the identical frozen base-agent snapshot.
+
+Frozen first-pass mutation surface:
+
+```text
+one bounded textual policy patch
+one mutable policy slot
+frozen weights
+frozen tool permissions
+no cross-branch carryover
+no architecture expansion
+no recursive self-modification
+```
+
+Therefore:
+
+```text
+ASI-0
+↛ recursive self-improvement
+```
+
+Changing the mutation surface after seeing `Δ_align` creates a new experiment rather than rescuing ASI-0.
+
+## ASI-0 secondary controls
+
+Secondary controls:
+
+```text
+STATIC
+RANDOM-EDIT
+```
+
+They help bound repeated execution and arbitrary mutation, but:
+
+```text
+SELF vs RANDOM
+→ useful control
+→ insufficient attribution test
+```
+
+The primary attribution test remains:
+
+```text
+E-ALIGNED
+vs
+E-MISALIGNED
+```
+
+## ASI-0 gates
+
+The frozen gate order is:
+
+```text
+resource matched
+        ↓
+protected regressions
+        ↓
+concealed confirmation
+        ↓
+structural holdout
+        ↓
+replication if positive
+```
+
+Every primary arm uses the same protected-regression gate. A rejected patch becomes an explicit no-op rather than receiving a hand-selected replacement.
+
+The concealed evaluator must be blind to arm and must not feed concealed outcomes back into candidate generation or selection.
+
+The task family must define structural holdout prospectively; surface novelty alone is insufficient.
+
+## ASI-0 scientific-instance gate
+
+The current config intentionally contains:
+
+```text
+MUST_FREEZE_BEFORE_SCIENTIFIC_RUN
+```
+
+for unresolved canonical instance fields such as the base model/revision, selection configuration, candidate count, evaluator, and concealed suite.
+
+The runner refuses scientific manifest preparation while any such placeholder remains.
+
+```text
+smoke success
+↛ preregistration complete
+↛ scientific result
+```
+
+## ASI-0 result contract
+
+For each arm:
+
+```text
+G_arm
+=
+Y_concealed(modified-or-gated agent)
+-
+Y_concealed(frozen base agent)
+```
+
+Primary report:
+
+```text
+mean G_aligned
+mean G_misaligned
+Δ_align
+target-cluster bootstrap interval
+number of targets / replicate pairs
+protected-regression pass rate by arm
+```
+
+Targets, not branch rows, are the primary clustering unit.
+
+### Maximum positive interpretation
+
+A positive replicated result authorizes, at most:
+
+> **Correct evidence-to-target assignment causally improves bounded modification selection and downstream concealed performance under the tested conditions.**
+
+Do not infer:
+
+```text
+future capability gain
+→ viability gain
+
+viability gain
+→ intelligence
+
+evidence-aligned modification
+→ recursive self-improvement
+
+ASI-0
+→ ASI
+```
+
+### Null interpretation
+
+If:
+
+```text
+E-aligned ≈ E-misaligned
+```
+
+then the authorized interpretation is:
+
+> **Correct semantic assignment of development evidence adds no detectable value under the tested mutation surface, task family, resource envelope, and measurement resolution.**
+
+Do not rescue a null by:
+
+```text
+inventing a new Z
+expanding the mutation surface post hoc
+increasing autonomy post hoc
+claiming the effect must emerge at scale
+```
+
+If the effect disappears, ASI-0 closes at that boundary unless a genuinely new independently motivated question is introduced.
+
+## Independent future-plasticity contract
+
+The future-plasticity benchmark remains independently frozen and pending canonical MNIST. ASI-0 neither supersedes its scientific object nor inherits authority from it.
 
 Neutral object:
 
@@ -111,7 +373,7 @@ Neutral object:
 future learning trajectory produced from checkpoint S_t on E*
 ```
 
-The frozen benchmark tests only G0–G3:
+Frozen G0–G3 questions:
 
 ```text
 G0 forecastability
@@ -120,10 +382,11 @@ G2 selected plasticity measurements beyond capability
 G3 broad checkpoint-state sketch beyond selected plasticity measurements
 ```
 
-Contract:
+Artifacts:
 
 - [`../experiments/FUTURE_PLASTICITY_FORECAST.md`](../experiments/FUTURE_PLASTICITY_FORECAST.md)
 - [`../experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json`](../experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json)
+- [`../results/FUTURE_PLASTICITY_FORECAST_STATUS.md`](../results/FUTURE_PLASTICITY_FORECAST_STATUS.md)
 
 Current status:
 
@@ -137,120 +400,7 @@ RESULT          ∅
 INTERPRETATION  ∅
 ```
 
-No surrogate dataset is authorized merely to obtain a number.
-
-## Future-task concealment contract
-
-The future task identity must not enter checkpoint measurement construction.
-
-Operational ordering:
-
-```text
-train continual history
-→ reach checkpoint
-→ measure checkpoint state
-→ freeze measurements
-→ only then consume future-task RNG
-→ evaluate future learning
-```
-
-This prevents future-task identity from leaking into the checkpoint predictors by construction.
-
-## Matched fresh-network control
-
-For every checkpoint/future-task pair, the future learning trajectory is compared against a fresh network trained on the identical future task under matched training conditions.
-
-The benchmark therefore targets:
-
-```text
-history-dependent future trainability
-```
-
-rather than raw future-task difficulty.
-
-Primary summaries:
-
-```text
-ΔAUC
-=
-AUC(checkpoint future curve)
--
-AUC(fresh future curve)
-
-T90_gap
-=
-T90(checkpoint)
--
-T90(fresh)
-```
-
-The full learning curve `Γ` remains the scientific object; scalar summaries are reporting projections.
-
-## Forecast hierarchy contract
-
-The first pass compares increasingly rich ordinary predictors:
-
-```text
-NULL
-→ outer-training mean
-
-AGE
-→ task age
-
-CAPABILITY
-→ age + current task accuracy/loss
-
-PLASTICITY
-→ capability + prospectively frozen trainability/network-state measures
-
-RICH
-→ plasticity + fixed 32-D projection of full parameter displacement
-```
-
-Evaluation uses grouped out-of-fold prediction by continual-history run, with nested regularization selection and group-bootstrap comparison.
-
-No predictor receives future-task identity as a checkpoint feature.
-
-## Escalation rule
-
-This pass terminates at G0–G3.
-
-```text
-G4/G5 cross-family transport
-→ NOT AUTHORIZED
-
-G6 compression search
-→ NOT AUTHORIZED
-
-new Z
-→ NOT AUTHORIZED
-
-new construct
-→ NOT AUTHORIZED
-
-new theory
-→ NOT AUTHORIZED
-```
-
-A failed gate terminates the corresponding escalation.
-
-Examples:
-
-```text
-G0 fails
-→ no forecastability claim at this measurement/sample resolution
-
-AGE explains most prediction
-→ simple temporal trajectory is sufficient at this resolution
-
-PLASTICITY absorbs capability-relative signal
-→ ordinary plasticity variables explain the tested increment
-
-RICH ≈ PLASTICITY
-→ broad parameter sketch adds little incremental information
-```
-
-No negative result is generalized beyond its measurement and benchmark scope.
+No surrogate dataset, G4–G6 escalation, new `Z`, new construct, or theory interpretation is authorized merely to obtain a result.
 
 ## Historical Pilot 0 contract
 
@@ -270,7 +420,7 @@ Authoritative terminal record:
 
 - [`../results/PILOT0_TERMINAL_RECORD.md`](../results/PILOT0_TERMINAL_RECORD.md)
 
-Do not reinterpret the active future-plasticity benchmark as a continuation or retrofit of Pilot 0.
+Do not reinterpret ASI-0 or future plasticity as a retrofit of Pilot 0.
 
 ## Pilot 1 / ID1 contract boundary
 
@@ -317,20 +467,19 @@ prediction
 ↛ causal mechanism
 ```
 
-The top-level theory eventually requires evidence-mediated viability gain, which is a stronger causal object than future trainability forecasting.
+ASI-0 uses randomized/permuted assignment to identify a narrower causal object, but even a positive assignment effect is not a viability result.
 
-Do not infer:
+Keep explicit:
 
 ```text
-future trainability difference
-→ viability gain
-
-viability gain
-→ evidence mediation
-
-evidence mediation
-→ construct validity as intelligence
+correct evidence assignment
+→ bounded concealed capability gain
+↛ viability gain
+↛ intelligence
+↛ ASI
 ```
+
+The top-level theory eventually requires evidence-mediated viability gain, which is a stronger object than either future-trainability forecasting or ASI-0 capability attribution.
 
 Each transition requires a separate identification strategy and prospective measurement definition.
 
@@ -346,7 +495,7 @@ The repository currently makes no construct-validity claim.
 
 The CARS control protocol can separately be tested as a reasoning intervention against baseline and generic careful-reasoning controls.
 
-Prompt efficacy does not establish the intelligence conjecture, Pilot-0 assay, predictive-resource results, or future-plasticity forecastability.
+Prompt efficacy does not establish the intelligence conjecture, Pilot-0 assay, predictive-resource results, future-plasticity forecastability, or ASI-0 evidence-assignment leverage.
 
 ## Subtraction rule
 
@@ -361,6 +510,20 @@ apparent discrepancy
 → independent replication if warranted
 → transport only if earned
 → new construct only if residual survives
+```
+
+ASI-0 adds the specific subtraction:
+
+```text
+SELF improves
+→ subtract search / mutation / compute / evaluator feedback
+
+E-aligned improves
+→ match information quantity / candidate diversity
+
+E-aligned > E-misaligned
+→ correct evidence-target relation has incremental leverage
+→ STOP
 ```
 
 The repository is allowed to end with:
@@ -379,7 +542,7 @@ A strong contradiction at the scientific-proposition level requires that shallow
 
 ## Version discipline
 
-Record the exact protocol, configuration, code, dataset identity, estimator, seed streams, and repository commit for any result whose authority matters.
+Record the exact protocol, configuration, code, dataset identity, estimator, seed streams, assignment mechanism, and repository commit for any result whose authority matters.
 
 Smoke/development streams remain separate from scientific outcome streams.
 
