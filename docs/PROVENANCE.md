@@ -2,7 +2,7 @@
 
 ## Research direction
 
-CARS is directed by **Björn Janson** as part of an independent research program on adaptive reasoning, correction, causal responsiveness, measurement identity, representation failure, and epistemic governance.
+CARS is directed by **Björn Janson** as part of an independent research program on adaptive reasoning, evidence use, future viability, causal responsiveness, plasticity, predictive state, measurement identity, representation failure, and epistemic governance.
 
 ## AI-assisted workflow
 
@@ -20,157 +20,185 @@ AI systems are used as research collaborators and development tools. Depending o
 - formalization of candidate hypotheses and evaluation criteria;
 - measurement-theoretic analysis;
 - causal-inference design discussion;
-- notation design and blind-decoding diagnostics.
+- notation design;
+- implementation and smoke testing.
 
-AI assistance is not independent scientific validation.
+AI assistance is **not** independent scientific validation.
 
-## Current artifact lineage
+## Current canonical artifact hierarchy
 
-The following were developed within the same broader AI-assisted research workflow:
+Current repository-level documents:
 
-- CARS prompt variants and current control protocol;
-- design rationale and claims documents;
-- seed prompt-level benchmark;
-- historical typed-attribution / representation-authority notes;
-- historical recursive correction architecture;
-- historical catalyst notation and execution semantics;
-- current minimal causal-responsiveness assay;
-- current measurement-boundary theorem/specification;
-- current adversarial assay red-team protocol;
-- evaluation, experiment, and result-reporting scaffolding.
+- [`INTELLIGENCE_THEORY.md`](INTELLIGENCE_THEORY.md) — functional theory conjecture;
+- [`CURRENT_RESEARCH_STATE.md`](CURRENT_RESEARCH_STATE.md) — terminal empirical/state ledger;
+- [`RESEARCH_CONTRACT.md`](RESEARCH_CONTRACT.md) — active authority and escalation rules;
+- [`CLAIMS_AND_NONCLAIMS.md`](CLAIMS_AND_NONCLAIMS.md) — current claim boundary.
 
-They are internally generated research artifacts, not independent evidence for one another.
+Historical Pilot-0 assay documents remain frozen provenance rather than current top-level scientific objects:
 
-In particular:
+- [`ASSAY_SPEC.md`](ASSAY_SPEC.md);
+- [`MEASUREMENT_BOUNDARY.md`](MEASUREMENT_BOUNDARY.md);
+- [`../experiments/PILOT0_MMLU_PRO.md`](../experiments/PILOT0_MMLU_PRO.md);
+- [`../results/PILOT0_TERMINAL_RECORD.md`](../results/PILOT0_TERMINAL_RECORD.md).
 
-```text
-CARS control protocol
-↛ assay hypothesis true
+## Top-level theory provenance
 
-assay architecture
-↛ CARS prompt effective
+The current theory is:
 
-measurement theorem
-↛ empirical measurement equivalence
+> **Intelligence is the capacity of a system to convert appropriately informative new evidence into increased expected future viability.**
 
-synthetic red-team result
-↛ real-world treatment-effect heterogeneity
-
-historical recursive architecture
-↛ current assay validated
-```
-
-## Current empirical object provenance
-
-The current scientific object is:
+Shorthand:
 
 ```text
-τ(i)
-=
-E[V(e₁)-V(e₀) | I=i]
+I_t ∝ Δ_E[V_{t+h}]
 ```
 
-with the primitive ordering proposition:
+The shorthand is not a validated law, linearity claim, or established definition. The theory emerged from a longer lineage involving correction, adaptive reasoning, causal responsiveness, predictive-state framing, and repeated subtraction against stronger generic explanations.
+
+The theory therefore must not be treated as independently discovered from the same evidence used to motivate it.
+
+## Pilot 0 provenance
+
+Pilot 0 operationalized a narrow causal-response question using:
 
 ```text
-i₁ > i₀
-⇒
-τ(i₁) > τ(i₀).
+I₁ = 1 - P(correct)
 ```
 
-This proposition emerged from a longer research trajectory beginning with the motivating conjecture:
+under one frozen Qwen3-4B / MMLU-Pro configuration.
+
+The original moderation hypothesis was not supported. Subsequent diagnostics localized representation-dependent transition effects and closed after replication/transport work.
+
+Pilot 0 remains read-only and does not supply evidence for the current future-plasticity benchmark.
+
+## Post-Pilot-0 subtraction provenance
+
+After Pilot 0, multiple candidate correction-specific abstractions were generated and attacked, including controller, transition, lineage, sufficiency, discovery, compression, and challengeability formulations.
+
+These subtraction artifacts were developed inside the same AI-assisted research lineage. They are not independent evidence for one another.
+
+The current scoped conclusion is only that no empirically independent correction-specific primitive was identified within the audited Pilot-0 phenomenon space.
+
+Historical subtraction branches remain provenance; they are not silently promoted into `main` as validated theory.
+
+## Pilot 1 predictive-resource provenance
+
+Pilot 1 introduced a new synthetic F/N/A benchmark independent of Pilot 0.
+
+The first unpaired run was quarantined when an avoidable realized-state matching defect was identified.
+
+Match1 repaired only that defect by pairing the same realized `(x0, θ0)` states across systems while preserving the scientific generator and estimator settings.
+
+A restricted predictor produced a descriptive structural-generalization A>N gap, but the exact known-dynamics simulator removed the discrepancy entirely.
+
+Therefore the stronger intrinsic-complexity interpretation was not retained.
+
+## ID1 provenance
+
+ID1 changed one scientific dimension: the transition/update equations were hidden from the predictor, requiring finite-data system identification.
+
+A pre-contract exploratory stream using an older toy seed was quarantined from confirmatory authority.
+
+The confirmatory ID1 stream used a fresh frozen seed. A row-wise implementation path exceeded the execution budget without producing a scientific outcome; the runner was vectorized with mathematically identical evaluation and no changes to the scientific contract before the confirmatory outcome was generated.
+
+The stronger P3 identifier removed approximately 99.46% of the weak-identifier high-resource A/N gap.
+
+A fresh-seed P3 replication was then frozen before outcome generation. The original tiny positive sign reversed, closing the discrepancy under the prespecified rule.
+
+Do not reuse the exposed ID1 streams as fresh validation for a successor benchmark.
+
+## Future plasticity benchmark provenance
+
+The future-plasticity forecast benchmark is independently motivated by an established continual-learning phenomenon rather than by the failed ID1 discrepancy.
+
+Frozen contract:
+
+- [`../experiments/FUTURE_PLASTICITY_FORECAST.md`](../experiments/FUTURE_PLASTICITY_FORECAST.md)
+- [`../experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json`](../experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json)
+
+The benchmark enforces:
 
 ```text
-I ∝ C_improve
+continual history
+→ checkpoint
+→ checkpoint measurements frozen
+→ future-task RNG consumed
+→ future task generated
+→ checkpoint/fresh future learning measured
 ```
 
-and later causal-response compressions.
+The future task therefore does not enter checkpoint-predictor construction.
 
-The lineage matters because the current assay should not be treated as an independently discovered empirical law. It is a candidate hypothesis generated inside the same research program and must therefore face external/adversarial evidence.
+A synthetic smoke run exercised the full implementation path but has development authority only.
 
-## Measurement-boundary provenance
+Canonical MNIST was unavailable in the active execution environment, so no full scientific outcome was generated and no surrogate dataset was substituted.
 
-The current measurement rule was sharpened through adversarial counterexample analysis.
-
-The working boundary is:
+Current status:
 
 ```text
-I
-→ order structure
-→ strictly increasing transforms preserve the primitive ordering
-
-V
-→ additive difference structure
-→ positive affine transforms preserve additive-CATE ordering
+DESIGN          PASS
+IMPLEMENTATION  PASS
+SMOKE           PASS
+SCIENTIFIC DATA unavailable in active execution environment
+RESULT          ∅
+INTERPRETATION  ∅
 ```
-
-This is a mathematical constraint on the current estimand, not empirical evidence that any real measurement instrument is valid or interval-equivalent.
-
-Claims that two independently constructed outcome instruments belong to the same affine-equivalence class require separate calibration evidence.
-
-## Red-team provenance
-
-Synthetic or constructed attacks are development evidence.
-
-They are useful for demonstrating that an estimator or scientific claim can fail under known conditions, including:
-
-- constant-effect worlds;
-- ceiling/floor artifacts;
-- nonlinear outcome remeasurement;
-- confounded treatment assignment;
-- generic plasticity;
-- measurement-equivalence failures.
-
-A synthetic counterexample can falsify an overstrong mathematical or methodological claim, but synthetic survival does not establish empirical validity in real systems.
-
-## CARS prompt provenance
-
-The current control protocol is in `prompts/CARS-CONTROL-PROTOCOL.md`.
-
-Historical prompt snapshots remain in `prompts/CARS-v0.1.md` and `prompts/CARS-v0.2-CANDIDATE.md`.
-
-Prompt versions should be treated as interventions. If a prompt experiment matters, record the exact file/hash and all context supplied to the model.
-
-## Historical catalyst diagnostics
-
-Blind or semi-blind model parses of the August 8 catalyst remain useful development diagnostics for semantic recoverability.
-
-They do not constitute evidence for the current causal-responsiveness assay.
-
-If catalyst experiments are reactivated, preserve the exact tested string and full context shown to the model.
 
 ## Selection-information boundary
 
-Any benchmark, calibration set, model parse, critique, prior result, or synthetic attack that can influence assay design, measurement choice, estimator choice, or threshold selection becomes part of the research lineage.
+Any benchmark, calibration set, model parse, critique, prior result, synthetic attack, seed stream, predictor family, or task family that can influence later design becomes part of the research lineage once exposed.
 
 Do not later relabel exposed development information as fresh independent validation.
 
-For independently constructed measurement instruments, keep calibration data separate from treatment-effect data when claiming independent interval-equivalence testing.
+Examples:
+
+```text
+Pilot 1 outcome
+→ may motivate ID1 question
+→ cannot be ID1 holdout evidence
+
+ID1 outcome
+→ cannot select features or outcomes for the independent future-plasticity benchmark
+
+synthetic smoke
+→ plumbing evidence only
+→ cannot become scientific benchmark evidence
+```
 
 ## Sequential provenance
 
 Evidence changes status over time.
 
-A benchmark or calibration set may be fresh for one decision, then become part of later design history once its results are observed.
-
 For sequential revisions, record:
 
 - when each benchmark/calibration environment was first exposed;
 - what revisions occurred afterward;
-- which generators or instruments were reused;
-- which audit cases remained unavailable to the development lineage.
+- which generators, task families, measurements, and estimators were reused;
+- which random streams were developmental versus confirmatory;
+- which audit cases remained unavailable to the development lineage;
+- whether a repair occurred before or after scientific outcome exposure.
 
 ## Construct / metric provenance
 
-The motivating conjecture and operational measures remain distinct.
+Theory, scientific object, measurement, and estimator remain distinct.
 
 ```text
-I ∝ C_improve
+theory shorthand
+≠ operational measurement
+≠ predictor
+≠ estimator
+≠ construct validity
 ```
 
-is a research framing, not a validated definition.
+Operational quantities acquire interpretation through reliability, predictive validity, causal identification where relevant, replication, and transport—not through their symbol names.
 
-`I`, `M_I`, `V`, and `M_V` used in an experiment are operational measurements. Their interpretation must be earned through reliability, invariance, predictive validity, causal-response relations, and transport—not through symbol names.
+In particular:
+
+```text
+I_t ∝ Δ_E[V_{t+h}]
+```
+
+is currently a theory conjecture, not a validated metric.
 
 ## Independence dimensions
 
@@ -178,28 +206,38 @@ Stronger evidence should increase independence along dimensions such as:
 
 - case authorship;
 - benchmark generator;
-- intervention construction;
+- future-task generator;
+- intervention/task construction;
 - measurement instrument construction;
 - calibration data;
+- random stream;
 - analysis implementation;
-- estimator;
+- estimator / predictor family;
 - model family / population;
 - evaluator;
 - replication team.
 
-Independence is not binary by default. Claims should state which dimensions were actually separated and which remain shared.
+Independence is not binary by default. Claims should state which dimensions were separated and which remain shared.
 
 ## Authority boundary
 
-AI-generated suggestions, simulations, implementations, benchmark cases, formal notation, critiques, or agreeing model interpretations acquire no scientific authority merely because they are coherent, executable, or convergent.
+Internally generated theories, simulations, implementations, benchmarks, critiques, and convergent model interpretations acquire no scientific authority merely because they are coherent or executable.
 
-The current protocol should therefore be read as:
+The current workflow is:
 
 ```text
-assay
+conjecture
+→ prospectively frozen empirical question
 → data
-→ CARS localization
-→ revision only if earned
+→ strongest generic comparator
+→ failure localization
+→ minimal revision
+→ held-out retest / replication if earned
+→ stop when no residual remains
 ```
 
-not as a closed loop in which internally generated theory validates itself.
+not a closed loop in which internally generated theory validates itself.
+
+## Governing provenance rule
+
+> **A result may evaluate a prior decision, but later outcomes may not retroactively supply the rationale, measurement choice, predictor, or hypothesis that generated that decision.**
