@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "study": "ASI-0 canonical Qwen2.5-0.5B evidence-assignment run",
+  "status": "PRE-OUTCOME CANONICAL SCIENTIFIC INSTANCE",
+  "scientific_question": "Can a fixed-base-model agent use development evidence to select bounded textual policy modifications that improve concealed capability, and does correct evidence-to-target assignment causally contribute to that gain?",
+  "model": {
+    "id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "revision": "7ae5576",
+    "weights_frozen": true,
+    "selection_and_execution_same_model": true
+  },
+  "task_family": {
+    "name": "latent_operation_adaptation_v1",
+    "description": "Four matched task families each contain four hidden fixed operations. Development evidence contains verified input-output examples without naming the operation. Candidate textual policies are frozen before assignment. Concealed examples are disjoint deterministic draws from the same target operation.",
+    "structural_holdout": "development and concealed examples use the same latent operation but disjoint inputs generated from prospectively distinct positions in a deterministic per-target RNG stream",
+    "task_generator_version": 1
+  },
+  "task_families": [
+    "pair_arithmetic",
+    "integer_list",
+    "string_transform",
+    "boolean_pair"
+  ],
+  "development_examples_per_target": 2,
+  "concealed_examples_per_target": 3,
+  "targets_per_family": 4,
+  "total_targets_per_phase": 16,
+  "mutation_surface": {
+    "type": "single_target_specific_textual_policy_patch",
+    "one_patch_only": true,
+    "weights_frozen": true,
+    "tool_permissions_frozen": true,
+    "cross_target_carryover": false,
+    "recursive_self_modification": false,
+    "candidate_generation": "deterministic family-specific candidate pool frozen in runner before evidence assignment"
+  },
+  "assignment": {
+    "aligned": "target receives its own development evidence",
+    "misaligned": "target receives another target's development evidence from the same task family under a prospectively seeded derangement with no fixed points",
+    "same_candidate_pool_across_primary_arms": true,
+    "same_base_model_across_primary_arms": true,
+    "same_concealed_items_across_primary_arms": true
+  },
+  "protected_regressions": {
+    "rule": "a selected patch is applied only if its score on the frozen regression suite is at least the unpatched base score; otherwise the arm becomes an explicit no-op",
+    "suite": [
+      "return exact token PINE",
+      "2+2 exact integer",
+      "uppercase CAT",
+      "larger of 7 and 3"
+    ]
+  },
+  "generation": {
+    "do_sample": false,
+    "selection_max_new_tokens": 16,
+    "answer_max_new_tokens": 16,
+    "answer_parser": "first stripped output line after removing quotes/backticks and optional Answer: prefix",
+    "candidate_parser": "exact candidate id or unique candidate-id substring; otherwise invalid selection and no-op"
+  },
+  "runtime": {
+    "python": "3.12",
+    "torch": "2.4.1+cpu",
+    "transformers": "4.46.3",
+    "batch_size": 8,
+    "torch_num_threads": 2
+  },
+  "inference": {
+    "capability_estimand": "C = E[Y_aligned - Y_base]",
+    "attribution_estimand": "A = E[Y_aligned - Y_misaligned]",
+    "joint_null": "C <= 0 OR A <= 0",
+    "joint_alternative": "C > 0 AND A > 0",
+    "test_family": "intersection-union gate using separate one-sided target-cluster bootstrap lower bounds",
+    "component_alpha": 0.05,
+    "one_sided_lower_quantile": 0.05,
+    "bootstrap_target_resamples": 5000,
+    "bootstrap_seed": 2026081011,
+    "green_rule": "L_C > 0 AND L_A > 0",
+    "alpha_split": "none; both component one-sided level-alpha criteria must pass"
+  },
+  "phases": {
+    "primary": {
+      "task_seed": 2026081101,
+      "assignment_seed": 2026081102,
+      "random_edit_seed": 2026081103
+    },
+    "replication": {
+      "task_seed": 2026081201,
+      "assignment_seed": 2026081202,
+      "random_edit_seed": 2026081203,
+      "run_only_if_primary_green": true
+    }
+  },
+  "interpretation": {
+    "maximum_green_claim": "Under this frozen latent-operation benchmark and bounded textual-policy mutation surface, correctly assigned development evidence causally contributed to selecting a modification that improved concealed capability relative to the fixed base model.",
+    "nonclaims": [
+      "general intelligence",
+      "viability optimization",
+      "recursive self-improvement",
+      "self-improving improvement process",
+      "superhuman AI research capability",
+      "general superhumanity",
+      "ASI",
+      "cross-task-family transport beyond this benchmark",
+      "architecture-level superiority"
+    ]
+  }
+}
