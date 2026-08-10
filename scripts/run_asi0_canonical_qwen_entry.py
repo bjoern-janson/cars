@@ -199,23 +199,55 @@ def materialize_diagnostic_case(case):
     raise ValueError(f"unknown diagnostic surface: {surface}")
 
 
-def canonical_user_prompts(cfg):
-    prompts = set()
-    for phase in ("primary", "replication"):
-        manifest = m.build_manifest(cfg, phase)
-        assignments = m.assign_evidence(manifest, int(cfg["phases"][phase]["assignment_seed"]))
-        amap = {(r["target_id"], r["arm"]): r for r in assignments}
-        for target in manifest:
-            for item in target["development_items"]:
-                prompts.add(item["prompt"])
-            for item in target["concealed_items"]:
-                prompts.add(item["prompt"])
-            for arm in ("aligned", "misaligned"):
-                assigned = amap[(target["target_id"], arm)]
-                prompts.add(m.selection_prompt(target, assigned["assigned_evidence_text"]))
-    for item in m.regression_suite():
-        prompts.add(item["prompt"])
-    return prompts
+def validate_canonical_input_feasibility(cfg):
+    required_unique = int(cfg["development_examples_per_target"]) + int(cfg["concealed_examples_per_target"])
+    if "boolean_pair" in cfg["task_families"] and required_unique > 4:
+        raise RuntimeError(
+            "canonical input infeasible before model execution: boolean_pair has only 4 distinct input prompts, "
+            f"but the frozen contract requests {required_unique} unique development+concealed prompts per target"
+        )
+
+
+def validate_diagnostic_separation(case):
+    surface = case["surface"]
+    if surface == "candidate_selection":
+        canonical_context = f"Unknown fixed operation within family {case['family']}."
+        if case["target_context"] == canonical_context:
+            raise ValueError(f"diagnostic selection context could equal canonical context: {case['case_id']}")
+        if not case["target_context"].startswith("Diagnostic-only "):
+            raise ValueError(f"diagnostic selection context lacks diagnostic namespace: {case['case_id']}")
+        return
+    if surface == "task_answering":
+        family = case["policy_family"]
+        prompt = case["prompt"]
+        if family == "pair_arithmetic":
+            mt = re.fullmatch(r"TASK: a=(-?\d+); b=(-?\d+)", prompt)
+            if not mt:
+                raise ValueError(f"invalid diagnostic pair prompt: {case['case_id']}")
+            a, b = map(int, mt.groups())
+            if -12 <= a <= 12 and -12 <= b <= 12 and a != b:
+                raise ValueError(f"diagnostic pair prompt lies inside canonical generator support: {case['case_id']}")
+            return
+        if family == "integer_list":
+            vals = list(map(int, prompt.split("=", 1)[1].split(",")))
+            if len(vals) == 5 and all(-9 <= v <= 15 for v in vals):
+                raise ValueError(f"diagnostic list prompt lies inside canonical generator support: {case['case_id']}")
+            return
+        if family == "string_transform":
+            s = prompt.split("=", 1)[1]
+            letters = set("abcdefghijkmnpqrstuvwxyz")
+            if len(s) == 6 and set(s) <= letters:
+                raise ValueError(f"diagnostic string prompt lies inside canonical generator support: {case['case_id']}")
+            return
+        if family == "boolean_pair":
+            raise ValueError("boolean task-answer diagnostics cannot be guaranteed disjoint from the canonical finite domain")
+        raise KeyError(family)
+    if surface == "regression":
+        canonical_regressions = {x["prompt"] for x in m.regression_suite()}
+        if case["prompt"] in canonical_regressions:
+            raise ValueError(f"diagnostic regression duplicates canonical regression input: {case['case_id']}")
+        return
+    raise ValueError(f"unknown diagnostic surface: {surface}")
 
 
 def validate_diagnostic_manifest(cfg, diag, materialized):
@@ -226,10 +258,9 @@ def validate_diagnostic_manifest(cfg, diag, materialized):
     case_ids = [x["case_id"] for x in materialized]
     if len(case_ids) != len(set(case_ids)):
         raise ValueError("diagnostic case_id values must be unique")
-    canonical_prompts = canonical_user_prompts(cfg)
-    overlap = sorted(x["case_id"] for x in materialized if x["user"] in canonical_prompts)
-    if overlap:
-        raise ValueError("diagnostic manifest overlaps canonical user prompts: " + ", ".join(overlap))
+    raw_by_id = {x["case_id"]: x for x in diag["cases"]}
+    for case_id in case_ids:
+        validate_diagnostic_separation(raw_by_id[case_id])
     return {"canonical_exact_prompt_overlap_count": 0, "n_cases": len(materialized)}
 
 
@@ -310,14 +341,16 @@ def diagnostic_main():
     cfg = m.load_json(args.config)
     diag = m.load_json(args.diagnostic_manifest)
     manifest_hash = m.sha256_obj(diag)
-    materialized = [materialize_diagnostic_case(case) for case in diag["cases"]]
-    separation = validate_diagnostic_manifest(cfg, diag, materialized)
-
     outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     checkpoint_path = outdir / "diagnostic_checkpoints.jsonl"
     logger = StageLogger(checkpoint_path, manifest_hash)
     overall_start = time.monotonic()
+
+    logger.emit("diagnostic_manifest_validation", 0, 0, 0)
+    materialized = [materialize_diagnostic_case(case) for case in diag["cases"]]
+    separation = validate_diagnostic_manifest(cfg, diag, materialized)
+    logger.emit("diagnostic_manifest_validation", len(materialized), len(materialized), 0)
 
     tok, model = diagnostic_load_model(cfg, args.device, logger)
     parsed_rows = []
@@ -400,4 +433,7 @@ if __name__ == "__main__":
         else:
             raise SystemExit(f"unsupported mode: {mode}")
     else:
+        cfg_path = sys.argv[1] if len(sys.argv) > 1 else None
+        if cfg_path:
+            validate_canonical_input_feasibility(m.load_json(cfg_path))
         m.main()
