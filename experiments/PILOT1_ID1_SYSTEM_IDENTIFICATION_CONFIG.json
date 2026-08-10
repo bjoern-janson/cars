@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "study": "Pilot 1 ID1: finite-data system identification under structural intervention holdout",
+  "status": "PRE-OUTCOME CONTRACT",
+  "authority": "synthetic benchmark only; tests finite-data identification plus recursive prediction for matched N and A systems when transition/update equations are hidden from the learner",
+  "confirmatory_seed": 20260830,
+  "development_seed": 20260930,
+  "interventions": {
+    "A": [1.0, 0.0],
+    "B": [0.8, 0.6],
+    "C": [0.0, 1.0]
+  },
+  "sequences": {
+    "train": ["AA", "BB", "CC", "AB", "AC", "BC"],
+    "structural_holdout": ["BA", "CA", "CB"]
+  },
+  "dynamics": {
+    "base_matrix": [[0.62, 0.18], [-0.12, 0.56]],
+    "theta_matrix_1": [[0.20, 0.06], [0.02, -0.10]],
+    "theta_matrix_2": [[-0.06, 0.16], [0.11, 0.04]],
+    "control_matrix": [[0.36, 0.04], [-0.03, 0.34]]
+  },
+  "adaptation": {
+    "rho": 0.90,
+    "eta": 0.25,
+    "exogenous_driver_schedule": [[0.7071067812, -0.7071067812], [-0.7071067812, 0.7071067812]]
+  },
+  "sampling": {
+    "x0_scale": 1.0,
+    "theta0_scale": 0.5,
+    "train_per_sequence_pool": 1000,
+    "iid_test_per_sequence": 500,
+    "structural_test_per_sequence": 500,
+    "train_per_sequence_grid": [8, 16, 32, 64, 128, 256, 512, 1000]
+  },
+  "identifier": {
+    "family": "multi-output ridge local transition model over generic polynomial features",
+    "ridge_alpha": 0.0001,
+    "degrees": [2, 3],
+    "primary_degree": 3,
+    "raw_input": "current full state (x,theta), intervention descriptor, one-hot step index",
+    "output": "next full state (x_next,theta_next)",
+    "rollout": "recursive horizon-2 prediction"
+  },
+  "readouts": {
+    "primary_distortion": "structural_nmse",
+    "tolerances": [0.01, 0.005, 0.001],
+    "slope_min_total_train_trajectories": 384,
+    "curve_axis": "log10 structural_nmse versus log10 total training trajectories"
+  },
+  "primary_contrast": "P3 A_minus_N_structural_nmse at total_train_trajectories=6000",
+  "decision_rule": {
+    "no_high_resource_A_excess": "primary contrast <= 0",
+    "descriptive_high_resource_A_excess": "primary contrast > 0",
+    "interpretation": "Any remaining A-N difference is estimator-level finite-data identification evidence only and must be attacked with stronger generic identifiers before any intrinsic-complexity interpretation."
+  },
+  "scope": {
+    "systems": ["N", "A"],
+    "horizon": 2,
+    "structural_holdout": "unseen order reversals only",
+    "known_dynamics_reference": "Match1 exact-model oracle gives D=0 for both N and A from full state",
+    "new_construct": false,
+    "new_theory": false
+  },
+  "provenance": {
+    "precontract_exploration": "Earlier toy seed used only for local implementation exploration; quarantined from ID1 evidence.",
+    "confirmatory_stream": "Seed 20260830 frozen before confirmatory outcome generation.",
+    "smoke_stream": "Separate development seed 20260930; never contributes to scientific result."
+  }
+}
