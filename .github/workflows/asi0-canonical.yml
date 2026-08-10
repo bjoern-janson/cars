@@ -26,10 +26,13 @@ jobs:
           for path in [
               "scripts/run_asi0_canonical_qwen.py",
               "scripts/run_asi0_canonical_qwen_entry.py",
+              "scripts/run_asi0_canonical_qwen_boolean_triple.py",
+              "scripts/validate_asi0_boolean_triple_repair.py",
           ]:
               ast.parse(open(path, encoding="utf-8").read())
               print("AST PASS", path)
           PY
+          python scripts/validate_asi0_boolean_triple_repair.py
       - name: Install frozen runtime
         run: |
           python -m pip install --upgrade pip
@@ -38,7 +41,7 @@ jobs:
           python -m pip install "transformers==4.46.3" "safetensors>=0.4.3"
       - name: Execute frozen ASI-0
         run: |
-          python scripts/run_asi0_canonical_qwen_entry.py \
+          python scripts/run_asi0_canonical_qwen_boolean_triple.py \
             experiments/ASI0_CANONICAL_QWEN_CONFIG.json \
             --outdir results/asi0_canonical_run
           cat results/asi0_canonical_run/asi0_final_summary.json
