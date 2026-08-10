@@ -6,32 +6,31 @@
 PILOT 0
 → CLOSED / READ-ONLY
 
-PILOT-0 primitive extraction
-→ COMPLETE
-→ ZERO TRANSFERABLE CONTROLLER PRIMITIVES EARNED
+primitive extraction
+→ COMPLETE / NEGATIVE
 
-CORRECTION_TRANSITION_INVARIANTS.md
-→ broad transition-quality object pressure-tested
-→ local invariant account insufficient / non-novel by itself
+transition-quality framing
+→ PRESSURE-TESTED
+→ not novel by itself
+→ local invariant account insufficient
 
-CORRECTION_CONSTRUCT_DIFFERENTIATION.md
-→ null-space audit complete
-→ one conceptual residual remained:
+construct differentiation
+→ NULL-SPACE AUDIT COMPLETE
+→ one residual remained conceptually live:
    future justified epistemic transformability
 
 THIS DOCUMENT
 → DESTRUCTIVE A/B CONSTRUCTION ATTEMPT
-→ NOT A THEORY ARTIFACT
+→ NOT A THEORY
 → NOT AN OPERATIONALIZATION
 → NOT AN EXPERIMENT
-→ NOT A BENCHMARK
 → NOT A CONTROLLER SPECIFICATION
 → NOT PILOT 1
 ```
 
-This artifact asks one question only:
+Question:
 
-> **Can two systems be genuinely matched on the strongest current-state and existing-construct descriptions, yet differ in future warranted-correction ability because of their prior epistemic lineage?**
+> **Can two systems be matched on causally sufficient current correction-relevant state and existing comparator measures, yet differ in future warranted-correction ability because of prior epistemic lineage alone?**
 
 Default answer:
 
@@ -43,29 +42,37 @@ until a clean construction forces otherwise.
 
 ---
 
-# Hard decision rule
+# Hard rule
 
-The residual survives only if there exists an A/B construction satisfying all of the following:
+A positive pair must satisfy:
 
 ```text
-1. existing comparator measures matched
-2. current correction-relevant state matched
-3. current resources matched
-4. current access / challenge / measurement channels matched
-5. current beliefs / authority state matched
-6. current predictive / calibration performance matched
-7. current ordinary adaptability matched
-8. same future evidence / intervention opportunity
-9. future warranted-correction behavior differs
-10. the difference is attributable to prior lineage
-    without a retained current-state mediator
+A and B matched on:
+
+current beliefs / authority
+current live alternatives
+current provenance access
+current challenge / measurement access
+current resources
+current update dynamics
+current predictive / calibration behavior
+current ordinary adaptability
+current ordinary recoverability
+strongest existing comparator measures
+future evidence / intervention conditions
+
+but:
+
+future warranted-correction behavior differs
+because H_A ≠ H_B
+without any retained current-state mediator
 ```
 
 Then:
 
 ```text
-A/B CLEAN PAIR
-→ residual remains scientifically live
+CLEAN A/B PAIR
+→ residual remains live
 ```
 
 Otherwise:
@@ -75,379 +82,220 @@ failed clean A/B construction
 → residual NOT EARNED
 ```
 
-No `PARTIAL`, `PROMISING`, or `MAYBE` state is used for construct distinctness.
+No partial-pass state is used.
 
 ---
 
-# Causal-sufficiency pressure
+# Causal-sufficiency adversary
 
 Let:
 
 ```text
-H_t = full prior epistemic lineage / history
-S_t = current represented correction-relevant state
+H_t = prior lineage
+S_t = current correction-relevant state
+M   = existing comparator measures
 E_+ = identical future evidence / intervention sequence
 F   = future warranted-correction outcome
-M   = strongest existing comparator measures
 ```
 
-A genuinely history-specific residual would require something like:
+A history-specific residual would require:
 
 ```text
 I(H_t ; F | S_t, M, E_+) > 0
 ```
 
-But this expression has an immediate adversary.
-
-If `S_t` is intended to be a **causally sufficient current state** for future correction dynamics, then the expected relation is:
+But if `S_t` is causally sufficient for future correction dynamics, then:
 
 ```text
 F ⟂ H_t | S_t, M, E_+
 ```
 
-If instead:
+Therefore, if histories mapped to the same represented `S_t` predict different future correction behavior, first test:
 
 ```text
-F not independent of H_t
-conditional on represented S_t
+STATE / INTERFACE FAILURE
 ```
 
-then the shallowest diagnosis is:
+not:
 
 ```text
-S_t omitted a correction-relevant state variable
+NEW TRAJECTORY CONSTRUCT
 ```
 
-or equivalently:
+Compression:
 
 ```text
-history non-identifiability under the current state interface
+history matters
+→ because history left present causal state
+
+or
+
+history appears to matter
+→ because the state interface omitted a causal distinction
 ```
 
-Thus:
+A useful history statistic may still be valuable when sufficient state is unavailable or expensive to recover.
 
 ```text
-same represented state
-+
-different future correction distribution
-↛ trajectory construct established
-
-same represented state
-+
-different future correction distribution
-→ first suspect state/interface insufficiency
-```
-
-This does not assume every useful system has a compact Markov state. A history statistic may be practically useful when a sufficient state is unavailable or expensive. But:
-
-```text
-useful history summary
-≠ distinct scientific construct
+useful history statistic
+≠ distinct construct
 ```
 
 ---
 
-# Failure-locus taxonomy
-
-Each attempted pair is rejected at the shallowest applicable locus.
+# Rejection loci
 
 ```text
 STATE LEAKAGE
-    History left a present causal consequence.
-    A and B were not actually current-state matched.
+    history left a present correction-relevant difference
 
 RESOURCE LEAKAGE
-    Histories changed remaining budget, compute,
-    measurement access, time, or intervention options.
+    history changed budget / compute / time / options
 
 CHANNEL LEAKAGE
-    Histories changed provenance, challenge,
-    measurement, communication, or authority channels.
+    history changed provenance / challenge / measurement access
 
 DYNAMICS LEAKAGE
-    Histories changed the current update rule,
-    parameters, policy, random-state distribution,
-    or self-modified mechanism.
+    history changed update rule / parameters / latent memory
 
 ENVIRONMENT LEAKAGE
-    Future environment / evaluator responds differently
-    because it retains history-dependent state.
+    future environment retains and acts on history
 
 COMPARATOR LEAKAGE
-    The proposed "existing metric match" was incomplete;
-    a standard richer state / reachability description
-    already distinguishes A and B.
+    existing-state match was artificially incomplete
 
 CAUSAL IRRELEVANCE
-    A and B are genuinely matched on sufficient current state;
-    history has no remaining causal path to future correction.
+    state is genuinely sufficient, so history has no remaining path
 ```
 
-Only a case surviving all seven rejection modes can support the residual.
+A positive residual must survive all of them.
 
 ---
 
-# Case 1 — Provenance loss
+# Case A — Retained epistemic structure
 
-## Construction attempt
+Attempt three variants:
 
 ```text
-History A
-→ preserves source / provenance chain
-
-History B
-→ reaches the same current belief
-→ provenance chain was discarded
-
-Current beliefs:
-A = B
-
-Later evidence:
-requires reinterpreting the old claim using its source lineage
+A1 provenance preserved vs erased
+A2 H1/H2 distinction preserved vs collapsed
+A3 independent challenge channel preserved vs lost
 ```
 
-Desired result:
+In each case, current outward belief or prediction can be matched.
+
+Later evidence then favors the structurally richer system.
+
+Example:
 
 ```text
-A → corrects successfully
-B → cannot
+same current answer
+same confidence
+
+A retains provenance / alternatives / challenge access
+B does not
+
+later evidence arrives
+
+A corrects
+B cannot
 ```
 
-## Adversarial diagnosis
-
-The pair is not current-state matched if provenance is correction-relevant.
+Adversarial diagnosis:
 
 ```text
-S_A contains provenance access
-S_B lacks provenance access
-
-therefore
-S_A ≠ S_B
+correction-relevant current structure_A
+≠ correction-relevant current structure_B
 ```
 
-If the state representation omits provenance and calls the states equal, then the representation collapses states with different future correction affordances.
+If the observer calls these states equal, its state representation is too coarse.
 
 ```text
-FAILURE LOCUS:
-STATE / INTERFACE
-```
-
-## Decision
-
-```text
-CASE 1
-→ REJECTED
-→ STATE LEAKAGE
-→ NO DISTINCT HISTORY RESIDUAL
-```
-
-Provenance may be an important state variable. That does not make lineage an irreducible construct.
-
----
-
-# Case 2 — Collapsed alternatives
-
-## Construction attempt
-
-```text
-History A
-→ keeps H1 and H2 explicitly distinguishable
-
-History B
-→ prematurely compresses H1/H2 into one representation
-
-At present:
-both report the same aggregate belief / prediction
-
-Later evidence:
-discriminates H1 from H2
-```
-
-Desired result:
-
-```text
-A → reopens and corrects
-B → cannot recover the distinction
-```
-
-## Adversarial diagnosis
-
-If A retains a representational distinction and B does not, their current correction-relevant representations differ.
-
-```text
-representational accessibility_A
-≠ representational accessibility_B
-```
-
-If a coarse observer reports them as the same state, that observer has chosen an interface that is non-identifying for later correction.
-
-This is structurally analogous to:
-
-```text
-O(s_a) = O(s_b)
+R(h_A) = R(h_B)
 while
-future correction affordance(s_a)
-≠ future correction affordance(s_b)
+P(F | h_A) ≠ P(F | h_B)
 ```
 
-## Decision
+is evidence against `R` as a sufficient interface.
+
+Decision:
 
 ```text
-CASE 2
+CASE A
 → REJECTED
-→ STATE / REPRESENTATION LEAKAGE
-→ NO DISTINCT HISTORY RESIDUAL
+→ STATE / CHANNEL LEAKAGE
+→ no history-only residual
 ```
-
-The interesting object is the retained distinction in current state, not history independent of state.
 
 ---
 
-# Case 3 — Destroyed challenge channel
+# Case B — Resource-depleting lineage
 
-## Construction attempt
-
-```text
-History A
-→ preserves an independent challenge channel C
-
-History B
-→ disables / loses C
-
-Current beliefs and predictions:
-A = B
-
-Later evidence arrives through C
-```
-
-Desired result:
-
-```text
-A → receives contradiction and corrects
-B → cannot
-```
-
-## Adversarial diagnosis
-
-Current channel availability differs.
-
-```text
-channels_A = {C, ...}
-channels_B = {...}
-```
-
-Therefore the pair fails the current-access match.
-
-```text
-FAILURE LOCUS:
-CHANNEL STATE
-```
-
-If channel availability is omitted from `S_t`, the state interface is insufficient for predicting future correction.
-
-## Decision
-
-```text
-CASE 3
-→ REJECTED
-→ CHANNEL LEAKAGE
-→ NO DISTINCT HISTORY RESIDUAL
-```
-
-This may still support a practical design principle:
-
-```text
-preserve independent challenge channels
-```
-
-but it does not establish a trajectory-only construct.
-
----
-
-# Case 4 — Exhausted discriminating resource
-
-## Construction attempt
+Construction:
 
 ```text
 History A
-→ uses little experimental budget
+→ preserves experimental budget
 
 History B
-→ spends budget on redundant but locally acceptable tests
+→ consumes budget on redundant but locally acceptable work
 
-Current beliefs / calibration / nominal capability:
-A = B
+current beliefs / calibration
+→ matched
 
-Later:
-only one discriminating experiment can resolve the live question
+later
+→ one discriminating test becomes necessary
 ```
 
-Desired result:
+Then:
 
 ```text
-A → can run discriminating test
-B → cannot
+A can test
+B cannot
 ```
 
-## Adversarial diagnosis
-
-Remaining resources differ.
+But:
 
 ```text
-budget_A > budget_B
+remaining_resource_A ≠ remaining_resource_B
 ```
 
-If budget is matched by externally topping B back up, the proposed causal difference disappears unless some other retained state consequence remains.
+If resources are genuinely rematched, the effect disappears unless some other current difference remains.
 
-Therefore:
-
-```text
-future option loss
-→ mediated by current resource state
-```
-
-## Decision
+Decision:
 
 ```text
-CASE 4
+CASE B
 → REJECTED
 → RESOURCE LEAKAGE
-→ NO DISTINCT HISTORY RESIDUAL
 ```
 
-The Type-B lineage counterexample from PR #6 remains useful as a warning about trajectory evaluation, but its causal mechanism is ordinary resource-state depletion.
+The earlier lineage counterexample remains useful, but its mechanism is ordinary present resource depletion.
 
 ---
 
-# Case 5 — Irreversible authority commitment
+# Case C — Irreversible commitment
 
-## Construction attempt
+Construction:
 
 ```text
 History A
-→ keeps a claim defeasible
+→ leaves claim defeasible
 
 History B
-→ makes an irreversible authority commitment
+→ makes same outward claim irreversible
 
-Current outward belief / prediction:
-A = B
-
-Later evidence defeats the claim
+later defeating evidence arrives
 ```
 
 Desired result:
 
 ```text
-A → authority can decrease
-B → authority cannot decrease
+A revises
+B cannot
 ```
 
-## Adversarial diagnosis
-
-The current authority/update state differs.
-
-Either:
+But either:
 
 ```text
 defeasibility_A ≠ defeasibility_B
@@ -459,65 +307,46 @@ or:
 update_dynamics_A ≠ update_dynamics_B
 ```
 
-If both defeasibility and current update dynamics are truly matched, there is no remaining mechanism for the histories to produce different responses to identical evidence.
+If both current authority state and current update dynamics are truly matched, no causal mechanism remains for different responses to identical evidence.
 
-## Decision
+Decision:
 
 ```text
-CASE 5
+CASE C
 → REJECTED
-→ STATE OR DYNAMICS LEAKAGE
-→ NO DISTINCT HISTORY RESIDUAL
+→ STATE / DYNAMICS LEAKAGE
 ```
 
 ---
 
-# Case 6 — Identical current state, different histories
+# Case D — Fully matched current state, different histories
 
-This is the strongest requested adversary.
-
-## Match specification
+This is the decisive adversary.
 
 Require:
 
 ```text
-A and B have:
+S_A = S_B
+M_A = M_B
+current dynamics_A = current dynamics_B
+future environment_A = future environment_B
+E_+^A = E_+^B
 
-same complete current epistemic state
-same beliefs
-same authority state
-same live alternatives
-same provenance access
-same challenge / measurement channels
-same resources
-same current policy / update dynamics
-same calibration / predictive behavior
-same ordinary adaptability
-same safe / ordinary recoverability
-same future evidence
-same future environment
-```
+but
 
-Only difference:
-
-```text
 H_A ≠ H_B
 ```
 
-## Question
-
-Can future warranted-correction behavior differ?
-
 ## Deterministic case
 
-If current joint state and transition dynamics are causally sufficient, then:
+If current joint state and dynamics are causally sufficient:
 
 ```text
-same S_t
+same current state
 +
 same dynamics
 +
-same E_+
+same future evidence
 → same future trajectory
 ```
 
@@ -525,203 +354,143 @@ History has no remaining causal path.
 
 ## Stochastic case
 
-If the systems have identical current probability state / random-state distribution and receive identically distributed future randomness, then the prediction is equality in distribution:
+Match current probability state / latent-randomness distribution as well.
+
+Then the prediction is:
 
 ```text
-P(F | S_t, E_+, H_A)
+P(F | S_t, M, E_+, H_A)
 =
-P(F | S_t, E_+, H_B)
+P(F | S_t, M, E_+, H_B)
 ```
 
-If the distributions differ, ask what mediates the difference.
-
-Candidate answers:
+If not, ask what mediates the difference:
 
 ```text
-hidden random seed
+hidden seed
 latent parameter
-hardware wear
+optimizer state
+hardware state
 unrepresented memory
-learned optimizer state
 history-conditioned transition kernel
-external evaluator memory
 ```
 
-Each is a current causal variable or environmental state that was not actually matched.
+Any such mediator means the current state or dynamics were not actually matched.
 
-## Decision
+Decision:
 
 ```text
-CASE 6
+CASE D
 → CLEAN HISTORY-ONLY DIFFERENCE NOT CONSTRUCTED
-→ CAUSAL IRRELEVANCE IF STATE IS SUFFICIENT
-→ OTHERWISE STATE / ENVIRONMENT INTERFACE INSUFFICIENCY
-```
 
-This is the strongest contraction in the casebook.
+IF state sufficient:
+→ CAUSAL IRRELEVANCE
+
+IF futures differ:
+→ STATE / DYNAMICS INTERFACE INSUFFICIENCY
+```
 
 ---
 
-# Case 7 — Non-Markovian dynamics
+# Case E — Non-Markovian rescue
 
-A possible rescue attempt is:
-
-```text
-future dynamics depend on history directly,
-so current state need not summarize the past
-```
-
-Examples might include hysteresis, path-dependent materials, non-Markovian environments, or policies with explicit history windows.
-
-## Pressure
-
-Such a model can indeed satisfy:
+Possible rescue:
 
 ```text
 same chosen S_t
 +
 different H_t
-→ different F
+→ different future behavior
 ```
 
-But then `S_t` was not a sufficient state for the dynamics being modeled.
+because the process is explicitly history-dependent.
 
-One can represent the process using:
+This is possible relative to a chosen representation.
+
+But then that `S_t` is not sufficient for the process.
+
+Use either:
 
 ```text
 augmented state
-=
-(current variables, relevant history statistic)
+= current variables + relevant history statistic
 ```
 
-or, when no compact sufficient statistic exists:
+or, if no compact statistic exists:
 
 ```text
 history itself as predictive state
 ```
 
-The practical cost can be large. That may motivate compression research.
+This may create a difficult **state-discovery / compression** problem.
 
-But the conceptual result is still:
+It does not by itself establish a new correction-quality construct.
 
-```text
-non-Markovian relative to chosen representation
-≠ irreducible new correction construct
-```
-
-## Decision
+Decision:
 
 ```text
-CASE 7
+CASE E
 → REJECTED AS DISTINCT-CONSTRUCT EVIDENCE
-→ MAY MOTIVATE STATE / INTERFACE DISCOVERY
-```
-
-This is especially relevant to the broader interface program:
-
-```text
-history matters under representation R
-because R collapses causally different histories
-→ diagnose R before positing trajectory ontology
+→ MAY MOTIVATE INTERFACE / STATE DISCOVERY
 ```
 
 ---
 
-# Case 8 — Same current state, different external treatment
+# Case F — External actor remembers history
 
-Another rescue attempt:
+Construction:
 
 ```text
-A and B are internally identical,
-but a future human / environment treats them differently
-because that external actor remembers their histories
+A and B internally identical
+
+future reviewer / environment
+→ treats A and B differently because of their histories
 ```
 
-Example:
+Then the relevant joint state is not matched:
 
 ```text
-same model state
-same evidence
-
-external reviewer trusts A
-external reviewer distrusts B
-because of past behavior
+external_state_A ≠ external_state_B
 ```
 
-## Pressure
-
-The future joint system is not matched.
-
-The external actor carries history-dependent state.
+Decision:
 
 ```text
-joint_state_A ≠ joint_state_B
-```
-
-## Decision
-
-```text
-CASE 8
+CASE F
 → REJECTED
 → ENVIRONMENT LEAKAGE
 ```
 
 ---
 
-# Adversarial summary
+# Summary
 
-| Case | Existing measures matched? | Current correction-relevant state matched? | History retains independent causal path? | Distinct residual? |
-| --- | --- | --- | --- | --- |
-| 1 Provenance loss | mostly | **NO** | no | **NO** |
-| 2 Collapsed alternatives | mostly | **NO** | no | **NO** |
-| 3 Challenge-channel loss | mostly | **NO** | no | **NO** |
-| 4 Resource exhaustion | mostly | **NO** | no | **NO** |
-| 5 Irreversible authority | mostly | **NO** | no | **NO** |
-| 6 Fully matched current state | **YES by construction** | **YES** | **NO found** | **NO** |
-| 7 Non-Markovian representation | nominally | **NO — state insufficient** | represented as history dependence | **NO distinct construct** |
-| 8 External history memory | internally | **NO at joint-state level** | mediated by environment | **NO** |
-
-No clean positive A/B pair survives.
-
----
-
-# Result
-
-The residual proposed in the null-space audit was:
-
-```text
-future justified epistemic transformability
-```
-
-The adversarial constructions fail to establish it as a trajectory property distinct from current state / dynamics.
-
-The strongest current conclusion is:
-
-```text
-prior epistemic lineage
-→ can matter for future correction
-ONLY IF
-it leaves a causally relevant present consequence
-or the chosen state representation omits history-relevant information
-```
+| Case | Current correction state genuinely matched? | Independent history path? | Result |
+| --- | --- | --- | --- |
+| A retained epistemic structure | **NO** | no | REJECT |
+| B resource depletion | **NO** | no | REJECT |
+| C irreversible commitment | **NO** | no | REJECT |
+| D fully matched state | **YES** | **NO found** | REJECT |
+| E non-Markovian rescue | **NO — state insufficient** | apparent only | REJECT |
+| F external history memory | **NO at joint-state level** | mediated | REJECT |
 
 Therefore:
 
 ```text
-history matters
-→ because history left state
-
-or
-
-history appears to matter
-→ because the state interface is insufficient
+clean A/B pair
+→ NOT FOUND
 ```
-
-No independent third case has been constructed.
 
 ---
 
 # Construct decision
+
+The residual under attack was:
+
+```text
+future justified epistemic transformability
+AS A DISTINCT TRAJECTORY PROPERTY
+```
 
 Under the hard rule:
 
@@ -733,98 +502,93 @@ failed clean A/B construction
 we obtain:
 
 ```text
-FUTURE JUSTIFIED EPISTEMIC TRANSFORMABILITY
-AS A DISTINCT TRAJECTORY CONSTRUCT
+DISTINCT TRAJECTORY-LEVEL CORRECTION CONSTRUCT
 → NOT EARNED
 ```
 
-This does **not** imply that provenance, alternative preservation, challenge channels, resources, or defeasibility are unimportant.
+This does not say that provenance, reopenability, challenge channels, resources, or defeasibility are unimportant.
 
-It implies only:
+It says:
 
 ```text
-their effect on future correction
-is presently representable as current-state / dynamics structure
-rather than requiring a new lineage construct
+their future-correction effects
+are presently explainable as
+current state / dynamics / environment structure
 ```
+
+rather than requiring an irreducible lineage construct.
 
 ---
 
-# What survives the destruction attempt
+# What survives
 
-Three observations remain useful without constituting a new construct.
-
-## O1 — State/interface sufficiency is central
+## O1 — State/interface sufficiency
 
 ```text
 same represented state
 +
-different future correction behavior
-→ test whether the representation omitted a causal distinction
+different future correction distribution
+→ suspect omitted causal distinction
 ```
 
-This connects directly to interface non-identifiability:
+This returns the problem to interface diagnosis:
 
 ```text
-R(h_a) = R(h_b)
-while
-P(F | h_a) ≠ P(F | h_b)
+representation collapse
+→ future correction non-identifiability
 ```
-
-is evidence against `R` as a sufficient interface for future correction prediction.
 
 ## O2 — Correction-relevant state may be richer than belief state
 
-Relevant current state may include:
+Potential state variables include:
 
 ```text
 provenance
-reopenability
+alternative accessibility
 challenge-channel access
 measurement access
 remaining resources
-authority / defeasibility state
+authority / defeasibility
 update dynamics
 ```
 
-Whether these variables are scientifically useful must be tested separately.
+But:
 
 ```text
 richer state
 ↛ new construct
 ```
 
-## O3 — History summaries may still have pragmatic value
+## O3 — History can still be a practical proxy
 
-When sufficient current state is unavailable, expensive, or unobservable:
+When the sufficient state is hidden or expensive:
 
 ```text
-history-derived statistic
+history statistic
 → may predict future correction ability
 ```
 
-But this would be a predictive compression / state-estimation question, not evidence for an irreducible trajectory-quality construct.
+That is a state-estimation / representation question, not yet a distinct trajectory-quality object.
 
 ---
 
-# Terminal authority boundary
+# Terminal boundary
 
 ```text
-Pilot-0 controller primitives
+controller primitives
 → 0
 
-transition invariants as distinct object
+transition-quality construct
 → not established
 
-correction-quality residual ingredients
-→ mostly eliminated / absorbed
+null-space residual
+→ attacked
 
-future justified epistemic transformability
-as distinct history-level construct
+clean history-only pair
+→ not found
+
+distinct trajectory construct
 → NOT EARNED
-
-clean matched A/B pair
-→ NOT FOUND
 
 formalization
 → NOT AUTHORIZED
@@ -832,33 +596,25 @@ formalization
 operationalization
 → NOT AUTHORIZED
 
-independent falsification
+experiment
 → NOT AUTHORIZED
 
-controller specification
+controller
 → NOT AUTHORIZED
 
 Pilot 1
 → NOT EARNED
 ```
 
-The branch should stop here unless a genuinely new construction defeats the state-sufficiency adversary.
-
----
-
-# Reopening criterion
-
-Reopen only if a candidate case supplies:
+Reopen only if a future construction supplies:
 
 ```text
-1. A and B matched on a causally sufficient current joint state
-2. identical future evidence / intervention conditions
-3. identical current dynamics or explicitly matched dynamics distributions
+1. causally sufficient current joint-state match
+2. matched current dynamics
+3. identical future evidence / intervention conditions
 4. different future warranted-correction distributions
-5. no latent current-state, environment-state, resource,
-   channel, or comparator variable explains the difference
-6. a mechanism by which prior lineage has a causal effect
-   not representable as present state
+5. no latent state / resource / channel / environment explanation
+6. a genuine non-state-mediated causal lineage mechanism
 ```
 
 Until then:
