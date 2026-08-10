@@ -7,239 +7,382 @@ This is the current repository-level research contract.
 It separates:
 
 ```text
-CARS control protocol
+INTELLIGENCE THEORY
 ≠
-heterogeneous causal-response assay
+CARS CONTROL PROTOCOL
 ≠
-optional longitudinal / equilibrium extensions
+EMPIRICAL BENCHMARKS
+≠
+HISTORICAL PILOT-0 ASSAY
 ```
 
-Historical prompt, catalyst, and recursive-architecture artifacts remain available for lineage and separate experiments.
+The theory can remain ambitious only if experiments remain scoped and independently falsifiable.
 
-## Primary empirical question
+## Top-level theory
 
-For a pre-intervention measured quantity `I`, intervention `E ∈ {e₀,e₁}`, and prespecified outcome `V`, define:
+Canonical theory:
+
+- [`INTELLIGENCE_THEORY.md`](INTELLIGENCE_THEORY.md)
+
+Conjecture:
+
+> **Intelligence is the capacity of a system to convert appropriately informative new evidence into increased expected future viability.**
+
+Shorthand:
 
 ```text
-τ(i)
+I_t ∝ Δ_E[V_{t+h}]
+```
+
+The proportionality symbol is shorthand, not a linear-law commitment.
+
+The scientifically meaningful ordering claim is:
+
+```text
+greater evidence-mediated expected future-viability gain
+→ greater intelligence under the conjecture
+```
+
+Current status:
+
+```text
+THEORY
+→ CONJECTURE
+
+MECHANISM
+→ UNSPECIFIED
+
+EMPIRICAL SUPPORT
+→ NOT ESTABLISHED
+```
+
+## Theory-to-evidence burden
+
+The empirical program must not smuggle the theory into lower-level benchmarks.
+
+```text
+THEORY
+Intelligence concerns evidence → future viability
+        │
+        ▼
+FORECASTABILITY
+Can present state predict future response to unseen tasks/evidence?
+        │
+        ▼
+PREDICTIVE STRUCTURE
+What ordinary state variables explain that response?
+        │
+        ▼
+RESOURCE QUESTION
+How much representation / computation / data is required?
+        │
+        ▼
+ADAPTATION
+Is the response actually evidence-mediated system change?
+        │
+        ▼
+VIABILITY
+Does the change improve future outcomes under a prospectively defined V?
+        │
+        ▼
+CAUSAL MEDIATION
+Is the gain attributable to the system's use of evidence?
+        │
+        ▼
+CONSTRUCT VALIDITY
+Does the relation explain intelligence better than alternatives?
+```
+
+Each arrow is a separate empirical burden.
+
+## Current empirical question
+
+The active frozen benchmark is **not** a direct intelligence test.
+
+It asks:
+
+> **Can prospectively measured checkpoint state forecast how much a continually trained neural network's future trainability will differ from a matched fresh network on the same concealed future task transformation?**
+
+Neutral object:
+
+```text
+Γ_t(E*)
 =
-E[V(e₁) - V(e₀) | I=i]
+future learning trajectory produced from checkpoint S_t on E*
 ```
 
-The primary scientific proposition is:
+The frozen benchmark tests only G0–G3:
 
 ```text
-i₁ > i₀
-⇒
-τ(i₁) > τ(i₀)
+G0 forecastability
+G1 current capability beyond age
+G2 selected plasticity measurements beyond capability
+G3 broad checkpoint-state sketch beyond selected plasticity measurements
 ```
 
-The experiment asks whether higher pre-intervention `I` orders larger causal treatment effects on later `V`.
+Contract:
 
-## What the primary question does not assume
+- [`../experiments/FUTURE_PLASTICITY_FORECAST.md`](../experiments/FUTURE_PLASTICITY_FORECAST.md)
+- [`../experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json`](../experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json)
 
-It does not assume that:
-
-- `I` is intelligence;
-- `I` causes `τ`;
-- `V` is value, viability, utility, welfare, or performance by definition;
-- the relation is linear;
-- `I ∝ τ`;
-- `I ∝ C_improve` is an empirical law;
-- generic intervention responsiveness is discriminative correction capacity.
-
-## Minimal design
+Current status:
 
 ```text
-measure I_t
-→ randomize E_t
-→ measure V_{t+h}
-→ estimate τ_{t,h}(i)
-→ test ordering
+DESIGN          PASS
+IMPLEMENTATION  PASS
+SMOKE           PASS
+CANONICAL DATA  unavailable in active execution environment
+SCIENTIFIC RUN  NOT EXECUTED
+RESULT          ∅
+INTERPRETATION  ∅
 ```
 
-The temporal ordering is not a causal arrow from `I` to `τ`.
+No surrogate dataset is authorized merely to obtain a number.
+
+## Future-task concealment contract
+
+The future task identity must not enter checkpoint measurement construction.
+
+Operational ordering:
+
+```text
+train continual history
+→ reach checkpoint
+→ measure checkpoint state
+→ freeze measurements
+→ only then consume future-task RNG
+→ evaluate future learning
+```
+
+This prevents future-task identity from leaking into the checkpoint predictors by construction.
+
+## Matched fresh-network control
+
+For every checkpoint/future-task pair, the future learning trajectory is compared against a fresh network trained on the identical future task under matched training conditions.
+
+The benchmark therefore targets:
+
+```text
+history-dependent future trainability
+```
+
+rather than raw future-task difficulty.
+
+Primary summaries:
+
+```text
+ΔAUC
+=
+AUC(checkpoint future curve)
+-
+AUC(fresh future curve)
+
+T90_gap
+=
+T90(checkpoint)
+-
+T90(fresh)
+```
+
+The full learning curve `Γ` remains the scientific object; scalar summaries are reporting projections.
+
+## Forecast hierarchy contract
+
+The first pass compares increasingly rich ordinary predictors:
+
+```text
+NULL
+→ outer-training mean
+
+AGE
+→ task age
+
+CAPABILITY
+→ age + current task accuracy/loss
+
+PLASTICITY
+→ capability + prospectively frozen trainability/network-state measures
+
+RICH
+→ plasticity + fixed 32-D projection of full parameter displacement
+```
+
+Evaluation uses grouped out-of-fold prediction by continual-history run, with nested regularization selection and group-bootstrap comparison.
+
+No predictor receives future-task identity as a checkpoint feature.
+
+## Escalation rule
+
+This pass terminates at G0–G3.
+
+```text
+G4/G5 cross-family transport
+→ NOT AUTHORIZED
+
+G6 compression search
+→ NOT AUTHORIZED
+
+new Z
+→ NOT AUTHORIZED
+
+new construct
+→ NOT AUTHORIZED
+
+new theory
+→ NOT AUTHORIZED
+```
+
+A failed gate terminates the corresponding escalation.
+
+Examples:
+
+```text
+G0 fails
+→ no forecastability claim at this measurement/sample resolution
+
+AGE explains most prediction
+→ simple temporal trajectory is sufficient at this resolution
+
+PLASTICITY absorbs capability-relative signal
+→ ordinary plasticity variables explain the tested increment
+
+RICH ≈ PLASTICITY
+→ broad parameter sketch adds little incremental information
+```
+
+No negative result is generalized beyond its measurement and benchmark scope.
+
+## Historical Pilot 0 contract
+
+Pilot 0 used a different scientific object and remains closed.
+
+It tested the pre-intervention moderator:
+
+```text
+I₁ = 1 - P(correct)
+```
+
+against causal response to verified-error feedback.
+
+The original moderation hypothesis was not supported. Subsequent diagnostics localized representation-dependent transition effects.
+
+Authoritative terminal record:
+
+- [`../results/PILOT0_TERMINAL_RECORD.md`](../results/PILOT0_TERMINAL_RECORD.md)
+
+Do not reinterpret the active future-plasticity benchmark as a continuation or retrofit of Pilot 0.
+
+## Pilot 1 / ID1 contract boundary
+
+The synthetic predictive-resource and finite-data system-identification lineages are closed at their tested questions.
+
+They established no intrinsic adaptive-specific predictive-resource or sample-complexity burden.
+
+Records:
+
+- [`../results/PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md`](../results/PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md)
+- [`../results/PILOT1_ID1_SYSTEM_IDENTIFICATION.md`](../results/PILOT1_ID1_SYSTEM_IDENTIFICATION.md)
+- [`../results/PILOT1_ID1_P3_REPLICATION.md`](../results/PILOT1_ID1_P3_REPLICATION.md)
+
+Do not increase horizon, intervention complexity, adaptive mechanism complexity, or replication count merely to recover a vanished discrepancy.
 
 ## Measurement contract
 
 Measurement partly constitutes the identity of the scientific object.
 
-The admissible transformation classes must be specified before invariance claims are tested.
-
-### I side
-
-The primitive proposition uses order.
-
-Strictly increasing transformations of `I` preserve the substantive ordering.
-
-### V side
-
-The additive CATE uses differences.
-
-Positive affine transformations:
+For every result whose evidential status matters, record:
 
 ```text
-V' = aV + b
-a > 0
+scientific object
+measurement variables
+pre-outcome contract
+future-data concealment rule where applicable
+data-generation / assignment process
+predictor / estimator family
+resource budget
+held-out structure
+uncertainty
+protocol deviations
+claim actually earned
 ```
 
-preserve:
+A changed object receives a new contract or explicit comparison condition rather than being silently treated as the same experiment.
+
+## Identification and causal contract
+
+Predictive forecastability is not causal evidence.
 
 ```text
-τ'(i) = aτ(i)
+prediction
+↛ causal mechanism
 ```
 
-and therefore preserve the ordering of treatment-effect heterogeneity.
+The top-level theory eventually requires evidence-mediated viability gain, which is a stronger causal object than future trainability forecasting.
 
-General monotone nonlinear transformations are not assumed to preserve the same additive causal estimand.
-
-## Shape contract
-
-The scientific proposition is not identical to a parametric model.
-
-Where justified:
+Do not infer:
 
 ```text
-∂τ(i)/∂i > 0
+future trainability difference
+→ viability gain
+
+viability gain
+→ evidence mediation
+
+evidence mediation
+→ construct validity as intelligence
 ```
 
-is a smooth representation.
+Each transition requires a separate identification strategy and prospective measurement definition.
 
-A preregistered linear approximation may use:
+## Construct-validity contract
 
-```text
-τ(i) = τ₀ + δi
-δ > 0
-```
+Even if an evidence-mediated future-viability quantity becomes measurable and causal, it is not automatically intelligence.
 
-but:
+Construct validity requires comparison against alternative intelligence accounts and independent outcomes that an intelligence measure is expected to explain.
 
-```text
-δ failure
-↛
-monotonicity failure
-```
-
-unless linearity is itself established as adequate.
-
-## Identification contract
-
-Prefer randomized intervention assignment.
-
-Randomization is used to identify the causal contrast of `E` on `V` within the experimental design.
-
-Randomization does not make `I` causal. `I` remains a pre-treatment moderator.
-
-Record treatment assignment, exclusions, attrition, protocol deviations, and any design restriction that could compromise positivity or identification.
-
-## Primary outcome
-
-The primary outcome is the ordering of estimated conditional treatment effects over prespecified ordered `I` values, strata, or a monotonicity functional.
-
-A linear `I×E` coefficient is a secondary representation when the linear model is justified.
-
-## Primary negative outcomes
-
-Scientifically meaningful negative or mixed outcomes include:
-
-- flat `τ(i)` within adequate precision;
-- decreasing `τ(i)`;
-- non-monotonic `τ(i)` that violates the global ordering claim;
-- apparent moderation explained by ceiling/floor geometry;
-- sign dependence on an outcome transformation not licensed to preserve the same estimand;
-- disagreement between instruments that fail interval-equivalence calibration;
-- positive response under warranted intervention accompanied by equally strong response to misleading intervention;
-- results that disappear under independent measurement or held-out domains;
-- insufficient sensitivity to distinguish zero from the preregistered smallest effect of interest.
-
-## Red-team requirement
-
-Before strong positive interpretation, the assay should be challenged with adversarial worlds or controls designed to manufacture false moderation.
-
-Minimum attacks are described in `RED_TEAM_PROTOCOL.md`.
-
-Important families include:
-
-- constant effect + prognostic `I`;
-- ceiling/floor saturation;
-- nonlinear outcome measurement;
-- baseline structure and broken-randomization controls;
-- generic plasticity;
-- affine measurement positive controls;
-- independently constructed interval-equivalent instruments;
-- high-correlation causal disagreement;
-- nonlinear `I` reparameterization;
-- sensitivity limits.
-
-## Specificity extension
-
-A positive primary result licenses a stronger follow-up, not an automatic stronger interpretation.
-
-Use independently established intervention status:
-
-```text
-E⁺
-E⁰
-E⁻
-```
-
-to test whether higher `I` predicts discrimination between warranted and misleading interventions rather than generic susceptibility.
-
-## Transport contract
-
-A result is scoped to the tested:
-
-```text
-intervention
-outcome measurement
-moderator measurement
-horizon
-domain
-population
-estimator
-causal-identification design
-```
-
-Transport across any of these is a separate empirical claim.
+The repository currently makes no construct-validity claim.
 
 ## CARS prompt experiment
 
 The CARS control protocol can separately be tested as a reasoning intervention against baseline and generic careful-reasoning controls.
 
-Prompt efficacy does not establish the heterogeneous-responsiveness hypothesis.
+Prompt efficacy does not establish the intelligence conjecture, Pilot-0 assay, predictive-resource results, or future-plasticity forecastability.
 
-Assay success does not establish prompt efficacy.
+## Subtraction rule
 
-## Historical research surfaces
-
-The August 8 catalyst and recursive-architecture artifacts remain historical research surfaces.
-
-They may be tested separately, but their results should not be silently promoted into the current assay claim.
-
-## Optional longitudinal extension
-
-Only if data warrant it, define:
+When an apparent special effect appears:
 
 ```text
-T_h^(e)(i)
-=
-E[I_{t+h} | do(E_t=e), I_t=i]
+apparent discrepancy
+→ strongest ordinary comparator
+→ shallowest failure localization
+→ minimal repair / stronger estimator
+→ held-out retest
+→ independent replication if warranted
+→ transport only if earned
+→ new construct only if residual survives
 ```
 
-A fixed point or contraction result is a separate claim about longitudinal dynamics.
+The repository is allowed to end with:
 
-Do not treat it as implied by the primary responsiveness assay.
+```text
+residual = ∅
+```
 
 ## Claim rule
 
-A positive result authorizes only the tested scientific object under the measurement, identification, estimation, and scope conditions actually used.
+A positive result authorizes only the tested object under the measurement, identification, estimator, and scope conditions actually used.
 
-A negative result should be localized before revision.
+A negative result is localized before revision.
 
-A genuine contradiction at the scientific-proposition level requires that lower-level explanations—measurement identity, causal identification, shape representation, estimator adequacy, and implementation—have been sufficiently ruled out.
+A strong contradiction at the scientific-proposition level requires that shallower explanations—measurement, identification, representation, estimator adequacy, implementation, and finite-sample variation—have been sufficiently ruled out.
 
 ## Version discipline
 
-Record the exact prompt, assay specification, measurement instruments, intervention protocol, code, estimator, and repository commit used for any result whose evidential status matters.
+Record the exact protocol, configuration, code, dataset identity, estimator, seed streams, and repository commit for any result whose authority matters.
 
-A changed object should receive a new version or explicit comparison condition rather than being silently treated as the same experiment.
+Smoke/development streams remain separate from scientific outcome streams.
+
+## Governing sentence
+
+> **The theory specifies what may matter. The empirical program gives ordinary machinery every opportunity to explain it away. Only what survives that subtraction earns additional scientific structure.**
