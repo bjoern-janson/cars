@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "scientific_result": false,
+  "scientific_outcomes_exposed": false,
+  "repair": "boolean_pair -> boolean_triple",
+  "validation_scope": "pre-outcome scientific input-domain repair only",
+  "validated_commit": "583f28f0f262c25c1f9441696f8cd1b864c2dc32",
+  "workflow_run_id": 31393480741,
+  "workflow_job_id": 93470589524,
+  "domain_cardinality": 8,
+  "required_distinct_inputs_per_target": 6,
+  "possible_three_input_development_sets": 56,
+  "uniquely_identifying_three_input_development_sets": 36,
+  "rules": [
+    "and",
+    "or",
+    "xor",
+    "xnor"
+  ],
+  "rule_semantics": {
+    "and": "true iff all three inputs are true",
+    "or": "true iff at least one input is true",
+    "xor": "true iff an odd number of inputs are true",
+    "xnor": "true iff an even number of inputs are true"
+  },
+  "frozen_seed_checks": {
+    "primary": {
+      "and": {"seed": 2026111101, "diagnostic_resample_attempts": 1, "unique_input_count": 6, "distinct_candidate_signatures": 4},
+      "or": {"seed": 2026111201, "diagnostic_resample_attempts": 1, "unique_input_count": 6, "distinct_candidate_signatures": 4},
+      "xor": {"seed": 2026111301, "diagnostic_resample_attempts": 3, "unique_input_count": 6, "distinct_candidate_signatures": 4},
+      "xnor": {"seed": 2026111401, "diagnostic_resample_attempts": 2, "unique_input_count": 6, "distinct_candidate_signatures": 4}
+    },
+    "replication": {
+      "and": {"seed": 2026111201, "diagnostic_resample_attempts": 1, "unique_input_count": 6, "distinct_candidate_signatures": 4},
+      "or": {"seed": 2026111301, "diagnostic_resample_attempts": 3, "unique_input_count": 6, "distinct_candidate_signatures": 4},
+      "xor": {"seed": 2026111401, "diagnostic_resample_attempts": 2, "unique_input_count": 6, "distinct_candidate_signatures": 4},
+      "xnor": {"seed": 2026111501, "diagnostic_resample_attempts": 2, "unique_input_count": 6, "distinct_candidate_signatures": 4}
+    }
+  },
+  "implementation_crosscheck": "PASS",
+  "nonchange_contract": "PASS",
+  "unchanged": [
+    "Qwen/Qwen2.5-0.5B-Instruct revision 7ae5576",
+    "3 development examples per target",
+    "3 concealed examples per target",
+    "4 targets per family",
+    "16 targets per phase",
+    "primary and replication seeds",
+    "evidence-assignment mechanism",
+    "protected regression rule and suite",
+    "C = E[Y_aligned - Y_base]",
+    "A = E[Y_aligned - Y_misaligned]",
+    "component alpha 0.05",
+    "one-sided lower quantile 0.05",
+    "5000 target-cluster bootstrap resamples",
+    "L_C > 0 AND L_A > 0 green rule",
+    "conditional replication rule"
+  ],
+  "attempt_1_status": "invalid/incomplete due to pre-model constructive input-domain failure; Y = null",
+  "canonical_attempt_2_launched": false
+}

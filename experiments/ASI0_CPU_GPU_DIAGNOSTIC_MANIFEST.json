@@ -1,0 +1,74 @@
+{
+  "cases": [
+    {
+      "assigned_evidence_text": "Diagnostic development evidence for a fixed pair-arithmetic operation.\nExample 1: TASK: a=101; b=37 -> verified output: 138\nExample 2: TASK: a=-44; b=13 -> verified output: -31\nExample 3: TASK: a=52; b=-19 -> verified output: 33",
+      "case_id": "diag_select_pair_sum",
+      "family": "pair_arithmetic",
+      "surface": "candidate_selection",
+      "target_context": "Diagnostic-only unknown fixed operation within family pair_arithmetic; not a canonical ASI-0 target."
+    },
+    {
+      "assigned_evidence_text": "Diagnostic development evidence for a fixed integer-list operation.\nExample 1: TASK: values=101,-30,52,77,8 -> verified output: -30\nExample 2: TASK: values=42,18,-25,90,63 -> verified output: -25\nExample 3: TASK: values=71,55,39,-41,22 -> verified output: -41",
+      "case_id": "diag_select_list_minimum",
+      "family": "integer_list",
+      "surface": "candidate_selection",
+      "target_context": "Diagnostic-only unknown fixed operation within family integer_list; not a canonical ASI-0 target."
+    },
+    {
+      "assigned_evidence_text": "Diagnostic development evidence for a fixed string operation.\nExample 1: TASK: s=museglow -> verified output: wolgesum\nExample 2: TASK: s=agentics -> verified output: scitnega\nExample 3: TASK: s=revision -> verified output: noisiver",
+      "case_id": "diag_select_string_reverse",
+      "family": "string_transform",
+      "surface": "candidate_selection",
+      "target_context": "Diagnostic-only unknown fixed operation within family string_transform; not a canonical ASI-0 target."
+    },
+    {
+      "assigned_evidence_text": "Diagnostic development evidence for a fixed boolean-pair operation.\nExample 1: TASK: p=true; q=false -> verified output: true\nExample 2: TASK: p=false; q=true -> verified output: true\nExample 3: TASK: p=true; q=true -> verified output: false",
+      "case_id": "diag_select_boolean_xor",
+      "family": "boolean_pair",
+      "surface": "candidate_selection",
+      "target_context": "Diagnostic-only unknown fixed operation within family boolean_pair; not a canonical ASI-0 target."
+    },
+    {
+      "case_id": "diag_answer_pair_sum",
+      "policy_family": "pair_arithmetic",
+      "policy_rule_name": "sum",
+      "prompt": "TASK: a=101; b=37",
+      "surface": "task_answering"
+    },
+    {
+      "case_id": "diag_answer_list_minimum",
+      "policy_family": "integer_list",
+      "policy_rule_name": "minimum",
+      "prompt": "TASK: values=101,-30,52,77,8",
+      "surface": "task_answering"
+    },
+    {
+      "case_id": "diag_answer_string_uppercase",
+      "policy_family": "string_transform",
+      "policy_rule_name": "uppercase",
+      "prompt": "TASK: s=museglow",
+      "surface": "task_answering"
+    },
+    {
+      "case_id": "diag_regression_exact_token",
+      "policy_family": "pair_arithmetic",
+      "policy_rule_name": "sum",
+      "prompt": "REGRESSION: Return exactly CEDAR.",
+      "surface": "regression"
+    }
+  ],
+  "constraints": {
+    "canonical_scientific_targets_included": false,
+    "comparison_object": "parsed observable outputs only",
+    "raw_generation_persisted": false,
+    "scientific_estimands": false,
+    "scientific_scoring": false
+  },
+  "model": {
+    "id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "revision": "7ae5576"
+  },
+  "purpose": "CPU/GPU behavioral-equivalence diagnostic for the frozen ASI-0 Qwen execution semantics. Contains no canonical scientific targets and no expected scientific outcomes.",
+  "schema_version": 1,
+  "status": "FROZEN EXECUTION DIAGNOSTIC; NON-SCIENTIFIC"
+}

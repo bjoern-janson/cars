@@ -1,0 +1,67 @@
+{
+  "analysis": {
+    "bootstrap_target_ci95": [
+      0.11492167564203343,
+      0.13188382737411952
+    ],
+    "bootstrap_target_resamples": 5000,
+    "delta_align": 0.12333082262686001,
+    "estimand": "E[Y_concealed | do(A=aligned)] - E[Y_concealed | do(A=misaligned)]",
+    "interpretation_ceiling": "Correct evidence-to-target assignment causally improves bounded modification selection and downstream concealed performance under the tested conditions.",
+    "mean_gain_by_arm": {
+      "aligned": 0.12355502445116791,
+      "misaligned": 0.0002242018243079046,
+      "random_edit": 0.02785384652100049,
+      "static": 0.0
+    },
+    "n_target_replicate_pairs": 24,
+    "n_targets": 24,
+    "nonclaims": [
+      "intelligence",
+      "viability gain",
+      "recursive self-improvement",
+      "ASI",
+      "new ontology",
+      "new intelligence variable",
+      "architecture-level superiority"
+    ],
+    "pair_rows": [
+      {"aligned_gain": 0.133630772822102, "misaligned_gain": 0.018783549696234303, "pair_delta_align": 0.1148472231258677, "replicate_id": "r0", "target_id": "s00-t00"},
+      {"aligned_gain": 0.11976329176589073, "misaligned_gain": -0.022793818799991095, "pair_delta_align": 0.14255711056588183, "replicate_id": "r0", "target_id": "s00-t01"},
+      {"aligned_gain": 0.13279867425357983, "misaligned_gain": -0.030321207469789502, "pair_delta_align": 0.16311988172336933, "replicate_id": "r0", "target_id": "s00-t02"},
+      {"aligned_gain": 0.1265339631440921, "misaligned_gain": -0.027482141699699036, "pair_delta_align": 0.15401610484379114, "replicate_id": "r0", "target_id": "s00-t03"},
+      {"aligned_gain": 0.1265640232491826, "misaligned_gain": -0.018242181444542815, "pair_delta_align": 0.1448062046937254, "replicate_id": "r0", "target_id": "s01-t00"},
+      {"aligned_gain": 0.11548134807363697, "misaligned_gain": 0.006974003016698038, "pair_delta_align": 0.10850734505693893, "replicate_id": "r0", "target_id": "s01-t01"},
+      {"aligned_gain": 0.12374897914552119, "misaligned_gain": 0.009619716300242831, "pair_delta_align": 0.11412926284527836, "replicate_id": "r0", "target_id": "s01-t02"},
+      {"aligned_gain": 0.13646631582067292, "misaligned_gain": 0.017352808143344944, "pair_delta_align": 0.11911350767732798, "replicate_id": "r0", "target_id": "s01-t03"},
+      {"aligned_gain": 0.10840031665218802, "misaligned_gain": 0.028820423208318513, "pair_delta_align": 0.07957989344386951, "replicate_id": "r0", "target_id": "s02-t00"},
+      {"aligned_gain": 0.12320033604882352, "misaligned_gain": -0.009770883794548824, "pair_delta_align": 0.13297121984337235, "replicate_id": "r0", "target_id": "s02-t01"},
+      {"aligned_gain": 0.11599819288145102, "misaligned_gain": -0.005679993326437094, "pair_delta_align": 0.12167818620788812, "replicate_id": "r0", "target_id": "s02-t02"},
+      {"aligned_gain": 0.11393334223144214, "misaligned_gain": -0.0036839290078307663, "pair_delta_align": 0.1176172712392729, "replicate_id": "r0", "target_id": "s02-t03"},
+      {"aligned_gain": 0.12375931578878463, "misaligned_gain": -0.013471388560961306, "pair_delta_align": 0.13723070434974594, "replicate_id": "r0", "target_id": "s03-t00"},
+      {"aligned_gain": 0.0977932571754847, "misaligned_gain": 0.0009195791871791092, "pair_delta_align": 0.0968736779883056, "replicate_id": "r0", "target_id": "s03-t01"},
+      {"aligned_gain": 0.10646556438817534, "misaligned_gain": -0.01749678514507691, "pair_delta_align": 0.12396234953325225, "replicate_id": "r0", "target_id": "s03-t02"},
+      {"aligned_gain": 0.1372541885899301, "misaligned_gain": -0.00422876966473873, "pair_delta_align": 0.14148295825466883, "replicate_id": "r0", "target_id": "s03-t03"},
+      {"aligned_gain": 0.14420438059576013, "misaligned_gain": 0.010475757284090947, "pair_delta_align": 0.13372862331166918, "replicate_id": "r0", "target_id": "s04-t00"},
+      {"aligned_gain": 0.13940131620856605, "misaligned_gain": 0.028957501666475538, "pair_delta_align": 0.11044381454209051, "replicate_id": "r0", "target_id": "s04-t01"},
+      {"aligned_gain": 0.11494359442229918, "misaligned_gain": -0.001548838289306409, "pair_delta_align": 0.11649243271160559, "replicate_id": "r0", "target_id": "s04-t02"},
+      {"aligned_gain": 0.12995181607034167, "misaligned_gain": -0.03477409084592509, "pair_delta_align": 0.16472590691626676, "replicate_id": "r0", "target_id": "s04-t03"},
+      {"aligned_gain": 0.12545671248713242, "misaligned_gain": 0.023824576769447492, "pair_delta_align": 0.10163213571768492, "replicate_id": "r0", "target_id": "s05-t00"},
+      {"aligned_gain": 0.12084458828808142, "misaligned_gain": 0.004640089108895684, "pair_delta_align": 0.11620449917918574, "replicate_id": "r0", "target_id": "s05-t01"},
+      {"aligned_gain": 0.12443969862273113, "misaligned_gain": 0.03589545704789504, "pair_delta_align": 0.08854424157483609, "replicate_id": "r0", "target_id": "s05-t02"},
+      {"aligned_gain": 0.12428659810216025, "misaligned_gain": 0.008611410403414843, "pair_delta_align": 0.11567518769874541, "replicate_id": "r0", "target_id": "s05-t03"}
+    ],
+    "protected_regression_pass_rate": {"aligned": 1.0, "misaligned": 1.0},
+    "study": "ASI-0 evidence-to-target assignment causal attribution"
+  },
+  "assignment_rows": 96,
+  "candidate_pool_match_failures": 0,
+  "estimated_delta_align": 0.12333082262686001,
+  "injected_delta_align": 0.12,
+  "manifest_targets": 24,
+  "misaligned_fixed_points": 0,
+  "note": "synthetic smoke validates plumbing only; it is not ASI-0 evidence",
+  "recovery_tolerance": 0.04,
+  "scientific_result": false,
+  "status": "PASS"
+}

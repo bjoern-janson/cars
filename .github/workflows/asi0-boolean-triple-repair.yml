@@ -1,0 +1,41 @@
+name: asi0-boolean-triple-repair
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - experiments/ASI0_BOOLEAN_TRIPLE_REPAIR.md
+      - scripts/validate_asi0_boolean_triple_repair.py
+      - scripts/run_asi0_canonical_qwen_entry.py
+      - scripts/run_asi0_canonical_qwen_boolean_triple.py
+      - scripts/run_asi0_canonical_qwen_boolean_triple_cuda.py
+      - experiments/ASI0_CANONICAL_QWEN_CONFIG.json
+      - .github/workflows/asi0-boolean-triple-repair.yml
+
+permissions:
+  contents: read
+
+jobs:
+  validate-repair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Syntax preflight
+        run: |
+          python - <<'PY'
+          import ast
+          for path in [
+              "scripts/validate_asi0_boolean_triple_repair.py",
+              "scripts/run_asi0_canonical_qwen_entry.py",
+              "scripts/run_asi0_canonical_qwen_boolean_triple.py",
+              "scripts/run_asi0_canonical_qwen_boolean_triple_cuda.py",
+          ]:
+              ast.parse(open(path, encoding="utf-8").read())
+              print("AST PASS", path)
+          PY
+      - name: Validate prospective Boolean repair
+        run: python scripts/validate_asi0_boolean_triple_repair.py

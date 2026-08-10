@@ -7,240 +7,152 @@ Pilot 0
 → CLOSED / READ-ONLY
 
 Pilot 1 predictive-resource toy
-→ CLOSED AT TESTED QUESTION
+→ CLOSED
 
 ID1 finite-data identification
 → CLOSED
 
-Future plasticity forecast benchmark
-→ FROZEN G0–G3 CONTRACT
-→ scientific result pending canonical MNIST data
+Future plasticity forecast
+→ FROZEN INDEPENDENT CONTRACT
+→ SCIENTIFIC RESULT UNOBSERVED
+
+ASI-0 evidence-assignment
+→ CLOSED
+→ C = 0
+→ A = 0
+→ STOP
+→ REPLICATION NOT AUTHORIZED
+
+Descendant ECIM-like object
+→ CAUSAL ARCHITECTURE PROVISIONAL
+→ G1 broad vs relational unresolved
+→ NO EXPERIMENT FROZEN
 ```
 
-The current repository-level theory and authority state are documented in:
+Canonical repository state:
 
-- [`../docs/INTELLIGENCE_THEORY.md`](../docs/INTELLIGENCE_THEORY.md)
 - [`../docs/CURRENT_RESEARCH_STATE.md`](../docs/CURRENT_RESEARCH_STATE.md)
 
-## Pilot 0 — closed
+## ASI-0 — closed canonical experiment
 
-Pilot 0 tested whether the literal moderator:
+Frozen scientific question:
 
-```text
-I₁ = 1 - P(correct)
-```
+> Can a fixed-base-model agent use development evidence to select bounded modifications that produce greater concealed future capability than evidence-independent or evidence-misaligned selection under matched resources?
 
-predicted larger causal benefit from verified-error feedback under one frozen Qwen3-4B / MMLU-Pro configuration.
+Primary two-axis object:
 
-The original moderation hypothesis was **not supported**. The subsequent diagnostic program localized representation-dependent transition effects and closed after R1 replication/transport.
+\[
+C=E[Y_{aligned}-Y_{base}]
+\]
 
-Authoritative terminal record:
+\[
+A=E[Y_{aligned}-Y_{misaligned}]
+\]
 
-- [`../results/PILOT0_TERMINAL_RECORD.md`](../results/PILOT0_TERMINAL_RECORD.md)
+Positive authorization required:
 
-Frozen protocol/provenance:
+\[
+L_C>0\land L_A>0.
+\]
 
-- [`PILOT0_MMLU_PRO.md`](PILOT0_MMLU_PRO.md)
-- [`PILOT0_PROVENANCE.md`](PILOT0_PROVENANCE.md)
-
-Keep explicit:
-
-```text
-Pilot 0 CLOSED
-≠ theory established
-≠ certainty
-≠ zero uncertainty
-
-CLOSED
-= no presently justified escalation from that lineage
-```
-
-No A8, R2, or additional `T_instability` decomposition is earned.
-
-## Pilot 1 — predictive-resource subtraction toy
-
-Pilot 1 introduced a new synthetic question independent of Pilot 0.
-
-System ladder:
+Canonical instance:
 
 ```text
-F — frozen dynamics
-N — exogenously changing dynamics
-A — intervention-coupled changing dynamics
+model      Qwen/Qwen2.5-0.5B-Instruct
+revision   7ae5576
+weights    frozen
+mutation   one bounded textual policy patch
 ```
 
-The first restricted predictor showed a small structural-generalization A>N gap on unseen order reversals. After pairing the realized initial states across F/N/A, that descriptive pattern persisted under the restricted estimator.
+### Lineage
 
-However, the exact known-dynamics simulator predicted N and A with:
+1. The causal design skeleton and assignment machinery were frozen prospectively.
+2. Canonical attempt #1 produced no scientific outcome because `boolean_pair` had only four unique inputs but the frozen design required three development + three concealed prompts without overlap.
+3. The Boolean input-domain layer was reopened prospectively and replaced with `boolean_triple`, preserving the four-operation family structure.
+4. The repaired Boolean contract passed its cardinality, signature, identifying-subset, frozen-seed, and non-change validations.
+5. CPU↔GPU equivalence was defined behaviorally on a separate eight-case non-scientific diagnostic manifest.
+6. The exact canonical CUDA execution path passed that frozen behavioral-equivalence gate.
+7. Canonical attempt #2 produced the first scientific observation.
+
+### Primary result
 
 ```text
-D = 0
+C      0
+A      0
+L_C    0
+L_A    0
+PRIMARY STOP
+REPLICATION NOT AUTHORIZED
+ASI-0 GREEN FALSE
 ```
 
-from the same full-state dimensionality and essentially the same per-step computational class.
+No aligned or misaligned selected patch passed the protected-regression gate, so both effective treatment arms remained base/no-op under the prospectively frozen policy-level ITT rule.
 
-Therefore:
+Canonical result records:
 
-```text
-estimator-level structural-generalization difference
-→ YES
+- [`../results/ASI0_TERMINAL_RECORD.md`](../results/ASI0_TERMINAL_RECORD.md)
+- [`../results/ASI0_PRIMARY_MECHANISM_FAILURE_REPORT.md`](../results/ASI0_PRIMARY_MECHANISM_FAILURE_REPORT.md)
+- [`../results/ASI0_EVIDENCE_ASSIGNMENT_STATUS.md`](../results/ASI0_EVIDENCE_ASSIGNMENT_STATUS.md)
 
-intrinsic adaptive predictive-resource burden
-→ NOT DEMONSTRATED
-```
+Primary contracts / implementation:
 
-Artifacts:
+- [`ASI0_EVIDENCE_ASSIGNMENT.md`](ASI0_EVIDENCE_ASSIGNMENT.md)
+- [`ASI0_EVIDENCE_ASSIGNMENT_CONFIG.json`](ASI0_EVIDENCE_ASSIGNMENT_CONFIG.json)
+- [`ASI0_CANONICAL_QWEN_CONFIG.json`](ASI0_CANONICAL_QWEN_CONFIG.json)
+- [`ASI0_BOOLEAN_TRIPLE_REPAIR.md`](ASI0_BOOLEAN_TRIPLE_REPAIR.md)
+- [`ASI0_CPU_GPU_DIAGNOSTIC_MANIFEST.json`](ASI0_CPU_GPU_DIAGNOSTIC_MANIFEST.json)
+- [`ASI0_PRIMARY_MECHANISM_DIAGNOSIS_PROTOCOL.md`](ASI0_PRIMARY_MECHANISM_DIAGNOSIS_PROTOCOL.md)
 
-- [`PILOT1_PREDICTIVE_RESOURCE_TOY.md`](PILOT1_PREDICTIVE_RESOURCE_TOY.md)
-- [`PILOT1_PREDICTIVE_RESOURCE_TOY_CONFIG.json`](PILOT1_PREDICTIVE_RESOURCE_TOY_CONFIG.json)
-- [`PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1_CONFIG.json`](PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1_CONFIG.json)
-- [`../results/PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md`](../results/PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md)
+ASI-0 is not open for rerun, prompt rescue, gate relaxation, stronger-model substitution, Glimmer, or retrospective estimand replacement.
 
-The unpaired Run 1 remains quarantined as a design-repair record:
+## Future plasticity forecast — frozen / unobserved
 
-- [`../results/PILOT1_PREDICTIVE_RESOURCE_TOY_RUN1.md`](../results/PILOT1_PREDICTIVE_RESOURCE_TOY_RUN1.md)
-
-Do not tune this toy to enlarge the A/N difference.
-
-## ID1 — finite-data system identification, closed
-
-ID1 changed exactly one scientific dimension:
-
-```text
-known transition/update equations
-→ hidden from learner
-```
-
-The learner had to identify local dynamics from finite trajectories and recursively predict structurally held-out order reversals.
-
-Frozen contract:
-
-- [`PILOT1_ID1_SYSTEM_IDENTIFICATION.md`](PILOT1_ID1_SYSTEM_IDENTIFICATION.md)
-- [`PILOT1_ID1_SYSTEM_IDENTIFICATION_CONFIG.json`](PILOT1_ID1_SYSTEM_IDENTIFICATION_CONFIG.json)
-
-A weak P2 identifier showed a visible A/N gap. The stronger generic P3 identifier removed approximately 99.46% of the high-resource gap.
-
-The remaining tiny positive P3 discrepancy was then replicated on a fresh seed under an unchanged generator/grammar/estimator/endpoint and reversed sign.
-
-Replication contract:
-
-- [`PILOT1_ID1_P3_REPLICATION_CONFIG.json`](PILOT1_ID1_P3_REPLICATION_CONFIG.json)
-
-Terminal interpretation:
-
-```text
-finite-data adaptive identification burden
-→ NOT DEMONSTRATED
-
-distinct sample-complexity regime
-→ NOT DEMONSTRATED
-
-ID1 discrepancy
-→ CLOSED
-```
-
-Records:
-
-- [`../results/PILOT1_ID1_SYSTEM_IDENTIFICATION.md`](../results/PILOT1_ID1_SYSTEM_IDENTIFICATION.md)
-- [`../results/PILOT1_ID1_P3_REPLICATION.md`](../results/PILOT1_ID1_P3_REPLICATION.md)
-
-Do not run another replication merely to recover the original sign. Longer horizons, richer intervention algebra, and a more complicated adaptive mechanism are not earned by ID1.
-
-## Future plasticity forecast benchmark — current frozen experiment
-
-This benchmark is independently motivated by established continual-learning plasticity variation. It does not descend from ID1 and does not use the A/N framing.
-
-Neutral object:
-
-```text
-Γ_t(E*)
-=
-future learning trajectory from checkpoint S_t
-on a concealed future task transformation E*
-```
-
-Each checkpoint is paired with a fresh network trained on the exact same future Permuted-MNIST task and example order.
-
-Frozen G0–G3 contract:
+This benchmark remains independent of ASI-0.
 
 - [`FUTURE_PLASTICITY_FORECAST.md`](FUTURE_PLASTICITY_FORECAST.md)
 - [`FUTURE_PLASTICITY_FORECAST_CONFIG.json`](FUTURE_PLASTICITY_FORECAST_CONFIG.json)
 
-Runner:
-
-- [`../scripts/run_future_plasticity_forecast.py`](../scripts/run_future_plasticity_forecast.py)
-
-Current state:
+Current status:
 
 ```text
 DESIGN          PASS
 IMPLEMENTATION  PASS
 SMOKE           PASS
-CANONICAL DATA  unavailable in active execution environment
 SCIENTIFIC RUN  NOT EXECUTED
-RESULT          ∅
-INTERPRETATION  ∅
+RESULT          UNOBSERVED
 ```
 
-Status:
+No surrogate dataset or downstream escalation is authorized as a substitute for the frozen scientific instance.
 
-- [`../results/FUTURE_PLASTICITY_FORECAST_STATUS.md`](../results/FUTURE_PLASTICITY_FORECAST_STATUS.md)
+## Closed ancestors
 
-Frozen full-run command once canonical MNIST is provisioned:
+Pilot 0:
 
-```bash
-python scripts/run_future_plasticity_forecast.py \
-  experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json \
-  --json-out results/future_plasticity_forecast_result.json
-```
+- [`PILOT0_MMLU_PRO.md`](PILOT0_MMLU_PRO.md)
+- [`PILOT0_PROVENANCE.md`](PILOT0_PROVENANCE.md)
+- [`../results/PILOT0_TERMINAL_RECORD.md`](../results/PILOT0_TERMINAL_RECORD.md)
 
-No substitute dataset, G4–G6 escalation, new `Z`, new construct, or theory claim is authorized before the canonical G0–G3 outcome.
+Pilot 1 / ID1:
 
-## General assay and synthetic red-team utilities
+- [`PILOT1_PREDICTIVE_RESOURCE_TOY.md`](PILOT1_PREDICTIVE_RESOURCE_TOY.md)
+- [`PILOT1_ID1_SYSTEM_IDENTIFICATION.md`](PILOT1_ID1_SYSTEM_IDENTIFICATION.md)
+- [`../results/PILOT1_ID1_SYSTEM_IDENTIFICATION.md`](../results/PILOT1_ID1_SYSTEM_IDENTIFICATION.md)
+- [`../results/PILOT1_ID1_P3_REPLICATION.md`](../results/PILOT1_ID1_P3_REPLICATION.md)
 
-The repository retains the Pilot-0 assay/red-team tooling for provenance and reusable methodological checks.
+## Descendant boundary
 
-Synthetic assay red-team:
+The next prospective object is not “ASI-0 fixed.”
 
-```bash
-python scripts/run_assay_red_team.py \
-  --seed 20260809 \
-  --n 20000 \
-  --json-out results/synthetic_assay_reference.json
-```
+Provisional architecture:
 
-Threshold / rare-jump stress tests:
+\[
+E\rightarrow C_{selected}\rightarrow M_{effective}\rightarrow(Y_T,Y_P)
+\]
 
-```bash
-python scripts/run_jump_worlds.py \
-  --seed 20260809 \
-  --n 20000 \
-  --json-out results/jump_worlds_reference.json
-```
+with direct independent modification assignment required for G2:
 
-General randomized LLM assay:
+\[
+do(M=m)\rightarrow(Y_T,Y_P).
+\]
 
-- [`LLM_ASSAY_PROTOCOL.md`](LLM_ASSAY_PROTOCOL.md)
-
-These are not the active future-plasticity benchmark and do not inherit its authority.
-
-## Evidence ladder
-
-```text
-smoke / synthetic plumbing
-↛ scientific result
-
-restricted estimator difference
-↛ intrinsic complexity
-
-predictive forecastability
-↛ causal mechanism
-
-future learning difference
-↛ viability gain
-
-viability gain
-↛ evidence-mediated intelligence
-```
-
-A new experiment requires a genuinely discriminating question and a fresh pre-outcome contract.
+The G1 epistemic object remains unresolved between broad evidence use and relational evidence use. Therefore no ontology, evidence intervention space, model, prompt, estimator, or execution is currently authorized.

@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "study": "ASI-0 evidence-to-target assignment causal attribution",
+  "status": "FROZEN CAUSAL SKELETON; SCIENTIFIC INSTANCE REQUIRES PROSPECTIVE MANIFEST",
+  "scientific_question": "Can a fixed-base-model agent use development evidence to select bounded modifications that produce greater concealed future capability than evidence-misaligned selection under matched resources?",
+  "treatment": {
+    "name": "evidence_target_assignment",
+    "symbol": "A",
+    "primary_arms": ["aligned", "misaligned"],
+    "primary_estimand": "E[Y_concealed | do(A=aligned)] - E[Y_concealed | do(A=misaligned)]",
+    "aligned_rule": "evidence from target i is assigned to modification selection for target i",
+    "misaligned_rule": "evidence is reassigned by a prospectively seeded within-stratum derangement with no fixed points",
+    "assignment_seed": 2026081001
+  },
+  "matching": {
+    "stratum_fields": [
+      "task_family",
+      "evidence_type",
+      "trace_length_bucket",
+      "difficulty_bucket",
+      "candidate_count",
+      "resource_budget_units"
+    ],
+    "minimum_targets_per_stratum": 2,
+    "forbid_misaligned_fixed_points": true,
+    "same_candidate_pool_across_primary_arms": true,
+    "same_base_agent_across_primary_arms": true,
+    "same_evaluator_across_primary_arms": true,
+    "same_concealed_suite_across_primary_arms": true,
+    "same_resource_budget_across_primary_arms": true
+  },
+  "agent": {
+    "base_model_id": "MUST_FREEZE_BEFORE_SCIENTIFIC_RUN",
+    "base_model_revision": "MUST_FREEZE_BEFORE_SCIENTIFIC_RUN",
+    "selection_configuration_hash": "MUST_FREEZE_BEFORE_SCIENTIFIC_RUN",
+    "reset_rule": "every arm starts from the identical frozen base-agent snapshot; no modification carries across targets or arms",
+    "mutation_surface": "one bounded textual policy patch selected from a frozen target-specific candidate pool and applied to a single mutable policy slot",
+    "max_patch_utf8_bytes": 2048,
+    "modifications_per_arm": 1,
+    "weights_frozen": true,
+    "tool_permissions_frozen": true,
+    "recursive_self_modification": false
+  },
+  "candidate_pool": {
+    "construction": "generated and frozen before assignment; the exact same target-specific pool is reused in aligned and misaligned arms",
+    "candidate_generation_may_use_development_evidence": true,
+    "candidate_generation_is_not_the_treatment": true,
+    "selection_only_is_assignment_sensitive": true,
+    "candidate_count": "MUST_FREEZE_BEFORE_SCIENTIFIC_RUN",
+    "candidate_length_matching": "freeze a narrow candidate-size envelope prospectively and record every selected patch byte length",
+    "application_cost": "exactly one patch slot application or one explicit no-op when the protected-regression gate rejects the patch"
+  },
+  "secondary_controls": {
+    "enabled": true,
+    "arms": ["static", "random_edit"],
+    "static": "identical base agent; no candidate is applied; evaluation budget is still recorded",
+    "random_edit": "one candidate is selected uniformly from the same frozen pool using a prospectively seeded RNG independent of evidence",
+    "random_edit_seed": 2026081002,
+    "authority": "secondary controls only; SELF/RANDOM-style contrasts are not the primary attribution test"
+  },
+  "gates": {
+    "protected_regressions": "the selected patch is accepted only under the same frozen regression gate in every arm; rejection yields an explicit no-op",
+    "concealed_confirmation": "concealed evaluation content is inaccessible to candidate generation and selection",
+    "structural_holdout": "confirmation items must be structurally held out from development evidence under a prospectively frozen rule",
+    "replication": "any positive interpretation requires an independently provisioned replication manifest and fresh assignment seed; replication does not enlarge the claim"
+  },
+  "evaluation": {
+    "base_score_field": "base_concealed_score",
+    "outcome_field": "concealed_score",
+    "gain_definition": "concealed_score - base_concealed_score",
+    "primary_unit": "target x replicate branch pair",
+    "evaluator_id": "MUST_FREEZE_BEFORE_SCIENTIFIC_RUN",
+    "concealed_suite_id": "MUST_FREEZE_BEFORE_SCIENTIFIC_RUN",
+    "evaluator_blinded_to_arm": true,
+    "bootstrap_target_resamples": 5000,
+    "bootstrap_seed": 2026081003
+  },
+  "manifest": {
+    "required_target_fields": [
+      "target_id",
+      "target_context",
+      "evidence_id",
+      "evidence_text",
+      "evidence_hash",
+      "task_family",
+      "evidence_type",
+      "trace_length_bucket",
+      "difficulty_bucket",
+      "candidate_count",
+      "resource_budget_units",
+      "candidates",
+      "base_agent_hash",
+      "evaluator_id",
+      "concealed_suite_id"
+    ],
+    "candidate_fields": ["candidate_id", "text"],
+    "scientific_manifest_rule": "all placeholder instance fields in this config and all target/candidate content must be frozen before any concealed outcome is generated"
+  },
+  "interpretation": {
+    "positive_maximum": "Correct evidence-to-target assignment causally improves bounded modification selection and downstream concealed performance under the tested conditions.",
+    "null_maximum": "Correct semantic assignment of development evidence adds no detectable value under the tested mutation surface, task family, resource envelope, and measurement resolution.",
+    "nonclaims": [
+      "intelligence",
+      "viability gain",
+      "recursive self-improvement",
+      "ASI",
+      "new ontology",
+      "new intelligence variable",
+      "architecture-level superiority"
+    ],
+    "no_null_rescue": [
+      "invent a new Z",
+      "expand the mutation surface because the effect disappeared",
+      "increase autonomy because the effect disappeared",
+      "claim the effect must emerge at scale"
+    ]
+  },
+  "smoke": {
+    "seed": 2026081099,
+    "strata": 6,
+    "targets_per_stratum": 4,
+    "injected_delta_align": 0.12,
+    "noise_sd": 0.015
+  }
+}

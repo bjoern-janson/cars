@@ -1,309 +1,307 @@
 # Current Research State
 
-## Terminal summary
-
-The project currently separates a broad functional intelligence conjecture from a deliberately subtractive empirical program.
+## Canonical authority state
 
 ```text
-INTELLIGENCE THEORY
-→ conjecture
+PILOT 0
+→ CLOSED
+→ original moderation hypothesis not supported
+→ scoped representation effects remain scoped
 
-SPECIAL CORRECTION MECHANISM
-→ none established
+POST-PILOT-0 CORRECTION-SPECIFIC CONSTRUCT SEARCH
+→ no empirically independent correction-specific primitive established
+→ historical subtraction branches are provenance, not live theory
 
-SPECIAL CORRECTION ARCHITECTURE
-→ none established
+PILOT 1 / ID1
+→ CLOSED at tested synthetic predictive-resource / identification questions
+→ no adaptive-specific predictive or sample-complexity burden established
 
-SPECIAL ADAPTIVE COMPLEXITY
-→ none established
+FUTURE-PLASTICITY FORECAST BENCHMARK
+→ frozen independent benchmark
+→ no scientific result yet
 
-ADAPTIVE-SPECIFIC PREDICTIVE BURDEN
-→ not demonstrated
+ASI-0 EVIDENCE-ASSIGNMENT EXPERIMENT
+→ CLOSED
+→ canonical primary observed
+→ C = 0
+→ A = 0
+→ STOP
+→ replication NOT AUTHORIZED
 
-ADAPTIVE-SPECIFIC IDENTIFICATION BURDEN
-→ not demonstrated / ID1 closed
-
-FUTURE-PLASTICITY FORECASTABILITY
-→ independent benchmark frozen
-→ scientific result pending canonical MNIST data
-
-CAUSAL EVIDENCE → VIABILITY
-→ not yet tested
-
-INTELLIGENCE CONSTRUCT VALIDITY
-→ not yet tested
+DESCENDANT ECIM-LIKE ARCHITECTURE
+→ provisional causal architecture only
+→ scientific object unresolved at G1 broad vs relational fork
+→ no experiment frozen
+→ no execution authorized
 ```
 
-## Theory
+## Top-level theory
 
-Canonical theory document:
+The repository retains a broad functional conjecture:
 
-- [`INTELLIGENCE_THEORY.md`](INTELLIGENCE_THEORY.md)
+> Intelligence is the capacity of a system to convert appropriately informative new evidence into increased expected future viability.
 
 Shorthand:
 
-```text
-I_t ∝ Δ_E[V_{t+h}]
-```
+\[
+I_t\propto \Delta_E[V_{t+h}]
+\]
 
-Interpretation:
+This is a conjecture, not a validated law, not a linearity claim, and not established by ASI-0.
 
-> Intelligence is conjectured to increase with a system's capacity to convert appropriately informative evidence into increased expected future viability.
+Canonical theory:
 
-This is not a validated law, not a linearity claim, and not an established construct definition.
+- [`INTELLIGENCE_THEORY.md`](INTELLIGENCE_THEORY.md)
 
-## Pilot 0 — empirical phenomenon, closed
+## Pilot 0 — closed ancestor
 
-Pilot 0 tested a heterogeneous causal-response hypothesis using Qwen3-4B on MMLU-Pro.
+Pilot 0 tested whether
 
-The original moderation hypothesis:
+\[
+I_1=1-P(\mathrm{correct})
+\]
 
-```text
-higher I₁ = 1 - P(correct)
-→ greater causal benefit from verified-error feedback
-```
+moderated causal benefit from verified-error feedback under one frozen Qwen3-4B / MMLU-Pro configuration.
 
-was **not supported**.
-
-The diagnostic program nevertheless established scoped representation-dependent transition effects, including replicated but practically small effects on `T_instability`.
+The original moderation hypothesis was not supported. Diagnostic work later established endpoint-specific representation effects and a replicated but practically small prior-state-encoding effect on `T_instability`.
 
 Authoritative record:
 
 - [`../results/PILOT0_TERMINAL_RECORD.md`](../results/PILOT0_TERMINAL_RECORD.md)
 
-Pilot 0 remains closed. No A8, R2, or further `T_instability` decomposition is earned by that lineage.
+No A8, R2, or further Pilot-0 localization is authorized by that lineage.
 
-## Post-Pilot-0 subtraction
+## Post-Pilot-0 subtraction — historical provenance
 
-The conceptual program repeatedly attempted to identify an irreducible correction-specific object.
+The project tested whether correction required a distinct controller primitive, transition-quality ontology, lineage property, state-sufficiency relation, or correction-specific target-discovery object.
 
-Candidates included:
+Within the audited Pilot-0 phenomenon space, those candidate residuals were progressively absorbed by ordinary state, dynamics, information/observation, objective, constraint, policy/search, update/adaptation, and identification machinery.
 
-```text
-controller primitive
-transition-quality ontology
-correction-quality construct
-irreducible lineage property
-correction-specific sufficiency
-correction-specific target discovery
-prospective compression warrant
-self-sealing challengeability
-```
+Scoped conclusion:
 
-Repeated comparison against established machinery contracted the live residual to the empty set within the audited Pilot-0 phenomenon space.
+> No empirically independent correction-specific primitive is presently required within the audited Pilot-0 phenomenon space.
 
-Current scoped conclusion:
+This is not a claim that no such residual can exist.
 
-> **Within the audited Pilot-0 phenomenon space, no empirically independent correction-specific primitive is presently required beyond ordinary state, dynamics, information/observation, task, objective, constraints, policy/search, update/adaptation, information retention, future-relevance assumptions, and endogenous observation/identification machinery.**
+Historical PRs #2–#10 preserve that subtraction lineage and are not live experimental branches.
 
-Keep explicit:
+## Pilot 1 / ID1 — closed
 
-```text
-no residual found
-≠ no residual exists
+The predictive-resource toy showed a structural-generalization difference under a restricted predictor, but an exact known-dynamics oracle removed the apparent intrinsic burden.
 
-generic representability
-≠ complete mechanistic explanation
-
-negative differentiation
-≠ philosophical reduction
-```
-
-The historical subtraction branches remain provenance, not canonical theory.
-
-## Pilot 1 — predictive-resource toy
-
-Pilot 1 asked a new question independent of Pilot 0:
-
-```text
-F — frozen response law
-N — exogenously changing response law
-A — intervention-coupled changing response law
-```
-
-The first restricted predictor showed:
-
-```text
-A > N on structurally held-out order reversals
-A ≈ N on IID sequence structure
-```
-
-But the exact-model oracle predicted both systems with zero distortion from full state and known dynamics.
+ID1 then hid dynamics and tested finite-data system identification. A stronger generic identifier removed approximately 99.46% of the earlier high-resource gap, and the remaining tiny discrepancy reversed sign under fresh-seed replication.
 
 Therefore:
 
 ```text
-restricted-predictor structural gap
-→ estimator / approximation phenomenon
-
-intrinsic adaptive predictive-resource burden
-→ not demonstrated
-```
-
-Canonical record:
-
-- [`../results/PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md`](../results/PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md)
-
-## ID1 — unknown-dynamics system identification, closed
-
-ID1 removed simulator privilege by hiding the transition/update equations and requiring finite-data identification.
-
-A weaker P2 identifier showed a visible A/N gap. A stronger generic P3 identifier removed approximately 99.46% of the high-resource gap.
-
-At the frozen high-resource P3 cell:
-
-```text
-ID1
-A - N = +4.70792e-7 structural NMSE
-```
-
-The coarse sample thresholds were identical for A and N, and no distinct sample-scaling regime was established.
-
-A fresh-seed P3 replication then yielded:
-
-```text
-ID1-R1
-A - N = -3.90770244e-6
-```
-
-The sign reversed under the frozen replication rule.
-
-Therefore:
-
-```text
-ID1 TINY DISCREPANCY
-→ CLOSED
-
-FINITE-DATA ADAPTIVE IDENTIFICATION BURDEN
-→ NOT DEMONSTRATED
-
-DISTINCT SAMPLE-COMPLEXITY REGIME
-→ NOT DEMONSTRATED
+adaptive-specific predictive-resource burden     NOT DEMONSTRATED
+adaptive-specific identification burden           NOT DEMONSTRATED
+distinct sample-complexity regime                 NOT DEMONSTRATED
+ID1                                               CLOSED
 ```
 
 Canonical records:
 
+- [`../results/PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md`](../results/PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md)
 - [`../results/PILOT1_ID1_SYSTEM_IDENTIFICATION.md`](../results/PILOT1_ID1_SYSTEM_IDENTIFICATION.md)
 - [`../results/PILOT1_ID1_P3_REPLICATION.md`](../results/PILOT1_ID1_P3_REPLICATION.md)
 
-Do not run another replication merely to recover the original sign.
+## Independent future-plasticity benchmark
 
-## Independent future-plasticity benchmark — frozen, no scientific result yet
+The G0–G3 future-plasticity benchmark remains frozen and independent of ASI-0.
 
-The next authorized benchmark is externally motivated by established continual-learning plasticity variation rather than by the failed ID1 toy.
-
-Object:
-
-```text
-Γ_t(E*)
-=
-future learning trajectory from checkpoint S_t
-on a concealed future task transformation E*
-```
-
-Primary comparison:
-
-```text
-checkpoint future-learning curve
-versus
-matched fresh-network curve
-on the identical E*
-```
-
-Current pass tests only G0–G3:
-
-```text
-G0 forecastability
-G1 current capability beyond age
-G2 established plasticity variables beyond capability
-G3 broad checkpoint-state sketch beyond plasticity variables
-```
-
-Frozen benchmark:
-
-- [`../experiments/FUTURE_PLASTICITY_FORECAST.md`](../experiments/FUTURE_PLASTICITY_FORECAST.md)
-- [`../experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json`](../experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json)
-- [`../scripts/run_future_plasticity_forecast.py`](../scripts/run_future_plasticity_forecast.py)
-
-Current status:
+Current state:
 
 ```text
 DESIGN          PASS
 IMPLEMENTATION  PASS
 SMOKE           PASS
-CANONICAL DATA  UNAVAILABLE IN ACTIVE EXECUTION ENVIRONMENT
 SCIENTIFIC RUN  NOT EXECUTED
-RESULT          ∅
-INTERPRETATION  ∅
+RESULT          UNOBSERVED
 ```
 
-Status record:
+No surrogate result has authority to substitute for the canonical benchmark.
 
+Records:
+
+- [`../experiments/FUTURE_PLASTICITY_FORECAST.md`](../experiments/FUTURE_PLASTICITY_FORECAST.md)
 - [`../results/FUTURE_PLASTICITY_FORECAST_STATUS.md`](../results/FUTURE_PLASTICITY_FORECAST_STATUS.md)
 
-No surrogate dataset, G4–G6 transport/compression escalation, new `Z`, new construct, or theory interpretation is authorized before the canonical run.
+## ASI-0 — closed negative primary
 
-## Current empirical hierarchy
+### Scientific object
 
-```text
-THEORY
-Intelligence concerns evidence → future viability
-        │
-        ▼
-FORECASTABILITY
-Can present state predict future response to unseen tasks/evidence?
-        │
-        ▼
-PREDICTIVE STRUCTURE
-What ordinary state variables explain that response?
-        │
-        ▼
-RESOURCE QUESTION
-How much representation / computation / data is required?
-        │
-        ▼
-ADAPTATION
-Is the response evidence-mediated system change?
-        │
-        ▼
-VIABILITY
-Does that change improve future outcomes?
-        │
-        ▼
-CAUSAL MEDIATION
-Did the system's use of evidence cause the gain?
-        │
-        ▼
-CONSTRUCT VALIDITY
-Does this relation earn the name intelligence?
-```
+ASI-0 asked whether correctly assigned development evidence causally contributed to selecting a bounded modification that improved concealed future capability relative to fixed base and evidence-misaligned assignment.
 
-Each arrow is a separate empirical burden.
+Frozen two-axis object:
 
-## Governing methodological rule
+\[
+C=E[Y_{aligned}-Y_{base}]
+\]
+
+\[
+A=E[Y_{aligned}-Y_{misaligned}]
+\]
+
+Positive authorization required:
+
+\[
+L_C>0\land L_A>0.
+\]
+
+### Execution lineage
+
+Canonical attempt #1 produced no scientific outcome because the original Boolean input domain could not satisfy the frozen uniqueness requirement. That defect was localized before outcomes and repaired prospectively by replacing `boolean_pair` with `boolean_triple` while preserving the four-operation family structure.
+
+The repaired exact CUDA path then passed the frozen eight-case CPU↔GPU behavioral-equivalence gate.
+
+Canonical attempt #2 was the first outcome-bearing run.
+
+### Primary result
 
 ```text
-candidate phenomenon
-→ strongest generic comparator
-→ localize discrepancy
-→ strengthen ordinary explanation
-→ replicate
-→ transport only if earned
-→ construct only if residual survives
+n_targets                         16
+aligned valid selection          14/16
+misaligned valid selection       14/16
+aligned gate admissions           0/16
+misaligned gate admissions        0/16
+mean base score                  0.20833333333333331
+mean aligned score               0.20833333333333331
+mean misaligned score            0.20833333333333331
+mean random-edit score           0.20833333333333331
+
+C                                  0
+A                                  0
+L_C                                0
+L_A                                0
+PRIMARY                            STOP
+REPLICATION                        NOT AUTHORIZED
+ASI-0 GREEN                        FALSE
 ```
 
-Or, in one sentence:
+Thus:
 
-> **Do not search for a new property. Construct the strongest existing explanation, measure where it fails, and only then investigate the failure.**
+\[
+\boxed{C=0,\quad A=0,\quad \mathrm{STOP}}
+\]
 
-## Current queue
+Earned claim:
+
+> Under the frozen proposal + protected-acceptance policy, correctly assigned development evidence produced no concealed capability gain and no incremental outcome leverage relative to misaligned assignment.
+
+Canonical record:
+
+- [`../results/ASI0_TERMINAL_RECORD.md`](../results/ASI0_TERMINAL_RECORD.md)
+
+## ASI-0 mechanism diagnosis
+
+The post-outcome diagnosis was outcome-blind with respect to concealed performance and used only candidate identity plus the frozen protected-regression cache.
+
+Pool property:
 
 ```text
-NEXT SCIENTIFIC ACTION
-→ provision canonical MNIST
-→ execute frozen future-plasticity G0–G3 benchmark
-
-NO DATA
-→ no result
-→ no interpretation
+16 frozen candidate patches
+1/16 passed the protected gate
+15/16 failed to preserve baseline protected behavior
 ```
+
+Realized-arm property:
+
+```text
+28 valid aligned/misaligned selections
+28/28 rejected
+```
+
+Every valid selected patch newly failed the exact-token `PINE` regression.
+
+The strongest justified decomposition is:
+
+```text
+assigned evidence
+  ↓ weak selection sensitivity
+candidate selection
+  ↓ poor behavioral isolation
+textual modification
+  ↓ correctly functioning protected gate
+rejection / no-op
+```
+
+Failure loci:
+
+```text
+INFERENCE
+→ assigned evidence barely controlled candidate identity
+
+MECHANISM / ISOLATION
+→ textual patches usually changed unrelated protected behavior
+
+ACCEPTANCE
+→ functioning as designed; detector rather than cause of the null
+```
+
+Detailed record:
+
+- [`../results/ASI0_PRIMARY_MECHANISM_FAILURE_REPORT.md`](../results/ASI0_PRIMARY_MECHANISM_FAILURE_REPORT.md)
+
+ASI-0 is immutable. No gate loosening, prompt rescue, model substitution, Glimmer run, or retrospective accepted-only estimand is authorized as ASI-0 continuation.
+
+## Provisional descendant architecture — not an experiment
+
+The descendant causal architecture is provisionally:
+
+\[
+E\rightarrow C_{selected}\rightarrow M_{effective}\rightarrow(Y_T,Y_P).
+\]
+
+Three distinct estimable properties are contemplated:
+
+```text
+θ1  evidence-conditioned warranted selection
+θT  target efficacy
+θP  protected-behavior interference
+```
+
+Hard design principle:
+
+\[
+G_2:\ do(M=m)\rightarrow(Y_T,Y_P)
+\]
+
+must be identified by direct modification assignment, not by conditioning on whichever candidate was selected under G1.
+
+The G1 epistemic object remains unresolved:
+
+\[
+G_1^{broad}\quad\text{vs}\quad G_1^{relational}.
+\]
+
+Destructive Part-I analysis established:
+
+```text
+universal relational codebook                 REFUTED
+ontology-conditional relational codebook      FEASIBLE IN PRINCIPLE
+```
+
+Permanent measurement-layer witnesses:
+
+```text
+constant-function ontology        -> relational UNSAT
+balanced 3-candidate/2-region     -> relational SAT in principle
+```
+
+No ontology, evidence intervention space, model, prompt, estimator, or empirical execution is currently frozen for the descendant.
+
+## Current authorization
+
+```text
+ASI-0                                      CLOSED / IMMUTABLE
+future-plasticity benchmark                FROZEN / UNOBSERVED
+ECIM-like causal architecture              PROVISIONALLY FIXED
+G2 direct do(M=m) principle                FIXED DESIGN PRINCIPLE
+G1 broad vs relational                     UNRESOLVED SCIENTIFIC OBJECT
+descendant ontology / E                     UNFROZEN
+descendant statistical contract             UNFROZEN
+descendant execution                        NOT AUTHORIZED
+```
+
+The current research branch stops at the explicit G1 scientific-object fork. Engineering must not choose that scientific object implicitly.
