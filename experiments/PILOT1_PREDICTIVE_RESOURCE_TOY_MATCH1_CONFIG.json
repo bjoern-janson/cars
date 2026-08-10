@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "study": "Pilot 1 Match1: paired-state predictive-resource subtraction toy",
+  "status": "PRE-OUTCOME MATCHING REPAIR",
+  "inherits": "PILOT1_PREDICTIVE_RESOURCE_TOY_CONFIG.json",
+  "repair_reason": "Run 1 used distinct realized initial-state draws across F/N/A; the primary A-N difference was small, so the intended matched-system subtraction is repaired by pairing x0 and theta0 across system classes.",
+  "authority": "synthetic matching repair only; no parameter, dynamics, intervention, representation, predictor, endpoint, sample-grid, or decision-rule tuning is authorized",
+  "seed": 20260810,
+  "interventions": {
+    "A": [1.0, 0.0],
+    "B": [0.8, 0.6],
+    "C": [0.0, 1.0]
+  },
+  "sequences": {
+    "train": ["AA", "BB", "CC", "AB", "AC", "BC"],
+    "structural_holdout": ["BA", "CA", "CB"]
+  },
+  "dynamics": {
+    "base_matrix": [[0.62, 0.18], [-0.12, 0.56]],
+    "theta_matrix_1": [[0.20, 0.06], [0.02, -0.10]],
+    "theta_matrix_2": [[-0.06, 0.16], [0.11, 0.04]],
+    "control_matrix": [[0.36, 0.04], [-0.03, 0.34]]
+  },
+  "adaptation": {
+    "rho": 0.90,
+    "eta": 0.25,
+    "exogenous_driver_schedule": [[0.7071067812, -0.7071067812], [-0.7071067812, 0.7071067812]]
+  },
+  "sampling": {
+    "x0_scale": 1.0,
+    "theta0_scale": 0.5,
+    "train_per_sequence": 1000,
+    "test_per_sequence": 500,
+    "pair_initial_states_across_systems": true
+  },
+  "predictor": {
+    "family": "multi-output ridge over fixed polynomial interaction features",
+    "ridge_alpha": 0.0001,
+    "representations": ["x_only", "x_theta_mean", "full_state"],
+    "train_sample_grid": [128, 512, 2048, 6000]
+  },
+  "primary_readout": {
+    "target": "flattened observable state trajectory [x1,x2]",
+    "distortion": "normalized mean squared error on structurally held-out reversed intervention orderings",
+    "representation_cost": "number of stored scalar initial-state features",
+    "compute_proxy": "predictor feature dimension multiplied by output dimension",
+    "sample_cost": "number of training trajectories"
+  },
+  "primary_contrast": "A_minus_N_structural_nmse at matched representation and training sample count",
+  "decision_rule": {
+    "A_not_harder_than_N": "A_minus_N_structural_nmse <= 0 at the full_state representation and maximum training sample count",
+    "descriptive_A_excess": "A_minus_N_structural_nmse > 0 at the full_state representation and maximum training sample count",
+    "interpretation": "Either outcome is descriptive synthetic evidence only; no intrinsic frontier, scaling law, adaptive-quality claim, or new construct is authorized."
+  },
+  "scope": {
+    "horizon": 2,
+    "omega": "order reversal only; no scalar intervention-complexity construct",
+    "systems": {
+      "F": "theta fixed",
+      "N": "theta changes via known exogenous time schedule independent of intervention identity",
+      "A": "theta changes as a function of intervention descriptor"
+    }
+  },
+  "repair_invariant": [
+    "Only realized initial-state pairing changes relative to Run 1.",
+    "All scientific and estimator settings are inherited unchanged.",
+    "Match1 must be interpreted against the same primary contrast and sign rule as Run 1."
+  ]
+}
