@@ -18,7 +18,8 @@ ABSTRACTION GATE
 
 THIS DOCUMENT
 → NEW HYPOTHESIS SPACE
-→ CANDIDATE TRANSITION INVARIANTS
+→ ADVERSARIAL CONCEPTUAL REVIEW COMPLETE
+→ CURRENT UNIFIED INVARIANT FRAMING: NOT ESTABLISHED
 → NOT A CONTROLLER SPECIFICATION
 → NOT PRIMITIVE EXTRACTION
 → NOT PILOT 1
@@ -27,19 +28,17 @@ THIS DOCUMENT
 
 The failed C2 primitive-promotion branch is intentionally not inherited. No controller primitive is assumed here.
 
-This artifact asks one question:
+This artifact now asks a stricter question than the first draft:
 
-> **Can correction quality be evaluated from properties of epistemic-state transitions, independently of reproducing the historical human decision sequence?**
+> **Is there a non-redundant, falsifiable notion of correction-transition quality that cannot be reduced to ordinary belief-revision postulates, domain-specific inference rules, or generic constraint shielding?**
 
-The candidate object is not `STOP`, `REPLICATE`, or `CHOOSE_NEXT_TEST`.
-
-It is:
+The candidate object remains provisional:
 
 ```text
 AUTHORIZED TRANSFORMATION
 ```
 
-meaning, provisionally:
+meaning only:
 
 ```text
 an epistemic-state change whose authority,
@@ -47,7 +46,7 @@ scope, and structural consequences are licensed
 by the evidence available at that transition
 ```
 
-This is a hypothesis, not an established principle.
+The review below shows that this description is **not yet sufficient** to define a new scientific object.
 
 ---
 
@@ -70,7 +69,14 @@ primitive-extraction failure
 ↛ transition-invariant success
 ```
 
-Every candidate below requires independent falsification outside the Pilot-0 decision sequence.
+and:
+
+```text
+cleanly auditable transition
+↛ novel transition theory
+```
+
+No candidate proceeds to experiment merely because it can be written as a predicate on a state transition.
 
 ---
 
@@ -122,9 +128,7 @@ open / closed questions
 admissible consequences
 ```
 
-The candidate invariants evaluate `T_t`.
-
-They do not choose `S_{t+1}`.
+The proposed audit evaluates `T_t`; it does not choose `S_{t+1}`.
 
 ```text
 transition audit      ≠ transition generation
@@ -132,13 +136,145 @@ transition legitimacy ≠ action optimality
 valid transition      ↛ unique next action
 ```
 
-A system may choose a different experiment from the historical researcher and still make a justified transition.
-
-A system may imitate the historical sequence while making an unjustified transition.
+That separation is useful, but the literature review below shows that **the separation itself is not novel**.
 
 ---
 
-# Candidate invariants
+# External conceptual adversaries
+
+The purpose of this section is not literature coverage. It identifies the strongest existing concepts that could make the proposed object redundant.
+
+## A1 — AGM and iterated belief revision
+
+Alchourrón, Gärdenfors, and Makinson formalized rational constraints on belief contraction and revision; Darwiche and Pearl later imposed additional constraints on **iterated epistemic-state revision** and preservation across sequences of observations.
+
+Relevant primary works:
+
+```text
+Alchourrón, Gärdenfors & Makinson (1985)
+On the Logic of Theory Change
+DOI: 10.2307/2274239
+
+Darwiche & Pearl (1997)
+On the Logic of Iterated Belief Revision
+DOI: 10.1016/S0004-3702(96)00038-0
+```
+
+Pressure:
+
+```text
+"evaluate rational properties of epistemic-state change"
+→ already established research territory
+```
+
+Therefore the proposed novelty cannot be merely:
+
+```text
+correction quality = postulates on transitions
+```
+
+## A2 — Relevance-sensitive / preservation-oriented belief change
+
+Belief-revision work also contains explicit attempts to preserve relevance, conditional structure, and unaffected information under revision.
+
+Relevant primary examples include Parikh-style language splitting / relevance-sensitive revision and later conditional-preservation work.
+
+Pressure:
+
+```text
+I2 scope locality
+I3 revision conservation
+I4 alternative / information preservation
+```
+
+cannot be treated as novel merely because they are expressed in Pilot-0 vocabulary.
+
+## A3 — Causal transportability
+
+Pearl and Bareinboim formalize when causal conclusions are licensed to transfer across domains and when stronger transport claims are not identified.
+
+Relevant primary work:
+
+```text
+Pearl & Bareinboim (2011)
+Transportability of Causal and Statistical Relations: A Formal Approach
+DOI: 10.1609/aaai.v25i1.7861
+```
+
+Pressure:
+
+```text
+I7 replication / transport discipline
+```
+
+may be a domain-specific instance of established causal-identification / transportability machinery rather than a general correction invariant.
+
+## A4 — Safety shielding / constrained action filtering
+
+Alshiekh et al. separate an action-generating learner from a synthesized shield that checks or modifies proposed actions to preserve an externally supplied temporal-logic safety specification.
+
+Relevant primary work:
+
+```text
+Alshiekh et al. (2018)
+Safe Reinforcement Learning via Shielding
+DOI: 10.1609/aaai.v32i1.11797
+```
+
+Pressure:
+
+```text
+policy
+→ proposed transition/action
+→ external constraint audit
+→ allow / block
+```
+
+is already an established architectural pattern.
+
+Therefore:
+
+```text
+transition audit ≠ transition generation
+```
+
+is an important separation, but not by itself a new scientific object.
+
+---
+
+# Residual novelty candidate — not established
+
+After the adversarial comparison, the remaining possible distinction is narrower:
+
+```text
+not merely belief revision
+not merely causal transportability
+not merely policy shielding
+
+but:
+
+evidence
+→ changes in epistemic authority / scope / provenance / admissibility
+→ evaluated for both local legitimacy and future corrigibility
+```
+
+Possible residual object:
+
+> **An evidence-responsive transition relation over structured epistemic states that tracks what claims and actions are licensed, what remains reopenable, and whether current changes preserve future capacity for justified correction.**
+
+This is only a conceptual remainder after subtraction of adjacent fields.
+
+```text
+residual distinction
+↛ novelty established
+↛ formal object established
+```
+
+---
+
+# Candidate set from the first draft
+
+The first draft proposed:
 
 ```text
 I1  EVIDENCE-BOUNDED AUTHORITY
@@ -150,422 +286,403 @@ I6  TERMINATION LEGITIMACY
 I7  REPLICATION DISCIPLINE
 ```
 
-All seven have status:
+All remain:
 
 ```text
-CANDIDATE HYPOTHESIS
 NOT ESTABLISHED
 ```
 
+The adversarial review additionally rejects the assumption that all seven belong to one mathematical family.
+
 ---
 
-## I1 — Evidence-Bounded Authority
+# Taxonomy pressure
 
-**Observed basis**
+The current candidates fracture into at least three functional classes.
 
-```text
-SOURCE: P0-DECISION + POST-P0-METHOD
-```
-
-Examples include:
+## T1 — Transition-integrity constraints
 
 ```text
-different point estimates ↛ heterogeneity
-common-effect compatibility ≠ invariance
-localized causal result ↛ global mechanism
+I1 Evidence-bounded authority
+I2 Scope locality
+I3 Revision conservation
+I4 Alternative preservation
 ```
 
-**Candidate invariant**
+These are plausibly predicates on a realized epistemic-state transition.
+
+## T2 — Selection / occurrence conditions
+
+```text
+I5 Escalation justification
+I6 Termination legitimacy
+```
+
+These concern whether a transition or action should occur at all. They require candidate-action comparison or a stopping/continuation criterion and therefore cannot currently be treated as ordinary transition invariants.
+
+## T3 — Domain-specific procedural discipline
+
+```text
+I7 Replication discipline
+```
+
+This currently depends on statistical / causal machinery specific to discrepancy, heterogeneity, and transport questions.
+
+Thus:
+
+```text
+I1–I7
+↛ one established invariant family
+```
+
+The taxonomy is allowed to fracture rather than being forced into a controller-shaped ontology.
+
+---
+
+# Counterexample construction
+
+The object is now pressure-tested with four adversarial constructions. These are conceptual tests, not empirical results.
+
+## Type A — Policy disagreement with equal local validity
+
+Construct an epistemic state with two unresolved hypotheses and evidence that does not discriminate between them.
+
+Two systems choose different policies:
+
+```text
+SYSTEM A
+→ schedule an independent replication
+
+SYSTEM B
+→ preserve unresolved status
+→ defer action pending a different measurement opportunity
+```
+
+Suppose both transitions:
+
+```text
+preserve the same authority ceiling
+preserve unrelated scope
+keep both hypotheses distinguishable
+make no heterogeneity / transport claim
+```
+
+Then:
+
+```text
+A ≠ B
+A locally valid
+B locally valid
+```
+
+### Result
+
+```text
+POLICY DISAGREEMENT TEST
+→ PASSES THE INTENDED SEPARATION
+```
+
+A transition-quality framework need not identify a unique historical action.
+
+This is evidence that transition auditing **can be conceptually separated from policy imitation**.
+
+It is not evidence that the proposed invariants are sufficient.
+
+---
+
+## Type B — Every local transition valid, lineage globally bad
+
+Construct a finite research budget and a sequence of locally permissible transitions.
+
+At each step the system:
+
+```text
+preserves authority ceilings
+preserves scope
+keeps alternatives explicit
+avoids unsupported heterogeneity claims
+```
+
+but repeatedly spends its finite experimental budget on redundant, low-information actions.
+
+After enough steps:
+
+```text
+all local transitions passed
++
+remaining budget exhausted
++
+future discriminating experiment no longer possible
+```
+
+The trajectory has damaged future correction capacity without necessarily violating I1/I2/I4/I7 at any single step.
+
+An equivalent construction can discard provenance or challenge-channel resolution incrementally while preserving current belief labels.
+
+### Result
+
+```text
+single-transition validity
+≠ lineage-level correction quality
+```
+
+This is a direct insufficiency result for any purely local transition account of correction quality.
+
+A valid future object may therefore need to represent **option value, provenance, reopenability, or future correction capacity** at trajectory scale.
+
+No new invariant is added here.
+
+---
+
+## Type C — Invalid transition with correct outcome
+
+Suppose evidence does not discriminate `H1` from `H2`, but a system collapses to `H1` anyway:
+
+```text
+E
+↛ authority to prefer H1
+
+system transition:
+{H1, H2 live}
+→ H1 accepted, H2 discarded
+```
+
+Assume `H1` later happens to be objectively true.
+
+Then:
+
+```text
+outcome correctness = GOOD
+transition justification = BAD
+```
+
+### Result
+
+```text
+transition quality
+≠ outcome correctness
+```
+
+This separation survives the counterexample and remains scientifically useful.
+
+---
+
+## Type D — Identity transition under new evidence
+
+Consider:
+
+```text
+S_t → S_t
+```
+
+with no epistemic-state change.
+
+### D1 — weak / non-discriminating evidence
+
+If `E_t` does not alter the authority of any represented claim, preserving the state may be legitimate.
+
+```text
+identity transition
+≠ automatic failure to correct
+```
+
+### D2 — decisive disconfirming evidence
+
+Now let `E_t` directly defeat a currently authorized claim.
+
+The current I1 formulation says only:
 
 ```text
 authority may increase only along dimensions
-identified by the available evidence
+identified by available evidence
 ```
 
-**Would forbid**
+It does **not** require authority to decrease when evidence defeats an existing claim.
+
+Therefore an unchanged state can satisfy the one-sided safety reading of I1 while refusing to respond to decisive contradiction.
+
+### Result
 
 ```text
-local evidence → unsupported global authority
-failure → unsupported causal diagnosis
-compatibility → stronger unearned claim
+constraint preservation alone
+≠ evidence responsiveness
 ```
 
-**Known gap**
-
-No domain-general representation of authority dimensions has been established.
-
-**Independent falsification requirement**
-
-Use held-out cases with explicit evidence-to-authority relations and compare transitions that remain within versus exceed those relations.
+and:
 
 ```text
-STATUS: NOT ESTABLISHED
+safety-only transition invariants
+can permit epistemic inertia
+```
+
+This is the strongest defect exposed by the counterexample review.
+
+The current candidate set contains restrictions on unauthorized change but does not yet provide a general criterion requiring **earned change when evidence demands it**.
+
+No additional invariant is introduced here; the defect remains open.
+
+---
+
+# Counterexample summary
+
+| Test | Result | Consequence |
+| --- | --- | --- |
+| Type A: different policies, both locally valid | **SURVIVES** | Transition audit can be policy-independent. |
+| Type B: locally valid, globally bad lineage | **FAILS SUFFICIENCY** | Local validity is not lineage quality. |
+| Type C: invalid transition, correct outcome | **SURVIVES** | Transition quality is distinct from outcome correctness. |
+| Type D: identity under decisive contradiction | **FAILS RESPONSIVENESS** | Current constraints permit epistemic inertia. |
+
+The mixed result matters:
+
+```text
+transition-quality framing
+→ not collapsed into policy imitation
+→ not collapsed into outcome correctness
+
+but
+
+current local invariant set
+→ insufficient for correction quality
 ```
 
 ---
 
-## I2 — Scope Locality
+# Readiness map after conceptual pressure test
 
-**Observed basis**
+The earlier question—"can an isolated test object be written?"—was too weak to authorize experimentation on the broader correction-quality claim.
 
-```text
-SOURCE: P0-DECISION
-```
+| Candidate | Existing-field pressure | Current class | Independent local test conceivable? | Tests correction quality as claimed? |
+| --- | --- | --- | --- | --- |
+| I1 Evidence-bounded authority | justification / belief-change overlap | transition integrity | YES | **NO — one-sided responsiveness defect** |
+| I2 Scope locality | relevance-sensitive belief revision overlap | transition integrity | YES | **NO — novelty not isolated** |
+| I3 Revision conservation | AGM/minimal-change overlap | transition integrity | PARTIAL | **NO** |
+| I4 Alternative preservation | iterated/preservation overlap | transition integrity | YES | **NO — lineage benefit unestablished** |
+| I5 Escalation justification | action-selection object | selection condition | NO | **NO** |
+| I6 Termination legitimacy | stopping/action-selection object | selection condition | NO | **NO** |
+| I7 Replication discipline | transportability/statistical overlap | domain-specific | YES | **NO — specialized instance** |
 
-Pilot 0 explicitly preserved:
-
-```text
-unresolved T_verified interaction
-↛ reopen T_instability
-```
-
-**Candidate invariant**
-
-```text
-evidence concerning X
-must not silently revise Y
-without a licensed X→Y link
-```
-
-**Would forbid**
+Therefore:
 
 ```text
-uncertainty in A → automatic reopening of B
-local failure → global reset
+INDEPENDENT INVARIANT EXPERIMENT
+→ NOT YET AUTHORIZED
 ```
 
-**Known gap**
-
-A general representation of scope linkage is not yet available.
-
-**Independent falsification requirement**
-
-Use predeclared X/Y scopes with known link-present versus link-absent cases and test whether unrelated Y-state is preserved.
-
-```text
-STATUS: NOT ESTABLISHED
-```
+Not because every candidate is false, but because no current candidate test cleanly discriminates the proposed **correction-quality object** from established neighboring objects while also surviving the responsiveness / lineage counterexamples.
 
 ---
 
-## I3 — Revision Conservation
+# What remains scientifically live
 
-**Observed basis**
+The review leaves three separable questions.
 
 ```text
-SOURCE: P0-DECISION + POST-P0-METHOD
+Q1 POLICY INDEPENDENCE
+Can multiple different policies produce transitions
+that are equally legitimate under independently specified constraints?
+
+STATUS: conceptually coherent
 ```
 
-Examples:
-
 ```text
-representation boundary localized before deeper escalation
-provenance defect → repair trace only
-schema defect → split component, not enlarge ontology
+Q2 EVIDENCE RESPONSIVENESS
+Can transition quality require both:
+(a) blocking unauthorized change, and
+(b) requiring authority reduction / revision when evidence defeats it?
+
+STATUS: missing formal object
 ```
 
-**Candidate invariant**
-
 ```text
-revise the smallest evidence-identified failure locus
-while preserving unaffected validated structure
+Q3 LINEAGE CORRIGIBILITY
+Can a sequence of individually legitimate transitions
+still reduce future capacity for justified correction?
+
+STATUS: counterexample says YES in principle;
+measurement object missing
 ```
 
-**Would forbid**
+The scientifically interesting remainder may therefore lie at the intersection:
 
 ```text
-local contradiction → gratuitous global rewrite
-estimator failure → automatic proposition rejection
-```
-
-**Known gap**
-
-`smallest`, `unaffected`, and `sufficient revision` are not generally operationalized.
-
-**Independent falsification requirement**
-
-Use modular tasks with a known localized failure and independently validated unaffected modules; compare local versus broad revisions prospectively.
-
-```text
-STATUS: NOT ESTABLISHED
-```
-
----
-
-## I4 — Alternative Preservation
-
-**Observed basis**
-
-```text
-SOURCE: POST-P0-METHOD
-```
-
-Examples:
-
-```text
-unknown historical rationale → UNKNOWN-RATIONALE
-missing generating rule → UNKNOWN-RULE
-unsupported candidate set → not reconstructed by plausibility
-```
-
-**Candidate invariant**
-
-```text
-when evidence does not discriminate live alternatives,
-a justified transition preserves their distinguishability
-```
-
-**Would forbid**
-
-```text
-insufficient evidence → forced single explanation
-one observed action → inferred universal rule
-```
-
-**Known gap**
-
-Pilot 0 did not directly test whether alternative preservation improves later correction.
-
-**Independent falsification requirement**
-
-Use tasks where hypotheses are initially observationally equivalent and become distinguishable later; compare early-preservation versus early-collapse trajectories.
-
-```text
-STATUS: NOT ESTABLISHED
-```
-
----
-
-## I5 — Escalation Justification
-
-**Observed basis**
-
-```text
-SOURCE: P0-DECISION
-```
-
-Pilot-0 contracts repeatedly constrained automatic complexity escalation.
-
-**Candidate invariant**
-
-```text
-moving to a more complex intervention or representation
-requires incremental discriminating justification
-not already supplied by a shallower alternative
-```
-
-**Would forbid**
-
-```text
-remaining uncertainty → experiment required
-possible interaction → interaction study automatically
-point-estimate discrepancy → heterogeneity program
-```
-
-**Known gap**
-
-`incremental discriminating justification` is not operationally defined.
-
-That same gap blocked structural action-selection primitives earlier.
-
-**Independent falsification requirement**
-
-A future task must predefine candidate actions, relative complexity, live hypotheses, and what evidence each action could discriminate before outcomes are observed.
-
-```text
-STATUS: NOT ESTABLISHED
-FALSIFICATION READY: NO
-```
-
----
-
-## I6 — Termination Legitimacy
-
-**Observed basis**
-
-```text
-SOURCE: P0-DECISION
-```
-
-Pilot 0 stopped with residual uncertainty:
-
-```text
-remaining uncertainty
+local epistemic legitimacy
 +
-no sufficiently discriminating unresolved question
-→ STOP
-```
-
-while preserving:
-
-```text
-STOP ≠ truth ≠ completeness ≠ certainty
-```
-
-**Candidate invariant**
-
-```text
-residual uncertainty does not itself authorize continuation
-```
-
-and, more strongly:
-
-```text
-stopping may be legitimate when no currently available
-transition has sufficient prospective justification
-```
-
-**Would forbid**
-
-```text
-uncertainty remains → action required
-experiment possible → experiment authorized
-```
-
-**Known gap**
-
-`sufficiently discriminating` and `sufficient justification` remain undefined. Pilot 0 contains only one terminal case.
-
-**Independent falsification requirement**
-
-A future task must prospectively define residual uncertainties, candidate actions, and criteria for authority-changing discrimination before STOP can be tested independently.
-
-```text
-STATUS: NOT ESTABLISHED
-FALSIFICATION READY: NO
-```
-
----
-
-## I7 — Replication Discipline
-
-**Observed basis**
-
-```text
-SOURCE: P0-DECISION + P0-EMPIRICAL
-```
-
-R1 explicitly enforced:
-
-```text
-different point estimates ↛ heterogeneity
-```
-
-and prospectively separated common-effect compatibility from invariance.
-
-**Candidate invariant**
-
-```text
-discrepancy may motivate discrimination,
-but does not acquire heterogeneity / transport-failure authority
-without an appropriate direct test
-```
-
-**Would forbid**
-
-```text
-different estimates → heterogeneity claim
-common-effect compatibility → invariance claim
-```
-
-**Known gap**
-
-The appropriate discrimination machinery is domain-dependent.
-
-**Independent falsification requirement**
-
-Use held-out repeated-estimate problems with known common-effect, heterogeneous-effect, and transport-failure regimes; measure both false heterogeneity authority and failure to detect real heterogeneity.
-
-```text
-STATUS: NOT ESTABLISHED
-```
-
----
-
-# Readiness map
-
-This is not a validation ranking.
-
-It asks only whether an independent test object appears specifiable without first solving the missing action-selection controller.
-
-| Candidate | Source basis | Independent test object currently specifiable? | Established? |
-| --- | --- | --- | --- |
-| I1 Evidence-bounded authority | P0-decision / post-P0 | **YES**, if authority dimensions are explicit | **NO** |
-| I2 Scope locality | P0-decision | **YES**, if scope linkage is explicit | **NO** |
-| I3 Revision conservation | process-heavy | **PARTIAL** | **NO** |
-| I4 Alternative preservation | post-P0 method | **YES** | **NO** |
-| I5 Escalation justification | P0-decision | **NO** — justification criterion missing | **NO** |
-| I6 Termination legitimacy | one terminal case | **NO** — stopping criterion missing | **NO** |
-| I7 Replication discipline | P0-decision / empirical | **YES**, domain-specific | **NO** |
-
-The `YES` rows are not promoted. They only survive the cheaper question:
-
-```text
-can an independent falsification object be specified?
-```
-
----
-
-# Candidate transition-audit target
-
-If any invariant later survives independent testing, the smallest automation object would be:
-
-```text
-current epistemic state
+evidence responsiveness
 +
-new evidence
-+
-proposed transition
-        ↓
-transition audit
-        ↓
-AUTHORIZED ALONG TESTED DIMENSION
-or
-VIOLATION ALONG TESTED DIMENSION
+future corrigibility / reopenability
 ```
 
-Important:
+rather than in a generic transition invariant alone.
+
+---
+
+# No automation target yet
+
+The first draft proposed:
 
 ```text
-AUTHORIZED ALONG TESTED DIMENSION
-↛ globally justified transition
+state + evidence + proposed transition
+→ transition audit
+→ authorized / violation
+```
+
+The shielding comparison shows that this architecture alone is generic.
+
+The Type B and Type D counterexamples additionally show that a local allow/block audit can miss:
+
+```text
+future correction-capacity loss
+epistemic inertia under decisive evidence
+```
+
+Therefore:
+
+```text
+TRANSITION AUDITOR
+→ NOT YET AN EARNED AUTOMATION OBJECT
 ```
 
 No transition generator is proposed.
-
 No next-action selector is proposed.
-
 No scalar transition-quality score is proposed.
-
-No conjunction of I1–I7 is assumed sufficient.
+No controller specification is authorized.
 
 ---
 
-# Independent-falsification gate
+# Revised falsification gate
 
-A candidate invariant becomes a genuine empirical object only if a test can specify, without using Pilot 0 as the answer key:
+A future candidate object becomes experimentally eligible only if a test can specify, without using Pilot 0 as the answer key:
 
 ```text
 1. epistemic state
 2. new evidence
-3. proposed transition
-4. invariant-specific expected relation
-5. violation criterion
-6. held-out cases
-7. result capable of falsifying or revising the invariant
+3. one or more proposed transitions
+4. invariant / relation under test
+5. both prohibited and required epistemic changes, where applicable
+6. lineage-relevant state if future corrigibility is claimed
+7. violation criterion
+8. held-out cases
+9. strongest neighboring theory that predicts the same result
+10. a discriminating outcome that could show the new object adds nothing
 ```
 
-Invalid test:
+The final two requirements are new consequences of the conceptual-adversary review.
+
+Invalid novelty test:
 
 ```text
-"did the system choose what the Pilot-0 researcher chose?"
+"can we audit a transition?"
 ```
 
-Relevant test:
+because belief revision and shielding already support closely related structures.
+
+Potentially discriminating test:
 
 ```text
-"did the proposed transition respect the independently
-specified constraint on justified epistemic change?"
+"does an authority/responsiveness/lineage constraint
+predict correction-quality distinctions that are not already
+captured by ordinary belief revision, domain-specific causal
+identification, or externally supplied safety shielding?"
 ```
 
 ---
@@ -574,8 +691,10 @@ specified constraint on justified epistemic change?"
 
 ```text
 CORRECTION TRANSITION INVARIANTS
-→ 7 candidate hypotheses
+→ 7 inherited candidate hypotheses
+→ taxonomy fractured
 → 0 established invariants
+→ 0 experiments authorized
 → 0 controller primitives
 → 0 controller specification
 ```
@@ -586,11 +705,23 @@ Current authority state:
 Pilot-0 primitive extraction
 → TERMINATED WITH ∅
 
-transition-quality framing
-→ NEW HYPOTHESIS SPACE
+broad transition-audit framing
+→ NOT NOVEL BY ITSELF
 
-I1–I7
-→ CANDIDATES ONLY
+policy-independence distinction
+→ SURVIVES CONCEPTUALLY
+
+outcome-independence distinction
+→ SURVIVES CONCEPTUALLY
+
+single-transition sufficiency
+→ FAILS COUNTEREXAMPLE
+
+evidence responsiveness
+→ MISSING FROM CURRENT SAFETY-ONLY FORMULATION
+
+lineage-level corrigibility
+→ LIVE QUESTION, NOT FORMALIZED
 
 controller specification
 → NOT AUTHORIZED
@@ -599,8 +730,10 @@ Pilot 1
 → NOT EARNED
 ```
 
-The next question is only:
+The next question is no longer "which invariant should we test first?"
 
-> **Does any candidate invariant survive an independent test in which transition quality can be scored without reproducing the Pilot-0 human decision sequence?**
+It is:
 
-If that cannot be made operational without importing the missing controller, this line stops.
+> **Can we define a correction-quality relation that is simultaneously evidence-responsive, lineage-aware, and empirically distinguishable from existing belief-revision and constraint-shielding machinery?**
+
+If not, the transition-quality line should stop rather than accumulate more named invariants.
