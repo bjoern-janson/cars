@@ -2,7 +2,13 @@
 
 ## Status
 
-This document specifies the transformation classes under which the current assay retains the same scientific identity.
+> **Historical Pilot-0 measurement specification.** This document specifies the transformation classes under which the Pilot-0 causal-response assay retained the same scientific identity. It is not the active repository-level empirical contract.
+
+Current repository-level state:
+
+- [`INTELLIGENCE_THEORY.md`](INTELLIGENCE_THEORY.md)
+- [`CURRENT_RESEARCH_STATE.md`](CURRENT_RESEARCH_STATE.md)
+- [`RESEARCH_CONTRACT.md`](RESEARCH_CONTRACT.md)
 
 Protocol rule:
 
@@ -15,7 +21,7 @@ A disagreement under an inadmissible transformation can simply mean that the est
 
 ## Scientific proposition
 
-The primitive assay claim is:
+The primitive Pilot-0 assay claim was:
 
 ```text
 i₁ > i₀
@@ -297,4 +303,4 @@ implementation?
 
 Only after localization should the substantive proposition be revised.
 
-The protocol does not protect the hypothesis from contradiction. It specifies what would count as one.
+The protocol does not protect the historical hypothesis from contradiction. It specifies what would count as one.
