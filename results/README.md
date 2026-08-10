@@ -1,304 +1,226 @@
 # Results
 
-## Pilot 0 terminal status
+## Current authority state
 
-Pilot 0 is now **closed** under an epistemic stopping rule. The repository contains scoped positive causal results about representation-dependent transition behavior, but these do **not** establish a global correction construct, psychological mechanism, transport invariance, or general intelligence claim.
+```text
+Pilot 0
+→ CLOSED
 
-Terminal record:
+Pilot 1 predictive-resource toy
+→ estimator-level structural-generalization difference only
+→ intrinsic adaptive predictive-resource burden NOT DEMONSTRATED
+
+ID1 finite-data identification
+→ CLOSED after fresh-seed sign reversal
+→ adaptive-specific identification/sample-complexity burden NOT DEMONSTRATED
+
+Future plasticity forecast benchmark
+→ NO SCIENTIFIC RESULT YET
+```
+
+Canonical repository-level state:
+
+- [`../docs/CURRENT_RESEARCH_STATE.md`](../docs/CURRENT_RESEARCH_STATE.md)
+- [`../docs/INTELLIGENCE_THEORY.md`](../docs/INTELLIGENCE_THEORY.md)
+
+## Pilot 0 terminal record
 
 - [`PILOT0_TERMINAL_RECORD.md`](PILOT0_TERMINAL_RECORD.md)
 
-The original moderation hypothesis was **not supported**. The later representation-localization program earned endpoint-specific causal authority, and the R1 replication/transport branch established a small replicated positive prior-state-encoding effect on `T_instability` whose common 95% interval lies entirely inside the inherited `±0.05` practical region.
+The original moderation hypothesis was **not supported**. Later diagnostic work established scoped representation-dependent transition effects, including a replicated but practically small prior-state-encoding effect on `T_instability`.
 
-Keep the stopping rule explicit:
-
-```text
-STOP
-≠ truth
-≠ completeness
-≠ certainty
-
-STOP
-= no presently justified escalation
-```
-
-No A8, R2, or further `T_instability` decomposition is currently earned. A future experiment requires a genuinely new scientific question and a new pre-outcome contract.
-
-Future result packages should record enough information to reconstruct:
+Keep explicit:
 
 ```text
-what scientific object was tested
-what measurement structure instantiated it
-how treatment was assigned
-what estimator represented it
-what transformations were licensed
-what claim the result actually supports
+Pilot 0 closure
+≠ theory established
+≠ global correction capacity
+≠ psychological mechanism
+≠ transport invariance
+≠ general intelligence claim
 ```
 
-## Result surfaces
+No A8, R2, or further `T_instability` decomposition is earned by that lineage.
 
-Keep distinct:
+## Pilot 1 predictive-resource toy
+
+Primary repaired result:
+
+- [`PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md`](PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md)
+
+Quarantined initial run:
+
+- [`PILOT1_PREDICTIVE_RESOURCE_TOY_RUN1.md`](PILOT1_PREDICTIVE_RESOURCE_TOY_RUN1.md)
+
+Match1 paired the same realized `(x0, θ0)` states across F/N/A.
+
+Observed under the restricted ridge predictor:
 
 ```text
-prompt result
-≠
-causal-responsiveness result
-≠
-measurement-invariance result
-≠
-specificity result
-≠
-longitudinal/equilibrium result
-≠
-historical catalyst/architecture result
+structurally held-out order reversals
+A > N descriptively
+
+IID structure
+A ≈ N
 ```
 
-A positive result on one surface does not automatically promote claims on another.
-
-## Primary assay result package
-
-For:
+The exact known-dynamics simulator then yielded:
 
 ```text
-τ(i)
-=
-E[V(e₁)-V(e₀) | I=i]
+D = 0 for N
+D = 0 for A
 ```
 
-record:
+with the same full-state dimensionality and essentially the same per-step computational class.
 
-- exact operational definition of `I` / `M_I`;
-- exact intervention levels `e₀,e₁`;
-- randomization/assignment procedure;
-- exact operational definition of `V` / `M_V`;
-- horizon `h`;
-- population/model family;
-- treatment counts across relevant `I` support;
-- baseline outcome or headroom variables where used;
-- attrition/missingness;
-- estimator and version/code;
-- whether the primary test was ordered strata, monotonicity, derivative, or linear interaction;
-- uncertainty intervals;
-- smallest effect/order difference the design was intended to resolve;
-- ceiling/floor exposure;
-- protocol deviations;
-- raw or auditable outputs where licensing/privacy permits.
-
-Report the scientific proposition before the parametric representation.
-
-For example:
+Therefore:
 
 ```text
-τ(i₁) - τ(i₀)
+restricted-predictor A/N difference
+→ estimator / approximation phenomenon
+
+intrinsic adaptive predictive-resource excess
+→ NOT DEMONSTRATED
 ```
 
-before or alongside:
+## ID1 finite-data system identification
+
+Primary result:
+
+- [`PILOT1_ID1_SYSTEM_IDENTIFICATION.md`](PILOT1_ID1_SYSTEM_IDENTIFICATION.md)
+- [`pilot1_id1_system_identification_result.json`](pilot1_id1_system_identification_result.json)
+
+Replication:
+
+- [`PILOT1_ID1_P3_REPLICATION.md`](PILOT1_ID1_P3_REPLICATION.md)
+- [`pilot1_id1_p3_replication_result.json`](pilot1_id1_p3_replication_result.json)
+
+The weaker P2 identifier showed a visible positive A/N structural gap. The stronger generic P3 identifier reduced the high-resource absolute gap by approximately **99.46%**.
+
+Frozen P3 high-resource ID1 contrast:
 
 ```text
-δ
+A - N
+= +4.70792e-7 structural NMSE
 ```
 
-when a linear model is used.
-
-## Measurement / invariance result package
-
-Before reporting an invariance result, record the transformation class that was licensed to preserve the object.
-
-### I-side
-
-For a strictly increasing reparameterization:
+The direct sample-threshold comparison was identical for N and A:
 
 ```text
-I' = f(I)
+ε = 0.01   → 48 / 48
+ε = 0.005  → 48 / 48
+ε = 0.001  → 96 / 96
 ```
 
-record whether the primitive ordering of `τ` across `I` was preserved.
-
-Do not require a linear coefficient to remain numerically invariant under nonlinear `f`.
-
-### V-side
-
-For a positive affine transformation:
+Fresh-seed P3 replication:
 
 ```text
-V' = aV + b
-a > 0
+A - N
+= -3.90770244e-6
 ```
 
-record whether:
+The sign reversed under the frozen rule. No distinct sample-scaling regime was established.
+
+Terminal classification:
 
 ```text
-τ'(i) = aτ(i)
+ID1 tiny P3 discrepancy
+→ CLOSED
+
+replication of positive sign
+→ FAILED
+
+finite-data adaptive identification burden
+→ NOT DEMONSTRATED
+
+distinct sample-complexity regime
+→ NOT DEMONSTRATED
+
+new construct
+→ NOT EARNED
+
+new theory
+→ NOT EARNED
 ```
 
-within estimation uncertainty and whether treatment-effect ordering is preserved.
+Do not run another replication merely to recover the sign.
 
-For nonlinear monotone outcome transforms, label the run as a changed/additional estimand unless a separate measurement model licenses equivalence.
+## Future plasticity forecast benchmark
 
-## Independent-instrument result package
+Current status:
 
-For independently constructed `M_V^A` and `M_V^B`, report:
+- [`FUTURE_PLASTICITY_FORECAST_STATUS.md`](FUTURE_PLASTICITY_FORECAST_STATUS.md)
 
-- instrument construction process;
-- calibration data source;
-- evidence that calibration data were independent of the treatment-effect analysis;
-- fitted/frozen affine link `V^B ≈ aV^A+b`;
-- prespecified tolerance for interval equivalence;
-- calibration uncertainty;
-- treatment-effect ordering under both instruments;
-- residual diagnostic:
+Frozen benchmark:
+
+- [`../experiments/FUTURE_PLASTICITY_FORECAST.md`](../experiments/FUTURE_PLASTICITY_FORECAST.md)
+- [`../experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json`](../experiments/FUTURE_PLASTICITY_FORECAST_CONFIG.json)
+
+Current state:
 
 ```text
-r = V^B - (aV^A+b)
-r ~ I + E + I×E
+DESIGN          PASS
+IMPLEMENTATION  PASS
+SMOKE           PASS
+CANONICAL DATA  unavailable in active execution environment
+SCIENTIFIC RUN  NOT EXECUTED
+RESULT          ∅
+INTERPRETATION  ∅
 ```
 
-- ordinary correlation only as secondary information.
+The synthetic smoke is plumbing evidence only. No Permuted-MNIST scientific outcome exists yet.
 
-Do not describe high correlation alone as measurement equivalence.
+## Reporting discipline
 
-## Red-team result package
-
-For every adversarial attack in `docs/RED_TEAM_PROTOCOL.md`, report one of:
+Future result packages should make reconstructible:
 
 ```text
-survived
-failed
-estimand changed
-inconclusive
+scientific object
+measurement structure
+pre-outcome contract
+assignment / data-generation process
+predictor / estimator
+resource budget
+held-out structure
+uncertainty
+protocol deviations
+claim actually earned
 ```
 
-Record the synthetic/known truth where applicable.
-
-A useful red-team report should make false positives visible rather than optimize for a green dashboard.
-
-## Specificity result package
-
-For:
+Keep surfaces separate:
 
 ```text
-E⁺
-E⁰
-E⁻
+prompt efficacy
+≠ causal responsiveness
+≠ structural generalization
+≠ predictive-resource burden
+≠ finite-data identification burden
+≠ future plasticity forecastability
+≠ viability improvement
+≠ evidence-mediated intelligence
 ```
 
-record how intervention status was established independently of the tested system.
+## Classification rule
 
-Report separately:
-
-```text
-τ⁺(i)
-τ⁰(i)
-τ⁻(i)
-```
-
-and the specificity contrast if used.
-
-Do not promote responsiveness under `E⁺` into discriminative correction capacity without these comparisons.
-
-## Horizon / transport result package
-
-Treat each horizon as a separate estimand unless pooling is preregistered and justified.
-
-Record each boundary crossed:
-
-- intervention;
-- domain;
-- population/model family;
-- moderator instrument;
-- outcome instrument;
-- benchmark generator.
-
-A result that survives one boundary gains only the corresponding scoped transport authority.
-
-## Prompt-level result package
-
-For CARS prompt/control-protocol evaluation, record:
-
-- exact CARS prompt file/hash;
-- generic control prompt/hash;
-- baseline condition;
-- model/version/date;
-- task source/authorship;
-- per-dimension scores from `eval/SCORING.md`;
-- substantive task outcome;
-- cost metrics;
-- exclusions/protocol deviations.
-
-Prompt efficacy remains independent of the causal-responsiveness assay.
-
-## Optional longitudinal / equilibrium result package
-
-If later work estimates:
-
-```text
-T_h^(e)(i)
-=
-E[I_{t+h} | do(E_t=e), I_t=i]
-```
-
-record:
-
-- exact repeated `I` measurement procedure;
-- intervention regime `e`;
-- horizon;
-- evidence for time-homogeneous/iterable dynamics if repeated-map claims are made;
-- fixed-point estimate and uncertainty;
-- self-map/domain conditions;
-- contraction/stability diagnostics if claimed.
-
-Do not infer equilibrium from a positive responsiveness assay.
-
-## Historical catalyst / architecture result package
-
-If the August 8 catalyst or recursive architecture is tested, retain the historical reporting requirements and dedicated scoring surfaces.
-
-Do not silently merge those results with the current assay evidence.
-
-## Result classification
-
-Classify each result as one of:
+Classify results as one of:
 
 - **positive within scope**;
 - **negative/null**;
 - **mixed tradeoff**;
 - **estimand changed**;
-- **invalid/inconclusive**.
+- **invalid/inconclusive**;
+- **development/smoke only**.
 
-Invalid or changed-estimand runs are not automatically evidence for or against the primitive proposition.
+A positive result on one surface does not promote authority on another.
 
-## Genuine contradiction reporting
-
-For a claimed measurement-form contradiction, state whether all of the following were satisfied:
-
-```text
-licensed transformation
-+
-reliable measurement
-+
-identified causal contrast
-+
-adequate estimator
-+
-opposite ordering
-```
-
-If yes, document the localization sequence and explain why lower-level failure loci were ruled out.
-
-## Claim discipline
-
-A positive result should state exactly what gained authority and within what scope.
-
-Do not promote:
+## Governing stopping rule
 
 ```text
-positive interaction
-→ I is intelligence
-→ mechanism understood
-→ discriminative correction capacity
-→ cross-domain transport
-→ equilibrium
-→ theory validated
+apparent discrepancy
+→ strongest generic explanation
+→ minimal repair / stronger estimator
+→ replication
+→ close if residual disappears or reverses
 ```
 
-without separate evidence for each transition.
+Do not escalate complexity merely because a branch produced an interesting number.
