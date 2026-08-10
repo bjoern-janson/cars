@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "study": "ASI-0 bounded self-improvement",
+  "status": "TEMPLATE_NOT_A_FROZEN_EXPERIMENT",
+  "primary_metric": "score",
+  "higher_is_better": true,
+  "minimum_absolute_mean_gain": null,
+  "minimum_family_win_fraction": null,
+  "maximum_resource_multipliers": {
+    "input_tokens": null,
+    "output_tokens": null,
+    "model_calls": null,
+    "wall_seconds": null,
+    "tool_calls": null
+  },
+  "protected_metrics": {},
+  "required_task_families": [],
+  "notes": [
+    "All null fields must be replaced prospectively for a specific task suite before outcome generation.",
+    "Promotion thresholds may not be changed after candidate hidden-evaluation outcomes are exposed.",
+    "This template does not define ASI and does not authorize L2+ capability claims."
+  ]
+}
