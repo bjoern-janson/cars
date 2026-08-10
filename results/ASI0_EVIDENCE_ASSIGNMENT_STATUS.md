@@ -1,144 +1,147 @@
 # ASI-0 Evidence-Assignment Status
 
-## Current state
+## Terminal state
+
+**CLOSED / IMMUTABLE**
 
 ```text
-DESIGN SKELETON            PASS / FROZEN
-ASSIGNMENT IMPLEMENTATION  PASS
-PAIR-MATCH VALIDATION      PASS
-DERANGEMENT VALIDATION     PASS
-SYNTHETIC SMOKE            PASS
-CANONICAL MODEL            NOT YET FROZEN
-CANONICAL TASK MANIFEST    NOT YET FROZEN
-CONCEALED SUITE             NOT YET FROZEN
-SCIENTIFIC RUN             NOT EXECUTED
-Δ_align                    UNKNOWN
-INTERPRETATION             ∅
+DESIGN                         FROZEN
+CANONICAL MODEL                Qwen/Qwen2.5-0.5B-Instruct @ 7ae5576
+BOOLEAN DOMAIN REPAIR          PASS / FROZEN
+CPU↔GPU BEHAVIORAL GATE        PASS
+CANONICAL ATTEMPT #1           UNOBSERVED / NO SCIENTIFIC OUTCOME
+CANONICAL ATTEMPT #2           SCIENTIFIC RESULT
+PRIMARY                        STOP
+REPLICATION                    NOT AUTHORIZED
+ASI-0 GREEN                    FALSE
 ```
 
 ## Frozen scientific object
 
-```text
-A = evidence → target assignment mechanism
-```
+ASI-0 tests a bounded causal-attribution question under a fixed-base-model textual-policy mutation surface.
 
-Primary estimand:
+Primary two-axis object:
 
-```text
-Δ_align
-=
-E[Y_concealed | do(A = aligned)]
--
-E[Y_concealed | do(A = misaligned)]
-```
+\[
+C=E[Y_{aligned}-Y_{base}]
+\]
 
-Primary contrast:
+\[
+A=E[Y_{aligned}-Y_{misaligned}]
+\]
 
-```text
-E-ALIGNED
-vs
-E-MISALIGNED
-```
+The positive gate was prospectively conjunctive:
 
-Secondary controls:
+\[
+L_C>0\land L_A>0.
+\]
+
+## Canonical primary result
 
 ```text
-STATIC
-RANDOM-EDIT
+n_targets                         16
+mean_base_score                   0.20833333333333331
+mean_aligned_score                0.20833333333333331
+mean_misaligned_score             0.20833333333333331
+mean_random_edit_score            0.20833333333333331
+aligned_valid_selection_rate      0.875
+misaligned_valid_selection_rate   0.875
+aligned_regression_gate_pass      0.0
+misaligned_regression_gate_pass   0.0
+
+C                                  0.0
+A                                  0.0
+L_C                                0.0
+L_A                                0.0
+joint_gate                         false
+classification                     STOP
 ```
 
-## Smoke execution
+Therefore:
 
-The synthetic smoke was run after implementing the assignment/analyzer harness.
+\[
+\boxed{C=0,\quad A=0,\quad \mathrm{STOP}}
+\]
 
-Command:
+Replication was not authorized by the frozen contract.
 
-```bash
-python scripts/run_asi0_assignment_experiment.py \
-  experiments/ASI0_EVIDENCE_ASSIGNMENT_CONFIG.json \
-  --smoke \
-  --json-out results/asi0_assignment_smoke.json
-```
+## Mechanism diagnosis
 
-Observed plumbing summary:
+Outcome-blind post-hoc diagnosis used selection identity and the frozen protected-regression cache only.
 
 ```text
-synthetic targets                  24
-primary aligned/misaligned pairs  24
-misaligned fixed points            0
-candidate-pool match failures      0
-injected Δ_align                   0.120000
-estimated Δ_align                  0.123331
-95% target-bootstrap interval      [0.114922, 0.131884]
-smoke status                       PASS
+valid aligned selections                 14/16
+valid misaligned selections              14/16
+admitted aligned candidates               0/16
+admitted misaligned candidates            0/16
+admitted | valid aligned                   0/14
+admitted | valid misaligned                0/14
+
+complete candidate pool                   16
+candidate patches preserving base gate      1
+pool pass rate                            1/16
 ```
 
-The injected effect exists only to verify estimator and assignment plumbing.
+Keep pool and realized-arm claims separate:
 
 ```text
-synthetic recovery
-↛ ASI-0 scientific evidence
+15/16 frozen candidate patches failed baseline protected-behavior preservation.
+All 28 valid selected patches were rejected.
 ```
 
-The smoke result may not be cited as evidence that evidence alignment improves a real agent.
+Every valid selected patch newly failed the exact-token `PINE` regression relative to base.
 
-## What the smoke validates
+Current localization:
 
 ```text
-within-stratum derangement
-no fixed points in E-MISALIGNED
-same candidate-pool hash across primary arms
-same target/base/evaluator/concealed-suite identifiers across pairs
-paired gain calculation
-Δ_align calculation
-target-level bootstrap uncertainty
-secondary STATIC / RANDOM-EDIT accounting
-placeholder refusal for scientific preparation
+INFERENCE
+→ assigned evidence weakly controlled candidate identity
+
+MECHANISM / ISOLATION
+→ textual policy patches usually interfered with protected behavior
+
+ACCEPTANCE
+→ functioning as designed; rejected interfering patches
 ```
 
-## Why no scientific run was performed
+## Authority boundary
 
-The causal skeleton is frozen, but a canonical scientific instance still requires prospectively frozen values for:
+Earned claim:
+
+> Under the frozen proposal + protected-acceptance policy, correctly assigned development evidence produced no concealed capability gain and no incremental outcome leverage relative to misaligned assignment.
+
+Not earned:
 
 ```text
-base model identifier and revision
-selection configuration
-canonical task family / target manifest
-candidate count and candidate-size envelope
-concealed evaluator
-concealed structural-holdout suite
+evidence alignment is intrinsically useless
+Qwen cannot identify useful candidate policies
+candidate selection was completely broken
+protected patches would have no effect absent the gate
+general intelligence / viability / RSI / ASI conclusions
 ```
 
-The config deliberately contains:
+## Canonical records
 
-```text
-MUST_FREEZE_BEFORE_SCIENTIFIC_RUN
-```
+- [`ASI0_TERMINAL_RECORD.md`](ASI0_TERMINAL_RECORD.md)
+- [`ASI0_PRIMARY_MECHANISM_FAILURE_REPORT.md`](ASI0_PRIMARY_MECHANISM_FAILURE_REPORT.md)
+- [`../experiments/ASI0_EVIDENCE_ASSIGNMENT.md`](../experiments/ASI0_EVIDENCE_ASSIGNMENT.md)
+- [`../experiments/ASI0_BOOLEAN_TRIPLE_REPAIR.md`](../experiments/ASI0_BOOLEAN_TRIPLE_REPAIR.md)
+- [`../experiments/ASI0_PRIMARY_MECHANISM_DIAGNOSIS_PROTOCOL.md`](../experiments/ASI0_PRIMARY_MECHANISM_DIAGNOSIS_PROTOCOL.md)
 
-for unresolved instance fields, and the runner refuses scientific preparation while any such placeholder remains.
+## Descendant boundary
 
-This is a design guard, not an execution failure.
+ASI-0 is not to be repaired until positive. Any future experiment is a new prospective object.
 
-## Interpretation boundary
+Provisional descendant architecture only:
 
-Current scientific result:
+\[
+E\rightarrow C_{selected}\rightarrow M_{effective}\rightarrow(Y_T,Y_P)
+\]
 
-```text
-Δ_align = UNKNOWN
-```
+with direct independent modification identification:
 
-Therefore no claim is authorized about:
+\[
+do(M=m)\rightarrow(Y_T,Y_P).
+\]
 
-```text
-evidence alignment improving a real agent
-intelligence
-viability
-recursive self-improvement
-ASI
-```
-
-A future positive replicated run may support only:
-
-> Correct evidence-to-target assignment causally improves bounded modification selection and downstream concealed performance under the tested conditions.
-
-A null closes ASI-0 at the tested mutation surface/task/resource/measurement boundary unless a genuinely new independently motivated question exists.
+No descendant model, benchmark, prompt, or empirical execution is currently authorized.
