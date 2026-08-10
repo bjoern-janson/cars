@@ -8,6 +8,7 @@ on:
       - scripts/validate_asi0_boolean_triple_repair.py
       - scripts/run_asi0_canonical_qwen_entry.py
       - scripts/run_asi0_canonical_qwen_boolean_triple.py
+      - scripts/run_asi0_canonical_qwen_boolean_triple_cuda.py
       - experiments/ASI0_CANONICAL_QWEN_CONFIG.json
       - .github/workflows/asi0-boolean-triple-repair.yml
 
@@ -31,6 +32,7 @@ jobs:
               "scripts/validate_asi0_boolean_triple_repair.py",
               "scripts/run_asi0_canonical_qwen_entry.py",
               "scripts/run_asi0_canonical_qwen_boolean_triple.py",
+              "scripts/run_asi0_canonical_qwen_boolean_triple_cuda.py",
           ]:
               ast.parse(open(path, encoding="utf-8").read())
               print("AST PASS", path)
