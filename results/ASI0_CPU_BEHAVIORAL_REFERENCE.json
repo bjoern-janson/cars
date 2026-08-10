@@ -1,0 +1,57 @@
+{
+  "canonical_exact_prompt_overlap_count": 0,
+  "device": "cpu",
+  "diagnostic_manifest_hash": "32b889e5c8044ab6f054c4b14f0f180380f18caaec24bd21364e0ae59b3c16fb",
+  "mode": "diagnostic",
+  "model": {
+    "id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "revision": "7ae5576"
+  },
+  "n_cases": 8,
+  "parsed_outputs": [
+    {
+      "case_id": "diag_select_boolean_xor",
+      "parsed_output": "boolean_pair:xor",
+      "surface": "candidate_selection"
+    },
+    {
+      "case_id": "diag_select_list_minimum",
+      "parsed_output": "integer_list:minimum",
+      "surface": "candidate_selection"
+    },
+    {
+      "case_id": "diag_select_pair_sum",
+      "parsed_output": "pair_arithmetic:difference",
+      "surface": "candidate_selection"
+    },
+    {
+      "case_id": "diag_select_string_reverse",
+      "parsed_output": "string_transform:length",
+      "surface": "candidate_selection"
+    },
+    {
+      "case_id": "diag_regression_exact_token",
+      "parsed_output": "10",
+      "surface": "regression"
+    },
+    {
+      "case_id": "diag_answer_list_minimum",
+      "parsed_output": "-30",
+      "surface": "task_answering"
+    },
+    {
+      "case_id": "diag_answer_pair_sum",
+      "parsed_output": "438",
+      "surface": "task_answering"
+    },
+    {
+      "case_id": "diag_answer_string_uppercase",
+      "parsed_output": "museglow",
+      "surface": "task_answering"
+    }
+  ],
+  "runtime_seconds": 30.720455,
+  "schema_version": 1,
+  "scientific_outcomes_exposed": false,
+  "scientific_result": false
+}
