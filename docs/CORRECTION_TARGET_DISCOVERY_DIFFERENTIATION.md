@@ -24,18 +24,17 @@ correction-state sufficiency
 
 THIS DOCUMENT
 → ADVERSARIAL TARGET-DISCOVERY SUBTRACTION AUDIT
-→ NOT A NEW THEORY
+→ NOT A THEORY
 → NOT A FORMALIZATION
 → NOT AN EXPERIMENT
-→ NOT A CONTROLLER SPECIFICATION
 → NOT PILOT 1
 ```
 
-This artifact asks one question only:
+Question:
 
-> **Does discovering correction-relevant targets or distinctions before failure reveals them constitute a scientifically distinct problem, rather than an instance of existing feature discovery, causal discovery, active learning, experimental design, goal generation, or open-ended task discovery?**
+> **Does discovering correction-relevant distinctions before failure reveals them constitute a scientifically distinct problem, rather than an instance of existing feature, target, goal, hypothesis, representation, or experiment discovery?**
 
-Default answer:
+Default:
 
 ```text
 NO
@@ -47,25 +46,25 @@ until a matched construction forces otherwise.
 
 # Hard elimination rule
 
-A proposed correction-specific discovery operation is eliminated if its apparent advantage can be explained by any of the following:
+Eliminate the correction-specific claim if the apparent advantage reduces to:
 
 ```text
-1. ordinary feature / causal-feature discovery
-2. ordinary state / representation discovery
-3. expanded downstream target or task family
-4. ordinary active learning / experimental design
-5. active causal discovery / intervention selection
-6. ordinary task selection / curriculum learning
-7. self-generated goal / open-ended challenge discovery
-8. hypothesis generation under an existing evaluation criterion
-9. a different utility, reward, constraint, or loss
-10. a richer goal / hypothesis representation
+known-target feature / causal-feature selection
+active learning / experimental design
+active causal intervention selection
+active task / curriculum selection
+self-generated goals
+open-ended challenge generation
+goal / hypothesis representation expansion
+expanded downstream task family
+new utility / reward / constraint / loss
+better search heuristic
 ```
 
-Only a residual requiring a genuinely different, independently measurable operation remains live.
+Only a genuinely different, independently measurable operation may survive.
 
 ```text
-existing machinery already captures it
+existing machinery captures it
 → ELIMINATE
 
 expanded target / objective captures it
@@ -74,47 +73,38 @@ expanded target / objective captures it
 richer representation captures it
 → ELIMINATE
 
-algorithm A merely performs worse than algorithm B
+B merely searches better than A
 → ALGORITHM COMPARISON, NOT NEW CONSTRUCT
 ```
 
 ---
 
-# Existing machinery used as adversaries
+# Strongest existing adversaries
 
-## A1 — Feature selection and causal feature selection
+## A1 — Feature and causal-feature discovery
 
-Feature-selection methods identify variables relevant to an already specified prediction or decision target.
-
-Local causal / Markov-blanket methods explicitly recover variables causally or predictively relevant to a target variable of interest.
-
-Primary reference:
+Local causal / Markov-blanket methods recover variables relevant to a specified target.
 
 ```text
 Aliferis et al. (2010)
-Local Causal and Markov Blanket Induction for Causal Discovery
-and Feature Selection for Classification, Part I
+Local Causal and Markov Blanket Induction ... Part I
 JMLR 11:171–234
 ```
 
-Pressure:
+Therefore:
 
 ```text
-target Y fixed
-→ discover variables relevant to Y
+target fixed
+→ discover relevant variables
 ```
 
 is occupied territory.
 
-This does not solve target formation itself, but it removes any novelty claim based only on discovering omitted variables once the downstream target is known.
-
 ---
 
-## A2 — Active learning and experimental design
+## A2 — Active learning / experimental design
 
-Sequential design methods choose measurements or interventions to reduce uncertainty about a specified quantity of interest or improve a specified objective.
-
-Primary reference:
+Sequential design chooses measurements or interventions for a specified quantity of interest or learning objective.
 
 ```text
 Mutny, Janik & Krause (2023)
@@ -122,44 +112,30 @@ Active Exploration via Experiment Design in Markov Chains
 AISTATS / PMLR 206
 ```
 
-Pressure:
-
-```text
-target / quantity of interest fixed
-→ choose informative experiment
-```
-
-is occupied territory.
-
-Likewise, active causal-discovery methods select interventions to identify a causal graph or orient unresolved causal structure.
+Active causal discovery likewise chooses interventions to resolve causal structure.
 
 ```text
 Hauser & Bühlmann (2012)
 Two Optimal Strategies for Active Learning of Causal Models
-from Interventional Data
-```
 
-```text
 Scherrer et al. (2021)
 Learning Neural Causal Models with Active Interventions
 ```
 
-Therefore:
+Thus:
 
 ```text
-choose observations that reveal a missing distinction
-↛ new correction-specific problem
+specified unresolved quantity
+→ choose discriminating experiment
 ```
 
-when the distinction or learning objective is already specified.
+is not correction-specific.
 
 ---
 
-## A3 — Active task selection / curriculum selection
+## A3 — Active task selection
 
 Meta-learning already contains active selection of informative tasks from candidate task families.
-
-Primary reference:
 
 ```text
 Chen, Zhang & Low (2022)
@@ -167,24 +143,20 @@ Near-Optimal Task Selection for Meta-Learning with Mutual Information
 AISTATS / PMLR 151
 ```
 
-Pressure:
+So:
 
 ```text
 candidate tasks exist
-→ choose which task to learn next
+→ choose next task
 ```
 
-is not a correction-specific operation.
+is occupied.
 
 ---
 
-## A4 — Self-generated goals and autotelic learning
+## A4 — Self-generated goals
 
-The stronger adversary is that some systems do not require a single externally fixed target at all.
-
-Intrinsically motivated goal-exploration processes can self-generate, self-select, self-order, and self-experiment on learning goals.
-
-Primary reference:
+Autotelic learning is a stronger adversary because the target need not be externally fixed.
 
 ```text
 Forestier et al. (2022)
@@ -193,60 +165,40 @@ with Automatic Curriculum Learning
 JMLR 23(152)
 ```
 
-Other examples:
+Such systems self-generate, self-select, self-order, and self-experiment on goals.
+
+Therefore:
 
 ```text
-Florensa et al. (2018)
-Automatic Goal Generation for Reinforcement Learning Agents
-ICML / PMLR 80
-
-Colas et al. (2019)
-CURIOUS: Intrinsically Motivated Modular Multi-Goal RL
-ICML / PMLR 97
+no fixed target
+→ generate / prioritize goals
 ```
 
-Thus:
-
-```text
-no externally fixed target
-→ generate and prioritize goals
-```
-
-is already an established research pattern.
+is already an established problem form.
 
 ---
 
-## A5 — Goal-space / representation reshaping
+## A5 — Goal-space / challenge invention
 
-A possible rescue is:
+Open-ended work also pressures the rescue:
 
 ```text
-existing methods select within a fixed goal language;
-correction requires inventing a new distinction / goal representation
+"the needed distinction was outside the fixed goal language"
 ```
 
-But open-ended/autotelic work also pressures this claim.
-
-Primary example:
+Examples include:
 
 ```text
 Colas et al. (2023)
 Augmenting Autotelic Agents with Large Language Models
-CoLLAs / PMLR 232
-```
+→ generate high-level goals / abstractions
 
-This work explicitly motivates agents that can reshape goal representations, form abstractions, and generate new high-level goals rather than relying only on a fixed hand-coded goal list.
-
-Open-ended systems also generate their own evolving learning challenges:
-
-```text
 Wang et al. (2020)
-Enhanced POET: Open-ended Reinforcement Learning through
-Unbounded Invention of Learning Challenges and their Solutions
-ICML / PMLR 119
+Enhanced POET
+→ generate evolving learning challenges
 ```
 
-Therefore:
+Thus:
 
 ```text
 invent / reshape goals or challenges
@@ -255,20 +207,23 @@ invent / reshape goals or challenges
 
 ---
 
-## A6 — “Active target discovery” terminology warning
-
-A 2025 NeurIPS paper is titled:
+## A6 — Terminology warning: “active target discovery”
 
 ```text
-Active Target Discovery under Uninformative Priors:
-The Power of Permanent and Transient Memory
+Sarkar, Ji & Vorobeychik (2025)
+Active Target Discovery under Uninformative Priors
 ```
 
-Its “target discovery” problem is strategic sampling to locate target instances / promising regions under a discovery objective.
+uses “target discovery” for strategic sampling to locate target instances / regions under an existing discovery objective.
 
-It does **not** by itself establish that the system discovers which scientific quantity or epistemic distinction deserves to become the objective.
+It does **not** by itself solve:
 
-Therefore this title must not be used as evidence that target-*specification* discovery is already solved.
+```text
+which epistemic quantity or distinction
+should become the objective?
+```
+
+Therefore:
 
 ```text
 same phrase
@@ -277,65 +232,62 @@ same phrase
 
 ---
 
-# Candidate correction-specific residual under attack
+# Candidate residual under attack
 
-The remaining intuition is:
+Remaining intuition:
 
 ```text
 before failure reveals the omission,
 discover distinctions that should become targets
-because preserving / testing them matters for future warranted correction
+because they matter for future warranted correction
 ```
 
-Call this only the **candidate residual**. No new construct name is introduced.
-
-The burden is to show that “correction relevance” changes the discovery problem itself rather than merely supplying another utility or task definition.
+The burden is to show that **correction relevance changes the discovery operation**, rather than merely supplying another target or utility.
 
 ---
 
 # Killer A/B construction
 
-Construct two research systems:
+Compare:
 
 ```text
-A = strongest existing open-ended discovery machinery
-B = proposed correction-specific discovery machinery
+A = strongest existing open-ended discovery system
+B = proposed correction-specific discovery system
 ```
 
-Match them on:
+Match:
 
 ```text
 observations
-prior information
-hypothesis / feature / goal language
-ability to generate candidate goals
-ability to reshape representation, where allowed
-computational budget
+priors
+feature / hypothesis / goal expressivity
+candidate-generation capacity
+representation-expansion capacity
+compute budget
 experimental budget
+intervention access
 future environment
-candidate intervention access
-existing downstream task family
-prospectively specified utilities / constraints / losses
+prospectively specified objective / constraint / loss family
 ```
 
 Require:
 
 ```text
-B discovers distinction X
+B discovers X
 A systematically does not
 ```
 
-and all of the following:
+while:
 
 ```text
-1. X materially changes future evidence-warranted correction
-2. X is independently measurable before the terminal outcome
-3. X cannot be represented as another feature / state variable
-4. X cannot be represented as another goal / task
-5. X cannot be represented as another constraint / loss / utility
-6. X cannot be recovered by enlarging A's target family
-7. X cannot be recovered by ordinary representation / goal-space expansion
-8. B's advantage is not merely a better search heuristic
+1. X changes future evidence-warranted correction
+2. X is prospectively and independently measurable
+3. X is not merely another feature / state variable
+4. X is not merely another task / goal / hypothesis
+5. X is not merely another constraint / utility / loss
+6. X is not recovered by enlarging the target family
+7. X is not recovered by ordinary goal / representation expansion
+8. B's advantage is not merely a superior search heuristic
 ```
 
 Only then:
@@ -347,191 +299,48 @@ CORRECTION-SPECIFIC DISCOVERY RESIDUAL
 
 ---
 
-# Adversarial cases
+# Adversarial examples
 
-## Case 1 — B discovers provenance
-
-```text
-B discovers:
-"preserve source provenance"
-```
-
-Attack:
-
-If provenance has a measurable effect on future correction, it can be represented as:
-
-```text
-feature
-state variable
-constraint
-task-relevant future test
-```
-
-and can enter an existing target / utility family.
-
-```text
-CASE 1
-→ ELIMINATED AS DISTINCT DISCOVERY OBJECT
-```
+| Proposed discovery | Shallowest existing explanation | Decision |
+| --- | --- | --- |
+| preserve provenance | state / feature / future-test variable | **ELIMINATE** |
+| preserve challenge channel | access variable / constraint / information utility | **ELIMINATE** |
+| retain alternatives | richer hypothesis representation / preservation objective | **ELIMINATE** |
+| choose discriminating experiment | active learning / experimental design | **ELIMINATE** |
+| invent target outside fixed goal language | open-ended goal / representation generation | **NOT CORRECTION-SPECIFIC** |
+| rank targets by future correction value | outer-level utility if measurable | **ELIMINATE** |
 
 ---
 
-## Case 2 — B discovers challengeability
+# Central fork
+
+The residual hits a hard dichotomy.
 
 ```text
-B discovers:
-"preserve an independent challenge channel"
-```
-
-Attack:
-
-If channel availability matters prospectively, it is a state/access variable or downstream constraint.
-
-If its value is unknown, an open-ended discovery method can in principle evaluate candidate goals under a utility that rewards future information or recoverability.
-
-```text
-CASE 2
-→ NO CORRECTION-SPECIFIC OPERATION ISOLATED
-```
-
----
-
-## Case 3 — B preserves alternative hypotheses
-
-Attack:
-
-```text
-retain H1/H2 distinguishability
-```
-
-can be represented as a richer hypothesis/state representation or as a preservation objective.
-
-The previous lineage and sufficiency audits already showed that representational richness does not itself create a new scientific construct.
-
-```text
-CASE 3
-→ ELIMINATED
-```
-
----
-
-## Case 4 — B chooses discriminating experiments
-
-Attack:
-
-Once the unresolved quantity or hypothesis family is specified:
-
-```text
-choose experiment maximizing discrimination / information
-```
-
-is ordinary active learning / experimental design.
-
-```text
-CASE 4
-→ ELIMINATED
-```
-
----
-
-## Case 5 — B invents a new target not in A's goal language
-
-This is the strongest apparent rescue.
-
-But if B can expand its goal / hypothesis representation while A cannot, the pair is not matched on discovery capacity.
-
-Compare B instead with open-ended / autotelic systems capable of generating or reshaping goal representations.
-
-Then ask what specifically correction-related operation remains.
-
-```text
-CASE 5
-→ REPRESENTATION / GOAL-SPACE DIFFERENCE
-→ NOT YET CORRECTION-SPECIFIC
-```
-
----
-
-## Case 6 — “correction relevance” supplies the missing selection criterion
-
-Suppose B ranks generated targets by:
-
-```text
-expected value for future warranted correction
-```
-
-There are two possibilities.
-
-### 6A — criterion prospectively measurable
-
-Then it is an outer-level utility / reward / acquisition criterion.
-
-Existing open-ended goal generation or task-selection machinery can in principle optimize that criterion.
-
-```text
-new utility
-≠ new discovery ontology
-```
-
-### 6B — criterion not prospectively measurable
-
-Then the target cannot yet be independently scored as “correction relevant.”
-
-```text
-unmeasurable correction relevance
-↛ empirical discovery construct
-```
-
-Decision:
-
-```text
-CASE 6
-→ NO DISTINCT OPERATION ESTABLISHED
-```
-
----
-
-# The central fork
-
-The live intuition now encounters a hard dichotomy:
-
-```text
-CORRECTION RELEVANCE IS SPECIFIED / MEASURABLE
+CORRECTION RELEVANCE IS PROSPECTIVELY MEASURABLE
         ↓
-can enter ordinary utility / task / constraint machinery
+can be supplied as utility / task / constraint / acquisition criterion
         ↓
-no new discovery construct earned
+existing open-ended discovery machinery can optimize it in principle
+        ↓
+NO NEW DISCOVERY CONSTRUCT EARNED
 ```
 
 or:
 
 ```text
-CORRECTION RELEVANCE IS NOT SPECIFIED / MEASURABLE
+CORRECTION RELEVANCE IS NOT PROSPECTIVELY MEASURABLE
         ↓
-no independent criterion for successful discovery
+no independent success criterion for discovery
         ↓
-no empirical construct earned
+NO EMPIRICAL CONSTRUCT EARNED
 ```
 
-This is the central negative result of the audit.
+This is the central negative result.
 
 ---
 
-# Current subtraction table
-
-| Proposed operation | Strongest existing capture | Correction-specific residual? |
-| --- | --- | --- |
-| find relevant variables for known target | feature / causal feature selection | **NO** |
-| choose informative observation / experiment | active learning / experimental design | **NO** |
-| choose informative intervention for causal structure | active causal discovery | **NO** |
-| choose among candidate tasks | active task selection / curriculum | **NO** |
-| self-generate goals | autotelic goal exploration | **NO** |
-| reshape / generate goal representations | open-ended / LLM-augmented autotelic learning | **NO DISTINCT RESIDUAL YET** |
-| generate scientific hypotheses / challenges | hypothesis generation / open-ended discovery | **NO DISTINCT RESIDUAL YET** |
-| rank targets by correction value | ordinary outer-level utility if measurable | **NO** |
-| discover an unmeasurable correction target | no prospective empirical criterion | **NO** |
-
-Result:
+# Decision
 
 ```text
 CORRECTION-SPECIFIC TARGET DISCOVERY
@@ -539,23 +348,24 @@ AS A DISTINCT SCIENTIFIC PROBLEM
 → NOT EARNED
 ```
 
----
+This does **not** imply that discovering missing distinctions is solved.
 
-# What remains live
+It implies only:
 
-The audit does not show that discovering missing distinctions is solved.
+```text
+unsolved general discovery problem
+≠ correction-specific new construct
+```
 
-It shows that the **correction-specific qualifier has not earned independence**.
-
-The remaining difficult problem is more general:
+The remaining general problem is:
 
 ```text
 how can a system generate / expand useful target,
 feature, hypothesis, or representation spaces
-when the important distinctions are not already encoded?
+when important distinctions are not already encoded?
 ```
 
-That problem is already shared with:
+That problem is shared with:
 
 ```text
 open-ended learning
@@ -565,37 +375,32 @@ causal discovery
 scientific hypothesis generation
 ```
 
-The project currently has no evidence that future correction requires a distinct discovery ontology beyond those families.
-
-Important boundary:
-
-```text
-unsolved general problem
-≠ correction-specific new construct
-```
+The current evidence does not isolate a correction-specific discovery ontology beyond them.
 
 ---
 
 # Reopening condition
 
-Reopen only if a prospective matched case satisfies all of the following:
+Reopen only if a prospective matched case shows:
 
 ```text
-1. A and B receive the same data / priors / budgets
-2. A and B have equally expressive feature / goal / hypothesis languages
-3. A and B share the same prospectively measurable objective family
-4. A uses the strongest relevant existing discovery machinery
-5. B performs an additional identifiable operation
-6. that operation discovers X before failure
-7. X changes future warranted-correction behavior
-8. X cannot be encoded as another ordinary feature, target,
-   representation variable, constraint, utility, or experiment objective
-9. the effect is independently measurable
-10. the distinction survives comparison with open-ended goal /
-    representation generation, not merely fixed-target methods
+same data / priors / budgets
+same expressive goal / feature / hypothesis language
+same representation-expansion capacity
+same measurable objective family
+strong existing open-ended discovery machinery in A
+
+but
+
+B performs an additional identifiable operation
+→ discovers X before failure
+→ X changes future warranted correction
+→ X cannot be encoded as feature, target, representation,
+   constraint, utility, loss, or experiment objective
+→ effect independently measurable
 ```
 
-If no such construction exists:
+If not:
 
 ```text
 NO DISTINCT CORRECTION-TARGET-DISCOVERY OBJECT
@@ -624,9 +429,6 @@ correction-specific sufficiency
 correction-specific target discovery
 → NOT EARNED
 
-existing discovery / open-ended machinery
-→ STRONG CURRENT EXPLANATION
-
 remaining general problem
 → target / hypothesis / representation invention
 → NOT CORRECTION-SPECIFICALLY DIFFERENTIATED
@@ -651,6 +453,6 @@ Pilot 1
 → NOT EARNED
 ```
 
-The current endpoint is not a new object. It is a subtraction result:
+Terminal sentence:
 
 > **The project has not established that discovering correction-relevant distinctions is scientifically different from existing open-ended target, feature, hypothesis, representation, and experiment discovery once the same prospective objective family is supplied.**
