@@ -1,6 +1,6 @@
 # CARS — Controlled Adaptive Reasoning System
 
-> **Status:** living research notebook. The project now separates a broad functional intelligence conjecture from a subtractive empirical program. Pilot 0 is closed, the Pilot-1/ID1 synthetic predictive-resource lineage is closed at its tested questions, and an independent future-plasticity forecast benchmark is frozen but has **no scientific result yet** because canonical MNIST was unavailable in the active execution environment.
+> **Status:** living research notebook. The project separates a broad functional intelligence conjecture from a subtractive empirical program. Pilot 0 and the Pilot-1/ID1 synthetic lineages are closed at their tested questions. The independent future-plasticity benchmark remains frozen with no scientific result. ASI-0 is now a frozen causal-attribution skeleton for evidence-to-target assignment; its implementation and synthetic smoke pass, but no canonical scientific run has been executed and `Δ_align` remains unknown.
 
 ## Top-level theory
 
@@ -14,14 +14,7 @@ Compact shorthand:
 I_t ∝ Δ_E[V_{t+h}]
 ```
 
-The proportionality symbol is shorthand, **not** a claimed linear law. The scientifically meaningful commitment is:
-
-```text
-greater evidence-mediated expected future-viability gain
-→ greater intelligence under the conjecture
-```
-
-The theory is currently a **conjecture**. Its mechanism is unspecified and current empirical support is not established.
+The proportionality symbol is shorthand, **not** a claimed linear law. The theory is currently a conjecture; its mechanism is unspecified and empirical support is not established.
 
 See:
 
@@ -105,6 +98,145 @@ Does this relation earn the name intelligence?
 
 Each arrow is a separate empirical burden. A benchmark is not allowed to inherit the conclusion it is meant to earn.
 
+ASI-0 deliberately tests only a lower fragment:
+
+```text
+development evidence
+→ modification selection
+→ bounded agent modification
+→ concealed future capability
+```
+
+## ASI-0 — active causal-attribution seam
+
+ASI-0 is **not** an ASI narrative. It asks one causal question:
+
+> **Can a fixed-base-model agent use development evidence to select bounded modifications that produce greater concealed future capability than evidence-misaligned selection under matched resources?**
+
+Treatment object:
+
+```text
+A = evidence → target assignment mechanism
+```
+
+Primary interventional estimand:
+
+```text
+Δ_align
+=
+E[Y_concealed | do(A = aligned)]
+-
+E[Y_concealed | do(A = misaligned)]
+```
+
+Primary contrast:
+
+```text
+ALIGNED
+E_i → target i
+
+MISALIGNED
+E_{π(i)} → target i
+π(i) ≠ i
+```
+
+The misaligned arm uses a prospectively seeded within-stratum derangement. It preserves evidence structure and generic information quality while destroying target relevance.
+
+Where feasible the primary pair holds fixed:
+
+```text
+base model / revision
+target
+candidate pool
+candidate count
+candidate-generation machinery
+selection opportunity
+resource budget
+protected-regression gate
+evaluator
+concealed suite
+```
+
+Only the evidence→candidate-selection mapping changes.
+
+Secondary controls:
+
+```text
+STATIC
+RANDOM-EDIT
+```
+
+but:
+
+```text
+SELF vs RANDOM
+→ useful control
+→ insufficient attribution test
+```
+
+Frozen artifacts:
+
+- [`experiments/ASI0_EVIDENCE_ASSIGNMENT.md`](experiments/ASI0_EVIDENCE_ASSIGNMENT.md)
+- [`experiments/ASI0_EVIDENCE_ASSIGNMENT_CONFIG.json`](experiments/ASI0_EVIDENCE_ASSIGNMENT_CONFIG.json)
+- [`scripts/run_asi0_assignment_experiment.py`](scripts/run_asi0_assignment_experiment.py)
+- [`results/ASI0_EVIDENCE_ASSIGNMENT_STATUS.md`](results/ASI0_EVIDENCE_ASSIGNMENT_STATUS.md)
+- [`results/asi0_assignment_smoke.json`](results/asi0_assignment_smoke.json)
+
+Current state:
+
+```text
+CAUSAL DESIGN SKELETON   FROZEN
+IMPLEMENTATION            PASS
+SYNTHETIC SMOKE           PASS
+CANONICAL MODEL           NOT YET FROZEN
+CANONICAL TARGET MANIFEST NOT YET FROZEN
+CONCEALED SUITE           NOT YET FROZEN
+SCIENTIFIC RUN            NOT EXECUTED
+Δ_align                   UNKNOWN
+INTERPRETATION            ∅
+```
+
+The config deliberately retains `MUST_FREEZE_BEFORE_SCIENTIFIC_RUN` placeholders. The runner refuses scientific manifest preparation while any remain.
+
+Synthetic smoke:
+
+```text
+targets                        24
+misaligned fixed points         0
+candidate-pool match failures   0
+injected Δ_align                0.120000
+estimated Δ_align               0.123331
+95% target-bootstrap interval   [0.114922, 0.131884]
+status                          PASS
+```
+
+This validates plumbing only:
+
+```text
+synthetic recovery
+↛ ASI-0 scientific evidence
+```
+
+Maximum future positive interpretation, after a prospectively frozen scientific run and independent replication:
+
+> **Correct evidence-to-target assignment causally improves bounded modification selection and downstream concealed performance under the tested conditions.**
+
+Stop there.
+
+```text
+concealed capability gain
+↛ viability gain
+
+viability gain
+↛ intelligence
+
+ASI-0
+↛ recursive self-improvement
+↛ ASI
+```
+
+A null closes ASI-0 at the tested mutation-surface/task/resource/measurement boundary. It may not be rescued by inventing a new `Z`, widening the mutation surface post hoc, increasing autonomy, or declaring that the effect must emerge at scale.
+
 ## CARS control protocol
 
 CARS is the epistemic-control layer around the research process. It governs how evidence is localized, interpreted, revised, and bounded.
@@ -163,27 +295,6 @@ error detection
 ```
 
 The diagnostic program nevertheless localized representation-dependent transition effects.
-
-### Pilot 0 terminal endpoint ledger
-
-| Object | Status |
-| --- | --- |
-| `T_change` × prior-state encoding | **CAUSAL** |
-| `T_change` × section scaffold | **CAUSAL** |
-| `T_change` × encoding×scaffold | **CAUSAL INTERACTION** |
-| `T_verified` × prior-state encoding | **CAUSAL** |
-| `T_verified` × conversational topology | **CAUSAL** |
-| `T_verified` × section scaffold | **PRACTICALLY SMALL** |
-| `T_verified` × encoding×scaffold | **UNRESOLVED** |
-| `T_instability` × broad inline representation | **CAUSAL** |
-| `T_instability` × prior-state encoding | **CAUSAL / REPLICATED / PRACTICALLY SMALL** |
-| `T_instability` × section scaffold | **PRACTICALLY SMALL** |
-| `T_instability` × encoding×scaffold | **PRACTICALLY SMALL** |
-| excess R1 cohort variation | **NOT DETECTED** |
-| transport invariance | **NOT ESTABLISHED** |
-| global correction capacity | **NOT ESTABLISHED** |
-| psychological mechanism | **NOT ESTABLISHED** |
-| general intelligence claim | **NOT ESTABLISHED** |
 
 Authoritative records:
 
@@ -286,7 +397,7 @@ Do not run another replication merely to recover the original sign.
 
 ## Independent future-plasticity forecast benchmark — frozen
 
-The next authorized benchmark does **not** descend from the failed ID1 toy. It uses an independently established continual-learning phenomenon: plasticity variation under Online Permuted MNIST.
+This remains a separate frozen benchmark. It does not supply authority to ASI-0 and ASI-0 does not reinterpret it.
 
 Neutral object:
 
@@ -296,8 +407,6 @@ Neutral object:
 future learning trajectory from checkpoint S_t
 on concealed future task transformation E*
 ```
-
-Each checkpoint is compared to a matched fresh network on the exact same future task, data order, initialization family, optimizer, and training budget.
 
 The first pass tests only:
 
@@ -359,13 +468,16 @@ docs/
 
 experiments/
   README.md
+  ASI0_EVIDENCE_ASSIGNMENT.*      active causal-attribution seam
   PILOT0_*                         historical frozen Pilot 0
   PILOT1_PREDICTIVE_RESOURCE_*    closed synthetic predictive-resource toy
   PILOT1_ID1_*                    closed finite-data identification toy
-  FUTURE_PLASTICITY_FORECAST.*    current frozen independent benchmark
+  FUTURE_PLASTICITY_FORECAST.*    independent frozen pending benchmark
 
 results/
   README.md
+  ASI0_EVIDENCE_ASSIGNMENT_STATUS.md
+  asi0_assignment_smoke.json
   PILOT0_TERMINAL_RECORD.md
   PILOT1_PREDICTIVE_RESOURCE_TOY_MATCH1.md
   PILOT1_ID1_SYSTEM_IDENTIFICATION.md
@@ -373,6 +485,7 @@ results/
   FUTURE_PLASTICITY_FORECAST_STATUS.md
 
 scripts/
+  run_asi0_assignment_experiment.py
   frozen Pilot 0 runners/analyzers
   Pilot 1 / ID1 synthetic runners
   future-plasticity forecast runner
@@ -386,6 +499,12 @@ smoke
 
 predictive gain
 ↛ causal mechanism
+
+correct evidence assignment → concealed capability gain
+↛ viability gain
+↛ intelligence
+↛ recursive self-improvement
+↛ ASI
 
 viability gain
 ↛ evidence mediation
