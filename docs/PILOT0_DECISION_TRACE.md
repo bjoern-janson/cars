@@ -50,57 +50,20 @@ Pilot 0 frozen evidence
 
 No Pilot 1 is authorized by this document.
 
-## Controller-relevant distinctions observed in the trace
+## Reconstruction rules
 
-The trace preserves three distinct layers without yet formalizing them into a controller:
+This artifact is deliberately narrower than a controller analysis.
 
-```text
-BELIEF
-What does the evidence support as potentially true?
-
-AUTHORITY
-What claims, scopes, and actions does the evidence license?
-
-CONTROL
-Given that authority state, what should happen next?
-```
-
-Candidate transition structure:
-
-```text
-evidence
-→ belief update
-→ authority update
-→ admissible-action update
-→ action selection
-```
-
-This reconstruction does **not** assume that the eventual controller must use exactly this representation.
-
-## Trace invariants
-
-The following constraints are preserved because they were repeatedly operative in Pilot 0 and are directly relevant to later controller extraction:
-
-```text
-UNRESOLVED
-↛ ACTION REQUIRED
-
-ACTIONABLE
-↛ EXPERIMENT REQUIRED
-
-EXPERIMENT POSSIBLE
-↛ EXPERIMENT AUTHORIZED
-```
-
-Additional reconstruction rules:
-
-1. Endpoint-specific uncertainty remains endpoint-local unless the historical record explicitly links it elsewhere.
-2. A nonzero effect and a practically meaningful effect are separate authority claims.
-3. Cross-cohort or cross-experiment point-estimate differences do not by themselves establish heterogeneity.
-4. `PRESERVE_UNRESOLVED` and `STOP` are not treated as equivalent operations.
-5. The trace records **why the selected action was supported** separately from **why alternatives were rejected**.
-6. Rejected-action rationales are `UNKNOWN` unless the historical record actually contains them.
-7. Later outcomes appear only under **LATER OUTCOME — QUARANTINED**.
+1. A candidate action is called **historically recoverable** only when a contemporaneous or terminal source records that action, alternative, or explicit non-authorization.
+2. An analytically possible action that is not recorded as historically considered is marked `UNKNOWN`; it is not inserted into the historical candidate set.
+3. A hypothesis is called **historically recoverable** only when a source records the hypothesis, fork, or scientific question. Later plausible explanations are not backfilled.
+4. Historical rationale is quoted or paraphrased only from provenance-bearing sources. Later labels such as “earned complexity escalation” are not used as contemporaneous rationale.
+5. Judgment-type classification is deferred to the later human-judgment audit. This trace records evidence, authority statements, actions, and recoverable rationale only.
+6. Endpoint-specific claims remain endpoint-specific unless a source explicitly links them.
+7. A nonzero effect and a practically meaningful effect remain separate claims when the source makes that distinction.
+8. Cross-cohort or cross-experiment point-estimate differences do not establish heterogeneity when the source explicitly prohibits that inference.
+9. Later outcomes appear only under **LATER OUTCOME — QUARANTINED**.
+10. This trace performs no cross-node controller abstraction.
 
 ## Provenance hierarchy
 
@@ -151,7 +114,7 @@ prior-state fields versus prose
 → T_instability practically small at ±0.05
 ```
 
-The A5 contract had isolated the prior-state body at the shallowest state-encoding boundary while holding the surrounding canonical inline scaffold fixed.
+The A5 contract had isolated the prior-state body at the state-encoding boundary while holding the surrounding canonical inline scaffold fixed.
 
 ### Authorized claims
 
@@ -161,7 +124,7 @@ prior-state encoding → T_verified    CAUSAL
 prior-state encoding → T_instability PRACTICALLY SMALL at ±0.05
 ```
 
-Not authorized:
+Not authorized by the A5 contract:
 
 ```text
 A5 explains A4c completely
@@ -173,7 +136,7 @@ A5 establishes global correction capacity
 
 The broad A4c `T_instability` effect remained unlocalized after the A5 encoding contrast was practically small for that endpoint.
 
-The A5 pre-outcome contract had already stated a conditional escalation rule:
+The A5 pre-outcome contract had stated this conditional next-step guardrail:
 
 ```text
 if A5 is practically small across the A4c endpoints,
@@ -181,18 +144,22 @@ next localization should target remaining outer-section framing
 rather than immediately invoking interaction
 ```
 
-The realized A5 result was mixed across endpoints rather than practically small across all three; the frozen A6 contract nevertheless records the next object as the remaining outer-scaffold component specifically after A5 isolated prior-state encoding.
+The realized A5 result was mixed across endpoints rather than practically small across all three. The frozen A6 contract nevertheless records A6's object as the remaining outer-scaffold component after A5 isolated prior-state encoding.
 
-### Candidate actions recoverable from record
+### Historical action record
+
+Historically evidenced:
 
 ```text
-1. test remaining outer section/scaffold framing
-2. invoke an interaction model immediately
-3. refine the prior-state encoding contrast further
-4. preserve unresolved / stop this localization branch
+SELECTED:
+run A6 section-scaffold localization
+
+NAMED IN PRIOR CONDITIONAL GUARDRAIL:
+remaining outer-section framing
+immediate interaction as the alternative not to invoke first under that condition
 ```
 
-Whether this list was exhaustive at the time:
+Historical consideration of other analytically possible actions, including finer encoding decomposition or stopping the localization branch:
 
 ```text
 UNKNOWN
@@ -212,19 +179,18 @@ prior-state field-versus-prose encoding
 
 No later A6/A7/R1 evidence is admitted into this section.
 
-## LIVE HYPOTHESES
+## HISTORICAL HYPOTHESIS / QUESTION RECORD
 
-Recoverable hypotheses:
+The A6 contract establishes the selected scientific object:
 
 ```text
-H_outer:
-remaining outer section/scaffold framing contributes to the residual A4c transition effects
-
-H_interaction:
-encoding may matter differently under another scaffold configuration
+isolate explicit section-label scaffold versus unlabeled scaffold
+while holding the prose state body and semantic chunks fixed
 ```
 
-Additional hypotheses considered contemporaneously:
+The A5 guardrail also names immediate interaction as a possible later escalation under its stated condition.
+
+A complete contemporaneous competing-hypothesis set:
 
 ```text
 UNKNOWN
@@ -233,8 +199,7 @@ UNKNOWN
 ## SELECTED ACTION
 
 ```text
-DISCRIMINATE
-→ run A6 randomized section-scaffold localization
+run A6 randomized section-scaffold localization
 ```
 
 A6 isolated:
@@ -257,52 +222,49 @@ of the broad A4c inline-rendering effect
 after A5 isolated prior-state encoding
 ```
 
-This is a structural localization rationale: move to the next experimentally isolatable representation boundary rather than changing mechanism level.
+No stronger comparative rule selecting A6 over every analytically possible alternative is recovered from the historical record.
 
-## REJECTED ACTIONS / REJECTION BASIS
+## ALTERNATIVES / REJECTION BASIS
 
-| Alternative | Status | Rejection basis recoverable from historical record |
+| Alternative | Historical status | Recoverable basis |
 | --- | --- | --- |
-| immediate interaction escalation | not selected | A5 contract explicitly preferred remaining outer framing before immediate interaction under its practically-small condition; exact realized-decision comparison is otherwise `UNKNOWN` |
-| finer encoding decomposition | not selected | `UNKNOWN` |
-| stop / preserve unresolved | not selected | `UNKNOWN` |
+| immediate interaction escalation | named in A5 conditional guardrail; not selected for D1 | A5 guardrail says remaining outer framing should precede immediate interaction under its stated practically-small condition; exact realized comparison after the mixed A5 result is `UNKNOWN` |
+| finer encoding decomposition | historical consideration `UNKNOWN` | `UNKNOWN` |
+| stop / preserve unresolved | historical consideration `UNKNOWN` | `UNKNOWN` |
 
 ## AUTHORITY CHANGE
 
+Supported by the A5 result and A6 lineage:
+
 ```text
 encoding component
-→ localized for T_change and T_verified
-→ bounded as practically small for T_instability
+→ causal for T_change and T_verified
+→ practically small for T_instability
 
-residual A4c T_instability uncertainty
-→ remains live
-→ does not yet authorize interaction as established
+A6 outer-scaffold object
+→ authorized for direct testing
 ```
 
-## JUDGMENT TYPE
+A formal rule mapping this state to A6:
 
 ```text
-STRUCTURAL
-+
-STATISTICAL input from A5 practical-equivalence result
+NOT RECOVERED
 ```
 
-Formal rule sufficient to reproduce the action:
+## JUDGMENT CLASSIFICATION
 
 ```text
-NOT ESTABLISHED
+DEFERRED TO HUMAN-JUDGMENT AUDIT
 ```
+
+This trace does not classify the decision as formal, statistical, structural, or value/cost based.
 
 ## STOP / CONTINUE STATUS
 
-```text
-CONTINUE LOCALIZATION
-```
-
-Reason recoverable from record:
+Observed historical action:
 
 ```text
-an experimentally isolatable outer-scaffold boundary remained live
+CONTINUE WITH A6
 ```
 
 Whether A6 had demonstrably superior value to every other possible action:
@@ -380,45 +342,56 @@ but neither tested A5 nor A6 main-effect component
 established a practically meaningful T_instability main effect
 ```
 
-The historical record explicitly leaves two broad classes live:
+The A6 historical guardrail explicitly leaves two classes for the next discrimination:
 
 ```text
-finer rendering difference
-OR
-encoding × scaffold interaction
+remaining finer rendering differences
+versus
+interaction
 ```
 
-### Candidate actions recoverable from record
+### Historical action record
+
+Historically recoverable:
 
 ```text
-1. test encoding × scaffold interaction
-2. test a finer rendering difference
-3. preserve unresolved / stop
+NAMED FOR NEXT DISCRIMINATION BY A6:
+1. remaining finer rendering differences
+2. interaction
+
+SELECTED IN A7:
+encoding × scaffold interaction factorial
 ```
 
-Other contemporaneous alternatives:
+Historical consideration of stopping or other actions:
 
 ```text
 UNKNOWN
 ```
 
-## LIVE HYPOTHESES
+## HISTORICAL HYPOTHESIS / QUESTION RECORD
+
+The A6 guardrail records the two-way discrimination:
 
 ```text
-H_interaction:
-the effect of prose versus fields differs by labeled versus unlabeled scaffold
-
-H_finer:
-another operational rendering difference contributes to the A4c instability contrast
+remaining finer rendering differences
+versus
+interaction
 ```
 
-The frozen record does not establish a complete mutually exclusive hypothesis set.
+The A7 contract then defines the interaction object as:
+
+```text
+whether the effect of prose versus fields
+differs between unlabeled and labeled scaffolds
+```
+
+The frozen record does not establish a complete mutually exclusive hypothesis set beyond that documented fork.
 
 ## SELECTED ACTION
 
 ```text
-DISCRIMINATE / ESCALATE REPRESENTATION COMPLEXITY
-→ run A7 encoding × scaffold factorial
+run A7 encoding × scaffold factorial
 ```
 
 A7 prospectively closed the missing `UF` cell and tested:
@@ -441,55 +414,58 @@ localized by A5 and A6
 
 For `T_instability`, the contract explicitly names `Gamma_FS_instability` as the highest-information residual target motivating A7.
 
-This is the clearest historical example in the trace of **earned complexity escalation**: the interaction was not introduced before the two component main-effect boundaries had been directly tested.
+The historical record does **not** additionally state a general rule of “earned complexity escalation.” That label is not used as D2's contemporaneous rationale.
 
-## REJECTED ACTIONS / REJECTION BASIS
+## ALTERNATIVES / REJECTION BASIS
 
-| Alternative | Status | Rejection basis recoverable from historical record |
+| Alternative | Historical status | Recoverable basis |
 | --- | --- | --- |
-| finer rendering localization | not selected | A6 record kept it live; why interaction was preferred over a specific finer rendering candidate is `UNKNOWN` |
-| stop / preserve unresolved | not selected | A7 contract treats the missing factorial cell as an available discriminating test; comparative stopping rationale otherwise `UNKNOWN` |
+| finer rendering localization | explicitly named by A6 as the other side of the next discrimination; not selected | why interaction was preferred over a specific finer-rendering candidate is `UNKNOWN` |
+| stop / preserve unresolved | historical consideration `UNKNOWN` | `UNKNOWN` |
 
 ## AUTHORITY CHANGE
 
-At selection time:
+At selection time, the A7 contract establishes:
 
 ```text
-interaction
-→ promoted from live hypothesis to testable causal object
+encoding × scaffold interaction
+→ defined as the next causal object to test
 
 interaction
-↛ established explanation
+↛ established explanation before A7 outcome
 ```
 
-No A7 result is admitted before execution.
-
-## JUDGMENT TYPE
+## JUDGMENT CLASSIFICATION
 
 ```text
-STRUCTURAL
-+
-STATISTICAL input from A5/A6 practical-equivalence decisions
+DEFERRED TO HUMAN-JUDGMENT AUDIT
 ```
 
-The choice between interaction and a particular finer-rendering experiment remained partly human-judged:
+A formal selection rule choosing interaction over a particular finer-rendering experiment:
 
 ```text
-FORMAL SELECTION RULE
-→ NOT RECOVERED
+NOT RECOVERED
 ```
 
 ## STOP / CONTINUE STATUS
 
+Observed historical action:
+
 ```text
-CONTINUE
+CONTINUE WITH A7
 ```
 
-Reason recoverable from record:
+Recoverable reason:
 
 ```text
-a previously missing factorial cell enabled a direct test
-of the live interaction explanation
+A7 contract identifies the missing factorial cell
+and defines a direct encoding × scaffold interaction test
+```
+
+Comparative rule showing that this action was superior to every alternative:
+
+```text
+UNKNOWN
 ```
 
 ## LATER OUTCOME — QUARANTINED
@@ -504,7 +480,7 @@ Gamma_FS_instability  practically small at ±0.05
 Gamma_FS_verified     unresolved
 ```
 
-For the motivating instability endpoint, the interaction explanation was weakened at the inherited practical scale.
+The later classification of what this implies for subsequent decisions belongs to D3, where A7 results were historically available.
 
 ---
 
@@ -544,32 +520,24 @@ section scaffold
 → practically small for T_instability
 ```
 
-Not authorized:
+The frozen R1 contract explicitly prohibits this inference:
 
 ```text
-A5/A7 point-estimate discrepancy
-→ cohort heterogeneity
-
-A7 interaction result
-→ no encoding effect
+different cohort point estimates
+→ heterogeneity
 ```
 
 ### Unresolved uncertainty
 
-The live question shifted from:
+The R1 contract defines the new scientific object as:
 
 ```text
-Does scaffold moderate encoding for T_instability?
+replicate/transport the labeled-scaffold E0-only
+encoding-to-instability contrast
+across independently sampled prestates
 ```
 
-to:
-
-```text
-Does the encoding → T_instability contrast itself
-reproduce / transport across independently sampled prestates?
-```
-
-The discrepancy was historical:
+The historical discrepancy recorded in the R1 lineage was:
 
 ```text
 A5       ≈ +0.0207
@@ -577,42 +545,50 @@ A7-L     ≈ +0.0556
 A7-U     ≈ +0.0476
 ```
 
-but the frozen R1 contract explicitly prohibited calling this heterogeneity merely from differing point estimates.
+### Historical action record
 
-### Candidate actions recoverable from record
+Historically evidenced:
 
 ```text
-1. replicate / test transport of encoding → T_instability
-2. run A8 finer-formatting localization
-3. infer cohort heterogeneity from A5/A7 differences
-4. continue interaction decomposition
-5. preserve unresolved / stop
+SELECTED:
+R1 replication/transport test
+
+EXPLICITLY NOT AUTHORIZED:
+A8 finer-formatting ablation
+heterogeneity merely from differing cohort point estimates
 ```
 
-Whether other actions were considered:
+Historical consideration of continuing interaction decomposition, stopping before R1, or other actions:
 
 ```text
 UNKNOWN
 ```
 
-## LIVE HYPOTHESES
+## HISTORICAL HYPOTHESIS / QUESTION RECORD
 
-Recoverable competing explanations for the discrepancy:
+The contemporaneous R1 record establishes:
 
 ```text
-sampling variation
-population / prestate composition difference
-context dependence
-transport-limited encoding effect
+QUESTION:
+does the inherited encoding → T_instability contrast
+replicate / transport across fresh independently sampled prestates?
+
+GUARDRAIL:
+differing cohort point estimates do not by themselves establish heterogeneity
 ```
 
-The frozen R1 contract does not treat any one of these as established before R1.
+A contemporaneous four-item competing explanation set such as sampling variation, prestate composition, context dependence, or transport-limited effect is **not recorded** in the frozen R1 contract.
+
+Historical competing-hypothesis set beyond the recorded replication/transport question and heterogeneity guardrail:
+
+```text
+UNKNOWN
+```
 
 ## SELECTED ACTION
 
 ```text
-REPLICATE / TEST_TRANSPORT
-→ R1
+R1 replication / transport branch
 ```
 
 R1 narrowed the design to:
@@ -625,10 +601,12 @@ T_instability only
 four fresh disjoint prestate cohorts
 ```
 
-The A-series was explicitly stopped:
+The R1 lineage explicitly states:
 
 ```text
-no A8 finer-formatting ablation
+A-series
+→ localization branch stopped
+→ no A8 finer-formatting ablation
 ```
 
 ## WHY THIS ACTION?
@@ -641,70 +619,57 @@ encoding-to-instability contrast
 across independently sampled prestates
 ```
 
-The contract explicitly reframed R1 as a different scientific purpose from A-series localization.
+The contract explicitly reframes R1 as a replication/transport branch rather than continuation of the A-series localization ladder.
 
-The discriminating target was no longer a representation component. It was whether the suspected encoding contrast was stable enough to transport across fresh samples from the same prestate-sampling distribution.
-
-## REJECTED ACTIONS / REJECTION BASIS
-
-| Alternative | Status | Rejection basis recoverable from historical record |
-| --- | --- | --- |
-| A8 finer-formatting ablation | explicitly rejected | R1 lineage states the A-series localization branch stopped and no A8 finer-formatting ablation was authorized |
-| infer heterogeneity directly | explicitly rejected | R1 guardrail: different cohort point estimates do not by themselves establish heterogeneity |
-| preserve interaction explanation | rejected for T_instability | A7 interaction was practically small for the motivating endpoint |
-| stop before replication | not selected | exact comparative rationale is `UNKNOWN`; R1 contract treats the replication discrepancy as a live directly testable uncertainty |
-
-## AUTHORITY CHANGE
-
-```text
-encoding × scaffold explanation for T_instability
-→ weakened at ±0.05
-
-A5 ↔ A7 difference
-→ promoted to replication/transport question
-↛ promoted to heterogeneity claim
-
-A-series localization
-→ stopped
-```
-
-## JUDGMENT TYPE
-
-```text
-STATISTICAL
-+
-STRUCTURAL
-```
-
-Statistical component:
-
-```text
-interaction practical-equivalence result
-+
-discrepant encoding point estimates
-```
-
-Structural component:
-
-```text
-change scientific object from localization
-to replication/transport
-```
-
-Formal rule sufficient to choose R1 over STOP:
+A formal comparative rule selecting R1 over every other possible action:
 
 ```text
 NOT RECOVERED
 ```
 
+## ALTERNATIVES / REJECTION BASIS
+
+| Alternative | Historical status | Recoverable basis |
+| --- | --- | --- |
+| A8 finer-formatting ablation | explicitly not authorized | R1 lineage states the A-series localization branch stopped and no A8 finer-formatting ablation was authorized |
+| infer heterogeneity directly | explicitly prohibited as an inference | R1 guardrail: different cohort point estimates do not by themselves establish heterogeneity |
+| continue interaction decomposition | historical consideration `UNKNOWN` | `UNKNOWN` |
+| stop before replication | historical consideration `UNKNOWN` | `UNKNOWN` |
+
+## AUTHORITY CHANGE
+
+Supported by the R1 lineage:
+
+```text
+A7 encoding × scaffold interaction for T_instability
+→ practically small
+
+A5 ↔ A7 encoding contrast discrepancy
+→ becomes the object of a replication/transport test
+↛ becomes a heterogeneity claim
+
+A-series localization
+→ stopped
+```
+
+## JUDGMENT CLASSIFICATION
+
+```text
+DEFERRED TO HUMAN-JUDGMENT AUDIT
+```
+
+No formal threshold for when a replication discrepancy warrants R1 is recovered from the frozen contract.
+
 ## STOP / CONTINUE STATUS
+
+Historically recorded scope transition:
 
 ```text
 A-SERIES: STOP
 R1 REPLICATION/TRANSPORT BRANCH: CONTINUE
 ```
 
-This is an important scoped-control distinction. Stopping one branch did not imply stopping the entire empirical program.
+No broader controller interpretation is assigned here.
 
 ## LATER OUTCOME — QUARANTINED
 
@@ -751,7 +716,7 @@ Delta_common = +0.033975
 p            = 0.00019996
 ```
 
-Thus:
+Thus, as recorded in the terminal artifact:
 
 ```text
 encoding → T_instability
@@ -794,34 +759,42 @@ NOT ESTABLISHED
 
 ### Remaining unresolved uncertainty
 
-At least one unrelated endpoint-local question remained:
+The terminal record retains at least one endpoint-local unresolved question:
 
 ```text
 T_verified encoding × scaffold interaction
 → UNRESOLVED
 ```
 
-But the committed terminal record explicitly preserves:
+and explicitly states:
 
 ```text
 unresolved T_verified interaction
 ↛ reopen T_instability
 ```
 
-Residual uncertainty therefore existed without automatically becoming action-forcing.
+## Historical action / alternative record
 
-### Candidate actions recoverable from record
+Historically evidenced by the terminal record:
 
 ```text
-1. STOP Pilot 0
-2. R2 replication / transport escalation
-3. reopen T_instability localization
-4. A8 finer-formatting localization
-5. use unresolved T_verified interaction to continue the representation branch
-6. preserve endpoint-local unresolved questions without further experiment
+SELECTED:
+STOP Pilot 0
+
+EXPLICITLY NOT EARNED:
+R2
+A8
+additional T_instability decomposition
+
+EXPLICIT AUTHORITY BOUNDARY:
+unresolved T_verified interaction
+↛ reopen T_instability
+
+EXPLICIT NON-CLAIM:
+transport invariance not established
 ```
 
-Whether this list was exhaustive:
+Whether additional candidate actions were considered but not recorded:
 
 ```text
 UNKNOWN
@@ -843,7 +816,7 @@ A-series
 → sufficiently resolved
 
 R1
-→ replication/transport question resolved enough to close
+→ replication/transport question closed
 
 A8
 → NOT EARNED
@@ -886,27 +859,32 @@ failure detected
 → STOP
 ```
 
-## REJECTED ACTIONS / REJECTION BASIS
+## ALTERNATIVES / REJECTION BASIS
 
-| Alternative | Status | Rejection basis recoverable from terminal record |
+| Alternative / claim | Historical status | Recoverable basis from terminal record |
 | --- | --- | --- |
-| R2 | explicitly not earned | R1 resolved the replication/transport question enough to close; no new sufficiently discriminating unresolved question recorded |
-| A8 | explicitly not earned | representation localization already sufficiently resolved; further complexity lacked authorization |
-| further T_instability decomposition | explicitly not earned | encoding effect replicated and bounded; scaffold and interaction already practically small; no new discriminating target recorded |
-| reopen T_instability because `T_verified` interaction is unresolved | explicitly rejected | endpoint-local uncertainty does not authorize reopening a resolved branch |
-| claim transport invariance | explicitly rejected as authority claim | compatibility with common effect does not establish invariance |
+| R2 | explicitly not earned | R1 replication/transport question was closed; no sufficiently discriminating unresolved question authorized R2 |
+| A8 | explicitly not earned | representation localization was sufficiently resolved; further complexity lacked authorization |
+| additional T_instability decomposition | explicitly not earned | terminal record closes the T_instability localization branch after replication/bounding and prior component tests |
+| reopen T_instability because `T_verified` interaction is unresolved | explicitly disallowed by authority boundary | endpoint-local uncertainty does not authorize reopening T_instability |
+| claim transport invariance | explicitly not established | compatibility with a common-effect model does not establish invariance |
 
 ## AUTHORITY CHANGE
 
+Terminal record:
+
 ```text
 A5 ↔ A7 replication discrepancy
-→ resolved as a fresh replication/transport question
+→ addressed by R1 replication/transport branch
 
 encoding → T_instability
 → CAUSAL / REPLICATED / PRACTICALLY SMALL
 
-heterogeneity branch
-→ NOT EARNED
+excess cohort variation
+→ NOT DETECTED
+
+transport invariance
+→ NOT ESTABLISHED
 
 T_instability localization branch
 → CLOSED
@@ -915,29 +893,13 @@ Pilot 0
 → CLOSED
 ```
 
-## JUDGMENT TYPE
-
-Recoverable components:
+## JUDGMENT CLASSIFICATION
 
 ```text
-STATISTICAL
-→ replicated nonzero effect
-→ practical-equivalence decision
-→ transport diagnostic
-
-STRUCTURAL
-→ endpoint-local authority preservation
-→ no branch leakage
-→ no new discriminating target identified
+DEFERRED TO HUMAN-JUDGMENT AUDIT
 ```
 
-Value/cost rule used to compare possible future experiments:
-
-```text
-NOT FORMALIZED IN HISTORICAL RECORD
-```
-
-This is a major target for the later human-judgment audit.
+The historical record does contain the statistical results, endpoint-local authority boundary, and explicit stopping rationale. It does **not** contain a formal next-experiment value function or admissibility threshold.
 
 ## STOP / CONTINUE STATUS
 
@@ -945,19 +907,16 @@ This is a major target for the later human-judgment audit.
 STOP
 ```
 
-This node demonstrates the distinction:
+Historically recoverable stopping condition:
 
 ```text
-there is still uncertainty
+remaining uncertainty exists
 +
-another experiment is possible
-+
-no next experiment is sufficiently justified
-=
-STOP
+no unresolved question supports a sufficiently discriminating next experiment
+→ STOP
 ```
 
-The trace does **not** treat STOP as evidence that the theory is true, complete, or certain.
+This is recorded here as historical stopping rationale, not as a universal controller primitive.
 
 ## LATER OUTCOME — QUARANTINED
 
@@ -967,137 +926,50 @@ Future research may evaluate whether this STOP decision was well calibrated, but
 
 ---
 
-# Cross-node observations — descriptive only
+# No cross-node abstraction in this artifact
 
-These are observations about the reconstructed trace, not yet controller primitives.
+The previous draft included cross-node conceptual compression about belief, authority, control, controller failure classes, nested stopping, and candidate controller invariants. Those observations are not part of the historical decision reconstruction and are intentionally removed from the trace surface.
 
-## 1. Belief, authority, and control can fail separately
+This document records chronology, contemporaneous evidence, historically recoverable action/question structure, authority statements, and quarantined later outcomes only.
 
-The trace motivates distinguishing:
-
-```text
-BELIEF ERROR
-wrong substantive interpretation
-
-AUTHORITY ERROR
-claim scope or strength exceeds what evidence licenses
-
-CONTROL ERROR
-evidence and authority may be interpreted acceptably,
-but the next action is poorly selected
-```
-
-This document does not yet define formal tests for these failure classes.
-
-## 2. Complexity escalation was not monotonic
-
-Observed sequence:
-
-```text
-A5 component
-→ A6 component
-→ A7 interaction
-→ R1 replication/transport
-→ STOP
-```
-
-The sequence did not continue to finer representation components after the interaction target weakened.
-
-## 3. Scope-local stopping occurred before global stopping
-
-At D3:
-
-```text
-A-series → STOP
-R1       → CONTINUE
-```
-
-At D4:
-
-```text
-R1       → STOP
-Pilot 0  → STOP
-```
-
-This suggests that a future controller may need nested action scopes rather than a single global continue/stop bit.
-
-## 4. `PRESERVE_UNRESOLVED` and `STOP` are observably distinct
-
-At terminal state:
-
-```text
-T_verified interaction
-→ remains UNRESOLVED
-→ preserved locally
-
-T_instability branch
-→ STOP
-
-Pilot 0
-→ STOP
-```
-
-Thus:
-
-```text
-UNRESOLVED ≠ ACTION REQUIRED
-```
-
-and:
-
-```text
-PRESERVE_UNRESOLVED ≠ STOP
-```
-
-## 5. A future controller cannot be validated by reproducing this trace alone
-
-```text
-reproduce Pilot 0 decisions
-≠ general correction controller
-```
-
-Pilot 0 is a development / reconstruction case. Any later controller claim requires independent falsification on problems not used to induce its primitives or rules.
+Any cross-node decomposition belongs, if authorized after provenance review, in a separate human-judgment audit.
 
 ---
 
 # Open reconstruction gaps
 
-The following gaps are intentionally left unresolved for the next human-judgment audit:
+The following historical gaps remain intentionally unresolved:
 
-1. **A5→A6:** why A6 was preferable to every concrete alternative is not fully recoverable from the frozen record.
-2. **A6→A7:** the record establishes that finer rendering and interaction were both live; the comparative rule selecting interaction is not formalized.
-3. **A7→R1:** the record establishes why heterogeneity could not yet be claimed and why R1 was a direct test, but no formal threshold for “replication discrepancy worth testing” is recorded.
-4. **R1→STOP:** the epistemic stopping rationale is explicit, but no formal next-experiment value function or admissibility threshold existed.
-5. **Candidate-action completeness:** historical candidate-action sets cannot be proven exhaustive from the committed records.
-6. **Cost/constraint weighting:** computational cost influenced the broader program operationally, but the decision trace does not establish a formal cost-weighting rule for these four transitions.
+1. **A5→A6:** the record establishes A6's selected outer-scaffold object and a prior conditional outer-framing-versus-immediate-interaction guardrail, but it does not recover a complete realized candidate-action set or a rule showing A6 was preferable to every alternative.
+2. **A6→A7:** the record establishes the finer-rendering-versus-interaction fork and A7's selected interaction test, but the comparative rule selecting interaction is not recovered.
+3. **A7→R1:** the record establishes the replication/transport question, the no-A8 lineage decision, and the prohibition on inferring heterogeneity from point estimates; it does not recover a broader competing-explanation set or a formal threshold for selecting replication.
+4. **R1→STOP:** the stopping rationale and explicitly unearned branches are recorded, but no formal next-experiment value function or admissibility threshold is present.
+5. **Candidate-action completeness:** for D1–D4, unrecorded analytically possible actions cannot be treated as historically considered.
+6. **Cost/constraint weighting:** whether and how cost or operational constraints entered these four historical choices is not established by this trace and remains `UNKNOWN` unless separate contemporaneous evidence is found.
 
-These gaps are not defects to repair retrospectively. They are empirical targets for:
-
-```text
-docs/PILOT0_HUMAN_JUDGMENT_AUDIT.md
-```
+These gaps are not repaired by inference.
 
 ---
 
 # Terminal boundary of this artifact
 
-This trace authorizes no new experiment.
+This trace authorizes no new experiment and no controller abstraction.
 
 ```text
 Decision Trace
-= historical observation
+= historical reconstruction only
 
 Human-Judgment Audit
-= next decomposition
+= downstream only after provenance PASS
 
 Controller Primitives
-= later abstraction
+= not authorized by this artifact
 
 Controller Specification
-= later formalization
+= not authorized by this artifact
 
 Independent Falsification
-= later test design
+= not authorized by this artifact
 ```
 
 No controller equation, scalar value-of-information function, Pilot 1, or autonomous-scientist claim is frozen here.
