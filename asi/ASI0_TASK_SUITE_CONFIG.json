@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "study": "ASI-0 bounded self-improvement task suite",
+  "status": "PRE-OUTCOME TASK-SUITE CONTRACT",
+  "development_seed": 20261021,
+  "choice_labels": ["A", "B", "C", "D"],
+  "core_families": [
+    "coding_bug",
+    "novel_coding",
+    "verification"
+  ],
+  "transfer_sentinel_families": [
+    "research_synthesis",
+    "tool_workflow"
+  ],
+  "counts": {
+    "development": {
+      "coding_bug": 24,
+      "novel_coding": 24,
+      "verification": 24,
+      "research_synthesis": 0,
+      "tool_workflow": 0
+    },
+    "selection": {
+      "coding_bug": 12,
+      "novel_coding": 12,
+      "verification": 12,
+      "research_synthesis": 0,
+      "tool_workflow": 0
+    },
+    "hidden": {
+      "coding_bug": 24,
+      "novel_coding": 24,
+      "verification": 24,
+      "research_synthesis": 12,
+      "tool_workflow": 12
+    }
+  },
+  "variant_partition": {
+    "development": [0, 1],
+    "selection": [2],
+    "hidden": [3, 4]
+  },
+  "scoring": {
+    "type": "exact_choice",
+    "core_family_weights": {
+      "coding_bug": 0.3333333333333333,
+      "novel_coding": 0.3333333333333333,
+      "verification": 0.3333333333333333
+    },
+    "sentinels_are_promotion_metrics": false
+  },
+  "secrecy": {
+    "development_seed_may_be_committed": true,
+    "selection_requires_external_secret_seed": true,
+    "hidden_requires_external_secret_seed": true,
+    "generated_selection_bundle_may_be_visible_to_candidate_generator": false,
+    "generated_hidden_bundle_may_be_visible_to_candidate_generator": false
+  },
+  "nonclaims": [
+    "core-family hidden gain does not establish transfer to unseen task families",
+    "sentinel-family performance is diagnostic only in ASI-0",
+    "task-suite success does not establish recursive self-improvement",
+    "task-suite success does not establish superhumanity or ASI"
+  ]
+}
