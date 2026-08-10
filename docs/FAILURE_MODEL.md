@@ -1,6 +1,12 @@
 # CARS Failure Model
 
-This document defines diagnostic failure classes used by the CARS control protocol and the current empirical assay. They are not an ontology of all reasoning or measurement errors.
+This document defines diagnostic failure classes used by the CARS control protocol and by empirical benchmarks. The assay-specific examples below are retained from the historical Pilot-0 causal-response program; they are not the repository's current top-level scientific object. These categories are not an ontology of all reasoning or measurement errors.
+
+Current repository-level state:
+
+- [`INTELLIGENCE_THEORY.md`](INTELLIGENCE_THEORY.md)
+- [`CURRENT_RESEARCH_STATE.md`](CURRENT_RESEARCH_STATE.md)
+- [`RESEARCH_CONTRACT.md`](RESEARCH_CONTRACT.md)
 
 The governing rule is:
 
@@ -10,7 +16,7 @@ failure does not identify its cause
 
 When a contradiction appears, localize the shallowest sufficient failure before revising higher-level structure.
 
-# Assay failure layers
+# Assay / benchmark failure layers
 
 ## 1. Causal-identification failure
 
@@ -20,9 +26,9 @@ The intervention contrast does not identify the intended causal effect because t
 
 ## 2. Measurement failure
 
-The measured `I` or `V` is noisy, saturated, unreliable, or generated through an invalid measurement procedure.
+The measured variables are noisy, saturated, unreliable, or generated through an invalid measurement procedure.
 
-Examples include:
+Historical Pilot-0 examples include `I` and `V` measurement. General examples include:
 
 - ceiling/floor compression;
 - differential measurement error;
@@ -36,7 +42,7 @@ Examples include:
 
 A transformation or alternate instrument changes the scientific object rather than merely reexpressing it.
 
-For the current additive CATE:
+For the historical Pilot-0 additive CATE:
 
 ```text
 V' = aV+b, a>0
@@ -50,7 +56,7 @@ is licensed to preserve additive-effect ordering, while a general nonlinear mono
 
 The scientific proposition may be correct while the chosen representation is wrong.
 
-Example:
+Historical Pilot-0 example:
 
 ```text
 τ(i)
@@ -66,21 +72,25 @@ A near-zero linear `δ` can therefore be a bad shape representation rather than 
 
 **Corrective pressure:** test the ordering or shape more directly.
 
-## 5. Estimator failure
+## 5. Estimator / predictor failure
 
-The chosen estimator is biased, unstable, misspecified, underpowered, or unable to recover the intended object under known-truth controls.
+The chosen estimator or predictor is biased, unstable, misspecified, underpowered, poorly regularized, or unable to recover the intended object under known-truth controls.
 
-**Corrective pressure:** validate the estimator in synthetic and negative-control worlds before revising the scientific proposition.
+**Corrective pressure:** strengthen or validate the estimator before revising the scientific proposition.
+
+Pilot 1 / ID1 demonstrated this distinction directly: an apparent A/N structural gap under weaker predictors largely disappeared under a stronger generic identifier and failed directional replication.
 
 ## 6. Implementation failure
 
-The code, data pipeline, randomization, scoring, calibration, or analysis differs from the declared protocol.
+The code, data pipeline, randomization, scoring, calibration, concealment ordering, or analysis differs from the declared protocol.
 
-**Corrective pressure:** repair the implementation and rerun.
+**Corrective pressure:** repair the implementation without changing the scientific contract and rerun.
 
 ## 7. Scientific-proposition failure
 
-After measurement identity, causal identification, shape representation, estimator adequacy, and implementation have survived scrutiny, the data show that:
+After shallower explanations—measurement identity, causal identification where relevant, shape representation, estimator adequacy, implementation, and finite-sample variation—have survived scrutiny, the data contradict the frozen scientific proposition.
+
+Historical Pilot-0 example:
 
 ```text
 i₁ > i₀
@@ -92,7 +102,13 @@ does not imply:
 τ(i₁) > τ(i₀).
 ```
 
-This is the level at which the primitive assay hypothesis takes a genuine empirical hit.
+For the active future-plasticity benchmark, failure is gate-local rather than theory-global. Example:
+
+```text
+G0 fails
+→ no forecastability claim at this measurement/sample resolution
+↛ intelligence theory falsified
+```
 
 # CARS reasoning failure classes
 
@@ -149,7 +165,7 @@ Earlier CARS work introduced additional diagnostic loci:
 - validation-procedure failure;
 - correction-procedure failure.
 
-These remain useful mechanism hypotheses and historical architecture categories. They are no longer required in the minimal assay.
+These remain useful mechanism hypotheses and historical architecture categories. They are not required by the current repository-level theory or active future-plasticity benchmark.
 
 If reactivated, preserve the old discipline:
 
@@ -171,7 +187,7 @@ applies to proposed replacements at every layer.
 
 ## Prognostic/predictive collapse
 
-A variable that predicts baseline outcome is treated as though it necessarily predicts treatment-effect heterogeneity.
+A variable that predicts baseline outcome is treated as though it necessarily predicts treatment-effect heterogeneity or future adaptation.
 
 ## Headroom artifact
 
@@ -179,11 +195,11 @@ Differential observable range is interpreted as intrinsic differential responsiv
 
 ## Estimand drift
 
-A changed measurement or transformation is described as the same causal object without justification.
+A changed measurement, transformation, benchmark, or task family is described as the same scientific object without justification.
 
 ## Parametric capture
 
-A convenient coefficient becomes the scientific object even though the proposition is more general.
+A convenient coefficient or latent score becomes the scientific object even though the proposition is more general.
 
 ## Authority laundering
 
@@ -193,20 +209,27 @@ Examples:
 
 ```text
 high correlation
-↛
-measurement equivalence
+↛ measurement equivalence
 ```
 
 ```text
 positive δ
-↛
-I is intelligence
+↛ I is intelligence
 ```
 
 ```text
-responsiveness
-↛
-discriminative correction capacity
+forecastability
+↛ causal mechanism
+```
+
+```text
+future trainability difference
+↛ viability gain
+```
+
+```text
+viability gain
+↛ evidence-mediated intelligence
 ```
 
 ## Premature retention
@@ -219,7 +242,7 @@ The system treats failure of an incumbent as validation of a successor.
 
 ## Over-escalation
 
-A lower-level measurement, estimator, or inference error triggers unnecessary theory/representation revision.
+A lower-level measurement, estimator, inference, implementation, or finite-sample error triggers unnecessary theory/representation revision.
 
 ## Under-escalation
 
@@ -227,7 +250,7 @@ Repeated failures are patched at a shallow layer despite evidence that the scien
 
 ## Common-mode validation
 
-Repeated confirmation is treated as independent despite shared measurement channels, assumptions, benchmark generators, or selection information.
+Repeated confirmation is treated as independent despite shared measurement channels, assumptions, benchmark generators, task families, or selection information.
 
 ## Narrative-only correction
 
@@ -237,10 +260,16 @@ The explanation changes while future reasoning, action, or measured behavior doe
 
 Repeated revisions adapt to previously exposed evaluation cases, which are then incorrectly described as fresh holdout evidence.
 
+## Intellectual escalation after closure
+
+A closed discrepancy is used to justify a longer horizon, richer grammar, more complex mechanism, additional replication, or new construct whose primary purpose is to recover the vanished effect.
+
+**Corrective pressure:** require an independently motivated scientific question and fresh pre-outcome contract.
+
 # Evaluation principle
 
 Failure localization is itself testable.
 
 The benchmark should not reward the model merely for naming a category. The relevant question is whether localization changes what is measured, tested, revised, or left unresolved in a way that survives independent follow-up.
 
-A useful red-team architecture does not protect the scientific proposition from contradiction. It specifies what lower-level failures must be ruled out before a contradiction reaches it.
+A useful red-team architecture does not protect a scientific proposition from contradiction. It specifies what lower-level failures must be ruled out before a contradiction reaches it.
