@@ -1,13 +1,6 @@
 name: asi0-canonical
 
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - experiments/ASI0_CANONICAL_QWEN_CONFIG.json
-      - scripts/run_asi0_canonical_qwen.py
-      - scripts/run_asi0_canonical_qwen_entry.py
-      - .github/workflows/asi0-canonical.yml
   workflow_dispatch:
 
 permissions:
