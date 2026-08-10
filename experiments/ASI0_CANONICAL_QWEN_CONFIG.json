@@ -13,6 +13,7 @@
     "name": "latent_operation_adaptation_v1",
     "description": "Four matched task families each contain four hidden fixed operations. Development evidence contains verified input-output examples without naming the operation. Candidate textual policies are frozen before assignment. Concealed examples are disjoint deterministic draws from the same target operation.",
     "structural_holdout": "development and concealed examples use the same latent operation but disjoint inputs generated from prospectively distinct positions in a deterministic per-target RNG stream",
+    "development_diagnosticity": "the runner resamples the three development inputs prospectively until the four candidate operations have distinct verified-output signatures; this prevents an underidentified evidence set without using concealed outcomes",
     "task_generator_version": 1
   },
   "task_families": [
@@ -21,7 +22,7 @@
     "string_transform",
     "boolean_pair"
   ],
-  "development_examples_per_target": 2,
+  "development_examples_per_target": 3,
   "concealed_examples_per_target": 3,
   "targets_per_family": 4,
   "total_targets_per_phase": 16,
